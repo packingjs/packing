@@ -1,11 +1,10 @@
-const path = require('path');
-const Express = require('express');
-const webpack = require('webpack');
+import path from 'path';
+import Express from 'express';
+import webpack from 'webpack';
 import urlrewrite from 'packing-urlrewrite';
+import webpackConfig from './dev.config.babel';
 
-const webpackConfig = require('./dev.root');
 const compiler = webpack(webpackConfig);
-
 const port = 3001;
 const serverOptions = {
   contentBase: 'src/',
@@ -25,14 +24,6 @@ const rules = {
   '^/api/(.*)': 'require!/mock/api/$1.js',
   // '^/hello': 'http://localhost:3001/123/4.html',
 };
-// Object.keys(rules).forEach((from) => {
-//   const to = rules[from];
-//   if (registerRule({ from, to })) {
-//     console.log(`Rewrite rule created for: [${from} -> ${to}].`);
-//   } else {
-//     console.log('Wrong rule given.');
-//   }
-// });
 
 app.use(Express.static(path.join(__dirname, '..', 'static')));
 app.use(urlrewrite(rules));

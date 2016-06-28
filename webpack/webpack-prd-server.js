@@ -1,5 +1,6 @@
-const path = require('path');
-const Express = require('express');
+import path from 'path';
+import Express from 'express';
+
 const port = 8080;
 const app = new Express();
 
