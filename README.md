@@ -7,11 +7,29 @@
 * 有些部门已经使用了react，但在实施过程中或多或少的遇到了一些问题，这些问题具有一些共性，其实可以使用统一的方案来解决
 * 无线touch团队在过往的工作中在前端工程化和react方面积累了不少经验，愿意进行技术分享和全公司内推广
 
+### 安装
+```
+npm install
+# 如果是在公司内网，使用下面的命令安装速度更快
+# npm install --registry http://registry.npm.corp.qunar.com
+
+# 启动开发模式
+npm run serve
+
+#open http://localhost:3001
+
+# 编译工程
+npm run build
+
+# 编译并预览编译结果
+npm run serve:dist
+```
+
 ### 特点
 - [ ]react支持
 - [ ]HRM
-- [ ]动态加载
-- [ ]支持自定义打包规则
+- [x]动态加载
+- [x]支持自定义打包规则
 - [ ]yo-generator
 - [ ]集成到QDR中，自动生产job，发布无障碍
 - [ ]工程新增的node_modules也能顺利在QDR中发布
