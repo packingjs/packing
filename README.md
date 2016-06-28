@@ -1,5 +1,3 @@
-## Packing
-
 [![NPM version][npm-image]][npm-url] [![Gitter chat][gitter-image]][gitter-url] [![Downloads][downloads-image]][downloads-url]
 
 [![NPM][nodei-image]][nodei-url]
@@ -17,13 +15,13 @@ donation
 
 基于webpack的前端集成开发环境和编译环境
 
-### 初衷
+### Introduction
 * 由于react的流行，公司越来越多的项目都希望使用react来构建，但目前公司的前端工具FEKit不能支持react开发和编译
 * 有些部门已经使用了react，但在实施过程中或多或少的遇到了一些问题，这些问题具有一些共性，其实可以使用统一的方案来解决
 * 无线touch团队在过往的工作中在前端工程化和react方面积累了不少经验，愿意进行技术分享和全公司内推广
 * 只关心通用的集成开发环境和编译过程，不关注前端架构
 
-### 安装
+### Install
 ```sh
 npm install
 # 如果是在公司内网，使用下面的命令安装速度更快
@@ -41,7 +39,7 @@ npm run build
 npm run serve:dist
 ```
 
-### 特点
+### Features
 - [ ]react支持
 - [ ]HRM
 - [x]动态加载
@@ -71,7 +69,7 @@ npm run serve:dist
 - [ ]example
 - [ ]unit test
 
-### 命令
+### Others
 ```
 # npm使用qunar源
 npm install --registry http://registry.npm.corp.qunar.com
