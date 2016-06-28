@@ -3,7 +3,7 @@ export default {
   path: {
     src: 'src',
     dist: 'prd',
-    static: 'static',
+    assets: 'static',
   },
 
   // webserver端口

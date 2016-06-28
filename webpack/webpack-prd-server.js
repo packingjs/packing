@@ -1,11 +1,12 @@
 import path from 'path';
 import Express from 'express';
-import packing from './packing';
+import packing from './packing.config';
 
 const port = packing.port.dist;
+const { dist } = packing.path;
 const app = new Express();
 
-app.use(Express.static(path.join(__dirname, '..', 'prd')));
+app.use(Express.static(path.join(__dirname, '..', dist)));
 
 app.listen(port, (err) => {
   if (err) {

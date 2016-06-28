@@ -2,13 +2,16 @@ import path from 'path';
 import Express from 'express';
 import webpack from 'webpack';
 import urlrewrite from 'packing-urlrewrite';
-import webpackConfig from './dev.config.babel';
-import packing from './packing';
+import webpackConfig from './webpack.dev.config.babel';
+import webpackDevMiddleware from 'webpack-dev-middleware';
+import webpackHotMiddleware from 'webpack-hot-middleware';
+import packing from './packing.config';
 
+const { src, assets } = packing.path;
 const compiler = webpack(webpackConfig);
 const port = packing.port.dev;
 const serverOptions = {
-  contentBase: packing.path.src,
+  contentBase: src,
   quiet: false,
   noInfo: true,
   hot: true,
@@ -26,12 +29,12 @@ const rules = {
   // '^/hello': 'http://localhost:3001/123/4.html',
 };
 
-console.log(path.join(__dirname, '..', packing.path.static));
+// console.log(path.join(__dirname, '..', static));
 
-app.use(Express.static(path.join(__dirname, '..', packing.path.static)));
+app.use(Express.static(path.join(__dirname, '..', assets)));
 app.use(urlrewrite(rules));
-app.use(require('webpack-dev-middleware')(compiler, serverOptions));
-app.use(require('webpack-hot-middleware')(compiler));
+app.use(webpackDevMiddleware(compiler, serverOptions));
+app.use(webpackHotMiddleware(compiler));
 
 app.listen(port, (err) => {
   if (err) {

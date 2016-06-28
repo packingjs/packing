@@ -28,14 +28,14 @@
       }
     },
     "build": {
-      "command": "webpack --verbose --colors --display-error-details --config webpack/prod.config.babel.js",
+      "command": "webpack --verbose --colors --display-error-details --config webpack/webpack.prd.config.babel.js",
       "env": {
         "NODE_ENV": "production",
         "CDN_ROOT": "http://www.test1.com/prd"
       }
     },
     "build:dev": {
-      "command": "webpack --config webpack/prod.root.js",
+      "command": "webpack --config webpack/webpack.prd.config.babel.js",
       "env": {
         "NODE_ENV": "development"
       }
