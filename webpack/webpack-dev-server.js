@@ -3,11 +3,12 @@ import Express from 'express';
 import webpack from 'webpack';
 import urlrewrite from 'packing-urlrewrite';
 import webpackConfig from './dev.config.babel';
+import packing from './packing';
 
 const compiler = webpack(webpackConfig);
-const port = 3001;
+const port = packing.port.dev;
 const serverOptions = {
-  contentBase: 'src/',
+  contentBase: packing.path.src,
   quiet: false,
   noInfo: true,
   hot: true,
@@ -25,7 +26,9 @@ const rules = {
   // '^/hello': 'http://localhost:3001/123/4.html',
 };
 
-app.use(Express.static(path.join(__dirname, '..', 'static')));
+console.log(path.join(__dirname, '..', packing.path.static));
+
+app.use(Express.static(path.join(__dirname, '..', packing.path.static)));
 app.use(urlrewrite(rules));
 app.use(require('webpack-dev-middleware')(compiler, serverOptions));
 app.use(require('webpack-hot-middleware')(compiler));

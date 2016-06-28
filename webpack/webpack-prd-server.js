@@ -1,7 +1,8 @@
 import path from 'path';
 import Express from 'express';
+import packing from './packing';
 
-const port = 8080;
+const port = packing.port.dist;
 const app = new Express();
 
 app.use(Express.static(path.join(__dirname, '..', 'prd')));
@@ -10,6 +11,6 @@ app.listen(port, (err) => {
   if (err) {
     console.error(err);
   } else {
-    console.info('==> 🚧  Webpack production server listening on port %s', port);
+    console.info('==> 🚧  Webserver listening on port %s', port);
   }
 });

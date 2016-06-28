@@ -4,9 +4,11 @@ import CleanPlugin from 'clean-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import ReplaceHashWebpackPlugin from 'replace-hash-webpack-plugin';
 import strip from 'strip-loader';
+import packing from './packing';
 
+const assets = 'assets';
 const projectRootPath = path.resolve(__dirname, '../');
-const assetsPath = path.resolve(projectRootPath, './prd/assets');
+const assetsPath = path.resolve(projectRootPath, `./${packing.path.dist}/${assets}`);
 
 export default {
   devtool: 'source-map',
@@ -24,7 +26,7 @@ export default {
     path: assetsPath,
     filename: '[name]-[chunkhash:6].js',
     chunkFilename: '[name]-[chunkhash:6].js',
-    publicPath: '/assets/'
+    publicPath: `/${assets}`
   },
   module: {
     /* eslint-disable */
@@ -65,9 +67,9 @@ export default {
     }),
     new ReplaceHashWebpackPlugin({
       assetsDomain: process.env.CDN_ROOT,
-      cwd: path.join(process.cwd(), 'static'),
+      cwd: path.join(process.cwd(), packing.path.static),
       src: '**/*.html',
-      dest: path.join(process.cwd(), 'prd'),
+      dest: path.join(process.cwd(), packing.path.dist),
     }),
 
     // optimizations
