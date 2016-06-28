@@ -1,0 +1,90 @@
+{
+  "name": "packing",
+  "description": "",
+  "version": "0.0.1",
+  "repository": "zhongzhi107/packing",
+  "license": "ISC",
+  "main": "lib",
+  "keywords": [
+    "webpack"
+  ],
+  "author": "zhongzhi <zhong.zhi@163.com>",
+  "scripts": {
+    "build": "better-npm-run build",
+    "serve": "better-npm-run serve",
+    "serve:dist": "better-npm-run build:dev && better-npm-run serve:dist"
+  },
+  "betterScripts": {
+    "serve": {
+      "command": "babel-node webpack/webpack-dev-server.js",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    "serve:dist": {
+      "command": "babel-node webpack/webpack-prd-server.js",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    "build": {
+      "command": "webpack --verbose --colors --display-error-details --config webpack/prod.root.js",
+      "env": {
+        "CDN_ROOT": "http://www.test1.com/prd"
+      }
+    },
+    "build:dev": {
+      "command": "webpack --config webpack/prod.root.js"
+    }
+  },
+  "devDependencies": {
+    "autoprefixer-loader": "3.2.0",
+    "babel-core": "6.9.1",
+    "babel-eslint": "6.0.5",
+    "babel-loader": "6.2.4",
+    "babel-plugin-add-module-exports": "0.2.1",
+    "babel-plugin-react-transform": "2.0.2",
+    "babel-plugin-transform-decorators-legacy": "1.3.4",
+    "babel-plugin-transform-react-display-name": "6.8.0",
+    "babel-plugin-transform-runtime": "6.9.0",
+    "babel-plugin-typecheck": "3.9.0",
+    "babel-polyfill": "6.9.1",
+    "babel-preset-es2015": "6.9.0",
+    "babel-preset-react": "6.5.0",
+    "babel-preset-stage-0": "6.5.0",
+    "better-npm-run": "0.0.9",
+    "clean-webpack-plugin": "0.1.9",
+    "css-loader": "0.23.1",
+    "eslint": "2.13.1",
+    "eslint-config-airbnb": "9.0.1",
+    "eslint-loader": "1.3.0",
+    "eslint-plugin-import": "1.8.1",
+    "eslint-plugin-jsx-a11y": "1.5.3",
+    "eslint-plugin-react": "5.2.2",
+    "express": "4.14.0",
+    "extract-text-webpack-plugin": "1.0.1",
+    "file-loader": "0.8.5",
+    "packing-urlrewrite": "0.0.1",
+    "json-loader": "0.5.4",
+    "less": "2.7.1",
+    "less-loader": "2.2.3",
+    "node-sass": "3.8.0",
+    "react": "15.1.0",
+    "react-a11y": "0.3.3",
+    "react-addons-test-utils": "15.1.0",
+    "react-transform-catch-errors": "1.0.2",
+    "redbox-react": "1.2.9",
+    "replace-hash-webpack-plugin": "1.2.1",
+    "sass-loader": "3.2.1",
+    "strip-loader": "0.1.2",
+    "style-loader": "0.13.1",
+    "url-loader": "0.5.7",
+    "webpack": "1.13.1",
+    "webpack-dev-middleware": "1.6.1",
+    "webpack-hot-middleware": "2.10.0"
+  },
+  "dependencies": {},
+  "engines": {
+    "node": ">=0.12.7"
+  }
+}

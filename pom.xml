@@ -1,0 +1,35 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>qunar.common</groupId>
+    <artifactId>qunar-supom-qzz</artifactId>
+    <version>1.3.2</version>
+  </parent>
+
+  <groupId>com.qunar.qzz</groupId>
+  <!--artifactId必须与qzz的module_name相同-->
+  <artifactId>mobile-rank-bi</artifactId>
+  <!--version由bds生成的btag/rtag来决定-->
+  <version>WAPHOTEL-3088_20151224_biOptimize-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <properties>
+    <!--qzz_files为项目相应的.ver, ver or refs-->
+    <qzz_files>views</qzz_files>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>com.github.goldin</groupId>
+        <artifactId>copy-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+</project>
