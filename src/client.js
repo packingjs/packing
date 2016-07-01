@@ -11,7 +11,7 @@ require('../static/big.jpg');
 console.log('--', json.name);
 
 ReactDOM.render(
-  <h1>Hello, world!</h1>,
+  <h1>Hello, world!i</h1>,
   document.getElementById('app')
 );
 

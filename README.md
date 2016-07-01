@@ -40,8 +40,8 @@ npm run serve:dist
 ```
 
 ### Features
-- [ ]react支持
-- [ ]HRM
+- [x]react支持
+- [ ]HMR
 - [x]动态加载
 - [x]支持自定义打包规则
 - [ ]yo-generator
@@ -61,7 +61,8 @@ npm run serve:dist
 - [x]预览编译后的内容
 - [x]不同环境使用profiles文件
 - [ ]redux-dev-tool
-
+- [ ]支持多种模版
+- [ ]自动抽取common.js
 ### Todo
 - [ ]文档
 - [ ]自动化生成scheme和job
