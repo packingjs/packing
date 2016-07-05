@@ -1,0 +1,87 @@
+@import "../common/css/base";
+@import "../common/css/grid";
+@import "../common/css/icon";
+
+body {
+	margin: 0 auto;
+	min-width: 320px;
+	min-height: 480px;
+	position: relative;
+	background-color: #fff;
+}
+.qt-bg-yellow {
+	background: #f9ae38;
+}
+
+.qt-bg-red {
+	background: #f55;
+}
+
+.qt-bg-green {
+	background: #31ac5a;
+}
+
+.qt-bg-blue {
+	background: #25a4bb;
+}
+
+.qt-bg-deep-blue {
+	background: #1489e6;
+}
+
+.qt-bg-purple {
+	background: #7e57c2;
+}
+
+.qt-bg-light-green {
+	background: #7eb63d;
+}
+
+.qt-bg-deep-green {
+	background: #009688;
+}
+
+.mobile-module {
+	padding: 4px;
+	padding-top: 0;
+	li {
+		a {
+			font-weight: bolder;
+			text-align: center;
+			border: 2px solid #fff;
+			height: 58px;
+			color: #fff;
+			&.col6{
+				display: flex;
+				align-items: center;
+				.icon{
+					font-size: 34px;
+					margin-left: 20px;
+				}
+				&.row2{
+					display: block;
+					height: 116px;
+					padding-top: 10px;
+					.icon{
+						font-size: 60px;
+					}
+				}
+			}
+			&.col3{
+				padding-top: 2px;
+				font-size: 12px;
+				.icon{
+					font-size: 28px;
+				}
+			}
+
+			&:active{
+				opacity: .8;
+			}
+			.text-left{
+				text-align: left;
+				margin-left: 10px;
+			}
+		}
+	}
+}
