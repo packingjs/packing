@@ -58,7 +58,7 @@ npm run serve:dist
 - [x]css预编译
 - [x]支持source map
 - [x]支持资源hash rename
-- [x]预览编译后的内容
+- [ ]预览编译后的内容
 - [x]不同环境使用profiles文件
 - [ ]redux-dev-tool
 - [ ]支持多种模版

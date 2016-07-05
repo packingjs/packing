@@ -2,14 +2,15 @@ import path from 'path';
 import { isString, isArray, isObject } from 'util';
 import webpack from 'webpack';
 import CleanPlugin from 'clean-webpack-plugin';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import ReplaceHashWebpackPlugin from 'replace-hash-webpack-plugin';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
+import HtmlWebpackPlugin from 'packing-html-webpack-plugin';
 import strip from 'strip-loader';
 import glob from 'glob';
 import packing from './packing.config';
 
-const { assets, dist, templates, entries } = packing.path;
+const { dist, templates, entries } = packing.path;
 const clientJS = 'webpack-hot-middleware/client';
 
 /**
@@ -39,14 +40,19 @@ const initConfig = () => {
   glob.sync(`**/*${ext}`, {
     cwd: path.resolve(templates, 'pages')
   }).forEach(page => {
-    const key = page.replace('/', '-').replace(ext, '');
+    const key = page.replace(ext, '');
     const value = `./${entries}/${page.replace(ext, '.js')}`;
 
     // 写入页面级别的配置
     entryConfig[key] = value;
+    const templateInitData = path.resolve('mock/page', page.replace(ext, '.js'));
     htmlWebpackPluginConfig.push({
-      filename: page.replace('/', '-').replace(ext, '.html'),
+      filename: page.replace(ext, '.html'),
       template: path.resolve(templates, 'pages', page),
+      templateInitData,
+      cache: false,
+      inject: false,
+      // hash: true,
       chunks: [key],
       // excludeChunks: ['dev-helper'],
     });
@@ -71,6 +77,7 @@ export default (options) => {
   const { entryConfig, htmlWebpackPluginConfig } = initConfig();
   const cwd = process.cwd();
   const projectRootPath = path.resolve(__dirname, '../');
+  // console.log('projectRootPath: ', projectRootPath);
   const assetsPath = path.resolve(projectRootPath, `./${dist}/assets`);
   const chunkhash = options.longTermCaching ? '-[chunkhash:6]' : '';
 
@@ -111,7 +118,7 @@ export default (options) => {
   /* eslint-disable */
   let moduleConfig = {
     loaders: [
-      { test: /\.json$/, loader: 'json-loader' },
+      { test: /\.json$/, loader: 'json' },
       { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
       { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
       { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/octet-stream" },
@@ -125,8 +132,7 @@ export default (options) => {
 
   const devLoaders = [
     { test: /\.js?$/, loaders: ['babel', 'eslint'], exclude: /node_modules/},
-    { test: /\.less$/, loader: 'style!css!less?outputStyle=expanded&sourceMap' },
-    //{ test: /\.less$/, loader: 'style!css?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]!autoprefixer?browsers=last 2 version!less?outputStyle=expanded&sourceMap' },
+    { test: /\.less$/, loader: 'style!css?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]!autoprefixer?browsers=last 2 version!less?outputStyle=expanded&sourceMap' },
     { test: /\.scss$/, loader: 'style!css?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap' },
   ];
   const prdLoaders = [
@@ -148,13 +154,19 @@ export default (options) => {
     extensions: ['', '.json', '.js', '.jsx']
   };
 
-  console.log(entryConfig, htmlWebpackPluginConfig);
+  // console.log(entryConfig, htmlWebpackPluginConfig);
   const devPlugins = htmlWebpackPluginConfig.map((item) => new HtmlWebpackPlugin(item));
 
   const buildPlugins = [
-    new CleanPlugin([assetsPath], {
+    new CleanPlugin([dist], {
       root: projectRootPath
     }),
+
+    new CopyWebpackPlugin([{
+      context: templates,
+      from: '**/*',
+      to: path.join(cwd, dist, 'templates'),
+    }]),
 
     // css files from the extract-text-plugin loader
     new ExtractTextPlugin(`[name]${chunkhash}.css`, {
@@ -168,10 +180,11 @@ export default (options) => {
     }),
 
     new ReplaceHashWebpackPlugin({
+      // autoInjectTag: true,
       assetsDomain: process.env.CDN_ROOT,
-      cwd: path.join(cwd, assets),
-      src: '**/*.html',
-      dest: path.join(cwd, dist),
+      cwd: path.join(cwd, templates),
+      src: '**/*.jade',
+      dest: path.join(cwd, dist, 'templates'),
     })
   ];
 

@@ -7,6 +7,7 @@ const { dist } = packing.path;
 const app = new Express();
 
 app.use(Express.static(path.join(__dirname, '..', dist)));
+// app.use(Express.static(path.join(__dirname, '..', dist, 'templates/pages')));
 
 app.listen(port, (err) => {
   if (err) {
