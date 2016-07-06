@@ -6,11 +6,12 @@ import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import ReplaceHashWebpackPlugin from 'replace-hash-webpack-plugin';
 import HtmlWebpackPlugin from 'packing-html-webpack-plugin';
+import RevWebpackPlugin from './packing-rev-webpack-plugin';
 import strip from 'strip-loader';
 import glob from 'glob';
 import packing from './packing.config';
 
-const { dist, templates, entries } = packing.path;
+const { dist, templates, entries, assets, assetsDist, templatesDist } = packing.path;
 const clientJS = 'webpack-hot-middleware/client';
 
 /**
@@ -79,7 +80,7 @@ export default (options) => {
   const projectRootPath = path.resolve(__dirname, '../');
   // console.log('projectRootPath: ', projectRootPath);
   const assetsPath = path.resolve(projectRootPath, `./${dist}/assets`);
-  const chunkhash = options.longTermCaching ? '-[chunkhash:6]' : '';
+  const chunkhash = options.longTermCaching ? '-[chunkhash:8]' : '';
 
   const devtool = options.devtool ? 'inline-source-map' : 'source-map';
   const progress = options.progress;
@@ -124,7 +125,7 @@ export default (options) => {
       { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/octet-stream" },
       { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file" },
       { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=image/svg+xml" },
-      { test: /\.jpg$/, loader: 'url?name=[name]-[hash:6].[ext]&limit=10240' },
+      { test: /\.jpg$/, loader: 'url?name=[name]-[hash:8].[ext]&limit=10240' },
       { test: /\.jade$/, loader: 'jade' },
       { test: /\.html$/, loader: 'html' },
     ]
@@ -132,13 +133,14 @@ export default (options) => {
 
   const devLoaders = [
     { test: /\.js?$/, loaders: ['babel', 'eslint'], exclude: /node_modules/},
-    { test: /\.less$/, loader: 'style!css?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]!autoprefixer?browsers=last 2 version!less?outputStyle=expanded&sourceMap' },
-    { test: /\.scss$/, loader: 'style!css?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap' },
+    // { test: /\.less$/, loader: 'style!css?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]!autoprefixer?browsers=last 2 version!less?outputStyle=expanded&sourceMap' },
+    { test: /\.less$/, loader: 'style!css?importLoaders=2&localIdentName=[local]___[hash:base64:8]!autoprefixer?browsers=last 2 version!less?outputStyle=expanded' },
+    { test: /\.scss$/, loader: 'style!css?importLoaders=2&localIdentName=[local]___[hash:base64:8]!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded' },
   ];
   const prdLoaders = [
     { test: /\.js?$/, loaders: [strip.loader('debug'), 'babel'], exclude: /node_modules/},
-    { test: /\.less$/, loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=2&sourceMap!autoprefixer?browsers=last 2 version!less?outputStyle=expanded&sourceMap=true&sourceMapContents=true') },
-    { test: /\.scss$/, loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=2&sourceMap!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap=true&sourceMapContents=true') },
+    { test: /\.less$/, loader: ExtractTextPlugin.extract('style', 'css?importLoaders=2!autoprefixer?browsers=last 2 version!less?outputStyle=expanded&sourceMapContents') },
+    { test: /\.scss$/, loader: ExtractTextPlugin.extract('style', 'css?importLoaders=2!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMapContents') },
   ];
   /* eslint-enable */
   moduleConfig.loaders.push(options.build ? prdLoaders : devLoaders);
@@ -154,7 +156,6 @@ export default (options) => {
     extensions: ['', '.json', '.js', '.jsx']
   };
 
-  // console.log(entryConfig, htmlWebpackPluginConfig);
   const devPlugins = htmlWebpackPluginConfig.map((item) => new HtmlWebpackPlugin(item));
 
   const buildPlugins = [
@@ -164,7 +165,7 @@ export default (options) => {
 
     new CopyWebpackPlugin([{
       context: templates,
-      from: '**/*',
+      src: '**/*',
       to: path.join(cwd, dist, 'templates'),
     }]),
 
@@ -180,12 +181,18 @@ export default (options) => {
     }),
 
     new ReplaceHashWebpackPlugin({
-      // autoInjectTag: true,
       assetsDomain: process.env.CDN_ROOT,
       cwd: path.join(cwd, templates),
       src: '**/*.jade',
-      dest: path.join(cwd, dist, 'templates'),
-    })
+      dest: path.join(cwd, templatesDist),
+    }),
+
+    new RevWebpackPlugin({
+      cwd: path.join(cwd, assets),
+      src: '**/*.{jpg,png}',
+      dest: path.join(cwd, assetsDist),
+    }),
+
   ];
 
   const plugins = options.build ? buildPlugins : devPlugins;

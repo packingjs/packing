@@ -1,18 +1,36 @@
 import path from 'path';
 import Express from 'express';
+import webpack from 'webpack';
+import urlrewrite from 'packing-urlrewrite';
+import webpackDevMiddleware from 'webpack-dev-middleware';
+// import webpackHotMiddleware from 'webpack-hot-middleware';
+import webpackConfig from './webpack.config2';
 import packing from './packing.config';
 
+const { src, assetsDist } = packing.path;
+const compiler = webpack(webpackConfig);
 const port = packing.port.dist;
-const { dist } = packing.path;
-const app = new Express();
+const serverOptions = {
+  contentBase: src,
+  quiet: false,
+  noInfo: true,
+  hot: true,
+  inline: true,
+  lazy: false,
+  publicPath: webpackConfig.output.publicPath,
+  headers: { 'Access-Control-Allow-Origin': '*' },
+  stats: { colors: true }
+};
 
-app.use(Express.static(path.join(__dirname, '..', dist)));
-// app.use(Express.static(path.join(__dirname, '..', dist, 'templates/pages')));
+const app = new Express();
+app.use(Express.static(path.join(__dirname, '..', assetsDist)));
+app.use(urlrewrite(packing.rewriteRules));
+app.use(webpackDevMiddleware(compiler, serverOptions));
 
 app.listen(port, (err) => {
   if (err) {
     console.error(err);
   } else {
-    console.info('==> 🚧  Webserver listening on port %s', port);
+    console.info('==> 🚧  Webpack development server listening on port %s', port);
   }
 });

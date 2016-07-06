@@ -2,10 +2,14 @@ export default {
   // 文件路径
   path: {
     src: 'src',
-    dist: 'prd',
     assets: 'static',
     entries: 'src/entries',
-    templates: 'src/templates/jade'
+    templates: 'src/templates/jade',
+    templatesPages: 'src/templates/jade/pages',
+    dist: 'prd',
+    assetsDist: 'prd/assets',
+    templatesDist: 'prd/templates',
+    templatesPagesDist: 'prd/templates/pages'
   },
 
   // webserver端口
