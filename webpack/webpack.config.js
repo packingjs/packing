@@ -6,7 +6,7 @@ import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import ReplaceHashWebpackPlugin from 'replace-hash-webpack-plugin';
 import HtmlWebpackPlugin from 'packing-html-webpack-plugin';
-import RevWebpackPlugin from './packing-rev-webpack-plugin';
+import RevWebpackPlugin from 'packing-rev-webpack-plugin';
 import strip from 'strip-loader';
 import glob from 'glob';
 import packing from './packing.config';

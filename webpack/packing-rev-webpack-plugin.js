@@ -8,6 +8,7 @@ var mkdirp = require('mkdirp');
 function RevWorldPlugin(patterns, options) {
   this.patterns = util.isArray(patterns) ? patterns : [patterns];
   this.options = Object.assign({}, options, {
+    format: '[name]-[hash][ext]',
     algorithm: 'sha256',
     length: 8
   });
@@ -31,7 +32,10 @@ RevWorldPlugin.prototype.apply = function(compiler) {
         var suffix = hash.slice(0, self.options.length);
         var ext = path.extname(file);
         // var newName = [path.basename(file, ext), suffix, ext.slice(1)].join('.');
-        var newName = `${path.basename(file, ext)}-${suffix}.${ext.slice(1)}`;
+        var newName = self.options.format
+          .replace('[name]', path.basename(file, ext))
+          .replace('[hash]', suffix)
+          .replace('[ext]', ext);
         // console.log(newName);
         var destDir = path.join(pattern.dest, path.dirname(item))
         var destFile = path.join(destDir, newName);
