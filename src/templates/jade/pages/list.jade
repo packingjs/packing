@@ -1,7 +1,14 @@
-doctype html
-html
-  head
-    title List
-    script(src="list.js")
-  body
-    #main List
+extends ../layout/default.jade
+
+block title
+  title Jade Example
+
+block style
+  link(type="text/css" rel="stylesheet" href="list.css")
+
+block script
+  script(src="list.js")
+
+block content
+  h1 list page
+  img(src="/test/n.jpg")

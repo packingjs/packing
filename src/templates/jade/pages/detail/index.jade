@@ -1,11 +1,16 @@
-doctype html
-html
-  head
-    title detail-index
-    script(src="/detail/index.js")
-  body
-    #main List
-      h2 == By #{author}
-      ul
-        each val in languages
-          li= val
+extends ../../layout/default.jade
+
+block title
+  title Jade Example
+
+block style
+  link(type="text/css" rel="stylesheet" href="detail/index.css")
+
+block script
+  script(src="detail/index.js")
+
+block content
+  h1 == By #{author}
+  ul
+    each val in languages
+      li= val
