@@ -157,11 +157,12 @@ export default (options) => {
       root: projectRootPath
     }),
 
-    new CopyWebpackPlugin([{
-      context: templates,
-      src: '**/*',
-      to: templatesDist,
-    }]),
+    // replace hash时也会将template生成一次，这次copy有些多余
+    // new CopyWebpackPlugin([{
+    //   context: templates,
+    //   from: '**/*',
+    //   to: path.resolve(cwd, templatesDist),
+    // }]),
 
     // css files from the extract-text-plugin loader
     new ExtractTextPlugin(`[name]${chunkhash}.css`, {
