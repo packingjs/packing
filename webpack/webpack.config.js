@@ -11,8 +11,18 @@ import strip from 'strip-loader';
 import glob from 'glob';
 import packing from './packing.config';
 
-const { dist, templates, entries, assets, assetsDist, templatesDist } = packing.path;
+const {
+  dist,
+  templates,
+  entries,
+  assets,
+  assetsDist,
+  templatesDist,
+  templatesPages
+} = packing.path;
+const { templateExtension } = packing;
 const clientJS = 'webpack-hot-middleware/client';
+const cwd = process.cwd();
 
 /**
  * 给所有入口js加上HRM的clientjs
@@ -35,21 +45,22 @@ const pushClientJS = entry => {
  * 根据文件的目录结构生成entry配置
  */
 const initConfig = () => {
+  const jsExt = '.js';
+  const htmlExt = '.html';
   const entryConfig = {};
   const htmlWebpackPluginConfig = [];
-  const ext = '.jade';
-  glob.sync(`**/*${ext}`, {
-    cwd: path.resolve(templates, 'pages')
+  glob.sync(`**/*${templateExtension}`, {
+    cwd: path.resolve(cwd, templatesPages)
   }).forEach(page => {
-    const key = page.replace(ext, '');
-    const value = `./${entries}/${page.replace(ext, '.js')}`;
+    const key = page.replace(templateExtension, '');
+    const value = `./${entries}/${page.replace(templateExtension, jsExt)}`;
 
     // 写入页面级别的配置
     entryConfig[key] = value;
-    const templateInitData = path.resolve('mock/page', page.replace(ext, '.js'));
+    const templateInitData = path.resolve('mock/pages', page.replace(templateExtension, jsExt));
     htmlWebpackPluginConfig.push({
-      filename: page.replace(ext, '.html'),
-      template: path.resolve(templates, 'pages', page),
+      filename: page.replace(templateExtension, htmlExt),
+      template: path.resolve(templatesPages, page),
       templateInitData,
       cache: false,
       inject: false,
@@ -76,9 +87,7 @@ const initConfig = () => {
  */
 export default (options) => {
   const { entryConfig, htmlWebpackPluginConfig } = initConfig();
-  const cwd = process.cwd();
   const projectRootPath = path.resolve(__dirname, '../');
-  // console.log('projectRootPath: ', projectRootPath);
   const assetsPath = path.resolve(projectRootPath, `./${dist}/assets`);
   const chunkhash = options.longTermCaching ? '-[chunkhash:8]' : '';
 
@@ -86,25 +95,7 @@ export default (options) => {
   const progress = options.progress;
   const context = path.resolve(__dirname, '..');
 
-  // entry可能是字符串／数组／对象
   let entry = entryConfig;
-  // let entry = {
-  //   main: [
-  //     './src/client.js'
-  //   ],
-  //   list: './src/list.js',
-  //   other: [
-  //     './src/client2.js'
-  //   ]
-  // };
-  // let entry = './src/client.js';
-  // let entry = {
-  //   main: [
-  //     // 'webpack-hot-middleware/client',
-  //     './src/client.js'
-  //   ],
-  //   other: './src/client2.js'
-  // };
 
   const output = {
     chunkFilename: `[name]${chunkhash}.js`,
@@ -166,7 +157,7 @@ export default (options) => {
     new CopyWebpackPlugin([{
       context: templates,
       src: '**/*',
-      to: path.join(cwd, dist, 'templates'),
+      to: templatesDist,
     }]),
 
     // css files from the extract-text-plugin loader
@@ -182,15 +173,15 @@ export default (options) => {
 
     new ReplaceHashWebpackPlugin({
       assetsDomain: process.env.CDN_ROOT,
-      cwd: path.join(cwd, templates),
+      cwd: templates,
       src: '**/*.jade',
-      dest: path.join(cwd, templatesDist),
+      dest: templatesDist,
     }),
 
     new RevWebpackPlugin({
-      cwd: path.join(cwd, assets),
+      cwd: assets,
       src: '**/*.{jpg,png}',
-      dest: path.join(cwd, assetsDist),
+      dest: assetsDist,
     }),
 
   ];
