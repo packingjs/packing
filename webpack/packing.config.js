@@ -10,9 +10,9 @@ export default {
     // webpack打包入口JS文件目录
     entries: 'src/entries/html',
     // 模版目录，可能包含布局框架和页面级别模版
-    templates: 'src/templates/html',
+    templates: 'src/templates/ejs',
     // 网页级别模版目录
-    templatesPages: 'src/templates/html',
+    templatesPages: 'src/templates/ejs',
     // 编译输出产物目录
     dist: 'prd',
     // 编译后的静态文件目录
@@ -24,9 +24,9 @@ export default {
   },
 
   // 模版类型
-  templateEngine: 'html',
+  templateEngine: 'ejs',
   // 模版文件扩展名
-  templateExtension: '.html',
+  templateExtension: '.ejs',
 
   // webserver端口
   port: {

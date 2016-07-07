@@ -61,7 +61,7 @@ npm run serve:dist
 - [x]预览编译后的内容
 - [x]不同环境使用profiles文件
 - [ ]redux-dev-tool
-- [ ]支持多种模版[html/jade/ejs/horge]
+- [ ]支持多种模版[html/jade/ejs/handlebars/smarty/velocity]
 - [ ]自动抽取common.js
 ### Todo
 - [ ]文档

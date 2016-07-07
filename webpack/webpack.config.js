@@ -120,6 +120,7 @@ export default (options) => {
       { test: /\.jpg$/, loader: 'url?name=[name]-[hash:8].[ext]&limit=10240' },
       { test: /\.jade$/, loader: 'jade' },
       { test: /\.html$/, loader: 'html' },
+      { test: /\.ejs$/, loader: 'ejs' },
     ]
   };
 

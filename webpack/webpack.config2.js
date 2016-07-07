@@ -32,6 +32,7 @@ const moduleConfig = {
   loaders: [
     { test: /\.jade$/, loader: 'jade' },
     { test: /\.html$/, loader: 'html' },
+    { test: /\.ejs$/, loader: 'ejs' },
   ]
 };
 
