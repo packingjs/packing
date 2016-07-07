@@ -24,6 +24,9 @@ const { templateExtension } = packing;
 const clientJS = 'webpack-hot-middleware/client';
 const cwd = process.cwd();
 
+// console.log('==templates: %s', templates);
+// console.log('==templatesDist: %s', templatesDist);
+
 /**
  * 给所有入口js加上HRM的clientjs
  */
@@ -174,7 +177,7 @@ export default (options) => {
     new ReplaceHashWebpackPlugin({
       assetsDomain: process.env.CDN_ROOT,
       cwd: templates,
-      src: '**/*.jade',
+      src: `**/*${templateExtension}`,
       dest: templatesDist,
     }),
 
