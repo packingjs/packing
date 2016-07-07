@@ -6,11 +6,11 @@ export default {
     // 静态文件目录
     assets: 'static',
     // webpack打包入口JS文件目录
-    entries: 'src/entries',
+    entries: 'src/entries/html',
     // 模版目录，可能包含布局框架和页面级别模版
-    templates: 'src/templates/jade',
+    templates: 'src/templates/html',
     // 网页级别模版目录
-    templatesPages: 'src/templates/jade/pages',
+    templatesPages: 'src/templates/html',
     // 编译输出产物目录
     dist: 'prd',
     // 编译后的静态文件目录
@@ -18,13 +18,13 @@ export default {
     // 编译后的模版目录
     templatesDist: 'prd/templates',
     // 编译后网页级别模版目录
-    templatesPagesDist: 'prd/templates/pages'
+    templatesPagesDist: 'prd/templates'
   },
 
   // 模版类型
-  templateEngine: 'jade',
+  templateEngine: 'html',
   // 模版文件扩展名
-  templateExtension: '.jade',
+  templateExtension: '.html',
 
   // webserver端口
   port: {
