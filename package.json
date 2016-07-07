@@ -7,6 +7,7 @@
     "webpack"
   ],
   "author": "zhongzhi <zhong.zhi@163.com>",
+  "license": "MIT",
   "scripts": {
     "build": "better-npm-run build",
     "serve": "better-npm-run serve",
