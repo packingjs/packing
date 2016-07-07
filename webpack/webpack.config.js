@@ -2,7 +2,7 @@ import path from 'path';
 import { isString, isArray, isObject } from 'util';
 import webpack from 'webpack';
 import CleanPlugin from 'clean-webpack-plugin';
-import CopyWebpackPlugin from 'copy-webpack-plugin';
+// import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import ReplaceHashWebpackPlugin from 'replace-hash-webpack-plugin';
 import HtmlWebpackPlugin from 'packing-html-webpack-plugin';
@@ -18,14 +18,12 @@ const {
   assets,
   assetsDist,
   templatesDist,
-  templatesPages
+  templatesPages,
+  mockPageInit,
 } = packing.path;
 const { templateExtension } = packing;
 const clientJS = 'webpack-hot-middleware/client';
 const cwd = process.cwd();
-
-// console.log('==templates: %s', templates);
-// console.log('==templatesDist: %s', templatesDist);
 
 /**
  * 给所有入口js加上HRM的clientjs
@@ -60,7 +58,7 @@ const initConfig = () => {
 
     // 写入页面级别的配置
     entryConfig[key] = value;
-    const templateInitData = path.resolve('mock/pages', page.replace(templateExtension, jsExt));
+    const templateInitData = path.resolve(mockPageInit, page.replace(templateExtension, jsExt));
     htmlWebpackPluginConfig.push({
       filename: page.replace(templateExtension, htmlExt),
       template: path.resolve(templatesPages, page),

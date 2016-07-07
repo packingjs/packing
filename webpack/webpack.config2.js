@@ -4,14 +4,13 @@ import glob from 'glob';
 import packing from './packing.config';
 
 const { templateExtension } = packing;
-const { dist, templatesPagesDist } = packing.path;
+const { dist, templatesPagesDist, mockPageInit } = packing.path;
 const htmlWebpackPluginConfig = [];
+const globOptions = { cwd: path.resolve(templatesPagesDist) };
 
-glob.sync(`**/*${templateExtension}`, {
-  cwd: path.resolve(templatesPagesDist)
-}).forEach(page => {
+glob.sync(`**/*${templateExtension}`, globOptions).forEach(page => {
   const key = page.replace(templateExtension, '');
-  const templateInitData = path.resolve('mock/pages', page.replace(templateExtension, '.js'));
+  const templateInitData = path.resolve(mockPageInit, page.replace(templateExtension, '.js'));
   htmlWebpackPluginConfig.push({
     filename: page.replace(templateExtension, '.html'),
     template: path.resolve(templatesPagesDist, page),

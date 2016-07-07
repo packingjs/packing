@@ -58,10 +58,10 @@ npm run serve:dist
 - [x]css预编译
 - [x]支持source map
 - [x]支持资源hash rename
-- [ ]预览编译后的内容
+- [x]预览编译后的内容
 - [x]不同环境使用profiles文件
 - [ ]redux-dev-tool
-- [ ]支持多种模版
+- [ ]支持多种模版[html/jade/ejs/horge]
 - [ ]自动抽取common.js
 ### Todo
 - [ ]文档
