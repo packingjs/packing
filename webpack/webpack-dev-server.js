@@ -4,7 +4,7 @@ import webpack from 'webpack';
 import urlrewrite from 'packing-urlrewrite';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
-import webpackConfig from './webpack.dev.config.babel';
+import webpackConfig from './webpack.config.serve.babel';
 import packing from './packing.config';
 
 const { src, assets } = packing.path;

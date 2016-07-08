@@ -3,7 +3,7 @@ import Express from 'express';
 import webpack from 'webpack';
 import urlrewrite from 'packing-urlrewrite';
 import webpackDevMiddleware from 'webpack-dev-middleware';
-import webpackConfig from './webpack.config2';
+import webpackConfig from './webpack.config.serve.dist';
 import packing from './packing.config';
 
 const { src, assetsDist } = packing.path;

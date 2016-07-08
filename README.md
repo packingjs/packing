@@ -75,4 +75,7 @@ npm run serve:dist
 # npm使用qunar源
 npm install --registry http://registry.npm.corp.qunar.com
 npm install --registry http://registry.npm.taobao.com
+
+# 只安装dependencies，不安装devDependencies，适用于QDR编译机
+npm install --registry http://registry.npm.corp.qunar.com --production
 ```
