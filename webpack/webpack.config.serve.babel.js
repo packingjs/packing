@@ -3,6 +3,7 @@ import { isString, isArray, isObject } from 'util';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'packing-html-webpack-plugin';
 import glob from 'glob';
+import autoprefixer from 'autoprefixer';
 import packing from './packing.config';
 
 const {
@@ -93,8 +94,8 @@ const webpackConfig = (options) => {
   let moduleConfig = {
     loaders: [
       { test: /\.js?$/, loaders: ['babel', 'eslint'], exclude: /node_modules/},
-      { test: /\.less$/, loader: 'style!css?importLoaders=2&localIdentName=[local]___[hash:base64:8]!autoprefixer?browsers=last 2 version!less?outputStyle=expanded' },
-      { test: /\.scss$/, loader: 'style!css?importLoaders=2&localIdentName=[local]___[hash:base64:8]!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded' },
+      { test: /\.less$/, loader: 'style!css?importLoaders=2&localIdentName=[local]___[hash:base64:8]!postcss!less?outputStyle=expanded' },
+      { test: /\.scss$/, loader: 'style!css?importLoaders=2&localIdentName=[local]___[hash:base64:8]!postcss!sass?outputStyle=expanded' },
       { test: /\.json$/, loader: 'json' },
       { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
       { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
@@ -110,6 +111,8 @@ const webpackConfig = (options) => {
       { test: /\.mustache$/, loader: 'mustache' },
     ]
   };
+
+  const postcss = () => [autoprefixer];
 
   const resolve = {
     alias: {
@@ -143,6 +146,7 @@ const webpackConfig = (options) => {
     entry,
     output,
     module: moduleConfig,
+    postcss,
     resolve,
     plugins,
   };

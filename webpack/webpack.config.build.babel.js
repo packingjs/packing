@@ -6,6 +6,7 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import ReplaceHashWebpackPlugin from 'replace-hash-webpack-plugin';
 import RevWebpackPlugin from 'packing-rev-webpack-plugin';
 import strip from 'strip-loader';
+import autoprefixer from 'autoprefixer';
 import glob from 'glob';
 import packing from './packing.config';
 
@@ -76,8 +77,8 @@ const webpackConfig = (options) => {
   let moduleConfig = {
     loaders: [
       { test: /\.js?$/, loaders: [strip.loader('debug'), 'babel'], exclude: /node_modules/},
-      { test: /\.less$/, loader: ExtractTextPlugin.extract('style', 'css?importLoaders=2!autoprefixer?browsers=last 2 version!less?outputStyle=expanded&sourceMapContents') },
-      { test: /\.scss$/, loader: ExtractTextPlugin.extract('style', 'css?importLoaders=2!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMapContents') },
+      { test: /\.less$/, loader: ExtractTextPlugin.extract('style', 'css?importLoaders=2!postcss!less?outputStyle=expanded&sourceMapContents') },
+      { test: /\.scss$/, loader: ExtractTextPlugin.extract('style', 'css?importLoaders=2!postcss!sass?outputStyle=expanded&sourceMapContents') },
       { test: /\.json$/, loader: 'json' },
       { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
       { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
@@ -93,6 +94,8 @@ const webpackConfig = (options) => {
       { test: /\.mustache$/, loader: 'mustache' },
     ]
   };
+
+  const postcss = () => [autoprefixer];
 
   const resolve = {
     alias: {
@@ -166,6 +169,7 @@ const webpackConfig = (options) => {
     entry,
     output,
     module: moduleConfig,
+    postcss,
     resolve,
     plugins,
   };
