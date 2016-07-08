@@ -8,11 +8,11 @@ export default {
     // 页面初始化mock数据文件存放目录
     mockPageInit: 'mock/pages',
     // webpack打包入口JS文件目录
-    entries: 'src/entries/html',
+    entries: 'src/entries/jade',
     // 模版目录，可能包含布局框架和页面级别模版
-    templates: 'src/templates/ejs',
+    templates: 'src/templates/jade',
     // 网页级别模版目录
-    templatesPages: 'src/templates/ejs',
+    templatesPages: 'src/templates/jade/pages',
     // 编译输出产物目录
     dist: 'prd',
     // 编译后的静态文件目录
@@ -20,13 +20,13 @@ export default {
     // 编译后的模版目录
     templatesDist: 'prd/templates',
     // 编译后网页级别模版目录
-    templatesPagesDist: 'prd/templates'
+    templatesPagesDist: 'prd/templates/pages'
   },
 
   // 模版类型
-  templateEngine: 'ejs',
+  templateEngine: 'jade',
   // 模版文件扩展名
-  templateExtension: '.ejs',
+  templateExtension: '.jade',
 
   // webserver端口
   port: {

@@ -121,6 +121,9 @@ export default (options) => {
       { test: /\.jade$/, loader: 'jade' },
       { test: /\.html$/, loader: 'html' },
       { test: /\.ejs$/, loader: 'ejs' },
+      { test: /\.tpl$|.smart$/, loader: 'smarty' },
+      { test: /\.handlebars$/, loader: 'handlebars' },
+      { test: /\.mustache$/, loader: 'mustache' },
     ]
   };
 

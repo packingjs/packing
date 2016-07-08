@@ -33,6 +33,9 @@ const moduleConfig = {
     { test: /\.jade$/, loader: 'jade' },
     { test: /\.html$/, loader: 'html' },
     { test: /\.ejs$/, loader: 'ejs' },
+    { test: /\.tpl$|.smarty$/, loader: 'smarty' },
+    { test: /\.handlebars$/, loader: 'handlebars' },
+    { test: /\.mustache$/, loader: 'mustache' },
   ]
 };
 
