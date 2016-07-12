@@ -4,11 +4,11 @@ export default {
     // 源文件目录
     src: 'src',
     // 静态文件目录
-    assets: 'static',
+    assets: 'src/assets',
     // 页面初始化mock数据文件存放目录
     mockPageInit: 'mock/pages',
     // webpack打包入口JS文件目录
-    entries: 'src/entries/jade',
+    entries: 'src/entries/jade/{pagename}.js',
     // 模版目录，可能包含布局框架和页面级别模版
     templates: 'src/templates/jade',
     // 网页级别模版目录
@@ -34,6 +34,16 @@ export default {
     dev: 3001,
     // 预览编译后结果的端口号
     dist: 8080,
+  },
+
+  commonChunks: {
+    // CommonsChunkPlugin会将最后一个当作Entry chunk
+    // Todo: 通过参数控制Entry chunk
+    vendor: [
+      'react',
+      'react-dom',
+      'classnames'
+    ]
   },
 
   // URL转发路由规则配置
