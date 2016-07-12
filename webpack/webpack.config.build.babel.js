@@ -1,7 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
 import CleanPlugin from 'clean-webpack-plugin';
-// import CopyWebpackPlugin from 'copy-webpack-plugin';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import ReplaceHashWebpackPlugin from 'replace-hash-webpack-plugin';
 import RevWebpackPlugin from 'packing-rev-webpack-plugin';
@@ -107,17 +107,18 @@ const webpackConfig = (options) => {
     extensions: ['', '.json', '.js', '.jsx']
   };
 
+  const noHashFile = 'big.jpg';
   const plugins = [
     new CleanPlugin([dist], {
       root: projectRootPath
     }),
 
     // replace hash时也会将template生成一次，这次copy有些多余
-    // new CopyWebpackPlugin([{
-    //   context: templates,
-    //   from: '**/*',
-    //   to: path.resolve(cwd, templatesDist),
-    // }]),
+    new CopyWebpackPlugin([{
+      context: assets,
+      from: `**/${noHashFile}`,
+      to: path.resolve(cwd, assetsDist),
+    }]),
 
     // css files from the extract-text-plugin loader
     new ExtractTextPlugin(`[name]${chunkhash}.css`, {
@@ -141,6 +142,7 @@ const webpackConfig = (options) => {
       cwd: assets,
       src: '**/*',
       dest: assetsDist,
+      exclude: [noHashFile]
     }),
 
   ];

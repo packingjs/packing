@@ -4,7 +4,7 @@ export default {
     // 源文件目录
     src: 'src',
     // 静态文件目录
-    assets: 'src/assets',
+    assets: 'static',
     // 页面初始化mock数据文件存放目录
     mockPageInit: 'mock/pages',
     // webpack打包入口JS文件目录
