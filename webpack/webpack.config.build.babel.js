@@ -78,12 +78,6 @@ const webpackConfig = (options) => {
       { test: /\.scss$/, loader: ExtractTextPlugin.extract('style', 'css?importLoaders=2!postcss!sass') },
       { test: /\.json$/, loader: 'json' },
       { test: /\.(jpg|png|ttf|woff|woff2|eot|svg)$/, loader: 'url?name=[name]-[hash:8].[ext]&limit=10000' },
-      { test: /\.jade$/, loader: 'jade' },
-      { test: /\.html$/, loader: 'html' },
-      { test: /\.ejs$/, loader: 'ejs' },
-      { test: /\.tpl$|.smart$/, loader: 'smarty' },
-      { test: /\.handlebars$/, loader: 'handlebars' },
-      { test: /\.mustache$/, loader: 'mustache' },
     ]
   };
 

@@ -34,16 +34,16 @@ const pushClientJS = entry => {
 };
 
 // 在浏览器地址中省略.html后缀
-const getPageWithIndex = (page) => {
-  let pageWithIndex;
-  const pathWithoutExt = page.replace(templateExtension, '');
-  if (path.basename(pathWithoutExt) === 'index') {
-    pageWithIndex = `${pathWithoutExt}.html`;
-  } else {
-    pageWithIndex = path.join(pathWithoutExt, 'index.html');
-  }
-  return pageWithIndex;
-};
+// const getPageWithIndex = (page, ext) => {
+//   let pageWithIndex;
+//   const pathWithoutExt = page.replace(ext, '');
+//   if (path.basename(pathWithoutExt) === 'index') {
+//     pageWithIndex = `${pathWithoutExt}.html`;
+//   } else {
+//     pageWithIndex = path.join(pathWithoutExt, 'index.html');
+//   }
+//   return pageWithIndex;
+// };
 
 /**
  * 根据文件的目录结构生成entry配置
@@ -52,25 +52,31 @@ const initConfig = () => {
   const jsExt = '.js';
   const entryConfig = {};
   const htmlWebpackPluginConfig = [];
+  const extensions = isArray(templateExtension) ? templateExtension : [templateExtension];
 
-  glob.sync(`**/*${templateExtension}`, {
-    cwd: path.resolve(cwd, templatesPages)
-  }).forEach(page => {
-    const key = page.replace(templateExtension, '');
-    const value = path.resolve(cwd, entries.replace('{pagename}', key));
+  extensions.forEach((ext) => {
+    glob.sync(`**/*${ext}`, {
+      cwd: path.resolve(cwd, templatesPages)
+    }).forEach(page => {
+      let key = page.replace(ext, '');
+      // 写入页面级别的配置
+      if (entryConfig[key]) {
+        key += ext;
+      }
+      const value = path.resolve(cwd, entries.replace('{pagename}', key));
+      entryConfig[key] = value;
 
-    // 写入页面级别的配置
-    entryConfig[key] = value;
-    const templateInitData = path.resolve(mockPageInit, page.replace(templateExtension, jsExt));
-    htmlWebpackPluginConfig.push({
-      filename: getPageWithIndex(page),
-      template: path.resolve(templatesPages, page),
-      templateInitData,
-      cache: false,
-      inject: false,
-      // hash: true,
-      chunks: [key],
-      // excludeChunks: ['dev-helper'],
+      const templateInitData = path.resolve(mockPageInit, page.replace(ext, jsExt));
+      htmlWebpackPluginConfig.push({
+        filename: `${page}.html`, // getPageWithIndex(page, ext),
+        template: path.resolve(templatesPages, page),
+        templateInitData,
+        cache: false,
+        inject: false,
+        // hash: true,
+        chunks: [key],
+        // excludeChunks: ['dev-helper'],
+      });
     });
   });
   return {
@@ -110,9 +116,10 @@ const webpackConfig = (options) => {
       { test: /\.jade$/, loader: 'jade' },
       { test: /\.html$/, loader: 'html' },
       { test: /\.ejs$/, loader: 'ejs' },
-      { test: /\.tpl$|.smart$/, loader: 'smarty' },
+      { test: /\.(tpl|smart)$/, loader: 'smarty' },
       { test: /\.handlebars$/, loader: 'handlebars' },
       { test: /\.mustache$/, loader: 'mustache' },
+      { test: /\.md$/, loader: 'html!markdown' },
     ]
   };
 
