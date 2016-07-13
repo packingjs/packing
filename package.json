@@ -11,7 +11,8 @@
   "scripts": {
     "build": "better-npm-run build",
     "serve": "better-npm-run serve",
-    "serve:dist": "better-npm-run build:dev && better-npm-run serve:dist"
+    "serve:dist": "better-npm-run build:dev && better-npm-run serve:dist",
+    "eslint": "better-npm-run eslint"
   },
   "betterScripts": {
     "serve": {
@@ -39,6 +40,9 @@
         "NODE_ENV": "development",
         "CDN_ROOT": "assets"
       }
+    },
+    "eslint": {
+      "command": "./node_modules/.bin/eslint src"
     }
   },
   "devDependencies": {
