@@ -33,12 +33,23 @@ const pushClientJS = entry => {
   return newEntry;
 };
 
+// 在浏览器地址中省略.html后缀
+const getPageWithIndex = (page) => {
+  let pageWithIndex;
+  const pathWithoutExt = page.replace(templateExtension, '');
+  if (path.basename(pathWithoutExt) === 'index') {
+    pageWithIndex = `${pathWithoutExt}.html`;
+  } else {
+    pageWithIndex = path.join(pathWithoutExt, 'index.html');
+  }
+  return pageWithIndex;
+};
+
 /**
  * 根据文件的目录结构生成entry配置
  */
 const initConfig = () => {
   const jsExt = '.js';
-  const htmlExt = '.html';
   const entryConfig = {};
   const htmlWebpackPluginConfig = [];
 
@@ -52,7 +63,7 @@ const initConfig = () => {
     entryConfig[key] = value;
     const templateInitData = path.resolve(mockPageInit, page.replace(templateExtension, jsExt));
     htmlWebpackPluginConfig.push({
-      filename: page.replace(templateExtension, htmlExt),
+      filename: getPageWithIndex(page),
       template: path.resolve(templatesPages, page),
       templateInitData,
       cache: false,
@@ -73,8 +84,6 @@ const webpackConfig = (options) => {
   const projectRootPath = path.resolve(__dirname, '../');
   const assetsPath = path.resolve(projectRootPath, `./${dist}/assets`);
   const chunkhash = options.longTermCaching ? '-[chunkhash:8]' : '';
-
-  const devtool = options.devtool ? 'inline-source-map' : 'source-map';
   const progress = options.progress;
   const context = path.resolve(__dirname, '..');
 
@@ -149,7 +158,6 @@ const webpackConfig = (options) => {
   }
 
   return {
-    devtool,
     context,
     progress,
     entry,
@@ -162,7 +170,6 @@ const webpackConfig = (options) => {
 };
 
 export default webpackConfig({
-  devtool: true,
   progress: true,
   hot: true,
 });
