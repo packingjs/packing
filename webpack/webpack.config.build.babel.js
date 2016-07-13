@@ -107,7 +107,7 @@ const webpackConfig = (options) => {
     extensions: ['', '.json', '.js', '.jsx']
   };
 
-  const noHashFile = 'big.jpg';
+  const ignoreRevPattern = '**/big.jpg';
   const plugins = [
     new CleanPlugin([dist], {
       root: projectRootPath
@@ -116,7 +116,7 @@ const webpackConfig = (options) => {
     // replace hash时也会将template生成一次，这次copy有些多余
     new CopyWebpackPlugin([{
       context: assets,
-      from: `**/${noHashFile}`,
+      from: ignoreRevPattern,
       to: path.resolve(cwd, assetsDist),
     }]),
 
@@ -142,7 +142,9 @@ const webpackConfig = (options) => {
       cwd: assets,
       src: '**/*',
       dest: assetsDist,
-      exclude: [noHashFile]
+      glob: {
+        ignore: [ignoreRevPattern]
+      }
     }),
 
   ];

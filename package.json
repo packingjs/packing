@@ -92,7 +92,7 @@
     "loader-utils": "^0.2.15",
     "mustache-loader": "^0.3.1",
     "packing-ajax": "^0.0.1",
-    "packing-rev-webpack-plugin": "^1.0.4",
+    "packing-rev-webpack-plugin": "^1.0.5",
     "postcss-loader": "^0.9.1",
     "react": "^15.2.1",
     "react-a11y": "^0.3.3",
