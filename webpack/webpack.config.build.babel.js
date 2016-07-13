@@ -55,8 +55,6 @@ const webpackConfig = (options) => {
   const projectRootPath = path.resolve(__dirname, '../');
   const assetsPath = path.resolve(projectRootPath, `./${dist}/assets`);
   const chunkhash = options.longTermCaching ? '-[chunkhash:8]' : '';
-
-  const devtool = options.devtool ? 'inline-source-map' : 'source-map';
   const progress = options.progress;
   const context = path.resolve(__dirname, '..');
 
@@ -76,15 +74,10 @@ const webpackConfig = (options) => {
   let moduleConfig = {
     loaders: [
       { test: /\.js?$/, loaders: [strip.loader('debug'), 'babel'], exclude: /node_modules/},
-      { test: /\.less$/, loader: ExtractTextPlugin.extract('style', 'css?importLoaders=2!postcss!less?outputStyle=expanded&sourceMapContents') },
-      { test: /\.scss$/, loader: ExtractTextPlugin.extract('style', 'css?importLoaders=2!postcss!sass?outputStyle=expanded&sourceMapContents') },
+      { test: /\.less$/, loader: ExtractTextPlugin.extract('style', 'css?importLoaders=2!postcss!less') },
+      { test: /\.scss$/, loader: ExtractTextPlugin.extract('style', 'css?importLoaders=2!postcss!sass') },
       { test: /\.json$/, loader: 'json' },
-      { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
-      { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
-      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/octet-stream" },
-      { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file" },
-      { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=image/svg+xml" },
-      { test: /\.jpg$/, loader: 'url?name=[name]-[hash:8].[ext]&limit=10240' },
+      { test: /\.(jpg|png|ttf|woff|woff2|eot|svg)$/, loader: 'url?name=[name]-[hash:8].[ext]&limit=10000' },
       { test: /\.jade$/, loader: 'jade' },
       { test: /\.html$/, loader: 'html' },
       { test: /\.ejs$/, loader: 'ejs' },
@@ -179,12 +172,12 @@ const webpackConfig = (options) => {
           drop_console: true,
         },
         comments: /^!/,
+        sourceMap: options.sourceMap,
       })
     );
   }
 
   return {
-    devtool,
     context,
     progress,
     entry,
@@ -201,4 +194,5 @@ export default webpackConfig({
   progress: true,
   longTermCaching: true,
   minimize: true,
+  sourceMap: false,
 });
