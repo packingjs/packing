@@ -136,6 +136,10 @@ const webpackConfig = (options) => {
       cwd: templates,
       src: `**/*${templateExtension}`,
       dest: templatesDist,
+      // 排除某些文件
+      // glob: {
+      //   ignore: '**/index.jade'
+      // }
     }),
 
     new RevWebpackPlugin({
