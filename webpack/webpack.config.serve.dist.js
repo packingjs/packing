@@ -4,22 +4,26 @@ import glob from 'glob';
 import packing from './packing.config';
 
 const { templateExtension } = packing;
-const { dist, templatesPagesDist, mockPageInit } = packing.path;
+const { dist, templatesDist, mockPageInit } = packing.path;
 const htmlWebpackPluginConfig = [];
-const globOptions = { cwd: path.resolve(templatesPagesDist) };
+const globOptions = { cwd: path.resolve(templatesDist) };
+const jsExt = '.js';
 
-glob.sync(`**/*${templateExtension}`, globOptions).forEach(page => {
-  const key = page.replace(templateExtension, '');
-  const templateInitData = path.resolve(mockPageInit, page.replace(templateExtension, '.js'));
-  htmlWebpackPluginConfig.push({
-    filename: page.replace(templateExtension, '.html'),
-    template: path.resolve(templatesPagesDist, page),
-    templateInitData,
-    cache: false,
-    inject: false,
-    chunks: [key],
+const extensions = isArray(templateExtension) ? templateExtension : [templateExtension];
+
+extensions.forEach((ext) => {
+  glob.sync(`**/*${ext}`, globOptions).forEach(page => {
+    const templateInitData = path.resolve(mockPageInit, page.replace(ext, jsExt));
+    htmlWebpackPluginConfig.push({
+      filename: `${page}.html`,
+      template: path.resolve(templatesDist, page),
+      templateInitData,
+      cache: false,
+      inject: false,
+    });
   });
 });
+
 const projectRootPath = path.resolve(__dirname, '../');
 const assetsPath = path.resolve(projectRootPath, dist);
 

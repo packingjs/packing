@@ -9,7 +9,7 @@ import packing from './packing.config';
 const {
   dist,
   entries,
-  templatesPages,
+  templates,
   mockPageInit,
 } = packing.path;
 const { templateExtension } = packing;
@@ -33,18 +33,6 @@ const pushClientJS = entry => {
   return newEntry;
 };
 
-// 在浏览器地址中省略.html后缀
-// const getPageWithIndex = (page, ext) => {
-//   let pageWithIndex;
-//   const pathWithoutExt = page.replace(ext, '');
-//   if (path.basename(pathWithoutExt) === 'index') {
-//     pageWithIndex = `${pathWithoutExt}.html`;
-//   } else {
-//     pageWithIndex = path.join(pathWithoutExt, 'index.html');
-//   }
-//   return pageWithIndex;
-// };
-
 /**
  * 根据文件的目录结构生成entry配置
  */
@@ -56,7 +44,7 @@ const initConfig = () => {
 
   extensions.forEach((ext) => {
     glob.sync(`**/*${ext}`, {
-      cwd: path.resolve(cwd, templatesPages)
+      cwd: path.resolve(cwd, templates)
     }).forEach(page => {
       let key = page.replace(ext, '');
       // 写入页面级别的配置
@@ -68,17 +56,15 @@ const initConfig = () => {
 
       const templateInitData = path.resolve(mockPageInit, page.replace(ext, jsExt));
       htmlWebpackPluginConfig.push({
-        filename: `${page}.html`, // getPageWithIndex(page, ext),
-        template: path.resolve(templatesPages, page),
+        filename: `${page}.html`,
+        template: path.resolve(templates, page),
         templateInitData,
         cache: false,
         inject: false,
-        // hash: true,
-        chunks: [key],
-        // excludeChunks: ['dev-helper'],
       });
     });
   });
+  console.log(htmlWebpackPluginConfig);
   return {
     entryConfig,
     htmlWebpackPluginConfig

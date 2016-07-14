@@ -9,18 +9,14 @@ export default {
     mockPageInit: 'mock/pages',
     // webpack打包入口JS文件目录
     entries: 'src/entries/jade/{pagename}.js',
-    // 模版目录，可能包含布局框架和页面级别模版
+    // 模版目录
     templates: 'src/templates/markdown',
-    // 网页级别模版目录
-    templatesPages: 'src/templates/markdown',
     // 编译输出产物目录
     dist: 'prd',
     // 编译后的静态文件目录
     assetsDist: 'prd/assets',
     // 编译后的模版目录
     templatesDist: 'prd/templates',
-    // 编译后网页级别模版目录
-    templatesPagesDist: 'prd/templates/pages'
   },
 
   // 模版类型
@@ -49,6 +45,12 @@ export default {
   // URL转发路由规则配置
   // require! 表示使用本地mock文件
   rewriteRules: {
+    // 网站URL与模版的对应路由关系
+    '^/$': '/index.md.html',
+    '^/list$': '/list.jade.html',
+    '^/detail$': '/detail/index.jade.html',
+
+    // API转发
     '^/api/(.*)': 'require!/mock/api/$1.js',
     // '^/api/(.*)': '/index.jade.html',
     // '^/api/(.*)': 'http://touch.qunar.com/api/hotel/findhotelcity?cityName=%E5%8C%97%E4%BA%AC',

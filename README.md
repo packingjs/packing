@@ -63,6 +63,7 @@ npm run serve:dist
 - [x]同时支持多种模版[html/jade/ejs/handlebars/smarty/velocity/md]
 - [x]自动抽取common.js
 - [ ]rev-webpack-plugin增加无引用文件删除的参数
+- [ ]新版本升级提示
 
 ### Todo
 - [ ]文档

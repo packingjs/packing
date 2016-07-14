@@ -1,4 +1,6 @@
+import { existsSync } from 'fs';
 import path from 'path';
+import { isArray } from 'util';
 import webpack from 'webpack';
 import CleanPlugin from 'clean-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
@@ -17,7 +19,6 @@ const {
   assets,
   assetsDist,
   templatesDist,
-  templatesPages,
 } = packing.path;
 const { templateExtension } = packing;
 const cwd = process.cwd();
@@ -27,16 +28,26 @@ const cwd = process.cwd();
  */
 const initConfig = () => {
   const entryConfig = {};
+  const extensions = isArray(templateExtension) ? templateExtension : [templateExtension];
 
-  glob.sync(`**/*${templateExtension}`, {
-    cwd: path.resolve(cwd, templatesPages)
-  }).forEach(page => {
-    const key = page.replace(templateExtension, '');
-    const value = path.resolve(cwd, entries.replace('{pagename}', key));
-
-    // 写入页面级别的配置
-    entryConfig[key] = value;
+  extensions.forEach((ext) => {
+    glob.sync(`**/*${ext}`, {
+      cwd: path.resolve(cwd, templates)
+    }).forEach(page => {
+      let key = page.replace(ext, '');
+      // 写入页面级别的配置
+      if (entryConfig[key]) {
+        key += ext;
+      }
+      const value = path.resolve(cwd, entries.replace('{pagename}', key));
+      if (existsSync(value)) {
+        entryConfig[key] = value;
+      } else {
+        console.log(`❗️ entry file not exist: ${value}`);
+      }
+    });
   });
+
   return entryConfig;
 };
 
