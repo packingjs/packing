@@ -50,6 +50,8 @@ export default {
   // require! 表示使用本地mock文件
   rewriteRules: {
     '^/api/(.*)': 'require!/mock/api/$1.js',
+    // '^/api/(.*)': '/index.jade.html',
+    // '^/api/(.*)': 'http://touch.qunar.com/api/hotel/findhotelcity?cityName=%E5%8C%97%E4%BA%AC',
     // '^/hello': 'http://localhost:3001/123/4.html',
   },
 
