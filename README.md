@@ -47,9 +47,8 @@ npm run serve:dist
 - [ ]yo-generator
 - [ ]集成到QDR中，自动生产job，发布无障碍
 - [ ]工程新增的node_modules也能顺利在QDR中发布
-- [ ]urlrewrite
+- [x]urlrewrite
 - [ ]支持SPA／多入口网站／React Native
-- [ ]兼容fekit
 - [x]支持多种资源的引入，如images、fonts、json
 - [x]大size图片在css中引用hash自动更新
 - [x]使用babel，支持ES6、ES7
@@ -61,14 +60,44 @@ npm run serve:dist
 - [x]预览编译后的内容
 - [x]不同环境使用profiles文件
 - [ ]redux-dev-tool
-- [ ]支持多种模版[html/jade/ejs/handlebars/smarty/velocity]
-- [ ]自动抽取common.js
+- [x]同时支持多种模版[html/jade/ejs/handlebars/smarty/velocity/md]
+- [x]自动抽取common.js
+- [ ]rev-webpack-plugin增加无引用文件删除的参数
+
 ### Todo
 - [ ]文档
 - [ ]自动化生成scheme和job
 - [ ]generator
 - [ ]example
 - [ ]unit test
+
+### Directory
+
+```
+.
+├── /mock/                              # 模拟数据
+│   ├── /api/                           # API接口类型模拟数据
+│   └── /pages                          # 页面初始化类型模拟数据
+├── /prd/                               # 项目编译输出目录
+├── /src/                               # 项目源码目录
+│   ├── /config/                        # 和网站运行相关的配置，如dev/beta环境差异变量
+│   ├── /entries/                       # webpack打包入口js
+│   └── /templates/                     # 后端模版，如jade、smarty
+├── /static/                            # 静态资源，如图片、字体
+├── /webpack/                           # webpack配置文件
+│   ├── /packing.config.js              # 和网站构建相关的配置
+│   ├── /webpack-dev-server.js          # serve脚本
+│   ├── /webpack-prd-server.js          # serve:dist脚本
+│   ├── /webpack.config.build.babel.js  # webpack编译环境配置文件
+│   ├── /webpack.config.serve.babel.js  # webpack开发环境配置文件
+│   └── /webpack.config.serve.dist.js   # webpack预览编译后结果的配置文件
+│── .babelrc                            # babel配置
+│── .editorconfig                       # 代码编辑器配置
+│── .eslintrc                           # eslint配置
+│── package.json
+│── pom.xml                             # maven配置
+└── README.md                   
+```
 
 ### Others
 ```
