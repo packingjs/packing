@@ -1,3 +1,4 @@
+import { isArray } from 'util';
 import path from 'path';
 import HtmlWebpackPlugin from 'packing-html-webpack-plugin';
 import glob from 'glob';
