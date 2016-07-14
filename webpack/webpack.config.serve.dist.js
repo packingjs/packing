@@ -9,7 +9,6 @@ const { dist, templatesDist, mockPageInit } = packing.path;
 const htmlWebpackPluginConfig = [];
 const globOptions = { cwd: path.resolve(templatesDist) };
 const jsExt = '.js';
-
 const extensions = isArray(templateExtension) ? templateExtension : [templateExtension];
 
 extensions.forEach((ext) => {
@@ -41,6 +40,7 @@ const moduleConfig = {
     { test: /\.tpl$|.smarty$/, loader: 'smarty' },
     { test: /\.handlebars$/, loader: 'handlebars' },
     { test: /\.mustache$/, loader: 'mustache' },
+    { test: /\.md$/, loader: 'html!markdown' },
   ]
 };
 

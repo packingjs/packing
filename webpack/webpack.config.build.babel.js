@@ -21,6 +21,7 @@ const {
   templatesDist,
 } = packing.path;
 const { templateExtension } = packing;
+const extensions = isArray(templateExtension) ? templateExtension : [templateExtension];
 const cwd = process.cwd();
 
 /**
@@ -28,7 +29,6 @@ const cwd = process.cwd();
  */
 const initConfig = () => {
   const entryConfig = {};
-  const extensions = isArray(templateExtension) ? templateExtension : [templateExtension];
 
   extensions.forEach((ext) => {
     glob.sync(`**/*${ext}`, {
@@ -132,7 +132,7 @@ const webpackConfig = (options) => {
     new ReplaceHashWebpackPlugin({
       assetsDomain: process.env.CDN_ROOT,
       cwd: templates,
-      src: `**/*${templateExtension}`,
+      src: `**/*{${extensions.join(',')}}`,
       dest: templatesDist,
       // 排除某些文件
       // glob: {
