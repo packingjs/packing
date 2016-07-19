@@ -2,7 +2,7 @@ import { isArray } from 'util';
 import path from 'path';
 import HtmlWebpackPlugin from 'packing-html-webpack-plugin';
 import glob from 'glob';
-import packing from './packing.config';
+import packing from './packing';
 
 const { templateExtension } = packing;
 const { dist, templatesDist, mockPageInit } = packing.path;

@@ -76,6 +76,11 @@ npm run serve:dist
 
 ```
 .
+├── /config/                            # webpack配置文件
+│   ├── /packing.js                     # 和构建工具相关的配置
+│   ├── /webpack.build.babel.js         # webpack编译环境配置文件
+│   ├── /webpack.serve.babel.js         # webpack开发环境配置文件
+│   └── /webpack.serve:dist.js          # webpack预览编译后结果的配置文件
 ├── /mock/                              # 模拟数据
 │   ├── /api/                           # API接口类型模拟数据
 │   └── /pages                          # 页面初始化类型模拟数据
@@ -85,13 +90,9 @@ npm run serve:dist
 │   ├── /entries/                       # webpack打包入口js
 │   └── /templates/                     # 后端模版，如jade、smarty
 ├── /static/                            # 静态资源，如图片、字体
-├── /webpack/                           # webpack配置文件
-│   ├── /packing.config.js              # 和网站构建相关的配置
-│   ├── /webpack-dev-server.js          # serve脚本
-│   ├── /webpack-prd-server.js          # serve:dist脚本
-│   ├── /webpack.config.build.babel.js  # webpack编译环境配置文件
-│   ├── /webpack.config.serve.babel.js  # webpack开发环境配置文件
-│   └── /webpack.config.serve.dist.js   # webpack预览编译后结果的配置文件
+├── /tools/                             # webpack配置文件
+│   ├── /serve.js                       # serve脚本
+│   └── /serve:dist.js                  # serve:dist脚本
 │── .babelrc                            # babel配置
 │── .editorconfig                       # 代码编辑器配置
 │── .eslintrc                           # eslint配置
@@ -108,4 +109,10 @@ npm install --registry http://registry.npm.taobao.com
 
 # 只安装dependencies，不安装devDependencies，适用于QDR编译机
 npm install --registry http://registry.npm.corp.qunar.com --production
+```
+
+### Yeoman generator
+```
+npm install -g yo generator-packing
+yo packing
 ```

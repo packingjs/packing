@@ -10,7 +10,7 @@ import RevWebpackPlugin from 'packing-rev-webpack-plugin';
 import strip from 'strip-loader';
 import autoprefixer from 'autoprefixer';
 import glob from 'glob';
-import packing from './packing.config';
+import packing from './packing';
 
 const {
   dist,

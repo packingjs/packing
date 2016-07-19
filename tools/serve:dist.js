@@ -3,16 +3,15 @@ import Express from 'express';
 import webpack from 'webpack';
 import urlrewrite from 'packing-urlrewrite';
 import webpackDevMiddleware from 'webpack-dev-middleware';
-import webpackHotMiddleware from 'webpack-hot-middleware';
-import webpackConfig from './webpack.config.serve.babel';
-import packing from './packing.config';
+import webpackConfig from '../config/webpack.serve:dist';
+import packing from '../config/packing';
 
-const { src, assets } = packing.path;
+const { src, assetsDist } = packing.path;
 const compiler = webpack(webpackConfig);
-const port = packing.port.dev;
+const port = packing.port.dist;
 const serverOptions = {
   contentBase: src,
-  quiet: true,
+  quiet: false,
   noInfo: true,
   hot: true,
   inline: true,
@@ -23,10 +22,9 @@ const serverOptions = {
 };
 
 const app = new Express();
-app.use(Express.static(path.join(__dirname, '..', assets)));
+app.use(Express.static(path.join(__dirname, '..', assetsDist)));
 app.use(urlrewrite(packing.rewriteRules));
 app.use(webpackDevMiddleware(compiler, serverOptions));
-app.use(webpackHotMiddleware(compiler));
 
 app.listen(port, (err) => {
   if (err) {

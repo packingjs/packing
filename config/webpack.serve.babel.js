@@ -4,7 +4,7 @@ import webpack from 'webpack';
 import HtmlWebpackPlugin from 'packing-html-webpack-plugin';
 import glob from 'glob';
 import autoprefixer from 'autoprefixer';
-import packing from './packing.config';
+import packing from './packing';
 
 const {
   dist,
