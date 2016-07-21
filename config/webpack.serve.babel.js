@@ -66,7 +66,7 @@ const initConfig = () => {
 
     const templateInitData = path.resolve(mockPageInit, page.replace(ext, jsExt));
     htmlWebpackPluginConfig.push({
-      filename: `${page}.html`,
+      filename: ext === '.html' ? page : `${page}.html`,
       template: path.resolve(templatesPages, page),
       templateInitData,
       cache: false,

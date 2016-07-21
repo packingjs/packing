@@ -15,7 +15,7 @@ glob.sync(`**/*{${extensions.join(',')}}`, globOptions).forEach(page => {
   const ext = path.extname(page);
   const templateInitData = path.resolve(mockPageInit, page.replace(ext, jsExt));
   htmlWebpackPluginConfig.push({
-    filename: `${page}.html`,
+    filename: ext === '.html' ? page : `${page}.html`,
     template: path.resolve(templatesDistPages, page),
     templateInitData,
     cache: false,
