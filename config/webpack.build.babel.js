@@ -1,6 +1,6 @@
 import { existsSync } from 'fs';
 import path from 'path';
-import { isArray } from 'util';
+import { isArray, isFunction } from 'util';
 import webpack from 'webpack';
 import CleanPlugin from 'clean-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
@@ -15,6 +15,7 @@ import packing from './packing';
 const {
   dist,
   templates,
+  templatesPages,
   entries,
   assets,
   assetsDist,
@@ -30,22 +31,26 @@ const cwd = process.cwd();
 const initConfig = () => {
   const entryConfig = {};
 
-  extensions.forEach((ext) => {
-    glob.sync(`**/*${ext}`, {
-      cwd: path.resolve(cwd, templates)
-    }).forEach(page => {
-      let key = page.replace(ext, '');
-      // 写入页面级别的配置
-      if (entryConfig[key]) {
-        key += ext;
-      }
-      const value = path.resolve(cwd, entries.replace('{pagename}', key));
-      if (existsSync(value)) {
-        entryConfig[key] = value;
-      } else {
-        console.log(`❗️ entry file not exist: ${value}`);
-      }
-    });
+  glob.sync(`**/*{${extensions.join(',')}}`, {
+    cwd: path.resolve(cwd, templatesPages)
+  }).forEach(page => {
+    const ext = path.extname(page);
+    let key = page.replace(ext, '');
+    // 写入页面级别的配置
+    if (entryConfig[key]) {
+      key += ext;
+    }
+    let value;
+    if (isFunction(entries)) {
+      value = entries(key);
+    } else {
+      value = path.resolve(cwd, entries.replace('{pagename}', key));
+    }
+    if (existsSync(value)) {
+      entryConfig[key] = value;
+    } else {
+      console.log(`❗️ entry file not exist: ${value}`);
+    }
   });
 
   return entryConfig;

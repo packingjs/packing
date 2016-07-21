@@ -10,19 +10,21 @@ export default {
     // webpack打包入口JS文件目录
     entries: 'src/entries/jade/{pagename}.js',
     // 模版目录
-    templates: 'src/templates/markdown',
+    templates: 'src/templates/jade',
+    templatesPages: 'src/templates/jade/pages',
     // 编译输出产物目录
     dist: 'prd',
     // 编译后的静态文件目录
     assetsDist: 'prd/assets',
     // 编译后的模版目录
     templatesDist: 'prd/templates',
+    templatesDistPages: 'prd/templates/pages'
   },
 
   // 模版类型
-  templateLoader: ['jade', 'markdown'],
+  templateLoader: ['jade'],
   // 模版文件扩展名
-  templateExtension: ['.jade', '.md'],
+  templateExtension: ['.jade'],
 
   // webserver端口
   port: {

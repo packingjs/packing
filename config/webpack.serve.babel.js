@@ -1,5 +1,6 @@
+import { existsSync } from 'fs';
 import path from 'path';
-import { isString, isArray, isObject } from 'util';
+import { isString, isArray, isObject, isFunction } from 'util';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'packing-html-webpack-plugin';
 import glob from 'glob';
@@ -9,7 +10,7 @@ import packing from './packing';
 const {
   dist,
   entries,
-  templates,
+  templatesPages,
   mockPageInit,
 } = packing.path;
 const { templateExtension } = packing;
@@ -42,29 +43,37 @@ const initConfig = () => {
   const htmlWebpackPluginConfig = [];
   const extensions = isArray(templateExtension) ? templateExtension : [templateExtension];
 
-  extensions.forEach((ext) => {
-    glob.sync(`**/*${ext}`, {
-      cwd: path.resolve(cwd, templates)
-    }).forEach(page => {
-      let key = page.replace(ext, '');
-      // 写入页面级别的配置
-      if (entryConfig[key]) {
-        key += ext;
-      }
-      const value = path.resolve(cwd, entries.replace('{pagename}', key));
+  glob.sync(`**/*{${extensions.join(',')}}`, {
+    cwd: path.resolve(cwd, templatesPages)
+  }).forEach(page => {
+    const ext = path.extname(page);
+    let key = page.replace(ext, '');
+    // 写入页面级别的配置
+    if (entryConfig[key]) {
+      key += ext;
+    }
+    let value;
+    if (isFunction(entries)) {
+      value = entries(key);
+    } else {
+      value = path.resolve(cwd, entries.replace('{pagename}', key));
+    }
+    if (existsSync(value)) {
       entryConfig[key] = value;
+    } else {
+      console.log(`❗️ entry file not exist: ${value}`);
+    }
 
-      const templateInitData = path.resolve(mockPageInit, page.replace(ext, jsExt));
-      htmlWebpackPluginConfig.push({
-        filename: `${page}.html`,
-        template: path.resolve(templates, page),
-        templateInitData,
-        cache: false,
-        inject: false,
-      });
+    const templateInitData = path.resolve(mockPageInit, page.replace(ext, jsExt));
+    htmlWebpackPluginConfig.push({
+      filename: `${page}.html`,
+      template: path.resolve(templatesPages, page),
+      templateInitData,
+      cache: false,
+      inject: false,
     });
   });
-  console.log(htmlWebpackPluginConfig);
+
   return {
     entryConfig,
     htmlWebpackPluginConfig
