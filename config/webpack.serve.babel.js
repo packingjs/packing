@@ -8,7 +8,7 @@ import autoprefixer from 'autoprefixer';
 import packing from './packing';
 
 const {
-  dist,
+  assetsDist,
   entries,
   templatesPages,
   mockPageInit,
@@ -79,6 +79,9 @@ const initConfig = () => {
     htmlWebpackPluginConfig.push(htmlFile);
   });
 
+  console.log(htmlWebpackPluginConfig);
+  console.log(entryConfig);
+
   return {
     entryConfig,
     htmlWebpackPluginConfig
@@ -88,7 +91,7 @@ const initConfig = () => {
 const webpackConfig = (options) => {
   const { entryConfig, htmlWebpackPluginConfig } = initConfig();
   const projectRootPath = path.resolve(__dirname, '../');
-  const assetsPath = path.resolve(projectRootPath, `./${dist}/assets`);
+  const assetsPath = path.resolve(projectRootPath, assetsDist);
   const chunkhash = options.longTermCaching ? '-[chunkhash:8]' : '';
   const progress = options.progress;
   const context = path.resolve(__dirname, '..');

@@ -101,6 +101,11 @@ npm run serve:dist
 └── README.md                   
 ```
 
+### 约定
+* 每个网页模版有一个对应的js入口文件 `entry.js`，保证 `entry.js`的目录结构和网页模版的目录结构一致
+* 网页模版中对静态资源引用时使用绝对路径，如 `/logo/qunar.png`
+*
+
 ### Others
 ```
 # npm使用qunar源
@@ -124,6 +129,7 @@ yo packing
 #### 新建项目
 
 #### 如何配置和线上环境一样的路由
+路由规则修改后需要重启`npm run serve`
 
 #### 如何模拟数据
 
@@ -133,3 +139,9 @@ yo packing
 根据团队的实际代码风格，修改 `.eslintrc`
 
 #### schema怎么配置
+
+#### webpackJsonp is not defined
+可能配置了common chunks，公共文件打到了vendor.js，需要在页面引用vendor.js
+```html
+<script src="/vendor.js"></script>
+```

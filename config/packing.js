@@ -49,8 +49,8 @@ export default {
   rewriteRules: {
     // 网站URL与模版的对应路由关系
     '^/$': '/index.html',
-    '^/list$': '/list.jade.html',
-    '^/detail$': '/detail/index.jade.html',
+    '^/list$': '/list.html',
+    '^/detail/abc$': '/detail/demo.html',
 
     // API转发
     '^/api/(.*)': 'require!/mock/api/$1.js',

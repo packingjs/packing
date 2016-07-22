@@ -72,7 +72,7 @@ const initConfig = () => {
 const webpackConfig = (options) => {
   const entryConfig = initConfig();
   const projectRootPath = path.resolve(__dirname, '../');
-  const assetsPath = path.resolve(projectRootPath, `./${dist}/assets`);
+  const assetsPath = path.resolve(projectRootPath, assetsDist);
   const chunkhash = options.longTermCaching ? '-[chunkhash:8]' : '';
   const progress = options.progress;
   const context = path.resolve(__dirname, '..');

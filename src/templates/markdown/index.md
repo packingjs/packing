@@ -1,4 +1,0 @@
-# Hello world
-
-* a
-* b
