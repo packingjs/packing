@@ -129,10 +129,7 @@ const webpackConfig = (options) => {
     alias: {
       'env-alias': path.resolve(__dirname, '../src/config/env', process.env.NODE_ENV)
     },
-    modulesDirectories: [
-      'src',
-      'node_modules'
-    ],
+    modulesDirectories: [ 'src', 'node_modules' ],
     extensions: ['', '.json', '.js', '.jsx']
   };
 

@@ -8,23 +8,23 @@ export default {
     // 页面初始化mock数据文件存放目录
     mockPageInit: 'mock/pages',
     // webpack打包入口JS文件目录
-    entries: 'src/entries/jade/{pagename}.js',
+    entries: 'src/entries/html/{pagename}.js',
     // 模版目录
-    templates: 'src/templates/jade',
-    templatesPages: 'src/templates/jade/pages',
+    templates: 'src/templates/html',
+    templatesPages: 'src/templates/html',
     // 编译输出产物目录
     dist: 'prd',
     // 编译后的静态文件目录
     assetsDist: 'prd/assets',
     // 编译后的模版目录
     templatesDist: 'prd/templates',
-    templatesDistPages: 'prd/templates/pages'
+    templatesDistPages: 'prd/templates'
   },
 
   // 模版类型
-  templateLoader: 'jade',
+  templateLoader: 'html',
   // 模版文件扩展名
-  templateExtension: '.jade',
+  templateExtension: '.html',
 
   // webserver端口
   port: {
@@ -48,7 +48,7 @@ export default {
   // require! 表示使用本地mock文件
   rewriteRules: {
     // 网站URL与模版的对应路由关系
-    '^/$': '/index.jade.html',
+    '^/$': '/index.html',
     '^/list$': '/list.jade.html',
     '^/detail$': '/detail/index.jade.html',
 

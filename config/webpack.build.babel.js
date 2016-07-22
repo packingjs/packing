@@ -36,6 +36,7 @@ const initConfig = () => {
   glob.sync(pattern, {
     cwd: path.resolve(cwd, templatesPages)
   }).forEach(page => {
+    console.log(`template page: ${page}`);
     const ext = path.extname(page);
     let key = page.replace(ext, '');
     // 写入页面级别的配置

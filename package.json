@@ -21,42 +21,42 @@
     "serve": {
       "command": "babel-node tools/serve.js",
       "env": {
-        "NODE_ENV": "development",
+        "NODE_ENV": "",
         "CDN_ROOT": ""
       }
     },
     "serve:dist": {
       "command": "babel-node tools/serve:dist.js",
       "env": {
-        "NODE_ENV": "development"
+        "NODE_ENV": ""
       }
     },
     "build": {
       "command": "webpack --verbose --colors --display-error-details --config config/webpack.build.babel.js",
       "env": {
-        "NODE_ENV": "development",
+        "NODE_ENV": "",
         "CDN_ROOT": ""
       }
     },
     "build:dev": {
       "command": "webpack --config config/webpack.build.babel.js",
       "env": {
-        "NODE_ENV": "production",
-        "CDN_ROOT": "http://l-wap1.wap.dev.cn6.qunar.com/xxx/prd"
+        "NODE_ENV": "development",
+        "CDN_ROOT": "//l-wap1.wap.dev.cn6.qunar.com/xxx/prd"
       }
     },
     "build:beta": {
       "command": "webpack --config config/webpack.build.babel.js",
       "env": {
-        "NODE_ENV": "production",
-        "CDN_ROOT": "http://mobileqzz.beta.qunar.com/xxx/prd"
+        "NODE_ENV": "beta",
+        "CDN_ROOT": "//mobileqzz.beta.qunar.com/xxx/prd"
       }
     },
     "build:prod": {
       "command": "webpack --config config/webpack.build.babel.js",
       "env": {
         "NODE_ENV": "production",
-        "CDN_ROOT": "http://q.qunarzz.com/xxx/prd"
+        "CDN_ROOT": "//q.qunarzz.com/xxx/prd/"
       }
     },
     "eslint": {
