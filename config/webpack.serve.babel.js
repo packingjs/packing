@@ -159,8 +159,6 @@ const webpackConfig = (options) => {
     })
   );
 
-
-
   // 从配置文件中获取并生成webpack打包配置
   if (packing.commonChunks) {
     const chunkKeys = Object.keys(packing.commonChunks);
