@@ -129,8 +129,9 @@ const webpackConfig = (options) => {
 
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: '"production"'
-      }
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+        CDN_ROOT: JSON.stringify(process.env.CDN_ROOT)
+      },
     }),
 
     new ReplaceHashWebpackPlugin({

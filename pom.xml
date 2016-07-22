@@ -10,14 +10,14 @@
 
   <groupId>com.qunar.qzz</groupId>
   <!--artifactId必须与qzz的module_name相同-->
-  <artifactId>mobile-rank-bi</artifactId>
+  <artifactId><%=appname%></artifactId>
   <!--version由bds生成的btag/rtag来决定-->
   <version>WAPHOTEL-3088_20151224_biOptimize-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <properties>
     <!--qzz_files为项目相应的.ver, ver or refs-->
-    <qzz_files>views</qzz_files>
+    <qzz_files>prd/templates</qzz_files>
   </properties>
 
   <build>

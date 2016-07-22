@@ -48,7 +48,7 @@ export default {
   // require! 表示使用本地mock文件
   rewriteRules: {
     // 网站URL与模版的对应路由关系
-    '^/$': '/index.md.html',
+    '^/$': '/index.jade.html',
     '^/list$': '/list.jade.html',
     '^/detail$': '/detail/index.jade.html',
 

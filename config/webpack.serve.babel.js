@@ -150,6 +150,16 @@ const webpackConfig = (options) => {
     // });
   }
 
+  plugins.push(
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+        CDN_ROOT: JSON.stringify(process.env.CDN_ROOT)
+      },
+    })
+  );
+
+
 
   // 从配置文件中获取并生成webpack打包配置
   if (packing.commonChunks) {

@@ -10,15 +10,19 @@
   "license": "MIT",
   "scripts": {
     "build": "better-npm-run build",
+    "build:dev": "better-npm-run build:dev",
+    "build:beta": "better-npm-run build:beta",
+    "build:prod": "better-npm-run build:prod",
     "serve": "better-npm-run serve",
-    "serve:dist": "better-npm-run build:dev && better-npm-run serve:dist",
+    "serve:dist": "better-npm-run build && better-npm-run serve:dist",
     "eslint": "better-npm-run eslint"
   },
   "betterScripts": {
     "serve": {
       "command": "babel-node tools/serve.js",
       "env": {
-        "NODE_ENV": "development"
+        "NODE_ENV": "development",
+        "CDN_ROOT": ""
       }
     },
     "serve:dist": {
@@ -30,15 +34,29 @@
     "build": {
       "command": "webpack --verbose --colors --display-error-details --config config/webpack.build.babel.js",
       "env": {
-        "NODE_ENV": "production",
-        "CDN_ROOT": "http://www.test1.com/prd/assets"
+        "NODE_ENV": "development",
+        "CDN_ROOT": ""
       }
     },
     "build:dev": {
       "command": "webpack --config config/webpack.build.babel.js",
       "env": {
-        "NODE_ENV": "development",
-        "CDN_ROOT": "assets"
+        "NODE_ENV": "production",
+        "CDN_ROOT": "l-wap1.wap.dev.cn6.qunar.com"
+      }
+    },
+    "build:beta": {
+      "command": "webpack --config config/webpack.build.babel.js",
+      "env": {
+        "NODE_ENV": "production",
+        "CDN_ROOT": "mobileqzz.beta.qunar.com"
+      }
+    },
+    "build:prod": {
+      "command": "webpack --config config/webpack.build.babel.js",
+      "env": {
+        "NODE_ENV": "production",
+        "CDN_ROOT": "q.qunarzz.com"
       }
     },
     "eslint": {

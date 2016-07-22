@@ -116,3 +116,20 @@ npm install --registry http://registry.npm.corp.qunar.com --production
 npm install -g yo generator-packing
 yo packing
 ```
+
+### 常见问题
+
+#### 迁移已有的项目
+
+#### 新建项目
+
+#### 如何配置和线上环境一样的路由
+
+#### 如何模拟数据
+
+#### 如何让文件在编译过程不做reversion
+
+#### eslint错误太多了
+根据团队的实际代码风格，修改 `.eslintrc`
+
+#### schema怎么配置
