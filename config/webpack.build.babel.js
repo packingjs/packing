@@ -22,8 +22,10 @@ const {
   templatesDist,
 } = packing.path;
 const { templateExtension } = packing;
-const extensions = isArray(templateExtension) ? templateExtension : [templateExtension];
 const cwd = process.cwd();
+const pattern = isArray(templateExtension) && templateExtension.length > 1 ?
+  `**/*{${templateExtension.join(',')}}` :
+  `**/*${templateExtension}`;
 
 /**
  * 根据文件的目录结构生成entry配置
@@ -31,7 +33,7 @@ const cwd = process.cwd();
 const initConfig = () => {
   const entryConfig = {};
 
-  glob.sync(`**/*{${extensions.join(',')}}`, {
+  glob.sync(pattern, {
     cwd: path.resolve(cwd, templatesPages)
   }).forEach(page => {
     const ext = path.extname(page);
@@ -103,10 +105,7 @@ const webpackConfig = (options) => {
     alias: {
       'env-alias': path.resolve(__dirname, '../src/config/env', process.env.NODE_ENV)
     },
-    modulesDirectories: [
-      'src',
-      'node_modules'
-    ],
+    modulesDirectories: [ 'src', 'node_modules' ],
     extensions: ['', '.json', '.js', '.jsx']
   };
 
@@ -137,7 +136,7 @@ const webpackConfig = (options) => {
     new ReplaceHashWebpackPlugin({
       assetsDomain: process.env.CDN_ROOT,
       cwd: templates,
-      src: `**/*{${extensions.join(',')}}`,
+      src: pattern,
       dest: templatesDist,
       // 排除某些文件
       // glob: {

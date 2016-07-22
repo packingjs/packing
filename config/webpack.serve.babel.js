@@ -14,13 +14,13 @@ const {
   mockPageInit,
 } = packing.path;
 const { templateExtension } = packing;
-const clientJS = 'webpack-hot-middleware/client';
 const cwd = process.cwd();
 
 /**
  * 给所有入口js加上HRM的clientjs
  */
 const pushClientJS = entry => {
+  const clientJS = 'webpack-hot-middleware/client';
   let newEntry = entry;
   if (isString(newEntry)) {
     newEntry = [clientJS, newEntry];
@@ -41,9 +41,11 @@ const initConfig = () => {
   const jsExt = '.js';
   const entryConfig = {};
   const htmlWebpackPluginConfig = [];
-  const extensions = isArray(templateExtension) ? templateExtension : [templateExtension];
+  const pattern = isArray(templateExtension) && templateExtension.length > 1 ?
+    `**/*{${templateExtension.join(',')}}` :
+    `**/*${templateExtension}`;
 
-  glob.sync(`**/*{${extensions.join(',')}}`, {
+  glob.sync(pattern, {
     cwd: path.resolve(cwd, templatesPages)
   }).forEach(page => {
     const ext = path.extname(page);
@@ -65,13 +67,16 @@ const initConfig = () => {
     }
 
     const templateInitData = path.resolve(mockPageInit, page.replace(ext, jsExt));
-    htmlWebpackPluginConfig.push({
+    const htmlFile = {
       filename: ext === '.html' ? page : `${page}.html`,
       template: path.resolve(templatesPages, page),
-      templateInitData,
       cache: false,
       inject: false,
-    });
+    };
+    if (existsSync(templateInitData)) {
+      htmlFile.templateInitData = templateInitData;
+    }
+    htmlWebpackPluginConfig.push(htmlFile);
   });
 
   return {

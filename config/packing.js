@@ -22,9 +22,9 @@ export default {
   },
 
   // 模版类型
-  templateLoader: ['jade'],
+  templateLoader: 'jade',
   // 模版文件扩展名
-  templateExtension: ['.jade'],
+  templateExtension: '.jade',
 
   // webserver端口
   port: {

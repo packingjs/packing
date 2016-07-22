@@ -9,9 +9,11 @@ const { dist, templatesDistPages, mockPageInit } = packing.path;
 const htmlWebpackPluginConfig = [];
 const globOptions = { cwd: path.resolve(templatesDistPages) };
 const jsExt = '.js';
-const extensions = isArray(templateExtension) ? templateExtension : [templateExtension];
+const pattern = isArray(templateExtension) && templateExtension.length > 1 ?
+  `**/*{${templateExtension.join(',')}}` :
+  `**/*${templateExtension}`;
 
-glob.sync(`**/*{${extensions.join(',')}}`, globOptions).forEach(page => {
+glob.sync(pattern, globOptions).forEach(page => {
   const ext = path.extname(page);
   const templateInitData = path.resolve(mockPageInit, page.replace(ext, jsExt));
   htmlWebpackPluginConfig.push({
