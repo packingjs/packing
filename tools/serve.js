@@ -12,7 +12,7 @@ const compiler = webpack(webpackConfig);
 const port = packing.port.dev;
 const serverOptions = {
   contentBase: src,
-  quiet: true,
+  quiet: false,
   noInfo: true,
   hot: true,
   inline: true,

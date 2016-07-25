@@ -1,10 +1,9 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { entry } from '../../containers/Entry/Entry';
+import '../../test.less';
 
-ReactDOM.render(
-  <h1>Hello, world!</h1>,
-  document.getElementById('app')
-);
-if (module.hot) {
-  module.hot.accept();
-}
+const component = <h1>Hello, world!</h1>;
+const store = (state = { name: 'Joe' }) => state;
+const rootElement = document.getElementById('app');
+
+entry(component, store, rootElement);

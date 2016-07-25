@@ -74,6 +74,7 @@ const webpackConfig = (options) => {
   const projectRootPath = path.resolve(__dirname, '../');
   const assetsPath = path.resolve(projectRootPath, assetsDist);
   const chunkhash = options.longTermCaching ? '-[chunkhash:8]' : '';
+  const contenthash = options.longTermCaching ? '-[contenthash:8]' : '';
   const progress = options.progress;
   const context = path.resolve(__dirname, '..');
 
@@ -124,11 +125,12 @@ const webpackConfig = (options) => {
     }]),
 
     // css files from the extract-text-plugin loader
-    new ExtractTextPlugin(`[name]${chunkhash}.css`, {
+    new ExtractTextPlugin(`[name]${contenthash}.css`, {
       allChunks: true
     }),
 
     new webpack.DefinePlugin({
+      '__DEVTOOLS__': false,
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
         CDN_ROOT: JSON.stringify(process.env.CDN_ROOT)

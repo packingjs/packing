@@ -41,13 +41,13 @@ npm run serve:dist
 
 ### Features
 - [x]react支持
-- [ ]HMR
+- [x]HMR
 - [x]动态加载
 - [x]支持自定义打包规则
 - [ ]yo-generator
 - [ ]集成到QDR中，自动生产job，发布无障碍
-- [ ]工程新增的node_modules也能顺利在QDR中发布
-- [x]urlrewrite
+- [x]工程新增的node_modules也能顺利在QDR中发布
+- [x]urlrewrite/自定义路由规则
 - [ ]支持SPA／多入口网站／React Native
 - [x]支持多种资源的引入，如images、fonts、json
 - [x]大size图片在css中引用hash自动更新
@@ -59,11 +59,13 @@ npm run serve:dist
 - [x]支持资源hash rename
 - [x]预览编译后的内容
 - [x]不同环境使用profiles文件
-- [ ]redux-dev-tool
+- [ ]redux-devtools
 - [x]同时支持多种模版[html/jade/ejs/handlebars/smarty/velocity/md]
 - [x]自动抽取common.js
 - [ ]rev-webpack-plugin增加无引用文件删除的参数
 - [ ]新版本升级提示
+- [ ]不同的前后端关联方式[maven/npm/bower]
+- [ ]commonChunks打包的css使用文件md5做reversion
 
 ### Todo
 - [ ]文档
