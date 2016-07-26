@@ -112,6 +112,20 @@ npm install -g yo generator-packing
 yo packing
 ```
 
+### npm-cache在QDR上部署
+使用npm-cache加速编译机上node_modules的安装速度
+```
+# 安装npm-cache
+npm install -g npm-cache
+
+# 安装依赖包，首次从线上下载，之后如果package.json文件不变，就走缓存
+# jenkins用户需要对 `NPM_CACHE_DIR` 目录有写入权限
+NPM_CACHE_DIR=/home/q/prj/npm npm-cache install npm --registry http://registry.npm.corp.qunar.com
+
+# 清空缓存
+NPM_CACHE_DIR=/home/q/prj/npm npm-cache clean
+```
+
 ### 常见问题
 
 #### 迁移已有的项目
