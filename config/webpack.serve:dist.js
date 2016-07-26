@@ -1,7 +1,7 @@
 import { isArray } from 'util';
 import path from 'path';
 import HtmlWebpackPlugin from 'packing-html-webpack-plugin';
-import glob from 'glob';
+import packingGlob from 'packing-glob';
 import packing from './packing';
 
 const { templateExtension } = packing;
@@ -13,7 +13,7 @@ const pattern = isArray(templateExtension) && templateExtension.length > 1 ?
   `**/*{${templateExtension.join(',')}}` :
   `**/*${templateExtension}`;
 
-glob.sync(pattern, globOptions).forEach(page => {
+packingGlob(pattern, globOptions).forEach(page => {
   const ext = path.extname(page);
   const templateInitData = path.resolve(mockPageInit, page.replace(ext, jsExt));
   htmlWebpackPluginConfig.push({

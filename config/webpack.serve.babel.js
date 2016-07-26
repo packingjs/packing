@@ -3,7 +3,7 @@ import path from 'path';
 import { isString, isArray, isObject, isFunction } from 'util';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'packing-html-webpack-plugin';
-import glob from 'glob';
+import packingGlob from 'packing-glob';
 import autoprefixer from 'autoprefixer';
 import packing from './packing';
 
@@ -45,7 +45,7 @@ const initConfig = () => {
     `**/*{${templateExtension.join(',')}}` :
     `**/*${templateExtension}`;
 
-  glob.sync(pattern, {
+  packingGlob(pattern, {
     cwd: path.resolve(cwd, templatesPages)
   }).forEach(page => {
     const ext = path.extname(page);

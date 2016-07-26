@@ -9,7 +9,7 @@ import ReplaceHashWebpackPlugin from 'replace-hash-webpack-plugin';
 import RevWebpackPlugin from 'packing-rev-webpack-plugin';
 import strip from 'strip-loader';
 import autoprefixer from 'autoprefixer';
-import glob from 'glob';
+import packingGlob from 'packing-glob';
 import packing from './packing';
 
 const {
@@ -33,7 +33,7 @@ const pattern = isArray(templateExtension) && templateExtension.length > 1 ?
 const initConfig = () => {
   const entryConfig = {};
 
-  glob.sync(pattern, {
+  packingGlob(pattern, {
     cwd: path.resolve(cwd, templatesPages)
   }).forEach(page => {
     console.log(`template page: ${page}`);
@@ -142,19 +142,12 @@ const webpackConfig = (options) => {
       cwd: templates,
       src: pattern, // [pattern, '!**/index.*'], // 排除!开头的pattern匹配的文件
       dest: templatesDist,
-      // 排除某些文件
-      // glob: {
-      //   ignore: '**/index.jade'
-      // }
     }),
 
     new RevWebpackPlugin({
       cwd: assets,
       src: ['**/*', '!hongniu1027.jpg'],
       dest: assetsDist,
-      // glob: {
-      //   ignore: [ignoreRevPattern]
-      // }
     }),
 
   ];
