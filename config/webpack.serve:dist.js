@@ -36,10 +36,10 @@ const output = {
 
 const moduleConfig = {
   loaders: [
-    { test: /\.jade$/, loader: 'jade' },
+    { test: /\.(jade|pug)$/, loader: 'pug' },
     { test: /\.html$/, loader: 'html' },
     { test: /\.ejs$/, loader: 'ejs' },
-    { test: /\.tpl$|.smarty$/, loader: 'smarty' },
+    { test: /\.(tpl|smarty)$/, loader: 'smarty' },
     { test: /\.handlebars$/, loader: 'handlebars' },
     { test: /\.mustache$/, loader: 'mustache' },
     { test: /\.md$/, loader: 'html!markdown' },

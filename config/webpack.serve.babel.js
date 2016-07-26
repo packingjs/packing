@@ -79,8 +79,8 @@ const initConfig = () => {
     htmlWebpackPluginConfig.push(htmlFile);
   });
 
-  console.log(htmlWebpackPluginConfig);
-  console.log(entryConfig);
+  // console.log(htmlWebpackPluginConfig);
+  // console.log(entryConfig);
 
   return {
     entryConfig,
@@ -116,7 +116,7 @@ const webpackConfig = (options) => {
       { test: /\.scss$/, loader: 'style!css?importLoaders=2&localIdentName=[local]___[hash:base64:8]!postcss!sass?outputStyle=expanded' },
       { test: /\.json$/, loader: 'json' },
       { test: /\.(jpg|png|gif|ttf|woff|woff2|eot|svg)$/, loader: 'url?name=[name]-[hash:8].[ext]&limit=10000' },
-      { test: /\.jade$/, loader: 'jade' },
+      { test: /\.(jade|pug)$/, loader: 'pug' },
       { test: /\.html$/, loader: 'html' },
       { test: /\.ejs$/, loader: 'ejs' },
       { test: /\.(tpl|smart)$/, loader: 'smarty' },
