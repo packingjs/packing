@@ -140,7 +140,7 @@ const webpackConfig = (options) => {
     new ReplaceHashWebpackPlugin({
       assetsDomain: process.env.CDN_ROOT,
       cwd: templates,
-      src: pattern,
+      src: pattern, // [pattern, '!**/index.*'], // 排除!开头的pattern匹配的文件
       dest: templatesDist,
       // 排除某些文件
       // glob: {
@@ -150,11 +150,11 @@ const webpackConfig = (options) => {
 
     new RevWebpackPlugin({
       cwd: assets,
-      src: '**/*',
+      src: ['**/*', '!hongniu1027.jpg'],
       dest: assetsDist,
-      glob: {
-        ignore: [ignoreRevPattern]
-      }
+      // glob: {
+      //   ignore: [ignoreRevPattern]
+      // }
     }),
 
   ];
