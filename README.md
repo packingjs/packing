@@ -16,10 +16,11 @@ donation
 基于webpack的前端集成开发环境和编译环境
 
 ### Introduction
-* 由于react的流行，公司越来越多的项目都希望使用react来构建，但目前公司的前端工具FEKit不能支持react开发和编译
+* 由于react的流行，公司越来越多的项目都希望使用react来构建，但目前公司的前端工具FEKit不能很好的支持react开发和编译
 * 有些部门已经使用了react，但在实施过程中或多或少的遇到了一些问题，这些问题具有一些共性，其实可以使用统一的方案来解决
 * 无线touch团队在过往的工作中在前端工程化和react方面积累了不少经验，愿意进行技术分享和全公司内推广
-* 只关心通用的集成开发环境和编译过程，不关注前端架构
+* 只关心通用的集成开发环境和编译过程，不关心网站的架构和目录结构
+* 部分灵感来源于grunt和Yeoman
 
 ### Install
 ```sh
@@ -43,7 +44,7 @@ npm run serve:dist
 - [x]react支持
 - [x]HMR
 - [x]动态加载
-- [x]支持自定义打包规则
+- [x]支持自定义打包规则和指定common.js
 - [ ]yo-generator
 - [ ]集成到QDR中，自动生产job，发布无障碍
 - [x]工程新增的node_modules也能顺利在QDR中发布
@@ -54,18 +55,16 @@ npm run serve:dist
 - [x]使用babel，支持ES6、ES7
 - [x]统一的eslint语法检查
 - [x]less、sass支持
-- [x]css预编译
+- [x]使用postcss预编译
 - [x]支持source map
 - [x]支持资源hash rename
 - [x]预览编译后的内容
 - [x]不同环境使用profiles文件
-- [ ]redux-devtools
+- [x]redux-devtools
 - [x]同时支持多种模版[html/jade/ejs/handlebars/smarty/velocity/md]
-- [x]自动抽取common.js
 - [ ]rev-webpack-plugin增加无引用文件删除的参数
 - [ ]新版本升级提示
 - [ ]不同的前后端关联方式[maven/npm/bower]
-- [ ]commonChunks打包的css使用文件md5做reversion
 
 ### Todo
 - [ ]文档
@@ -106,7 +105,6 @@ npm run serve:dist
 ### 约定
 * 每个网页模版有一个对应的js入口文件 `entry.js`，保证 `entry.js`的目录结构和网页模版的目录结构一致
 * 网页模版中对静态资源引用时使用绝对路径，如 `/logo/qunar.png`
-*
 
 ### Others
 ```
@@ -143,7 +141,11 @@ yo packing
 #### schema怎么配置
 
 #### webpackJsonp is not defined
-可能配置了common chunks，公共文件打到了vendor.js，需要在页面引用vendor.js
+可能配置了common chunks，公共文件打到了vendor.js，需要在页面引用vendor.js，
 ```html
 <script src="/vendor.js"></script>
+```
+如果vendor.js引用了css，页面还需要引用vendor.css
+```html
+<link href="/vendor.css" media="all" rel="stylesheet" />
 ```
