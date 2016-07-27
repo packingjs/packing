@@ -1,7 +1,9 @@
 [![NPM](https://nodei.co/npm/packing.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/packing/)
+[![NPM version][npm-image]][npm-url]
+[![build status][travis-image]][travis-url]
+[![Downloads][downloads-image]][downloads-url]
 
-[![Build Status](https://travis-ci.org/zhongzhi107/packing.svg?branch=master)](https://travis-ci.org/zhongzhi107/packing)
-
+# Packing
 
 基于webpack的前端集成开发环境和编译环境
 
@@ -61,6 +63,13 @@ npm run serve:dist
 - [ ]自动化生成scheme和job
 - [ ]generator
 - [ ]example
+  - [ ]base
+  - [ ]custom template
+  - [ ]react+redus+redux-devtools
+  - [ ]commonChunk
+  - [ ]url rules
+  - [ ]data mock
+  - [ ]profiles
 - [ ]unit test
 
 ### Directory
