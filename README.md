@@ -1,10 +1,6 @@
 [![NPM](https://nodei.co/npm/packing.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/packing/)
 
-[![NPM version][npm-image]][npm-url]
-
-[![build status][travis-image]][travis-url]
-
-[![Downloads][downloads-image]][downloads-url]
+[![Build Status](https://travis-ci.org/zhongzhi107/packing.svg?branch=master)](https://travis-ci.org/zhongzhi107/packing)
 
 # Packing
 
