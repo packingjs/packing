@@ -19,8 +19,11 @@ const cwd = process.cwd();
 /**
  * 给所有入口js加上HRM的clientjs
  */
-const pushClientJS = entry => {
-  const clientJS = 'webpack-hot-middleware/client';
+const pushClientJS = (entry, reload) => {
+  let clientJS = 'webpack-hot-middleware/client';
+  if (reload) {
+    clientJS += '?reload=true';
+  }
   let newEntry = entry;
   if (isString(newEntry)) {
     newEntry = [clientJS, newEntry];
@@ -28,7 +31,7 @@ const pushClientJS = entry => {
     newEntry.unshift(clientJS);
   } else if (isObject(newEntry)) {
     Object.keys(newEntry).forEach(key => {
-      newEntry[key] = pushClientJS(newEntry[key]);
+      newEntry[key] = pushClientJS(newEntry[key], reload);
     });
   }
   return newEntry;
@@ -139,7 +142,7 @@ const webpackConfig = (options) => {
   const plugins = htmlWebpackPluginConfig.map((item) => new HtmlWebpackPlugin(item));
 
   if (options.hot) {
-    entry = pushClientJS(entry);
+    entry = pushClientJS(entry, options.reload);
     plugins.push(
       new webpack.HotModuleReplacementPlugin()
     );
@@ -188,4 +191,6 @@ const webpackConfig = (options) => {
 export default webpackConfig({
   progress: true,
   hot: true,
+  // 检测到module有变化时，强制刷新页面
+  reload: false,
 });
