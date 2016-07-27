@@ -42,7 +42,7 @@
       "command": "webpack --config config/webpack.build.babel.js",
       "env": {
         "NODE_ENV": "development",
-        "CDN_ROOT": "//l-wap1.wap.dev.cn6.qunar.com/xxx/prd"
+        "CDN_ROOT": "//l-wap1.wap.dev.cn6.qunar.com/xxx/dev"
       }
     },
     "build:beta": {

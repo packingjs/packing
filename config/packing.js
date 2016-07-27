@@ -24,14 +24,14 @@ export default {
     dist: 'prd',
 
     // 编译后的静态文件目录
-    assetsDist: 'prd/assets',
+    assetsDist: 'prd',
 
     // 编译后的模版目录，如果模版支持继承或layout的话
     // 模板一般会再区分布局文件(layout)和网页文件(pages)
-    templatesDist: 'prd/templates',
+    templatesDist: 'templates',
 
     // 编译后的模版网页文件，如果没有使用layout的话，保持这个地址和`templatesDist`一样
-    templatesDistPages: 'prd/templates'
+    templatesDistPages: 'templates'
   },
 
   // 模版类型，用数组形式支持多种模版，如 ['html', 'jade']
