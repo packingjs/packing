@@ -59,26 +59,13 @@ const initConfig = () => {
   return entryConfig;
 };
 
-/**
- * options:
- * options.hot
- * options.release
- * options.longTermCaching
- * options.build
- * options.progress
- * options.devtool
- * options.minimize
- */
 const webpackConfig = (options) => {
-  const entryConfig = initConfig();
   const projectRootPath = path.resolve(__dirname, '../');
   const assetsPath = path.resolve(projectRootPath, assetsDist);
   const chunkhash = options.longTermCaching ? '-[chunkhash:8]' : '';
   const contenthash = options.longTermCaching ? '-[contenthash:8]' : '';
-  const progress = options.progress;
   const context = path.resolve(__dirname, '..');
-
-  const entry = entryConfig;
+  const entry = initConfig();
 
   const output = {
     chunkFilename: `[name]${chunkhash}.js`,
@@ -185,7 +172,6 @@ const webpackConfig = (options) => {
 
   return {
     context,
-    progress,
     entry,
     output,
     module: moduleConfig,
@@ -197,7 +183,6 @@ const webpackConfig = (options) => {
 
 export default webpackConfig({
   devtool: false,
-  progress: true,
   longTermCaching: true,
   minimize: true,
   sourceMap: false,
