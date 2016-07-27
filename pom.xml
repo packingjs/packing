@@ -17,7 +17,7 @@
 
   <properties>
     <!--qzz_files为项目相应的.ver, ver or refs-->
-    <qzz_files>prd/templates</qzz_files>
+    <qzz_files>templates</qzz_files>
   </properties>
 
   <build>
