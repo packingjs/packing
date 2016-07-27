@@ -9,6 +9,10 @@ node_js:
   - "6"
   - "iojs"
 
+branches:
+  only:
+    - master
+
 cache:
   directories:
     - node_modules
