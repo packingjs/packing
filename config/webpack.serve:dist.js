@@ -42,7 +42,6 @@ const moduleConfig = {
     { test: /\.(tpl|smarty)$/, loader: 'smarty' },
     { test: /\.handlebars$/, loader: 'handlebars' },
     { test: /\.mustache$/, loader: 'mustache' },
-    { test: /\.md$/, loader: 'html!markdown' },
   ]
 };
 

@@ -123,7 +123,6 @@ const webpackConfig = (options) => {
       { test: /\.(tpl|smart)$/, loader: 'smarty' },
       { test: /\.handlebars$/, loader: 'handlebars' },
       { test: /\.mustache$/, loader: 'mustache' },
-      { test: /\.md$/, loader: 'html!markdown' },
     ]
   };
 

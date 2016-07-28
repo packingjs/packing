@@ -2,13 +2,13 @@
 
 >基于webpack的前端集成开发环境和编译环境
 
+[![NPM](https://nodei.co/npm/packing.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/packing/)
+
 [![Build Status](https://travis-ci.org/zhongzhi107/packing.svg?branch=master)](https://travis-ci.org/zhongzhi107/packing)
 [![Build status](https://ci.appveyor.com/api/projects/status/52hgp0fv4bmjjq25?svg=true)](https://ci.appveyor.com/project/zhongzhi107/packing)
 [![Coverage Status](https://coveralls.io/repos/github/zhongzhi107/packing/badge.svg?branch=master)](https://coveralls.io/github/zhongzhi107/packing?branch=master)
 [![Dependency Status](https://david-dm.org/zhongzhi107/packing.svg)](https://david-dm.org/zhongzhi107/packing)
 [![devDependency Status](https://david-dm.org/zhongzhi107/packing/dev-status.svg)](https://david-dm.org/zhongzhi107/packing#info=devDependencies)
-
-[![NPM](https://nodei.co/npm/packing.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/packing/)
 
 ### Introduction
 * 由于react的流行，公司越来越多的项目都希望使用react来构建，但目前公司的前端工具FEKit不能很好的支持react开发和编译
@@ -18,16 +18,26 @@
 * 部分灵感来源于grunt和Yeoman
 
 ### Install
-```sh
-npm install
-# 如果是在公司内网，使用下面的命令安装速度更快
-# npm install --registry http://registry.npm.corp.qunar.com
 
-# 启动开发模式
+1. 安装`yo`和`generator-packing`
+```
+npm install -g yo generator-packing
+```
+
+2. 生成你的网站
+```
+yo packing
+```
+
+3. 启动开发模式
+```
 npm run serve
+```
 
-#open http://localhost:3001
+4. 在浏览器中预览网站 `http://localhost:3001`
 
+5. 其他命令
+```
 # 编译工程
 npm run build
 
