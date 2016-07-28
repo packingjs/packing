@@ -138,6 +138,17 @@ NPM_CACHE_DIR=/home/q/prj/npm npm-cache install npm --registry http://registry.n
 NPM_CACHE_DIR=/home/q/prj/npm npm-cache clean
 ```
 
+如果node < 4.0，还需要为npm-cache指定高版本的node编译器：
+1. 打开npm-cache
+```
+sodu vi `which npm-cache`
+```
+
+2. 将第一行换成下面的代码，根据服务器上的node路径修改
+```
+#! /home/q/node/node-v4.2.4-linux-x64/bin/node
+```
+
 ### 常见问题
 
 #### 迁移已有的项目
