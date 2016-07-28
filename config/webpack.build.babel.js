@@ -7,7 +7,7 @@ import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import ReplaceHashWebpackPlugin from 'replace-hash-webpack-plugin';
 import RevWebpackPlugin from 'packing-rev-webpack-plugin';
-import MoveWebpackPlugin from 'move-webpack-plugin';
+// import MoveWebpackPlugin from 'move-webpack-plugin';
 import strip from 'strip-loader';
 import autoprefixer from 'autoprefixer';
 import packingGlob from 'packing-glob';
@@ -75,7 +75,6 @@ const webpackConfig = (options) => {
     path: assetsPath,
     // dev环境下数据流访问地址
     publicPath: '',
-    // publicPath: '/assets/'
   };
 
   /* eslint-disable */
@@ -101,7 +100,7 @@ const webpackConfig = (options) => {
 
   const ignoreRevPattern = '**/big.jpg';
   const plugins = [
-    new CleanPlugin([templatesDist, dist], {
+    new CleanPlugin([dist], {
       root: projectRootPath
     }),
 
@@ -137,12 +136,6 @@ const webpackConfig = (options) => {
       src: ['**/*', '!hongniu1027.jpg'],
       dest: assetsDist,
     }),
-
-    new MoveWebpackPlugin({
-      src: 'templates',
-      dest: 'prd'
-    }, 'done'),
-
   ];
 
   // 从配置文件中获取并生成webpack打包配置
@@ -175,6 +168,17 @@ const webpackConfig = (options) => {
       })
     );
   }
+
+  // 在编译机上编译需要调整目录结构
+  // 把编译后的模版目录移动到根目录
+  // if (process.env.NODE_ENV !== '') {
+  //   plugins.push(
+  //     new MoveWebpackPlugin({
+  //       src: templatesDist,
+  //       dest: ''
+  //     }, 'done')
+  //   );
+  // }
 
   return {
     context,

@@ -42,21 +42,21 @@
       "command": "webpack --config config/webpack.build.babel.js",
       "env": {
         "NODE_ENV": "development",
-        "CDN_ROOT": "//l-wap1.wap.dev.cn6.qunar.com/xxx/dev"
+        "CDN_ROOT": "//l-wap1.wap.dev.cn6.qunar.com/xxx/dev/assets"
       }
     },
     "build:beta": {
       "command": "webpack --config config/webpack.build.babel.js",
       "env": {
         "NODE_ENV": "beta",
-        "CDN_ROOT": "//mobileqzz.beta.qunar.com/xxx/prd"
+        "CDN_ROOT": "//mobileqzz.beta.qunar.com/xxx/prd/assets"
       }
     },
     "build:prod": {
       "command": "webpack --config config/webpack.build.babel.js",
       "env": {
         "NODE_ENV": "production",
-        "CDN_ROOT": "//s.qunarzz.com/xxx/prd/"
+        "CDN_ROOT": "//s.qunarzz.com/xxx/prd/assets"
       }
     },
     "eslint": {
