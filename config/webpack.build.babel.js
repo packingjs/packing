@@ -7,6 +7,7 @@ import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import ReplaceHashWebpackPlugin from 'replace-hash-webpack-plugin';
 import RevWebpackPlugin from 'packing-rev-webpack-plugin';
+import MoveWebpackPlugin from 'move-webpack-plugin';
 import strip from 'strip-loader';
 import autoprefixer from 'autoprefixer';
 import packingGlob from 'packing-glob';
@@ -100,7 +101,7 @@ const webpackConfig = (options) => {
 
   const ignoreRevPattern = '**/big.jpg';
   const plugins = [
-    new CleanPlugin([dist], {
+    new CleanPlugin([templatesDist, dist], {
       root: projectRootPath
     }),
 
@@ -136,6 +137,11 @@ const webpackConfig = (options) => {
       src: ['**/*', '!hongniu1027.jpg'],
       dest: assetsDist,
     }),
+
+    new MoveWebpackPlugin({
+      src: 'templates',
+      dest: 'prd'
+    }, 'done'),
 
   ];
 
