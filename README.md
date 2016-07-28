@@ -23,19 +23,15 @@
 ```
 npm install -g yo generator-packing
 ```
-
 2. 生成你的网站
 ```
 yo packing
 ```
-
 3. 启动开发模式
 ```
 npm run serve
 ```
-
 4. 在浏览器中预览网站 `http://localhost:3001`
-
 5. 其他命令
 ```
 # 编译工程
