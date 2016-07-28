@@ -82,9 +82,6 @@ const initConfig = () => {
     htmlWebpackPluginConfig.push(htmlFile);
   });
 
-  // console.log(htmlWebpackPluginConfig);
-  // console.log(entryConfig);
-
   return {
     entryConfig,
     htmlWebpackPluginConfig
@@ -115,8 +112,9 @@ const webpackConfig = (options) => {
   let moduleConfig = {
     loaders: [
       { test: /\.js?$/, loaders: ['babel', 'eslint'], exclude: /node_modules/},
-      { test: /\.less$/, loader: 'style!css?importLoaders=2&localIdentName=[local]___[hash:base64:8]!postcss!less?outputStyle=expanded' },
-      { test: /\.scss$/, loader: 'style!css?importLoaders=2&localIdentName=[local]___[hash:base64:8]!postcss!sass?outputStyle=expanded' },
+      { test: /\.css$/, loader: 'style!css?importLoaders=2!postcss' },
+      { test: /\.less$/, loader: 'style!css?importLoaders=2!postcss!less' },
+      { test: /\.scss$/, loader: 'style!css?importLoaders=2!postcss!sass' },
       { test: /\.json$/, loader: 'json' },
       { test: /\.(jpg|png|gif|ttf|woff|woff2|eot|svg)$/, loader: 'url?name=[name]-[hash:8].[ext]&limit=10000' },
       { test: /\.(jade|pug)$/, loader: 'pug' },

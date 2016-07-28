@@ -81,6 +81,7 @@ const webpackConfig = (options) => {
   let moduleConfig = {
     loaders: [
       { test: /\.js?$/, loaders: [strip.loader('debug'), 'babel'], exclude: /node_modules/},
+      { test: /\.css$/, loader: ExtractTextPlugin.extract('style', 'css?importLoaders=2!postcss') },
       { test: /\.less$/, loader: ExtractTextPlugin.extract('style', 'css?importLoaders=2!postcss!less') },
       { test: /\.scss$/, loader: ExtractTextPlugin.extract('style', 'css?importLoaders=2!postcss!sass') },
       { test: /\.json$/, loader: 'json' },
@@ -133,7 +134,7 @@ const webpackConfig = (options) => {
 
     new RevWebpackPlugin({
       cwd: assets,
-      src: ['**/*', '!hongniu1027.jpg'],
+      src: ['**/*'],
       dest: assetsDist,
     }),
   ];
