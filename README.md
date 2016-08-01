@@ -70,6 +70,7 @@ npm run serve:dist
 - [ ]rev-webpack-plugin增加无引用文件删除的参数
 - [ ]新版本升级提示
 - [ ]不同的前后端关联方式[maven/npm/bower]
+- [ ]velocity-loader
 
 ### Todo
 - [ ]文档
