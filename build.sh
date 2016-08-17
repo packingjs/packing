@@ -15,7 +15,7 @@ else
 
   echo project_name: $git
 
-  cache_directory=/home/q/prj/npm/project_name
+  cache_directory=/home/q/prj/npm/$git
 
   echo cache_directory: $cache_directory
 
