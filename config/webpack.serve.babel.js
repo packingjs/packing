@@ -95,6 +95,7 @@ const webpackConfig = (options) => {
   const chunkhash = options.longTermCaching ? '-[chunkhash:8]' : '';
   const progress = options.progress;
   const context = path.resolve(__dirname, '..');
+  const devtool = options.devtool;
 
   let entry = entryConfig;
 
@@ -182,6 +183,7 @@ const webpackConfig = (options) => {
     postcss,
     resolve,
     plugins,
+    devtool
   };
 };
 
@@ -190,4 +192,5 @@ export default webpackConfig({
   hot: true,
   // 检测到module有变化时，强制刷新页面
   reload: false,
+  devtool: 'eval-source-map'
 });

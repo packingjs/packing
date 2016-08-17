@@ -9,6 +9,7 @@
   "author": "zhongzhi <zhong.zhi@163.com>",
   "license": "MIT",
   "scripts": {
+    "start": "npm run serve",
     "build": "better-npm-run build",
     "build:dev": "better-npm-run build:dev",
     "build:beta": "better-npm-run build:beta",
@@ -99,6 +100,7 @@
     "babel-preset-stage-0": "^6.5.0",
     "babel-runtime": "^6.9.2",
     "better-npm-run": "^0.0.10",
+    "classnames": "^2.2.5",
     "clean-webpack-plugin": "^0.1.10",
     "copy-webpack-plugin": "^3.0.1",
     "css-loader": "^0.23.1",
