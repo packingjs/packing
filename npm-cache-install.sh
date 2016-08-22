@@ -13,4 +13,4 @@ cache_directory=/home/q/prj/npm/$git
 
 echo cache_directory: $cache_directory
 
-NPM_CACHE_DIR=$cache_directory npm-cache install npm --registry http://registry.npm.corp.qunar.com --production
+npm-cache install --cacheDirectory $cache_directory --clearInvalidCache npm --registry http://registry.npm.corp.qunar.com --production
