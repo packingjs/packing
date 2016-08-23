@@ -13,7 +13,7 @@ const port = packing.port.dev;
 const serverOptions = {
   contentBase: src,
   quiet: false,
-  noInfo: true,
+  noInfo: false,
   hot: true,
   inline: true,
   lazy: false,

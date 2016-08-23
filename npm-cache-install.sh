@@ -8,8 +8,8 @@ git="${git%\.*}"
 
 echo project_name: $git
 
-cache_directory=/home/q/prj/npm/$git
-#cache_directory=~/.package_cache/$git
+#cache_directory=/home/q/prj/npm/$git
+cache_directory=~/.package_cache/$git
 
 echo cache_directory: $cache_directory
 

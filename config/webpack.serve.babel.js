@@ -2,6 +2,7 @@ import { existsSync } from 'fs';
 import path from 'path';
 import { isString, isArray, isObject, isFunction } from 'util';
 import webpack from 'webpack';
+import DashboardPlugin from 'webpack-dashboard/plugin';
 import HtmlWebpackPlugin from 'packing-html-webpack-plugin';
 import packingGlob from 'packing-glob';
 import autoprefixer from 'autoprefixer';
@@ -158,7 +159,8 @@ const webpackConfig = (options) => {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
         CDN_ROOT: JSON.stringify(process.env.CDN_ROOT)
       },
-    })
+    }),
+    new DashboardPlugin()
   );
 
   // 从配置文件中获取并生成webpack打包配置
