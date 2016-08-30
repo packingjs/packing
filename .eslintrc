@@ -11,6 +11,7 @@
     "import/named": 0,
     "import/namespace": 0,
     "import/no-unresolved": 0,
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
     # "import/no-named-as-default": 2,
     "comma-dangle": 0,  // not sure why airbnb turned this on. gross!
     "indent": [2, 2, {"SwitchCase": 1}],
