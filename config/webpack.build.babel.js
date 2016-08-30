@@ -134,7 +134,7 @@ const webpackConfig = (options) => {
 
     new RevWebpackPlugin({
       cwd: assets,
-      src: ['**/*'],
+      src: ['**/*', '!**/*.md'],
       dest: assetsDist,
     }),
   ];
