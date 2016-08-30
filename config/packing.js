@@ -1,3 +1,9 @@
+/**
+ * 和构建工具相关的配置信息
+ * @author Joe Zhong <zhong.zhi@163.com>
+ * @module config/packing
+ */
+
 export default {
   // 文件路径，所有目录都使用相对于项目根目录的相对目录格式
   path: {

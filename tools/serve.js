@@ -1,3 +1,9 @@
+/**
+ * serve脚本
+ * @author Joe Zhong <zhong.zhi@163.com>
+ * @module tools/serve
+ */
+
 import path from 'path';
 import Express from 'express';
 import webpack from 'webpack';

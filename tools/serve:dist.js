@@ -1,3 +1,9 @@
+/**
+ * serve:dist脚本
+ * @author Joe Zhong <zhong.zhi@163.com>
+ * @module tools/serve:dist
+ */
+
 import path from 'path';
 import Express from 'express';
 import webpack from 'webpack';

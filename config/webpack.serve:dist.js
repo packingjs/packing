@@ -1,3 +1,9 @@
+/**
+ * webpack预览编译后结果的配置文件
+ * @author Joe Zhong <zhong.zhi@163.com>
+ * @module config/webpack.serve:dist
+ */
+
 import { isArray } from 'util';
 import path from 'path';
 import HtmlWebpackPlugin from 'packing-html-webpack-plugin';

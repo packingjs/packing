@@ -1,13 +1,18 @@
+/**
+ * webpack编译环境配置文件
+ * @author Joe Zhong <zhong.zhi@163.com>
+ * @module config/webpack.build.babel
+ */
+
 import { existsSync } from 'fs';
 import path from 'path';
 import { isArray, isFunction } from 'util';
 import webpack from 'webpack';
 import CleanPlugin from 'clean-webpack-plugin';
-import CopyWebpackPlugin from 'copy-webpack-plugin';
+// import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import ReplaceHashWebpackPlugin from 'replace-hash-webpack-plugin';
 import RevWebpackPlugin from 'packing-rev-webpack-plugin';
-// import MoveWebpackPlugin from 'move-webpack-plugin';
 import strip from 'strip-loader';
 import autoprefixer from 'autoprefixer';
 import packingGlob from 'packing-glob';
@@ -28,15 +33,15 @@ const pattern = isArray(templateExtension) && templateExtension.length > 1 ?
   `**/*{${templateExtension.join(',')}}` :
   `**/*${templateExtension}`;
 
-/**
- * 根据文件的目录结构生成entry配置
- */
+ /**
+  * 根据文件的目录结构生成entry配置
+  * @return {object}
+  */
 const initConfig = () => {
   const entryConfig = {};
+  const globOptions = { cwd: path.resolve(cwd, templatesPages) };
 
-  packingGlob(pattern, {
-    cwd: path.resolve(cwd, templatesPages)
-  }).forEach(page => {
+  packingGlob(pattern, globOptions).forEach(page => {
     console.log(`template page: ${page}`);
     const ext = path.extname(page);
     let key = page.replace(ext, '');
@@ -60,6 +65,21 @@ const initConfig = () => {
   return entryConfig;
 };
 
+/**
+ * 返回样式loader字符串
+ * @param {string} cssPreprocessor css预处理器类型
+ * @return {string}
+ */
+const styleLoaderString = (cssPreprocessor) => {
+  const query = cssPreprocessor ? `!${cssPreprocessor}` : '';
+  return ExtractTextPlugin.extract('style', `css?importLoaders=2!postcss${query}`);
+};
+
+/**
+ * 生成webpack配置文件
+ * @param {object} options 特征配置项
+ * @return {object}
+ */
 const webpackConfig = (options) => {
   const projectRootPath = path.resolve(__dirname, '../');
   const assetsPath = path.resolve(projectRootPath, assetsDist);
@@ -81,9 +101,9 @@ const webpackConfig = (options) => {
   let moduleConfig = {
     loaders: [
       { test: /\.js?$/, loaders: [strip.loader('debug'), 'babel'], exclude: /node_modules/},
-      { test: /\.css$/, loader: ExtractTextPlugin.extract('style', 'css?importLoaders=2!postcss') },
-      { test: /\.less$/, loader: ExtractTextPlugin.extract('style', 'css?importLoaders=2!postcss!less') },
-      { test: /\.scss$/, loader: ExtractTextPlugin.extract('style', 'css?importLoaders=2!postcss!sass') },
+      { test: /\.css$/, loader: styleLoaderString() },
+      { test: /\.less$/, loader: styleLoaderString('less') },
+      { test: /\.scss$/, loader: styleLoaderString('sass') },
       { test: /\.json$/, loader: 'json' },
       { test: /\.(jpg|png|ttf|woff|woff2|eot|svg)$/, loader: 'url?name=[name]-[hash:8].[ext]&limit=10000' },
     ]
@@ -99,18 +119,18 @@ const webpackConfig = (options) => {
     extensions: ['', '.json', '.js', '.jsx']
   };
 
-  const ignoreRevPattern = '**/big.jpg';
+  // const ignoreRevPattern = '**/big.jpg';
   const plugins = [
     new CleanPlugin([dist], {
       root: projectRootPath
     }),
 
     // replace hash时也会将template生成一次，这次copy有些多余
-    new CopyWebpackPlugin([{
-      context: assets,
-      from: ignoreRevPattern,
-      to: path.resolve(cwd, assetsDist),
-    }]),
+    // new CopyWebpackPlugin([{
+    //   context: assets,
+    //   from: ignoreRevPattern,
+    //   to: path.resolve(cwd, assetsDist),
+    // }]),
 
     // css files from the extract-text-plugin loader
     new ExtractTextPlugin(`[name]${contenthash}.css`, {
@@ -128,13 +148,13 @@ const webpackConfig = (options) => {
     new ReplaceHashWebpackPlugin({
       assetsDomain: process.env.CDN_ROOT,
       cwd: templates,
-      src: pattern, // [pattern, '!**/index.*'], // 排除!开头的pattern匹配的文件
+      src: pattern,
       dest: templatesDist,
     }),
 
     new RevWebpackPlugin({
       cwd: assets,
-      src: ['**/*', '!**/*.md'],
+      src: ['**/*', '!**/*.md'], // 忽略md文件
       dest: assetsDist,
     }),
   ];

@@ -1,3 +1,9 @@
+/**
+ * webpack开发环境配置文件
+ * @author Joe Zhong <zhong.zhi@163.com>
+ * @module config/webpack.serve.babel
+ */
+
 import { existsSync } from 'fs';
 import path from 'path';
 import { isString, isArray, isObject, isFunction } from 'util';
@@ -17,9 +23,12 @@ const {
 const { templateExtension } = packing;
 const cwd = process.cwd();
 
-/**
- * 给所有入口js加上HRM的clientjs
- */
+ /**
+  * 给所有入口js加上HRM的clientjs
+  * @param {string|array|object} entry 页面入口列表
+  * @param {boolean} reload 是否强制刷新页面
+  * @return {array}
+  */
 const pushClientJS = (entry, reload) => {
   let clientJS = 'webpack-hot-middleware/client';
   if (reload) {
@@ -40,18 +49,18 @@ const pushClientJS = (entry, reload) => {
 
 /**
  * 根据文件的目录结构生成entry配置
+ * @return {object}
  */
 const initConfig = () => {
   const jsExt = '.js';
   const entryConfig = {};
   const htmlWebpackPluginConfig = [];
+  const globOptions = { cwd: path.resolve(cwd, templatesPages) };
   const pattern = isArray(templateExtension) && templateExtension.length > 1 ?
     `**/*{${templateExtension.join(',')}}` :
     `**/*${templateExtension}`;
 
-  packingGlob(pattern, {
-    cwd: path.resolve(cwd, templatesPages)
-  }).forEach(page => {
+  packingGlob(pattern, globOptions).forEach(page => {
     const ext = path.extname(page);
     let key = page.replace(ext, '');
     // 写入页面级别的配置
@@ -89,6 +98,21 @@ const initConfig = () => {
   };
 };
 
+/**
+ * 返回样式loader字符串
+ * @param {string} cssPreprocessor css预处理器类型
+ * @return {string}
+ */
+const styleLoaderString = (cssPreprocessor) => {
+  const query = cssPreprocessor ? `!${cssPreprocessor}` : '';
+  return `style!css?importLoaders=2!postcss${query}`;
+};
+
+/**
+ * 生成webpack配置文件
+ * @param {object} options 特征配置项
+ * @return {object}
+ */
 const webpackConfig = (options) => {
   const { entryConfig, htmlWebpackPluginConfig } = initConfig();
   const projectRootPath = path.resolve(__dirname, '../');
@@ -113,10 +137,10 @@ const webpackConfig = (options) => {
   /* eslint-disable */
   let moduleConfig = {
     loaders: [
-      { test: /\.js?$/, loaders: ['babel', 'eslint'], exclude: /node_modules/},
-      { test: /\.css$/, loader: 'style!css?importLoaders=2!postcss' },
-      { test: /\.less$/, loader: 'style!css?importLoaders=2!postcss!less' },
-      { test: /\.scss$/, loader: 'style!css?importLoaders=2!postcss!sass' },
+      { test: /\.js?$/, loaders: ['babel', 'eslint'], exclude: /node_modules/ },
+      { test: /\.css$/, loader: styleLoaderString() },
+      { test: /\.less$/, loader: styleLoaderString('less') },
+      { test: /\.scss$/, loader: styleLoaderString('sass') },
       { test: /\.json$/, loader: 'json' },
       { test: /\.(jpg|png|gif|ttf|woff|woff2|eot|svg)$/, loader: 'url?name=[name]-[hash:8].[ext]&limit=10000' },
       { test: /\.(jade|pug)$/, loader: 'pug' },
