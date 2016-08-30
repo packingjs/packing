@@ -11,14 +11,14 @@ export default {
     mockPageInit: 'mock/pages',
 
     // webpack打包入口JS文件目录
-    entries: 'src/entries/html/{pagename}.js',
+    entries: 'src/entries/{pagename}.js',
 
     // 模版目录，如果模版支持继承或layout的话
     // 模板一般会再区分布局文件(layout)和网页文件(pages)
-    templates: 'src/templates/html',
+    templates: 'src/templates',
 
     // 模版网页文件，如果没有使用layout的话，保持这个地址和`templates`一样
-    templatesPages: 'src/templates/html',
+    templatesPages: 'src/templates/pages',
 
     // 编译输出产物目录
     dist: 'prd',
@@ -31,14 +31,14 @@ export default {
     templatesDist: 'prd/templates',
 
     // 编译后的模版网页文件，如果没有使用layout的话，保持这个地址和`templatesDist`一样
-    templatesDistPages: 'prd/templates'
+    templatesDistPages: 'prd/templates/pages'
   },
 
-  // 模版类型，用数组形式支持多种模版，如 ['html', 'jade']
+  // 模版类型，用数组形式支持多种模版，如 ['html', 'pug']
   // 新增模版后，需要在webpack配置中加上对应的loader
-  templateLoader: 'html',
-  // 模版文件扩展名，用数组形式支持多种模版，如 ['.html', '.jade']
-  templateExtension: '.html',
+  templateLoader: 'pug',
+  // 模版文件扩展名，用数组形式支持多种模版，如 ['.html', '.pug']
+  templateExtension: '.pug',
 
   // webserver端口
   port: {
@@ -64,9 +64,9 @@ export default {
   // require! 表示使用本地mock文件
   rewriteRules: {
     // 网站URL与模版的对应路由关系
-    '^/$': '/index.html',
-    '^/list$': '/list.html',
-    '^/detail/abc$': '/detail/demo.html',
+    '^/$': '/index.pug.html',
+    '^/list$': '/list.pug.html',
+    '^/detail$': '/detail.pug.html',
 
     // API转发
     '^/api/(.*)': 'require!/mock/api/$1.js',
