@@ -43,7 +43,7 @@ const initConfig = () => {
 
   packingGlob(pattern, globOptions).forEach(page => {
     console.log(`template page: ${page}`);
-    const ext = path.extname(page);
+    const ext = path.extname(page).toLowerCase();
     let key = page.replace(ext, '');
     // 写入页面级别的配置
     if (entryConfig[key]) {

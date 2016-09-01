@@ -20,7 +20,7 @@ const pattern = isArray(templateExtension) && templateExtension.length > 1 ?
   `**/*${templateExtension}`;
 
 packingGlob(pattern, globOptions).forEach(page => {
-  const ext = path.extname(page);
+  const ext = path.extname(page).toLowerCase();
   const templateInitData = path.resolve(mockPageInit, page.replace(ext, jsExt));
   htmlWebpackPluginConfig.push({
     filename: ext === '.html' ? page : `${page}.html`,
