@@ -142,7 +142,7 @@ const webpackConfig = (options) => {
       { test: /\.less$/, loader: styleLoaderString('less') },
       { test: /\.scss$/, loader: styleLoaderString('sass') },
       { test: /\.json$/, loader: 'json' },
-      { test: /\.(jpg|png|gif|ttf|woff|woff2|eot|svg)$/, loader: 'url?name=[name]-[hash:8].[ext]&limit=10000' },
+      { test: /\.(jpg|png|gif|mp3|ttf|woff|woff2|eot|svg)$/, loader: 'file' },
       { test: /\.(jade|pug)$/, loader: 'pug' },
       { test: /\.html$/, loader: 'html' },
       { test: /\.ejs$/, loader: 'ejs' },
@@ -158,7 +158,7 @@ const webpackConfig = (options) => {
     alias: {
       'env-alias': path.resolve(__dirname, '../src/config/env', process.env.NODE_ENV)
     },
-    modulesDirectories: [ 'src', 'node_modules' ],
+    modulesDirectories: [ 'src', 'static', 'node_modules' ],
     extensions: ['', '.json', '.js', '.jsx']
   };
 
