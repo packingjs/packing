@@ -21,30 +21,30 @@
 ### Install
 
 1. 安装`yo`和`generator-packing`
-```
-npm install -g yo generator-packing
-```
+  ```
+  npm install -g yo generator-packing
+  ```
 
 2. 生成你的网站
-```
-yo packing
-```
+  ```
+  yo packing
+  ```
 
 3. 启动开发模式
-```
-npm run serve
-```
+  ```
+  npm run serve
+  ```
 
 4. 在浏览器中预览网站 `http://localhost:3001`
 
 5. 其他命令
-```
-# 编译工程
-npm run build
+  ```
+  # 编译工程
+  npm run build
 
-# 编译并预览编译结果
-npm run serve:dist
-```
+  # 编译并预览编译结果
+  npm run serve:dist
+  ```
 
 ### Features
 - [x]react支持
@@ -118,7 +118,9 @@ npm run serve:dist
 
 ### 约定
 * 每个网页模版有一个对应的js入口文件 `entry.js`，保证 `entry.js`的目录结构和网页模版的目录结构一致
-* 网页模版中对静态资源引用时使用绝对路径，如 `/logo/qunar.png`
+* 网页模版中对静态资源引用时使用绝对路径，如 `<script src='/logo/qunar.png'>`
+* js中对静态资源引用时使用相对路径，如 `import logo from '../../logo.png'`
+* css中对静态资源引用时使用波浪线`~`开头相对路径，如 `background:url(~/logo.png)`
 
 ### Others
 ```
