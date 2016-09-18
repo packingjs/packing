@@ -121,7 +121,7 @@
 * 网页模版中对静态资源引用时使用绝对路径，如 `<script src='/logo/qunar.png'>`
 * js中对静态资源引用时使用相对路径，如 `import logo from '../../logo.png'`
 * css中对静态资源引用时使用波浪线`~`开头相对路径，如 `background:url(~/logo.png)`
-* js中也可以用`process.env.CDN_ROOT`获取到资源的uri地址，从而手工拼接url
+* js中也可以用`process.env.CDN_ROOT`获取到静态资源的uri地址，从而手工拼接url，这种方式引入的静态资源不会做md5
 
 ### Others
 ```
