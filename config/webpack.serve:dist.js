@@ -27,7 +27,7 @@ packingGlob(pattern, globOptions).forEach(page => {
     template: path.resolve(templatesDistPages, page),
     templateInitData,
     cache: false,
-    inject: false,
+    inject: false
   });
 });
 
@@ -37,7 +37,7 @@ const assetsPath = path.resolve(projectRootPath, dist);
 
 const output = {
   // prd环境静态文件输出地址
-  path: assetsPath,
+  path: assetsPath
 };
 
 const moduleConfig = {
@@ -47,7 +47,7 @@ const moduleConfig = {
     { test: /\.ejs$/, loader: 'ejs' },
     { test: /\.(tpl|smarty)$/, loader: 'smarty' },
     { test: /\.handlebars$/, loader: 'handlebars' },
-    { test: /\.mustache$/, loader: 'mustache' },
+    { test: /\.mustache$/, loader: 'mustache' }
   ]
 };
 
@@ -56,5 +56,5 @@ const plugins = htmlWebpackPluginConfig.map((item) => new HtmlWebpackPlugin(item
 export default {
   output,
   module: moduleConfig,
-  plugins,
+  plugins
 };

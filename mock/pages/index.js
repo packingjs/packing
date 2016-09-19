@@ -7,7 +7,7 @@
  * @param {object} res - HTTP response object
  * @return {object} Mock json data
  */
- 
+
 export default {
   name: 'world',
   languages: [

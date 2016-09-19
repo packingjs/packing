@@ -25,13 +25,14 @@ const {
   entries,
   assets,
   assetsDist,
-  templatesDist,
+  templatesDist
 } = packing.path;
 const { templateExtension } = packing;
 const cwd = process.cwd();
 const pattern = isArray(templateExtension) && templateExtension.length > 1 ?
   `**/*{${templateExtension.join(',')}}` :
   `**/*${templateExtension}`;
+
 
  /**
   * 根据文件的目录结构生成entry配置
@@ -94,7 +95,7 @@ const webpackConfig = (options) => {
     // prd环境静态文件输出地址
     path: assetsPath,
     // dev环境下数据流访问地址
-    publicPath: '',
+    publicPath: ''
   };
 
   /* eslint-disable */

@@ -1,5 +1,3 @@
-console.log('---env: dev---');
-
 export default {
 
   // CDN根目录

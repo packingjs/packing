@@ -18,7 +18,7 @@ const {
   assetsDist,
   entries,
   templatesPages,
-  mockPageInit,
+  mockPageInit
 } = packing.path;
 const { templateExtension } = packing;
 const cwd = process.cwd();
@@ -84,7 +84,7 @@ const initConfig = () => {
       filename: ext === '.html' ? page : `${page}.html`,
       template: path.resolve(templatesPages, page),
       cache: false,
-      inject: false,
+      inject: false
     };
     if (existsSync(templateInitData)) {
       htmlFile.templateInitData = templateInitData;
@@ -130,7 +130,7 @@ const webpackConfig = (options) => {
     // prd环境静态文件输出地址
     path: assetsPath,
     // dev环境下数据流访问地址
-    publicPath: '',
+    publicPath: ''
     // publicPath: '/js/'
   };
 

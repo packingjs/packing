@@ -4,12 +4,12 @@ import { Provider } from 'react-redux';
 import { createStore, compose } from 'redux';
 import DevTools from '../DevTools/DevTools';
 
-export function entry(component, store, rootElement) {
+export default function entry(component, store, rootElement) {
   const enhancer = compose(
     DevTools.instrument()
   );
 
-  let entryStore = createStore(store, enhancer);
+  const entryStore = createStore(store, enhancer);
   let entryComponent = component;
 
   if (__DEVTOOLS__ && !window.devToolsExtension) {
