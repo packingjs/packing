@@ -172,7 +172,7 @@ sodu vi `which npm-cache`
 
 #### js文件中如何使用图片、字体等静态资源
 假设文件目录结构如下：
-```js
+```
 ├── /hotel/
 │   └── /entries/
 │       └── /index.js
