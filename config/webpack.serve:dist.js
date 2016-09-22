@@ -42,12 +42,12 @@ const output = {
 
 const moduleConfig = {
   loaders: [
-    { test: /\.(jade|pug)$/, loader: 'pug' },
-    { test: /\.html$/, loader: 'html' },
-    { test: /\.ejs$/, loader: 'ejs' },
-    { test: /\.(tpl|smarty)$/, loader: 'smarty' },
-    { test: /\.handlebars$/, loader: 'handlebars' },
-    { test: /\.mustache$/, loader: 'mustache' }
+    { test: /\.(jade|pug)$/i, loader: 'pug' },
+    { test: /\.html$/i, loader: 'html' },
+    { test: /\.ejs$/i, loader: 'ejs' },
+    { test: /\.(tpl|smarty)$/i, loader: 'smarty' },
+    { test: /\.handlebars$/i, loader: 'handlebars' },
+    { test: /\.mustache$/i, loader: 'mustache' }
   ]
 };
 

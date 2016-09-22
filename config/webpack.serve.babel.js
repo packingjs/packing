@@ -12,7 +12,7 @@ import DashboardPlugin from 'webpack-dashboard/plugin';
 import HtmlWebpackPlugin from 'packing-html-webpack-plugin';
 import packingGlob from 'packing-glob';
 import autoprefixer from 'autoprefixer';
-import packing from './packing';
+import packing, { assetExtensions } from './packing';
 
 const {
   assetsDist,
@@ -136,18 +136,18 @@ const webpackConfig = (options) => {
   /* eslint-disable */
   let moduleConfig = {
     loaders: [
-      { test: /\.js?$/, loaders: ['babel', 'eslint'], exclude: /node_modules/ },
-      { test: /\.css$/, loader: styleLoaderString() },
-      { test: /\.less$/, loader: styleLoaderString('less') },
-      { test: /\.scss$/, loader: styleLoaderString('sass') },
-      { test: /\.json$/, loader: 'json' },
-      { test: /\.(jpg|png|gif|mp3|ttf|woff|woff2|eot|svg)$/, loader: 'file' },
-      { test: /\.(jade|pug)$/, loader: 'pug' },
-      { test: /\.html$/, loader: 'html' },
-      { test: /\.ejs$/, loader: 'ejs' },
-      { test: /\.(tpl|smart)$/, loader: 'smarty' },
-      { test: /\.handlebars$/, loader: 'handlebars' },
-      { test: /\.mustache$/, loader: 'mustache' },
+      { test: /\.js?$/i, loaders: ['babel', 'eslint'], exclude: /node_modules/ },
+      { test: /\.css$/i, loader: styleLoaderString() },
+      { test: /\.less$/i, loader: styleLoaderString('less') },
+      { test: /\.scss$/i, loader: styleLoaderString('sass') },
+      { test: /\.json$/i, loader: 'json' },
+      { test: new RegExp(`\.(${assetExtensions.join('|')})$`, 'i'), loader: 'file' },
+      { test: /\.(jade|pug)$/i, loader: 'pug' },
+      { test: /\.html$/i, loader: 'html' },
+      { test: /\.ejs$/i, loader: 'ejs' },
+      { test: /\.(tpl|smart)$/i, loader: 'smarty' },
+      { test: /\.handlebars$/i, loader: 'handlebars' },
+      { test: /\.mustache$/i, loader: 'mustache' },
     ]
   };
 

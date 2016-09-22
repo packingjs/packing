@@ -16,7 +16,7 @@ import ReplaceHashWebpackPlugin from 'replace-hash-webpack-plugin';
 import strip from 'strip-loader';
 import autoprefixer from 'autoprefixer';
 import packingGlob from 'packing-glob';
-import packing from './packing';
+import packing, { assetExtensions } from './packing';
 
 const {
   dist,
@@ -101,12 +101,12 @@ const webpackConfig = (options) => {
   /* eslint-disable */
   let moduleConfig = {
     loaders: [
-      { test: /\.js?$/, loaders: [strip.loader('debug'), 'babel'], exclude: /node_modules/},
-      { test: /\.css$/, loader: styleLoaderString() },
-      { test: /\.less$/, loader: styleLoaderString('less') },
-      { test: /\.scss$/, loader: styleLoaderString('sass') },
-      { test: /\.json$/, loader: 'json' },
-      { test: /\.(jpg|png|gif|mp3|ttf|woff|woff2|eot|svg)$/, loader: 'url?name=[1]-[hash:8].[ext]&limit=100' },
+      { test: /\.js?$/i, loaders: [strip.loader('debug'), 'babel'], exclude: /node_modules/},
+      { test: /\.css$/i, loader: styleLoaderString() },
+      { test: /\.less$/i, loader: styleLoaderString('less') },
+      { test: /\.scss$/i, loader: styleLoaderString('sass') },
+      { test: /\.json$/i, loader: 'json' },
+      { test: new RegExp(`\.(${assetExtensions.join('|')})$`, 'i'), loader: 'url?name=[1]-[hash:8].[ext]&limit=100' },
     ]
   };
 
