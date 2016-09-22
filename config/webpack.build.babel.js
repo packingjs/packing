@@ -106,7 +106,10 @@ const webpackConfig = (options) => {
       { test: /\.less$/i, loader: styleLoaderString('less') },
       { test: /\.scss$/i, loader: styleLoaderString('sass') },
       { test: /\.json$/i, loader: 'json' },
-      { test: new RegExp(`\.(${assetExtensions.join('|')})$`, 'i'), loader: `url?name=[1]-[hash:${fileHashLength}].[ext]&limit=100` },
+      {
+        test: new RegExp(`\.(${assetExtensions.join('|')})$`, 'i'),
+        loader: `url?name=[path][name]-[hash:${fileHashLength}].[ext]&context=${assets}&limit=100`
+      },
     ]
   };
 
@@ -208,9 +211,6 @@ const webpackConfig = (options) => {
     module: moduleConfig,
     postcss,
     resolve,
-    fileLoader: {
-      regExp: new RegExp(`${assets}/(.*)\\.`)
-    },
     plugins,
   };
 };

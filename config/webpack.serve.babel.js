@@ -141,7 +141,10 @@ const webpackConfig = (options) => {
       { test: /\.less$/i, loader: styleLoaderString('less') },
       { test: /\.scss$/i, loader: styleLoaderString('sass') },
       { test: /\.json$/i, loader: 'json' },
-      { test: new RegExp(`\.(${assetExtensions.join('|')})$`, 'i'), loader: 'file?name=[1].[ext]&emitFile=false' },
+      {
+        test: new RegExp(`\.(${assetExtensions.join('|')})$`, 'i'),
+        loader: `file?name=[path][name].[ext]&context=${assets}&emitFile=false`
+      },
       { test: /\.(jade|pug)$/i, loader: 'pug' },
       { test: /\.html$/i, loader: 'html' },
       { test: /\.ejs$/i, loader: 'ejs' },
@@ -207,9 +210,9 @@ const webpackConfig = (options) => {
     resolve,
     plugins,
     devtool,
-    fileLoader: {
-      regExp: new RegExp(`${assets}/(.*)\\.`)
-    }
+    // fileLoader: {
+    //   regExp: new RegExp(`${assets}/(.*)\\.`)
+    // }
   };
 };
 
