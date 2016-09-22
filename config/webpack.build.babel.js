@@ -19,6 +19,7 @@ import packingGlob from 'packing-glob';
 import packing, { assetExtensions, fileHashLength } from './packing';
 
 const {
+  src,
   dist,
   templates,
   templatesPages,
@@ -98,10 +99,9 @@ const webpackConfig = (options) => {
     publicPath: ''
   };
 
-  /* eslint-disable */
-  let moduleConfig = {
+  const moduleConfig = {
     loaders: [
-      { test: /\.js?$/i, loaders: [strip.loader('debug'), 'babel'], exclude: /node_modules/},
+      { test: /\.js?$/i, loaders: [strip.loader('debug'), 'babel'], exclude: /node_modules/ },
       { test: /\.css$/i, loader: styleLoaderString() },
       { test: /\.less$/i, loader: styleLoaderString('less') },
       { test: /\.scss$/i, loader: styleLoaderString('sass') },
@@ -109,7 +109,7 @@ const webpackConfig = (options) => {
       {
         test: new RegExp(`\.(${assetExtensions.join('|')})$`, 'i'),
         loader: `url?name=[path][name]-[hash:${fileHashLength}].[ext]&context=${assets}&limit=100`
-      },
+      }
     ]
   };
 
@@ -119,7 +119,7 @@ const webpackConfig = (options) => {
     alias: {
       'env-alias': path.resolve(__dirname, '../src/config/env', process.env.NODE_ENV)
     },
-    modulesDirectories: [ 'src', 'assets', 'node_modules' ]
+    modulesDirectories: [src, assets, 'node_modules']
   };
 
   // const ignoreRevPattern = '**/big.jpg';
@@ -141,19 +141,19 @@ const webpackConfig = (options) => {
     }),
 
     new webpack.DefinePlugin({
-      '__DEVTOOLS__': false,
+      // '__DEVTOOLS__': false,
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
         CDN_ROOT: JSON.stringify(process.env.CDN_ROOT)
-      },
+      }
     }),
 
     new ReplaceHashWebpackPlugin({
       assetsDomain: process.env.CDN_ROOT,
       cwd: templates,
       src: pattern,
-      dest: templatesDist,
-    }),
+      dest: templatesDist
+    })
 
     // new RevWebpackPlugin({
     //   cwd: assets,
@@ -185,10 +185,10 @@ const webpackConfig = (options) => {
         compress: {
           warnings: false,
           drop_debugger: true,
-          drop_console: true,
+          drop_console: true
         },
         comments: /^!/,
-        sourceMap: options.sourceMap,
+        sourceMap: options.sourceMap
       })
     );
   }
@@ -211,7 +211,7 @@ const webpackConfig = (options) => {
     module: moduleConfig,
     postcss,
     resolve,
-    plugins,
+    plugins
   };
 };
 
@@ -219,5 +219,5 @@ export default webpackConfig({
   devtool: false,
   longTermCaching: true,
   minimize: true,
-  sourceMap: false,
+  sourceMap: false
 });

@@ -15,6 +15,7 @@ import autoprefixer from 'autoprefixer';
 import packing, { assetExtensions } from './packing';
 
 const {
+  src,
   assets,
   assetsDist,
   entries,
@@ -133,8 +134,7 @@ const webpackConfig = (options) => {
     // publicPath: '/js/'
   };
 
-  /* eslint-disable */
-  let moduleConfig = {
+  const moduleConfig = {
     loaders: [
       { test: /\.js?$/i, loaders: ['babel', 'eslint'], exclude: /node_modules/ },
       { test: /\.css$/i, loader: styleLoaderString() },
@@ -150,7 +150,7 @@ const webpackConfig = (options) => {
       { test: /\.ejs$/i, loader: 'ejs' },
       { test: /\.(tpl|smart)$/i, loader: 'smarty' },
       { test: /\.handlebars$/i, loader: 'handlebars' },
-      { test: /\.mustache$/i, loader: 'mustache' },
+      { test: /\.mustache$/i, loader: 'mustache' }
     ]
   };
 
@@ -160,7 +160,7 @@ const webpackConfig = (options) => {
     alias: {
       'env-alias': path.resolve(__dirname, '../src/config/env', process.env.NODE_ENV)
     },
-    modulesDirectories: [ 'src', 'assets', 'node_modules' ]
+    modulesDirectories: [src, assets, 'node_modules']
   };
 
   const plugins = htmlWebpackPluginConfig;
@@ -179,11 +179,11 @@ const webpackConfig = (options) => {
 
   plugins.push(
     new webpack.DefinePlugin({
-      '__DEVTOOLS__': true,
+      // '__DEVTOOLS__': true,
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
         CDN_ROOT: JSON.stringify(process.env.CDN_ROOT)
-      },
+      }
     }),
     new DashboardPlugin()
   );
@@ -209,10 +209,7 @@ const webpackConfig = (options) => {
     postcss,
     resolve,
     plugins,
-    devtool,
-    // fileLoader: {
-    //   regExp: new RegExp(`${assets}/(.*)\\.`)
-    // }
+    devtool
   };
 };
 
