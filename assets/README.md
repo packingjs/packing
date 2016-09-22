@@ -10,9 +10,9 @@
 ├── /hotel/
 │   └── /entries/
 │       └── /index.js
-└── /assets/                              # 模拟数据
-    └── /images/                           # API接口类型模拟数据
-        └── /logo.png                        # 页面初始化类型模拟数据
+└── /assets/
+    └── /images/
+        └── /logo.png
 
 ```
 有两种方式能将静态资源引入JavaScript中：

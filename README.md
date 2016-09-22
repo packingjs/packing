@@ -91,6 +91,7 @@
 
 ```
 .
+├── /assets/                            # 静态资源，如图片、字体
 ├── /config/                            # webpack配置文件
 │   ├── /packing.js                     # 和构建工具相关的配置
 │   ├── /webpack.build.babel.js         # webpack编译环境配置文件
@@ -104,7 +105,6 @@
 │   ├── /config/                        # 和网站运行相关的配置，如dev/beta环境差异变量
 │   ├── /entries/                       # webpack打包入口js
 │   └── /templates/                     # 后端模版，如jade、smarty
-├── /assets/                            # 静态资源，如图片、字体
 ├── /tools/                             # packing脚本
 │   ├── /serve.js                       # serve脚本
 │   └── /serve:dist.js                  # serve:dist脚本
