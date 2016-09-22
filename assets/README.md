@@ -1,4 +1,4 @@
-# static
+# assets
 存放静态文件的目录，如图片、字体等，不存放代码类文件，如CSS、JavaScript
 
 ## 约定

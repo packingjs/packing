@@ -11,7 +11,7 @@ export default {
     src: 'src',
 
     // 静态文件目录，可以设置在src里，也可以设置在src外
-    assets: 'static',
+    assets: 'assets',
 
     // 页面初始化mock数据文件存放目录
     mockPageInit: 'mock/pages',
@@ -87,7 +87,7 @@ export default {
   // require! 表示使用本地mock文件
   rewriteRules: {
     // 网站URL与模版的对应路由关系
-    '^/$': '/index.pug.html',
+    '^/a/b/c$': '/index.pug.html',
     '^/list$': '/list.pug.html',
     '^/detail$': '/detail.pug.html',
 

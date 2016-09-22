@@ -160,7 +160,7 @@ const webpackConfig = (options) => {
     alias: {
       'env-alias': path.resolve(__dirname, '../src/config/env', process.env.NODE_ENV)
     },
-    modulesDirectories: [ 'src', 'static', 'node_modules' ]
+    modulesDirectories: [ 'src', 'assets', 'node_modules' ]
   };
 
   const plugins = htmlWebpackPluginConfig;
