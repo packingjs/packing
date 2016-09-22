@@ -16,6 +16,7 @@
 
 ```
 有两种方式能将静态资源引入JavaScript中：
+
 1. 使用webpack的require机制（推荐）<br>
 require或import时使用静态资源相对路径，有两种相对路径可用：
   - 静态文件相对于当前JavaScript文件的相对路径
@@ -41,6 +42,7 @@ require或import时使用静态资源相对路径，有两种相对路径可用�
   var a = new Image();
   a.src = `/${logo}`;
   ```
+  
 2. 手动拼资源的URL地址，获取到静态资源的uri地址 `process.env.CDN_ROOT`，从而手工拼接url，这种方式引入的静态资源不会做md5
 
   ```
