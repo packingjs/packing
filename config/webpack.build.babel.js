@@ -12,7 +12,7 @@ import CleanPlugin from 'clean-webpack-plugin';
 // import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import ReplaceHashWebpackPlugin from 'replace-hash-webpack-plugin';
-import RevWebpackPlugin from 'packing-rev-webpack-plugin';
+// import RevWebpackPlugin from 'packing-rev-webpack-plugin';
 import strip from 'strip-loader';
 import autoprefixer from 'autoprefixer';
 import packingGlob from 'packing-glob';
@@ -42,7 +42,7 @@ const initConfig = () => {
   const entryConfig = {};
   const globOptions = { cwd: path.resolve(cwd, templatesPages) };
 
-  packingGlob(pattern, globOptions).forEach(page => {
+  packingGlob(pattern, globOptions).forEach((page) => {
     console.log(`template page: ${page}`);
     const ext = path.extname(page).toLowerCase();
     let key = page.replace(ext, '');
@@ -106,7 +106,7 @@ const webpackConfig = (options) => {
       { test: /\.less$/, loader: styleLoaderString('less') },
       { test: /\.scss$/, loader: styleLoaderString('sass') },
       { test: /\.json$/, loader: 'json' },
-      { test: /\.(jpg|png|gif|mp3|ttf|woff|woff2|eot|svg)$/, loader: 'url?name=[path][name]-[hash:8].[ext]&limit=10000' },
+      { test: /\.(jpg|png|gif|mp3|ttf|woff|woff2|eot|svg)$/, loader: 'url?name=[1]-[hash:8].[ext]&limit=100' },
     ]
   };
 
@@ -153,11 +153,11 @@ const webpackConfig = (options) => {
       dest: templatesDist,
     }),
 
-    new RevWebpackPlugin({
-      cwd: assets,
-      src: ['**/*', '!**/*.md'], // 忽略md文件
-      dest: assetsDist,
-    }),
+    // new RevWebpackPlugin({
+    //   cwd: assets,
+    //   src: ['**/*', '!**/*.md'], // 忽略md文件
+    //   dest: assetsDist,
+    // }),
   ];
 
   // 从配置文件中获取并生成webpack打包配置
@@ -178,7 +178,7 @@ const webpackConfig = (options) => {
     plugins.push(
       // optimizations
       new webpack.optimize.DedupePlugin(),
-      new webpack.optimize.OccurenceOrderPlugin(),
+      new webpack.optimize.OccurrenceOrderPlugin(),
       new webpack.optimize.UglifyJsPlugin({
         compress: {
           warnings: false,
@@ -209,6 +209,9 @@ const webpackConfig = (options) => {
     module: moduleConfig,
     postcss,
     resolve,
+    fileLoader: {
+      regExp: new RegExp(`${assets}/(.*)\\.`)
+    },
     plugins,
   };
 };

@@ -40,7 +40,7 @@ const pushClientJS = (entry, reload) => {
   } else if (isArray(newEntry)) {
     newEntry.unshift(clientJS);
   } else if (isObject(newEntry)) {
-    Object.keys(newEntry).forEach(key => {
+    Object.keys(newEntry).forEach((key) => {
       newEntry[key] = pushClientJS(newEntry[key], reload);
     });
   }
@@ -60,7 +60,7 @@ const initConfig = () => {
     `**/*{${templateExtension.join(',')}}` :
     `**/*${templateExtension}`;
 
-  packingGlob(pattern, globOptions).forEach(page => {
+  packingGlob(pattern, globOptions).forEach((page) => {
     const ext = path.extname(page).toLowerCase();
     let key = page.replace(ext, '');
     // 写入页面级别的配置
@@ -118,7 +118,6 @@ const webpackConfig = (options) => {
   const projectRootPath = path.resolve(__dirname, '../');
   const assetsPath = path.resolve(projectRootPath, assetsDist);
   const chunkhash = options.longTermCaching ? '-[chunkhash:8]' : '';
-  const progress = options.progress;
   const context = path.resolve(__dirname, '..');
   const devtool = options.devtool;
 
@@ -202,7 +201,6 @@ const webpackConfig = (options) => {
 
   return {
     context,
-    progress,
     entry,
     output,
     module: moduleConfig,
@@ -214,7 +212,6 @@ const webpackConfig = (options) => {
 };
 
 export default webpackConfig({
-  progress: true,
   hot: true,
   // 检测到module有变化时，强制刷新页面
   reload: false,
