@@ -1,7 +1,7 @@
 {
   "name": "packing",
   "description": "",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "repository": "zhongzhi107/packing",
   "keywords": [
     "webpack"
