@@ -66,6 +66,20 @@ export default {
     ]
   },
 
+  // 静态资源类型
+  assetExtensions: [
+    'jpg',
+    'jpeg',
+    'png',
+    'gif',
+    'mp3',
+    'ttf',
+    'woff',
+    'woff2',
+    'eot',
+    'svg'
+  ],
+
   // URL转发路由规则配置
   // require! 表示使用本地mock文件
   rewriteRules: {
