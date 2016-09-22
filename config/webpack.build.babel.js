@@ -136,7 +136,7 @@ const webpackConfig = (options) => {
     // }]),
 
     // css files from the extract-text-plugin loader
-    new ExtractTextPlugin(`[name]${contenthash}.css`, {
+    new ExtractTextPlugin(`css/[name]${contenthash}.css`, {
       allChunks: true
     }),
 

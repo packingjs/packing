@@ -49,7 +49,7 @@ export default {
   // webserver端口
   port: {
     // 开发环境端口号
-    dev: 3001,
+    dev: 8081,
     // 预览编译后结果的端口号
     dist: 8080
   },
