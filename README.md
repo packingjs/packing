@@ -119,9 +119,7 @@
 ### 约定
 * 每个网页模版有一个对应的js入口文件 `entry.js`，保证 `entry.js`的目录结构和网页模版的目录结构一致
 * 网页模版中对静态资源引用时使用绝对路径，如 `<script src='/logo/qunar.png'>`
-* js中对静态资源引用时使用相对路径，如 `import logo from '../../logo.png'`
 * css中对静态资源引用时使用波浪线`~`开头相对路径，如 `background:url(~/logo.png)`
-* js中也可以用`process.env.CDN_ROOT`获取到静态资源的uri地址，从而手工拼接url，这种方式引入的静态资源不会做md5
 
 ### Others
 ```
@@ -166,21 +164,53 @@ sodu vi `which npm-cache`
 
 ### 常见问题
 
-#### 迁移已有的项目
-
-#### 新建项目
-
 #### 如何配置和线上环境一样的路由
 路由规则修改后需要重启`npm run serve`
-
-#### 如何模拟数据
-
-#### 如何让文件在编译过程不做reversion
 
 #### eslint错误太多了
 根据团队的实际代码风格，修改 `.eslintrc`
 
-#### schema怎么配置
+#### js文件中如何使用图片、字体等静态资源
+假设文件目录结构如下：
+```
+├── /hotel/
+│   └── /entries/
+│       └── /index.js
+└── /assets/                              # 模拟数据
+    └── /images/                           # API接口类型模拟数据
+        └── /logo.png                        # 页面初始化类型模拟数据
+
+```
+有两种方式能将静态资源引入JavaScript中：
+1. 使用webpack的require机制（推荐）<br>
+require或import时使用静态资源相对路径，有两种相对路径可用：
+  - 静态文件相对于当前JavaScript文件的相对路径
+  ```
+  // index.js
+  import logo from '../../assets/images/logo.png';
+  ```
+  当文件目录层级比较深时，这种方式书写较费劲
+  - 静态文件相对于`assets`的相对路径
+  ```
+  // index.js
+  import logo from 'images/logo.png';
+  ```
+  这种方式比较简洁
+  无论使用上述哪种方式引入的静态资源，使用时都必须使用绝对路径
+  ```
+  // index.js
+  import logo from '../../assets/images/logo.png';
+  // import logo from 'images/logo.png';
+  var a = new Image();
+  a.src = `/${logo}`;
+  ```
+2. 手动拼资源的URL地址，获取到静态资源的uri地址 `process.env.CDN_ROOT`，从而手工拼接url，这种方式引入的静态资源不会做md5
+  ```
+  // index.js
+  var a = new Image();
+  a.src = process.env.CDN_ROOT + '/images/logo.png';
+  ```
+
 
 #### webpackJsonp is not defined
 可能配置了common chunks，公共文件打到了vendor.js，需要在页面引用vendor.js，
@@ -191,3 +221,13 @@ sodu vi `which npm-cache`
 ```html
 <link href="/vendor.css" media="all" rel="stylesheet" />
 ```
+
+#### 迁移已有的项目
+
+#### 新建项目
+
+#### 如何模拟数据
+
+#### 如何让文件在编译过程不做reversion
+
+#### schema怎么配置
