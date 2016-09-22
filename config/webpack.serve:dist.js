@@ -12,23 +12,25 @@ import packing from './packing';
 
 const { templateExtension } = packing;
 const { dist, templatesDistPages, mockPageInit } = packing.path;
-const htmlWebpackPluginConfig = [];
+const plugins = [];
 const globOptions = { cwd: path.resolve(templatesDistPages) };
 const jsExt = '.js';
 const pattern = isArray(templateExtension) && templateExtension.length > 1 ?
   `**/*{${templateExtension.join(',')}}` :
   `**/*${templateExtension}`;
 
-packingGlob(pattern, globOptions).forEach(page => {
+packingGlob(pattern, globOptions).forEach((page) => {
   const ext = path.extname(page).toLowerCase();
   const templateInitData = path.resolve(mockPageInit, page.replace(ext, jsExt));
-  htmlWebpackPluginConfig.push({
-    filename: ext === '.html' ? page : `${page}.html`,
-    template: path.resolve(templatesDistPages, page),
-    templateInitData,
-    cache: false,
-    inject: false
-  });
+  plugins.push(
+    new HtmlWebpackPlugin({
+      filename: ext === '.html' ? page : `${page}.html`,
+      template: path.resolve(templatesDistPages, page),
+      templateInitData,
+      cache: false,
+      inject: false
+    })
+  );
 });
 
 
@@ -50,8 +52,6 @@ const moduleConfig = {
     { test: /\.mustache$/i, loader: 'mustache' }
   ]
 };
-
-const plugins = htmlWebpackPluginConfig.map((item) => new HtmlWebpackPlugin(item));
 
 export default {
   output,

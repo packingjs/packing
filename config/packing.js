@@ -80,6 +80,9 @@ export default {
     'svg'
   ],
 
+  // 静态文件md5保留长度
+  fileHashLength: 8,
+
   // URL转发路由规则配置
   // require! 表示使用本地mock文件
   rewriteRules: {

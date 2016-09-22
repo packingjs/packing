@@ -15,6 +15,7 @@ import autoprefixer from 'autoprefixer';
 import packing, { assetExtensions } from './packing';
 
 const {
+  assets,
   assetsDist,
   entries,
   templatesPages,
@@ -89,7 +90,7 @@ const initConfig = () => {
     if (existsSync(templateInitData)) {
       htmlFile.templateInitData = templateInitData;
     }
-    htmlWebpackPluginConfig.push(htmlFile);
+    htmlWebpackPluginConfig.push(new HtmlWebpackPlugin(htmlFile));
   });
 
   return {
@@ -117,15 +118,14 @@ const webpackConfig = (options) => {
   const { entryConfig, htmlWebpackPluginConfig } = initConfig();
   const projectRootPath = path.resolve(__dirname, '../');
   const assetsPath = path.resolve(projectRootPath, assetsDist);
-  const chunkhash = options.longTermCaching ? '-[chunkhash:8]' : '';
   const context = path.resolve(__dirname, '..');
   const devtool = options.devtool;
 
   let entry = entryConfig;
 
   const output = {
-    chunkFilename: `[name]${chunkhash}.js`,
-    filename: `[name]${chunkhash}.js`,
+    chunkFilename: '[name].js',
+    filename: '[name].js',
     // prd环境静态文件输出地址
     path: assetsPath,
     // dev环境下数据流访问地址
@@ -141,7 +141,7 @@ const webpackConfig = (options) => {
       { test: /\.less$/i, loader: styleLoaderString('less') },
       { test: /\.scss$/i, loader: styleLoaderString('sass') },
       { test: /\.json$/i, loader: 'json' },
-      { test: new RegExp(`\.(${assetExtensions.join('|')})$`, 'i'), loader: 'file' },
+      { test: new RegExp(`\.(${assetExtensions.join('|')})$`, 'i'), loader: 'file?name=[1].[ext]&emitFile=false' },
       { test: /\.(jade|pug)$/i, loader: 'pug' },
       { test: /\.html$/i, loader: 'html' },
       { test: /\.ejs$/i, loader: 'ejs' },
@@ -157,11 +157,10 @@ const webpackConfig = (options) => {
     alias: {
       'env-alias': path.resolve(__dirname, '../src/config/env', process.env.NODE_ENV)
     },
-    modulesDirectories: [ 'src', 'static', 'node_modules' ],
-    extensions: ['', '.json', '.js', '.jsx']
+    modulesDirectories: [ 'src', 'static', 'node_modules' ]
   };
 
-  const plugins = htmlWebpackPluginConfig.map((item) => new HtmlWebpackPlugin(item));
+  const plugins = htmlWebpackPluginConfig;
 
   if (options.hot) {
     entry = pushClientJS(entry, options.reload);
@@ -207,7 +206,10 @@ const webpackConfig = (options) => {
     postcss,
     resolve,
     plugins,
-    devtool
+    devtool,
+    fileLoader: {
+      regExp: new RegExp(`${assets}/(.*)\\.`)
+    }
   };
 };
 

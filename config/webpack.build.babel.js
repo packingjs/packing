@@ -16,7 +16,7 @@ import ReplaceHashWebpackPlugin from 'replace-hash-webpack-plugin';
 import strip from 'strip-loader';
 import autoprefixer from 'autoprefixer';
 import packingGlob from 'packing-glob';
-import packing, { assetExtensions } from './packing';
+import packing, { assetExtensions, fileHashLength } from './packing';
 
 const {
   dist,
@@ -84,8 +84,8 @@ const styleLoaderString = (cssPreprocessor) => {
 const webpackConfig = (options) => {
   const projectRootPath = path.resolve(__dirname, '../');
   const assetsPath = path.resolve(projectRootPath, assetsDist);
-  const chunkhash = options.longTermCaching ? '-[chunkhash:8]' : '';
-  const contenthash = options.longTermCaching ? '-[contenthash:8]' : '';
+  const chunkhash = options.longTermCaching ? `-[chunkhash:${fileHashLength}]` : '';
+  const contenthash = options.longTermCaching ? `-[contenthash:${fileHashLength}]` : '';
   const context = path.resolve(__dirname, '..');
   const entry = initConfig();
 
@@ -106,7 +106,7 @@ const webpackConfig = (options) => {
       { test: /\.less$/i, loader: styleLoaderString('less') },
       { test: /\.scss$/i, loader: styleLoaderString('sass') },
       { test: /\.json$/i, loader: 'json' },
-      { test: new RegExp(`\.(${assetExtensions.join('|')})$`, 'i'), loader: 'url?name=[1]-[hash:8].[ext]&limit=100' },
+      { test: new RegExp(`\.(${assetExtensions.join('|')})$`, 'i'), loader: `url?name=[1]-[hash:${fileHashLength}].[ext]&limit=100` },
     ]
   };
 
@@ -116,8 +116,7 @@ const webpackConfig = (options) => {
     alias: {
       'env-alias': path.resolve(__dirname, '../src/config/env', process.env.NODE_ENV)
     },
-    modulesDirectories: [ 'src', 'static', 'node_modules' ],
-    extensions: ['', '.json', '.js', '.jsx']
+    modulesDirectories: [ 'src', 'static', 'node_modules' ]
   };
 
   // const ignoreRevPattern = '**/big.jpg';
