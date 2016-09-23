@@ -131,7 +131,6 @@ const webpackConfig = (options) => {
     path: assetsPath,
     // dev环境下数据流访问地址
     publicPath: ''
-    // publicPath: '/js/'
   };
 
   const moduleConfig = {
