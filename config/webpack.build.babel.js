@@ -16,7 +16,12 @@ import ReplaceHashWebpackPlugin from 'replace-hash-webpack-plugin';
 import strip from 'strip-loader';
 import autoprefixer from 'autoprefixer';
 import packingGlob from 'packing-glob';
-import packing, { assetExtensions, fileHashLength } from './packing';
+import packing, { assetExtensions, fileHashLength, templateExtension } from './packing';
+
+// js输出文件保持目录名称
+const JS_DIRECTORY_NAME = 'js';
+// js输出文件保持目录名称
+const CSS_DIRECTORY_NAME = 'css';
 
 const {
   src,
@@ -28,7 +33,7 @@ const {
   assetsDist,
   templatesDist
 } = packing.path;
-const { templateExtension } = packing;
+
 const cwd = process.cwd();
 const pattern = isArray(templateExtension) && templateExtension.length > 1 ?
   `**/*{${templateExtension.join(',')}}` :
@@ -91,8 +96,8 @@ const webpackConfig = (options) => {
   const entry = initConfig();
 
   const output = {
-    chunkFilename: `[name]${chunkhash}.js`,
-    filename: `[name]${chunkhash}.js`,
+    chunkFilename: `${JS_DIRECTORY_NAME}/[name]${chunkhash}.js`,
+    filename: `${JS_DIRECTORY_NAME}/[name]${chunkhash}.js`,
     // prd环境静态文件输出地址
     path: assetsPath,
     // dev环境下数据流访问地址
@@ -136,7 +141,7 @@ const webpackConfig = (options) => {
     // }]),
 
     // css files from the extract-text-plugin loader
-    new ExtractTextPlugin(`css/[name]${contenthash}.css`, {
+    new ExtractTextPlugin(`${CSS_DIRECTORY_NAME}/[name]${contenthash}.css`, {
       allChunks: true
     }),
 
