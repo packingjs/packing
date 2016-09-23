@@ -113,7 +113,7 @@ const webpackConfig = (options) => {
       { test: /\.json$/i, loader: 'json' },
       {
         test: new RegExp(`\.(${assetExtensions.join('|')})$`, 'i'),
-        loader: `url?name=[path][name]-[hash:${fileHashLength}].[ext]&context=${assets}&limit=100`
+        loader: `url?name=[path][name]-[hash:${fileHashLength}].[ext]&context=${assets}&limit=100!image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false`
       }
     ]
   };
