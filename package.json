@@ -79,6 +79,7 @@
     "redux-devtools-dock-monitor": "^1.1.1",
     "redux-devtools-log-monitor": "^1.0.11",
     "smarty-loader": "^0.0.1",
+    "velocity-loader": "^1.0.0",
     "webpack-dashboard": "^0.1.8",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.12.1"

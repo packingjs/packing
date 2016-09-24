@@ -149,7 +149,8 @@ const webpackConfig = (options) => {
       { test: /\.ejs$/i, loader: 'ejs' },
       { test: /\.(tpl|smart)$/i, loader: 'smarty' },
       { test: /\.handlebars$/i, loader: 'handlebars' },
-      { test: /\.mustache$/i, loader: 'mustache' }
+      { test: /\.mustache$/i, loader: 'mustache' },
+      { test: /\.vm$/i, loader: 'velocity' }
     ]
   };
 
