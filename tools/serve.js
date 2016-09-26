@@ -8,12 +8,14 @@ import path from 'path';
 import Express from 'express';
 import webpack from 'webpack';
 import urlrewrite from 'packing-urlrewrite';
+import template from 'packing-template-smarty';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackConfig from '../config/webpack.serve.babel';
-import packing from '../config/packing';
+import packing, { rewriteRules } from '../config/packing';
 
-const { src, assets } = packing.path;
+
+const { src, assets, templatesPages, mockPageInit } = packing.path;
 const compiler = webpack(webpackConfig);
 const port = packing.port.dev;
 const serverOptions = {
@@ -30,9 +32,14 @@ const serverOptions = {
 
 const app = new Express();
 app.use(Express.static(path.join(__dirname, '..', assets)));
-app.use(urlrewrite(packing.rewriteRules));
+app.use(urlrewrite(rewriteRules));
 app.use(webpackDevMiddleware(compiler, serverOptions));
 app.use(webpackHotMiddleware(compiler));
+app.use(template({
+  templates: templatesPages,
+  mockData: mockPageInit,
+  rewriteRules
+}));
 
 app.listen(port, (err) => {
   if (err) {

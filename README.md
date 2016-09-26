@@ -51,11 +51,11 @@
 - [x]HMR
 - [x]动态加载
 - [x]支持自定义打包规则和指定common.js
-- [ ]yo-generator
+- [x]yo-generator
 - [ ]集成到QDR中，自动生产job，发布无障碍
 - [x]工程新增的node_modules也能顺利在QDR中发布
 - [x]urlrewrite/自定义路由规则
-- [ ]支持SPA／多入口网站／React Native
+- [x]支持SPA／多入口网站／React Native
 - [x]支持多种资源的引入，如images、fonts、json
 - [x]大size图片在css中引用hash自动更新
 - [x]使用babel，支持ES6、ES7
@@ -67,11 +67,9 @@
 - [x]预览编译后的内容
 - [x]不同环境使用profiles文件
 - [x]redux-devtools
-- [x]同时支持多种模版[html/jade/ejs/handlebars/smarty/velocity/md]
-- [ ]rev-webpack-plugin增加无引用文件删除的参数
+- [x]支持多种模版[html/jade/ejs/handlebars/smarty/velocity]
 - [ ]新版本升级提示
 - [ ]不同的前后端关联方式[maven/npm/bower]
-- [ ]velocity-loader
 
 ### Todo
 - [ ]文档
@@ -95,7 +93,6 @@
 ├── /config/                            # webpack配置文件
 │   ├── /packing.js                     # 和构建工具相关的配置
 │   ├── /webpack.build.babel.js         # webpack编译环境配置文件
-│   ├── /webpack.serve.babel.js         # webpack开发环境配置文件
 │   └── /webpack.serve:dist.js          # webpack预览编译后结果的配置文件
 ├── /mock/                              # 模拟数据
 │   ├── /api/                           # API接口类型模拟数据

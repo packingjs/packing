@@ -9,7 +9,6 @@ import path from 'path';
 import { isString, isArray, isObject, isFunction } from 'util';
 import webpack from 'webpack';
 import DashboardPlugin from 'webpack-dashboard/plugin';
-import HtmlWebpackPlugin from 'packing-html-webpack-plugin';
 import packingGlob from 'packing-glob';
 import autoprefixer from 'autoprefixer';
 import packing, { assetExtensions } from './packing';
@@ -19,8 +18,7 @@ const {
   assets,
   assetsDist,
   entries,
-  templatesPages,
-  mockPageInit
+  templatesPages
 } = packing.path;
 const { templateExtension } = packing;
 const cwd = process.cwd();
@@ -54,9 +52,7 @@ const pushClientJS = (entry, reload) => {
  * @return {object}
  */
 const initConfig = () => {
-  const jsExt = '.js';
   const entryConfig = {};
-  const htmlWebpackPluginConfig = [];
   const globOptions = { cwd: path.resolve(cwd, templatesPages) };
   const pattern = isArray(templateExtension) && templateExtension.length > 1 ?
     `**/*{${templateExtension.join(',')}}` :
@@ -80,23 +76,10 @@ const initConfig = () => {
     } else {
       console.log(`❗️ entry file not exist: ${value}`);
     }
-
-    const templateInitData = path.resolve(mockPageInit, page.replace(ext, jsExt));
-    const htmlFile = {
-      filename: ext === '.html' ? page : `${page}.html`,
-      template: path.resolve(templatesPages, page),
-      cache: false,
-      inject: false
-    };
-    if (existsSync(templateInitData)) {
-      htmlFile.templateInitData = templateInitData;
-    }
-    htmlWebpackPluginConfig.push(new HtmlWebpackPlugin(htmlFile));
   });
 
   return {
-    entryConfig,
-    htmlWebpackPluginConfig
+    entryConfig
   };
 };
 
@@ -116,7 +99,7 @@ const styleLoaderString = (cssPreprocessor) => {
  * @return {object}
  */
 const webpackConfig = (options) => {
-  const { entryConfig, htmlWebpackPluginConfig } = initConfig();
+  const { entryConfig } = initConfig();
   const projectRootPath = path.resolve(__dirname, '../');
   const assetsPath = path.resolve(projectRootPath, assetsDist);
   const context = path.resolve(__dirname, '..');
@@ -143,14 +126,7 @@ const webpackConfig = (options) => {
       {
         test: new RegExp(`\.(${assetExtensions.join('|')})$`, 'i'),
         loader: `file?name=[path][name].[ext]&context=${assets}&emitFile=false`
-      },
-      { test: /\.(jade|pug)$/i, loader: 'pug' },
-      { test: /\.html$/i, loader: 'html' },
-      { test: /\.ejs$/i, loader: 'ejs' },
-      { test: /\.(tpl|smart)$/i, loader: 'smarty' },
-      { test: /\.handlebars$/i, loader: 'handlebars' },
-      { test: /\.mustache$/i, loader: 'mustache' },
-      { test: /\.vm$/i, loader: 'velocity' }
+      }
     ]
   };
 
@@ -163,7 +139,7 @@ const webpackConfig = (options) => {
     modulesDirectories: [src, assets, 'node_modules']
   };
 
-  const plugins = htmlWebpackPluginConfig;
+  const plugins = [];
 
   if (options.hot) {
     entry = pushClientJS(entry, options.reload);

@@ -40,11 +40,8 @@ export default {
     templatesDistPages: 'prd/templates/pages'
   },
 
-  // 模版类型，用数组形式支持多种模版，如 ['html', 'pug']
-  // 新增模版后，需要在webpack配置中加上对应的loader
-  templateLoader: ['pug', 'velocity'],
-  // 模版文件扩展名，用数组形式支持多种模版，如 ['.html', '.pug']
-  templateExtension: ['.pug', '.vm'],
+  // 模版文件扩展名
+  templateExtension: '.tpl',
 
   // webserver端口
   port: {
@@ -87,9 +84,9 @@ export default {
   // require! 表示使用本地mock文件
   rewriteRules: {
     // 网站URL与模版的对应路由关系
-    '^/$': '/index.pug.html',
-    '^/list$': '/list.pug.html',
-    '^/detail$': '/detail.vm.html',
+    '^/$': '/index.pug',
+    '^/list$': '/list.pug',
+    '^/detail$': '/test.tpl',
 
     // API转发
     '^/api/(.*)': 'require!/mock/api/$1.js'

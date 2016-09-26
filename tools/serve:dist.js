@@ -6,31 +6,21 @@
 
 import path from 'path';
 import Express from 'express';
-import webpack from 'webpack';
 import urlrewrite from 'packing-urlrewrite';
-import webpackDevMiddleware from 'webpack-dev-middleware';
-import webpackConfig from '../config/webpack.serve:dist';
-import packing from '../config/packing';
+import template from 'packing-template-smarty';
+import packing, { rewriteRules } from '../config/packing';
 
-const { src, assetsDist } = packing.path;
-const compiler = webpack(webpackConfig);
+const { assetsDist, templatesDistPages, mockPageInit } = packing.path;
 const port = packing.port.dist;
-const serverOptions = {
-  contentBase: src,
-  quiet: false,
-  noInfo: true,
-  hot: true,
-  inline: true,
-  lazy: false,
-  publicPath: webpackConfig.output.publicPath,
-  headers: { 'Access-Control-Allow-Origin': '*' },
-  stats: { colors: true }
-};
 
 const app = new Express();
 app.use(Express.static(path.join(__dirname, '..', assetsDist)));
 app.use(urlrewrite(packing.rewriteRules));
-app.use(webpackDevMiddleware(compiler, serverOptions));
+app.use(template({
+  templates: templatesDistPages,
+  mockData: mockPageInit,
+  rewriteRules
+}));
 
 app.listen(port, (err) => {
   if (err) {
