@@ -10,9 +10,9 @@
 
   <groupId>com.qunar.qzz</groupId>
   <!--artifactId必须与qzz的module_name相同-->
-  <artifactId><%=appname%></artifactId>
+  <artifactId><%= props.name %></artifactId>
   <!--version由bds生成的btag/rtag来决定-->
-  <version>WAPHOTEL-3088_20151224_biOptimize-SNAPSHOT</version>
+  <version>SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <properties>
