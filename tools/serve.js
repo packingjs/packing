@@ -8,7 +8,7 @@ import path from 'path';
 import Express from 'express';
 import webpack from 'webpack';
 import urlrewrite from 'packing-urlrewrite';
-import template from 'packing-template-smarty';
+import template from 'packing-template-pug';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackConfig from '../config/webpack.serve.babel';

@@ -7,7 +7,7 @@
 import path from 'path';
 import Express from 'express';
 import urlrewrite from 'packing-urlrewrite';
-import template from 'packing-template-smarty';
+import template from 'packing-template-pug';
 import packing, { rewriteRules } from '../config/packing';
 
 const { assetsDist, templatesDistPages, mockPageInit } = packing.path;

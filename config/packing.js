@@ -41,7 +41,7 @@ export default {
   },
 
   // 模版文件扩展名
-  templateExtension: '.tpl',
+  templateExtension: '.pug',
 
   // webserver端口
   port: {
@@ -88,6 +88,7 @@ export default {
     '^/list$': '/list.pug',
     '^/detail$': '/test.tpl',
 
+    'ws://localhost:8080': 'ws://beta.qunar.com:8080',
     // API转发
     '^/api/(.*)': 'require!/mock/api/$1.js'
     // '^/api/(.*)': '/index.jade.html',
