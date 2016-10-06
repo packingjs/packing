@@ -4,9 +4,7 @@
  * @module config/webpack.build.babel
  */
 
-import { existsSync } from 'fs';
 import path from 'path';
-import { isArray, isFunction } from 'util';
 import webpack from 'webpack';
 import CleanPlugin from 'clean-webpack-plugin';
 // import CopyWebpackPlugin from 'copy-webpack-plugin';
@@ -15,7 +13,6 @@ import ReplaceHashWebpackPlugin from 'replace-hash-webpack-plugin';
 // import RevWebpackPlugin from 'packing-rev-webpack-plugin';
 import strip from 'strip-loader';
 import autoprefixer from 'autoprefixer';
-import packingGlob from 'packing-glob';
 import packing, { assetExtensions, fileHashLength, templateExtension } from './packing';
 
 // js输出文件保持目录名称
@@ -27,50 +24,11 @@ const {
   src,
   dist,
   templates,
-  templatesPages,
   entries,
   assets,
   assetsDist,
   templatesDist
 } = packing.path;
-
-const cwd = process.cwd();
-const pattern = isArray(templateExtension) && templateExtension.length > 1 ?
-  `**/*{${templateExtension.join(',')}}` :
-  `**/*${templateExtension}`;
-
-
- /**
-  * 根据文件的目录结构生成entry配置
-  * @return {object}
-  */
-const initConfig = () => {
-  const entryConfig = {};
-  const globOptions = { cwd: path.resolve(cwd, templatesPages) };
-
-  packingGlob(pattern, globOptions).forEach((page) => {
-    console.log(`template page: ${page}`);
-    const ext = path.extname(page).toLowerCase();
-    let key = page.replace(ext, '');
-    // 写入页面级别的配置
-    if (entryConfig[key]) {
-      key += ext;
-    }
-    let value;
-    if (isFunction(entries)) {
-      value = entries(key);
-    } else {
-      value = path.resolve(cwd, entries.replace('{pagename}', key));
-    }
-    if (existsSync(value)) {
-      entryConfig[key] = value;
-    } else {
-      console.log(`❗️ entry file not exist: ${value}`);
-    }
-  });
-
-  return entryConfig;
-};
 
 /**
  * 返回样式loader字符串
@@ -93,7 +51,7 @@ const webpackConfig = (options) => {
   const chunkhash = options.longTermCaching ? `-[chunkhash:${fileHashLength}]` : '';
   const contenthash = options.longTermCaching ? `-[contenthash:${fileHashLength}]` : '';
   const context = path.resolve(__dirname, '..');
-  const entry = initConfig();
+  const entry = entries;
 
   const output = {
     chunkFilename: `${JS_DIRECTORY_NAME}/[name]${chunkhash}.js`,
@@ -155,7 +113,7 @@ const webpackConfig = (options) => {
     new ReplaceHashWebpackPlugin({
       assetsDomain: process.env.CDN_ROOT,
       cwd: templates,
-      src: pattern,
+      src: `**/*${templateExtension}`,
       dest: templatesDist
     })
 
@@ -178,7 +136,6 @@ const webpackConfig = (options) => {
       new webpack.optimize.CommonsChunkPlugin({ names: chunkKeys })
     );
   }
-
 
   if (options.minimize) {
     plugins.push(

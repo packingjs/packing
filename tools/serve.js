@@ -14,7 +14,6 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackConfig from '../config/webpack.serve.babel';
 import packing, { rewriteRules } from '../config/packing';
 
-
 const { src, assets, templatesPages, mockPageInit } = packing.path;
 const compiler = webpack(webpackConfig);
 const port = packing.port.dev;

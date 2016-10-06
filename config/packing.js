@@ -17,7 +17,11 @@ export default {
     mockPageInit: 'mock/pages',
 
     // webpack打包入口JS文件目录
-    entries: 'src/entries/{pagename}.js',
+    // As value an object, a string, a function, a RegExp and an array is accepted.
+    entries: {
+      index: './src/entries/index.js',
+      list: './src/entries/list.js'
+    }, // 'src/entries/{pagename}.js',
 
     // 模版目录，如果模版支持继承或layout的话
     // 模板一般会再区分布局文件(layout)和网页文件(pages)
@@ -58,8 +62,7 @@ export default {
     // <script src="/vendor.js"></script>
     vendor: [
       'react',
-      'react-dom',
-      'classnames'
+      'react-dom'
     ]
   },
 
