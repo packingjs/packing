@@ -3,6 +3,8 @@
  * @author Joe Zhong <zhong.zhi@163.com>
  * @module config/packing
  */
+import path from 'path';
+import packingGlob from 'packing-glob';
 
 export default {
   // 文件路径，所有目录都使用相对于项目根目录的相对目录格式
@@ -17,11 +19,22 @@ export default {
     mockPageInit: 'mock/pages',
 
     // webpack打包入口JS文件目录
-    // As value an object, a string, a function, a RegExp and an array is accepted.
-    entries: {
-      index: './src/entries/index.js',
-      list: './src/entries/list.js'
-    }, // 'src/entries/{pagename}.js',
+    // As value an object, a function is accepted.
+    // entries: {
+    //   index: './src/entries/index.js',
+    //   list: './src/entries/list.js'
+    // },
+
+    entries: () => {
+      const config = {};
+      const cwd = path.resolve('src/entries');
+      packingGlob('**/*.js', { cwd }).forEach((page) => {
+        const ext = path.extname(page).toLowerCase();
+        const key = page.replace(ext, '');
+        config[key] = path.join(cwd, page);
+      });
+      return config;
+    },
 
     // 模版目录，如果模版支持继承或layout的话
     // 模板一般会再区分布局文件(layout)和网页文件(pages)

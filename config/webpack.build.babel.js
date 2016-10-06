@@ -5,6 +5,7 @@
  */
 
 import path from 'path';
+import { isFunction } from 'util';
 import webpack from 'webpack';
 import CleanPlugin from 'clean-webpack-plugin';
 // import CopyWebpackPlugin from 'copy-webpack-plugin';
@@ -51,7 +52,7 @@ const webpackConfig = (options) => {
   const chunkhash = options.longTermCaching ? `-[chunkhash:${fileHashLength}]` : '';
   const contenthash = options.longTermCaching ? `-[contenthash:${fileHashLength}]` : '';
   const context = path.resolve(__dirname, '..');
-  const entry = entries;
+  const entry = isFunction(entries) ? entries() : entries;
 
   const output = {
     chunkFilename: `${JS_DIRECTORY_NAME}/[name]${chunkhash}.js`,

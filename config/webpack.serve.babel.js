@@ -5,7 +5,7 @@
  */
 
 import path from 'path';
-import { isString, isArray, isObject } from 'util';
+import { isString, isArray, isObject, isFunction } from 'util';
 import webpack from 'webpack';
 import DashboardPlugin from 'webpack-dashboard/plugin';
 import autoprefixer from 'autoprefixer';
@@ -63,7 +63,7 @@ const webpackConfig = (options) => {
   const context = path.resolve(__dirname, '..');
   const devtool = options.devtool;
 
-  let entry = entries;
+  let entry = isFunction(entries) ? entries() : entries;
 
   const output = {
     chunkFilename: '[name].js',
