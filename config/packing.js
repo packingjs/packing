@@ -26,9 +26,11 @@ export default {
     // },
 
     entries: () => {
+      const entryPath = 'src/entries';
+      const entryPattern = '**/*.js';
+      const cwd = path.resolve(entryPath);
       const config = {};
-      const cwd = path.resolve('src/entries');
-      packingGlob('**/*.js', { cwd }).forEach((page) => {
+      packingGlob(entryPattern, { cwd }).forEach((page) => {
         const ext = path.extname(page).toLowerCase();
         const key = page.replace(ext, '');
         config[key] = path.join(cwd, page);
