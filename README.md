@@ -44,6 +44,9 @@
 
   # 编译并预览编译结果，端口8080
   npm run serve:dist
+
+  # 禁用启动时自动打开浏览器功能
+  DISABLE_OPEN_BROWSER=true npm run serve
   ```
 
 ### Features

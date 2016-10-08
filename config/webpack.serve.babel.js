@@ -111,6 +111,12 @@ const webpackConfig = (options) => {
     // });
   }
 
+  if (!process.env.DISABLE_OPEN_BROWSER) {
+    plugins.push(
+      new OpenBrowserPlugin({ url: `http://${localhost}:${port.dev}` })
+    );
+  }
+
   plugins.push(
     new webpack.DefinePlugin({
       // '__DEVTOOLS__': true,
@@ -119,7 +125,6 @@ const webpackConfig = (options) => {
         CDN_ROOT: JSON.stringify(process.env.CDN_ROOT)
       }
     }),
-    new OpenBrowserPlugin({ url: `http://${localhost}:${port.dev}` }),
     new DashboardPlugin(),
   );
 
