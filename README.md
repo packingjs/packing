@@ -121,7 +121,6 @@
 ```
 
 ### 约定
-* 每个网页模版有一个对应的js入口文件 `entry.js`，保证 `entry.js`的目录结构和网页模版的目录结构一致
 * 网页模版中对静态资源引用时使用绝对路径，如 `<script src='/logo/qunar.png'>`
 * css中对静态资源引用时使用波浪线`~`开头相对路径，如 `background:url(~/logo.png)`
 
