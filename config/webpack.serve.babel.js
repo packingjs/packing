@@ -8,8 +8,9 @@ import path from 'path';
 import { isString, isArray, isObject, isFunction } from 'util';
 import webpack from 'webpack';
 import DashboardPlugin from 'webpack-dashboard/plugin';
+import OpenBrowserPlugin from 'open-browser-webpack-plugin';
 import autoprefixer from 'autoprefixer';
-import packing, { assetExtensions } from './packing';
+import packing, { assetExtensions, localhost, port } from './packing';
 
 const {
   src,
@@ -118,7 +119,8 @@ const webpackConfig = (options) => {
         CDN_ROOT: JSON.stringify(process.env.CDN_ROOT)
       }
     }),
-    new DashboardPlugin()
+    new OpenBrowserPlugin({ url: `http://${localhost}:${port.dev}` }),
+    new DashboardPlugin(),
   );
 
   // 从配置文件中获取并生成webpack打包配置
