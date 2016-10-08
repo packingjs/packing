@@ -52,7 +52,6 @@
 - [x]动态加载
 - [x]支持自定义打包规则和指定common.js
 - [x]yo-generator
-- [ ]集成到QDR中，自动生产job，发布无障碍
 - [x]工程新增的node_modules也能顺利在QDR中发布
 - [x]urlrewrite/自定义路由规则
 - [x]支持SPA／多入口网站／React Native
@@ -67,8 +66,14 @@
 - [x]预览编译后的内容
 - [x]不同环境使用profiles文件
 - [x]redux-devtools
-- [x]支持多种模版[html/jade/ejs/handlebars/smarty/velocity]
-- [ ]新版本升级提示
+- [x]支持多种模版
+  - html
+  - [pug](https://pugjs.org)
+  - [ejs](https://github.com/tj/ejs)
+  - [handlebars](http://handlebarsjs.com/)
+  - [smarty](http://www.smarty.net/)
+  - [velocity](http://velocity.apache.org/)
+  - [artTemplate](https://github.com/aui/artTemplate)
 
 ### Todo
 - [ ]文档
