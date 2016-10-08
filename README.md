@@ -38,7 +38,7 @@
 4. 在浏览器中预览网站 `http://localhost:8081`
 
 5. 其他命令
-  ```
+  ```sh
   # 编译工程
   npm run build
 
@@ -60,7 +60,7 @@
 - [x]支持SPA／多入口网站／React Native
 - [x]支持多种资源的引入，如images、fonts、json
 - [x]大size图片在css中引用hash自动更新
-- [x]使用babel，支持ES2015
+- [x]使用babel，支持ES6/7
 - [x]统一的eslint语法检查
 - [x]less、sass支持
 - [x]使用postcss预编译
