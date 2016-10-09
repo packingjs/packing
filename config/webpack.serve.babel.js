@@ -92,7 +92,7 @@ const webpackConfig = (options) => {
 
   const resolve = {
     alias: {
-      'env-alias': path.resolve(__dirname, '../src/config/env', process.env.NODE_ENV)
+      'env-alias': path.resolve(__dirname, '../src/config/env', process.env.NODE_ENV || '')
     },
     modulesDirectories: [src, assets, 'node_modules']
   };

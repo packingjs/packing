@@ -20,31 +20,16 @@
   },
   "betterScripts": {
     "serve": {
-      "command": "webpack-dashboard -- babel-node tools/serve.js",
-      "env": {
-        "NODE_ENV": "",
-        "CDN_ROOT": ""
-      }
+      "command": "webpack-dashboard -- babel-node tools/serve.js"
     },
     "serve:nodashboard": {
-      "command": "babel-node tools/serve.js",
-      "env": {
-        "NODE_ENV": "",
-        "CDN_ROOT": ""
-      }
+      "command": "babel-node tools/serve.js"
     },
     "serve:dist": {
-      "command": "babel-node tools/serve:dist.js",
-      "env": {
-        "NODE_ENV": ""
-      }
+      "command": "babel-node tools/serve:dist.js"
     },
     "build": {
-      "command": "webpack --verbose --colors --display-error-details --config config/webpack.build.babel.js",
-      "env": {
-        "NODE_ENV": "",
-        "CDN_ROOT": ""
-      }
+      "command": "webpack --verbose --colors --display-error-details --config config/webpack.build.babel.js"
     },
     "build:dev": {
       "command": "webpack --config config/webpack.build.babel.js",
