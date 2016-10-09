@@ -11,6 +11,7 @@ import CleanPlugin from 'clean-webpack-plugin';
 // import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import ReplaceHashWebpackPlugin from 'replace-hash-webpack-plugin';
+import ProfilePlugin from 'packing-profile-webpack-plugin';
 // import RevWebpackPlugin from 'packing-rev-webpack-plugin';
 import strip from 'strip-loader';
 import autoprefixer from 'autoprefixer';
@@ -30,6 +31,8 @@ const {
   assetsDist,
   templatesDist
 } = packing.path;
+
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 /**
  * 返回样式loader字符串
@@ -79,14 +82,15 @@ const webpackConfig = (options) => {
   const postcss = () => [autoprefixer];
 
   const resolve = {
-    alias: {
-      'env-alias': path.resolve(__dirname, '../src/config/env', process.env.NODE_ENV || '')
-    },
     modulesDirectories: [src, assets, 'node_modules']
   };
 
   // const ignoreRevPattern = '**/big.jpg';
   const plugins = [
+    new ProfilePlugin({
+      cwd: 'src/config/env',
+      failOnMissing: true
+    }),
     new CleanPlugin([dist], {
       root: projectRootPath
     }),

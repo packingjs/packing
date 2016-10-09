@@ -9,6 +9,7 @@ import { isString, isArray, isObject, isFunction } from 'util';
 import webpack from 'webpack';
 import DashboardPlugin from 'webpack-dashboard/plugin';
 import OpenBrowserPlugin from 'open-browser-webpack-plugin';
+import ProfilePlugin from 'packing-profile-webpack-plugin';
 import autoprefixer from 'autoprefixer';
 import packing, { assetExtensions, localhost, port } from './packing';
 
@@ -18,6 +19,8 @@ const {
   assetsDist,
   entries
 } = packing.path;
+
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
  /**
   * 给所有入口js加上HRM的clientjs
@@ -91,9 +94,6 @@ const webpackConfig = (options) => {
   const postcss = () => [autoprefixer];
 
   const resolve = {
-    alias: {
-      'env-alias': path.resolve(__dirname, '../src/config/env', process.env.NODE_ENV || '')
-    },
     modulesDirectories: [src, assets, 'node_modules']
   };
 
@@ -118,6 +118,12 @@ const webpackConfig = (options) => {
   }
 
   plugins.push(
+    new ProfilePlugin({
+      cwd: 'src/config/env'
+      // failOnMissing: true,
+      // filename: '',
+      // functionName: ''
+    }), // require('../src/config/env/' + process.env.NODE_ENV)),
     new webpack.DefinePlugin({
       // '__DEVTOOLS__': true,
       'process.env': {
@@ -157,5 +163,5 @@ export default webpackConfig({
   hot: true,
   // 检测到module有变化时，强制刷新页面
   reload: false,
-  devtool: 'eval-source-map'
+  devtool: 'eval'
 });
