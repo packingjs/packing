@@ -88,7 +88,6 @@ const webpackConfig = (options) => {
   // const ignoreRevPattern = '**/big.jpg';
   const plugins = [
     new ProfilePlugin({
-      cwd: 'src/config/env',
       failOnMissing: true
     }),
     new CleanPlugin([dist], {

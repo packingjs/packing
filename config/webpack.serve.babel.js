@@ -118,12 +118,7 @@ const webpackConfig = (options) => {
   }
 
   plugins.push(
-    new ProfilePlugin({
-      cwd: 'src/config/env'
-      // failOnMissing: true,
-      // filename: '',
-      // functionName: ''
-    }), // require('../src/config/env/' + process.env.NODE_ENV)),
+    new ProfilePlugin(),
     new webpack.DefinePlugin({
       // '__DEVTOOLS__': true,
       'process.env': {
