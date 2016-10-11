@@ -58,7 +58,7 @@
   },
   "devDependencies": {
     "express": "^4.14.0",
-    "open-browser-webpack-plugin": "0.0.2",
+    "open-browser-webpack-plugin": "^0.0.2",
     "packing-template-artTemplate": "^1.0.1",
     "packing-template-ejs": "^1.0.0",
     "packing-template-handlebars": "^1.0.0",
