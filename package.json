@@ -29,7 +29,11 @@
       "command": "babel-node tools/serve:dist.js"
     },
     "build": {
-      "command": "webpack --verbose --colors --display-error-details --config config/webpack.build.babel.js"
+      "command": "webpack --verbose --colors --display-error-details --config config/webpack.build.babel.js",
+      "env": {
+        "NODE_ENV": "local",
+        "CDN_ROOT": ""
+      }
     },
     "build:dev": {
       "command": "webpack --verbose --display-error-details --config config/webpack.build.babel.js",

@@ -7,7 +7,7 @@
 import path from 'path';
 import Express from 'express';
 import urlrewrite from 'packing-urlrewrite';
-import packing, { rewriteRules } from '../config/packing';
+import packing, { rewriteRules, templateEngine } from '../config/packing';
 
 // eslint-disable-next-line
 const template = require(`packing-template-${templateEngine}`);

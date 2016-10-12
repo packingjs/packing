@@ -31,8 +31,6 @@ const {
   templatesDist
 } = packing.path;
 
-process.env.NODE_ENV = process.env.NODE_ENV || 'development';
-
 /**
  * 返回样式loader字符串
  * @param {string} cssPreprocessor css预处理器类型

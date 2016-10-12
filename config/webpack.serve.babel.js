@@ -20,8 +20,6 @@ const {
   entries
 } = packing.path;
 
-process.env.NODE_ENV = process.env.NODE_ENV || 'development';
-
  /**
   * 给所有入口js加上HRM的clientjs
   * @param {string|array|object} entry 页面入口列表
