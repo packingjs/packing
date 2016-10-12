@@ -24,7 +24,6 @@ const CSS_DIRECTORY_NAME = 'css';
 
 const {
   src,
-  dist,
   templates,
   entries,
   assets,
@@ -90,7 +89,7 @@ const webpackConfig = (options) => {
     new ProfilePlugin({
       failOnMissing: true
     }),
-    new CleanPlugin([dist], {
+    new CleanPlugin([assetsDist, templatesDist], {
       root: projectRootPath
     }),
 

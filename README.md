@@ -106,9 +106,9 @@
 │   └── /pages/                         # 页面初始化类型模拟数据
 ├── /prd/                               # 项目编译输出目录
 ├── /src/                               # 项目源码目录
-│   ├── /config/                        # 和网站运行相关的配置，如dev/beta环境差异变量
-│   ├── /entries/                       # webpack打包入口js
-│   └── /templates/                     # 后端模版，如jade、smarty
+│   ├── /entries/                       # webpack打包入口js（非必须）
+│   ├── /profiles/                      # 类似maven的profiles，设置不同环境下的配置（非必须）
+│   └── /templates/                     # 后端模版，如jade、smarty（非必须）
 ├── /tools/                             # packing脚本
 │   ├── /serve.js                       # serve脚本
 │   └── /serve:dist.js                  # serve:dist脚本
@@ -127,7 +127,7 @@
 ### Others
 ```
 # npm使用qunar源
-npm install --registry http://registry.npm.corp.qunar.com
+npm install --registry http://registry.npm.corp.qunar.com --disturl=https://npm.taobao.org/dist --sass-binary-site=http://npm.taobao.org/mirrors/node-sass
 npm install --registry http://registry.npm.taobao.com
 
 # 只安装dependencies，不安装devDependencies，适用于QDR编译机

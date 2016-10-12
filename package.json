@@ -32,21 +32,21 @@
       "command": "webpack --verbose --colors --display-error-details --config config/webpack.build.babel.js"
     },
     "build:dev": {
-      "command": "webpack --config config/webpack.build.babel.js",
+      "command": "webpack --verbose --display-error-details --config config/webpack.build.babel.js",
       "env": {
         "NODE_ENV": "development",
         "CDN_ROOT": "//l-wap1.wap.dev.cn6.qunar.com/xxx/dev/assets"
       }
     },
     "build:beta": {
-      "command": "webpack --config config/webpack.build.babel.js",
+      "command": "webpack --verbose --display-error-details --config config/webpack.build.babel.js",
       "env": {
         "NODE_ENV": "beta",
         "CDN_ROOT": "//mobileqzz.beta.qunar.com/xxx/prd/assets"
       }
     },
     "build:prod": {
-      "command": "webpack --config config/webpack.build.babel.js",
+      "command": "webpack --verbose --display-error-details --config config/webpack.build.babel.js",
       "env": {
         "NODE_ENV": "production",
         "CDN_ROOT": "//s.qunarzz.com/xxx/prd/assets"
@@ -62,7 +62,7 @@
     "packing-template-artTemplate": "^1.0.1",
     "packing-template-ejs": "^1.0.0",
     "packing-template-handlebars": "^1.0.0",
-    "packing-template-pug": "^1.0.2",
+    "packing-template-pug": "^1.0.4",
     "packing-template-smarty": "^1.0.3",
     "packing-template-velocity": "^1.0.2",
     "packing-urlrewrite": "^0.1.7",

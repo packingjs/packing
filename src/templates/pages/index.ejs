@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <title>html test</title>
+  </head>
+
+  <body>
+    <h1>Hi, <%= name %></h1>
+    <h2><%= greeting%></h2>
+    <ul>
+      <% books.forEach(function(book) { %>
+        <li><%= book.title%></li>
+      <% }) %>
+    </ul>
+    <div>
+      异步获取的时间戳: <span id="now"></span>
+    </div>
+
+    <script src="/vendor.js"></script>
+    <script src="/index.js"></script>
+  </body>
+</html>
