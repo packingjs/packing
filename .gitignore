@@ -5,6 +5,7 @@ node_modules/
 /stats.json
 .idea/
 /templates
+/views
 /sh
 /.gitlab
 /.github
