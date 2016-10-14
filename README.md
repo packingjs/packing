@@ -231,9 +231,26 @@ sodu vi `which npm-cache`
 <link href="/vendor.css" media="all" rel="stylesheet" />
 ```
 
-#### 迁移已有的项目
+#### 网页需要引入一个less文件，但这个网页没有js文件，我应该如何把这个less编译成css
+在 config/packing.js 的 `entries` 添加这个less文件，如
+```js
+entries: {
+  abc: './src/entries/abc.less'
+  // 需要输出到不同路径的话可以随意修改key值
+  // 'test/abc': './src/entries/abc.less'
+}
+```
+编译时会把 `abc.less` 编译成 `prd/css/abc-xxxxxxxx.css`
 
-#### 新建项目
+```html
+<!--编译前html代码-->
+<link href="/abc.css" rel="stylesheet" />
+```
+
+```html
+<!--编译后html代码-->
+<link href="/abc-xxxxxxxx.css" rel="stylesheet" />
+```
 
 #### 如何模拟数据
 
