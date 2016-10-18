@@ -80,8 +80,8 @@
 
 ### Todo
 - [ ]文档
-- [ ]自动化生成scheme和job
-- [ ]generator
+- [ ]页面初始化数据支持代理服务器功能
+- [ ]性能：不常修改的common包支持编译结果缓存
 - [ ]example
   - [ ]base
   - [ ]custom template
@@ -106,9 +106,9 @@
 │   └── /pages/                         # 页面初始化类型模拟数据
 ├── /prd/                               # 项目编译输出目录
 ├── /src/                               # 项目源码目录
-│   ├── /entries/                       # webpack打包入口js（非必须）
-│   ├── /profiles/                      # 类似maven的profiles，设置不同环境下的配置（非必须）
-│   └── /templates/                     # 后端模版，如jade、smarty（非必须）
+│   ├── /entries/                       # webpack打包入口js
+│   ├── /profiles/                      # 类似maven的profiles，设置不同环境下的配置
+│   └── /templates/                     # 后端模版，如jade、smarty
 ├── /tools/                             # packing脚本
 │   ├── /serve.js                       # serve脚本
 │   └── /serve:dist.js                  # serve:dist脚本
@@ -240,7 +240,7 @@ entries: {
   // 'test/abc': './src/entries/abc.less'
 }
 ```
-编译时会把 `abc.less` 编译成 `prd/css/abc-xxxxxxxx.css`
+编译时会把 `abc.less` 编译成 `prd/css/abc-xxxxxxxx.css`，同时html中的引用也会自动更新
 
 ```html
 <!--编译前html代码-->
@@ -253,7 +253,3 @@ entries: {
 ```
 
 #### 如何模拟数据
-
-#### 如何让文件在编译过程不做reversion
-
-#### schema怎么配置
