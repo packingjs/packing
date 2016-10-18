@@ -4,8 +4,7 @@ node_modules/
 /dist/
 /stats.json
 .idea/
-/templates
-/views
+/dll
 /sh
 /.gitlab
 /.github

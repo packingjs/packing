@@ -15,6 +15,9 @@ export default {
     // 页面初始化mock数据文件存放目录
     mockPageInit: 'mock/pages',
 
+    // dll输出目录
+    dll: 'dll',
+
     // 静态文件目录，可以设置在src里，也可以设置在src外
     assets: 'assets',
 
@@ -74,15 +77,19 @@ export default {
     dist: 8080
   },
 
+  // 提取共用包有2个作用：
+  // 1. 能提高开发环境的编译速度，运行`npm run serve`前先运行`npm run dll`来生成manifest.json
+  // 2. 能减少生产环境文件传输的size
+  // CommonsChunkPlugin会将最后一个当作Entry chunk
+  // 注意，如果配置了commonChunks，所有网页模版需要引用公共包文件
+  // 否则会报错
+  // <script src="/vendor.js"></script>
   commonChunks: {
-    // CommonsChunkPlugin会将最后一个当作Entry chunk
-    // 注意，如果配置了commonChunks，所有网页模版需要引用公共包文件
-    // 否则会报错
-    // <script src="/vendor.js"></script>
-    vendor: [
-      'react',
-      'react-dom'
-    ]
+    // vendor: [
+    //   'react',
+    //   'react-dom'
+    //   'packing-ajax'
+    // ]
   },
 
   // 静态资源类型

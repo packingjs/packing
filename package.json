@@ -1,7 +1,7 @@
 {
   "name": "packing",
   "description": "",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "repository": "zhongzhi107/packing",
   "keywords": [
     "webpack"
@@ -10,6 +10,7 @@
   "license": "MIT",
   "scripts": {
     "start": "npm run serve",
+    "dll": "better-npm-run dll",
     "build": "better-npm-run build",
     "build:dev": "better-npm-run build:dev",
     "build:beta": "better-npm-run build:beta",
@@ -24,6 +25,13 @@
     },
     "serve:nodashboard": {
       "command": "babel-node tools/serve.js"
+    },
+    "dll": {
+      "command": "webpack --verbose --colors --display-error-details --config config/webpack.dll.babel.js",
+      "env": {
+        "NODE_ENV": "local",
+        "CDN_ROOT": ""
+      }
     },
     "serve:dist": {
       "command": "babel-node tools/serve:dist.js"

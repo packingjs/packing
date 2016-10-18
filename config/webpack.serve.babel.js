@@ -17,6 +17,7 @@ const {
   src,
   assets,
   assetsDist,
+  dll,
   entries
 } = packing.path;
 
@@ -62,8 +63,10 @@ const styleLoaderString = (cssPreprocessor) => {
 const webpackConfig = (options) => {
   const projectRootPath = path.resolve(__dirname, '../');
   const assetsPath = path.resolve(projectRootPath, assetsDist);
-  const context = path.resolve(__dirname, '..');
+  const dllPath = path.resolve(projectRootPath, dll);
+  const context = projectRootPath;
   const devtool = options.devtool;
+  // eslint-disable-next-line
 
   let entry = isFunction(entries) ? entries() : entries;
 
@@ -118,26 +121,25 @@ const webpackConfig = (options) => {
   plugins.push(
     new ProfilePlugin(),
     new webpack.DefinePlugin({
-      // '__DEVTOOLS__': true,
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
         CDN_ROOT: JSON.stringify(process.env.CDN_ROOT)
       }
     }),
-    new DashboardPlugin(),
+    new DashboardPlugin()
   );
 
-  // 从配置文件中获取并生成webpack打包配置
+   // 从配置文件中获取dll
   if (packing.commonChunks) {
-    const chunkKeys = Object.keys(packing.commonChunks);
-    chunkKeys.forEach((key) => {
-      entry[key] = packing.commonChunks[key];
+    Object.keys(packing.commonChunks).forEach((key) => {
+      plugins.push(
+        new webpack.DllReferencePlugin({
+          context,
+          // eslint-disable-next-line
+          manifest: require(path.join(dllPath, `${key}-manifest.json`))
+        })
+      );
     });
-
-    // 扩展阅读 http://webpack.github.io/docs/list-of-plugins.html#commonschunkplugin
-    plugins.push(
-      new webpack.optimize.CommonsChunkPlugin({ names: chunkKeys })
-    );
   }
 
   return {
@@ -153,7 +155,7 @@ const webpackConfig = (options) => {
 };
 
 export default webpackConfig({
-  hot: true,
+  hot: false,
   // 检测到module有变化时，强制刷新页面
   reload: false,
   devtool: 'eval'

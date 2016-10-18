@@ -16,7 +16,7 @@ import packing, { templateEngine, rewriteRules } from '../config/packing';
 // eslint-disable-next-line
 const template = require(`packing-template-${templateEngine}`);
 
-const { src, assets, templatesPages, mockPageInit } = packing.path;
+const { src, assets, templatesPages, mockPageInit, dll } = packing.path;
 const compiler = webpack(webpackConfig);
 const port = packing.port.dev;
 const serverOptions = {
@@ -31,8 +31,12 @@ const serverOptions = {
   stats: { colors: true }
 };
 
+const assetsPath = path.join(__dirname, '..', assets);
+const dllPath = path.join(__dirname, '..', dll);
+
 const app = new Express();
-app.use(Express.static(path.join(__dirname, '..', assets)));
+app.use(Express.static(assetsPath));
+app.use(Express.static(dllPath));
 app.use(urlrewrite(rewriteRules));
 app.use(webpackDevMiddleware(compiler, serverOptions));
 app.use(webpackHotMiddleware(compiler));
