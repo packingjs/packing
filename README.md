@@ -34,6 +34,11 @@
   ```
   npm run serve
   ```
+  如果启动dll plugin，需要先运行
+  ```
+  npm run dll
+  ```
+  来生成` manifest.json `
 
 4. 在浏览器中预览网站 `http://localhost:8081`
 
