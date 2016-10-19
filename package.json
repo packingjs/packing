@@ -74,7 +74,7 @@
     "packing-template-artTemplate": "^1.0.1",
     "packing-template-ejs": "^1.0.0",
     "packing-template-handlebars": "^1.0.0",
-    "packing-template-pug": "^1.0.4",
+    "packing-template-pug": "^1.0.5",
     "packing-template-smarty": "^1.0.3",
     "packing-template-velocity": "^1.0.2",
     "packing-urlrewrite": "^0.1.7",
