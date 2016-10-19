@@ -10,12 +10,11 @@
   "license": "MIT",
   "scripts": {
     "start": "npm run serve",
-    "dll": "better-npm-run dll",
     "build": "better-npm-run build",
     "build:dev": "better-npm-run build:dev",
     "build:beta": "better-npm-run build:beta",
     "build:prod": "better-npm-run build:prod",
-    "serve": "better-npm-run serve",
+    "serve": "better-npm-run dll.js && better-npm-run serve",
     "serve:dist": "better-npm-run build && better-npm-run serve:dist",
     "eslint": "better-npm-run eslint"
   },
@@ -23,8 +22,8 @@
     "serve": {
       "command": "webpack-dashboard -- babel-node tools/serve.js"
     },
-    "serve:nodashboard": {
-      "command": "babel-node tools/serve.js"
+    "dll.js": {
+      "command": "babel-node tools/dll.js"
     },
     "dll": {
       "command": "webpack --verbose --colors --display-error-details --config config/webpack.dll.babel.js",
@@ -70,6 +69,7 @@
   },
   "devDependencies": {
     "express": "^4.14.0",
+    "mkdirp": "^0.5.1",
     "open-browser-webpack-plugin": "^0.0.2",
     "packing-template-artTemplate": "^1.0.1",
     "packing-template-ejs": "^1.0.0",

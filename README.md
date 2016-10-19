@@ -34,10 +34,6 @@
   ```
   npm run serve
   ```
-  如果工程中使用了[DllPlugin](http://webpack.github.io/docs/list-of-plugins.html#dllplugin)，需要先运行下面的命令来生成` manifest.json `
-  ```
-  npm run dll
-  ```
 
 4. 在浏览器中预览网站 `http://localhost:8081`
 

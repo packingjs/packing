@@ -16,7 +16,7 @@ export default {
     mockPageInit: 'mock/pages',
 
     // dll输出目录
-    dll: 'dll',
+    dll: '.tmp/dll',
 
     // 静态文件目录，可以设置在src里，也可以设置在src外
     assets: 'assets',
@@ -85,11 +85,11 @@ export default {
   // 否则会报错
   // <script src="/vendor.js"></script>
   commonChunks: {
-    // vendor: [
+    vendor: [
     //   'react',
     //   'react-dom'
-    //   'packing-ajax'
-    // ]
+      'packing-ajax'
+    ]
   },
 
   // 静态资源类型
