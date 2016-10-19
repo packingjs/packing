@@ -19,18 +19,18 @@
     "eslint": "better-npm-run eslint"
   },
   "betterScripts": {
-    "serve": {
-      "command": "webpack-dashboard -- babel-node tools/serve.js"
-    },
-    "dll.js": {
-      "command": "babel-node tools/dll.js"
-    },
     "dll": {
       "command": "webpack --verbose --colors --display-error-details --config config/webpack.dll.babel.js",
       "env": {
         "NODE_ENV": "local",
         "CDN_ROOT": ""
       }
+    },
+    "dll.js": {
+      "command": "babel-node tools/dll.js"
+    },
+    "serve": {
+      "command": "webpack-dashboard -- babel-node tools/serve.js"
     },
     "serve:dist": {
       "command": "babel-node tools/serve:dist.js"
