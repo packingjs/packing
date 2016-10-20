@@ -69,6 +69,7 @@
 - [x]预览编译后的内容
 - [x]不同环境使用profiles文件
 - [x]redux-devtools
+- [x]性能：不常修改的common包支持编译结果缓存
 - [x]支持多种模版
   - html
   - [pug](https://pugjs.org)
@@ -81,7 +82,6 @@
 ## Todo
 - [ ]文档
 - [ ]页面初始化数据支持代理服务器功能
-- [ ]性能：不常修改的common包支持编译结果缓存
 - [ ]example
   - [ ]base
   - [ ]custom template
@@ -100,6 +100,7 @@
 ├── /config/                            # webpack配置文件
 │   ├── /packing.js                     # 和构建工具相关的配置
 │   ├── /webpack.build.babel.js         # webpack编译环境配置文件
+│   ├── /webpack.dll.babel.js           # DllPlugin插件编译配置
 │   └── /webpack.serve:dist.js          # webpack预览编译后结果的配置文件
 ├── /mock/                              # 模拟数据
 │   ├── /api/                           # API接口类型模拟数据
@@ -110,6 +111,7 @@
 │   ├── /profiles/                      # 类似maven的profiles，设置不同环境下的配置
 │   └── /templates/                     # 后端模版，如jade、smarty
 ├── /tools/                             # packing脚本
+│   ├── /dll.js                         # 运行DllPlugin插件的入口脚本
 │   ├── /serve.js                       # serve脚本
 │   └── /serve:dist.js                  # serve:dist脚本
 ├── .babelrc                            # babel配置
@@ -136,7 +138,7 @@ npm install --registry https://registry.npm.taobao.org
 npm install --registry http://registry.npm.corp.qunar.com --production
 ```
 
-## 常见问题
+## FAQ
 
 ### 如何配置和线上环境一样的路由
 路由规则修改后需要重启`npm run serve`
