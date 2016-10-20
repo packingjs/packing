@@ -1,11 +1,12 @@
 {
   "name": "packing",
   "description": "",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "repository": "zhongzhi107/packing",
   "keywords": [
     "webpack"
   ],
+  "files": ["config", "tools"],
   "author": "zhongzhi <zhong.zhi@163.com>",
   "license": "MIT",
   "scripts": {
