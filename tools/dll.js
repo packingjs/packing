@@ -5,11 +5,12 @@
  */
 import fs from 'fs';
 import path from 'path';
-import { exec } from 'child_process';
 import crypto from 'crypto';
 import mkdirp from 'mkdirp';
+import webpack from 'webpack';
 import packing, { commonChunks } from '../config/packing';
 import pkg from '../package.json';
+import webpackConfig from '../config/webpack.dll.babel';
 
 const { dll } = packing.path;
 
@@ -18,20 +19,18 @@ function md5(string) {
 }
 
 function execDll(destDir, hashFile, newHash) {
-  // 执行npm run dll
   // 写入newHash
-  const command = 'better-npm-run dll';
-  exec(command, (error, stdout, stderr) => {
-    if (error) {
-      console.log(stderr);
+  webpack(webpackConfig, (err) => {
+    if (err) {
+      console.log(err);
     } else {
-      console.log(stdout);
       if (!fs.existsSync(destDir)) {
         mkdirp.sync(destDir);
       }
       fs.writeFileSync(hashFile, JSON.stringify({
         hash: newHash
       }));
+      console.log('DllPlugin executed!');
     }
   });
 }

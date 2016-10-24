@@ -6,6 +6,13 @@
 import path from 'path';
 import packingGlob from 'packing-glob';
 
+if (!{}.hasOwnProperty.call(process.env, 'NODE_ENV')) {
+  process.env.NODE_ENV = 'local';
+}
+if (!{}.hasOwnProperty.call(process.env, 'CDN_ROOT')) {
+  process.env.CDN_ROOT = '';
+}
+
 export default {
   // 文件路径，所有目录都使用相对于项目根目录的相对目录格式
   path: {

@@ -86,7 +86,7 @@ const webpackConfig = (options) => {
       { test: /\.less$/i, loader: styleLoaderString('less') },
       { test: /\.scss$/i, loader: styleLoaderString('sass') },
       {
-        test: new RegExp(`\.(${assetExtensions.join('|')})$`, 'i'),
+        test: new RegExp(`.(${assetExtensions.join('|')})$`, 'i'),
         loader: `file?name=[path][name].[ext]&context=${assets}&emitFile=false`
       }
     ]

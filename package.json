@@ -15,19 +15,12 @@
     "build:dev": "better-npm-run build:dev",
     "build:beta": "better-npm-run build:beta",
     "build:prod": "better-npm-run build:prod",
-    "serve": "better-npm-run dll.js && better-npm-run serve",
+    "serve": "better-npm-run dll && better-npm-run serve",
     "serve:dist": "better-npm-run build && better-npm-run serve:dist",
     "eslint": "better-npm-run eslint"
   },
   "betterScripts": {
     "dll": {
-      "command": "webpack --verbose --colors --display-error-details --config config/webpack.dll.babel.js",
-      "env": {
-        "NODE_ENV": "local",
-        "CDN_ROOT": ""
-      }
-    },
-    "dll.js": {
       "command": "babel-node tools/dll.js"
     },
     "serve": {
@@ -37,31 +30,27 @@
       "command": "babel-node tools/serve:dist.js"
     },
     "build": {
-      "command": "webpack --verbose --colors --display-error-details --config config/webpack.build.babel.js",
-      "env": {
-        "NODE_ENV": "local",
-        "CDN_ROOT": ""
-      }
+      "command": "webpack --verbose --colors --display-error-details --config config/webpack.build.babel.js"
     },
     "build:dev": {
-      "command": "webpack --verbose --display-error-details --config config/webpack.build.babel.js",
+      "command": "better-npm-run build",
       "env": {
         "NODE_ENV": "development",
         "CDN_ROOT": "//l-wap1.wap.dev.cn6.qunar.com/xxx/dev/assets"
       }
     },
     "build:beta": {
-      "command": "webpack --verbose --display-error-details --config config/webpack.build.babel.js",
+      "command": "better-npm-run build",
       "env": {
         "NODE_ENV": "beta",
         "CDN_ROOT": "//mobileqzz.beta.qunar.com/xxx/prd/assets"
       }
     },
     "build:prod": {
-      "command": "webpack --verbose --display-error-details --config config/webpack.build.babel.js",
+      "command": "better-npm-run build",
       "env": {
         "NODE_ENV": "production",
-        "CDN_ROOT": "//s.qunarzz.com/xxx/prd/assets"
+        "CDN_ROOT": "//q.qunarzz.com/xxx/prd/assets"
       }
     },
     "eslint": {
