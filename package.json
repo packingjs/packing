@@ -122,7 +122,6 @@
     "redbox-react": "^1.3.0",
     "redux": "^3.5.2",
     "replace-hash-webpack-plugin": "^1.4.12",
-    "strip-loader": "^0.1.2",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.2"

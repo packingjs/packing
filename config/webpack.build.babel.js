@@ -13,7 +13,6 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import ReplaceHashWebpackPlugin from 'replace-hash-webpack-plugin';
 import ProfilePlugin from 'packing-profile-webpack-plugin';
 // import RevWebpackPlugin from 'packing-rev-webpack-plugin';
-import strip from 'strip-loader';
 import autoprefixer from 'autoprefixer';
 import packing, { assetExtensions, fileHashLength, templateExtension } from './packing';
 
@@ -65,7 +64,7 @@ const webpackConfig = (options) => {
 
   const moduleConfig = {
     loaders: [
-      { test: /\.js?$/i, loaders: [strip.loader('debug'), 'babel'], exclude: /node_modules/ },
+      { test: /\.js?$/i, loaders: ['babel'], exclude: /node_modules/ },
       { test: /\.css$/i, loader: styleLoaderString() },
       { test: /\.less$/i, loader: styleLoaderString('less') },
       { test: /\.scss$/i, loader: styleLoaderString('sass') },
