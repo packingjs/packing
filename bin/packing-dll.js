@@ -1,18 +1,23 @@
-/**
- * 该脚步会在npm run serve前执行，serve前一定执行过DllPlugin
- * 出于性能的考虑，只有在DllPlugin中包含的文件或者文件版本发生改变时
- * 才会重新执行一次DllPlugin
- */
-import fs from 'fs';
-import path from 'path';
-import crypto from 'crypto';
-import mkdirp from 'mkdirp';
-import webpack from 'webpack';
-import packing, { commonChunks } from '../config/packing';
-import pkg from '../package.json';
-import webpackConfig from '../config/webpack.dll.babel';
+#!/usr/bin/env babel-node
 
-const { dll } = packing.path;
+require('packing/util/babel-register');
+
+const program = require('commander');
+const pkg = require('packing/package.json');
+program
+  .version(pkg.version)
+  .parse(process.argv);
+
+const fs = require('fs');
+const path = require('path');
+const crypto = require('crypto');
+const mkdirp = require('mkdirp');
+const webpack = require('webpack');
+const pRequire = require('packing/util/require');
+const webpackConfig = pRequire('config/webpack.dll.babel');
+const packing = pRequire('config/packing');
+const commonChunks = packing.commonChunks;
+const dll = packing.path.dll;
 
 function md5(string) {
   return crypto.createHash('md5').update(string).digest('hex');
@@ -30,7 +35,7 @@ function execDll(destDir, hashFile, newHash) {
       fs.writeFileSync(hashFile, JSON.stringify({
         hash: newHash
       }));
-      console.log('DllPlugin executed!');
+      console.log('💚  DllPlugin executed!');
     }
   });
 }
@@ -55,6 +60,8 @@ if (fs.existsSync(hashFile)) {
   const oldHash = require(hashFile).hash;
   if (oldHash !== newHash) {
     execDll(destDir, hashFile, newHash);
+  } else {
+    console.log('💛  DllPlugin skipped!');
   }
 } else {
   execDll(destDir, hashFile, newHash);

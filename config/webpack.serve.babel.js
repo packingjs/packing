@@ -11,7 +11,11 @@ import DashboardPlugin from 'webpack-dashboard/plugin';
 import OpenBrowserPlugin from 'open-browser-webpack-plugin';
 import ProfilePlugin from 'packing-profile-webpack-plugin';
 import autoprefixer from 'autoprefixer';
-import packing, { assetExtensions, localhost, port } from './packing';
+import pRequire from '../util/require';
+// import packing, { assetExtensions, localhost, port } from './packing';
+
+const packing = pRequire('config/packing');
+const { assetExtensions, localhost, port } = packing;
 
 const {
   src,

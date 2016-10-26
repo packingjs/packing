@@ -1,12 +1,16 @@
 {
   "name": "packing",
   "description": "",
-  "version": "0.2.1",
+  "version": "0.3.1",
   "repository": "zhongzhi107/packing",
   "keywords": [
+    "packing",
     "webpack"
   ],
-  "files": ["config", "tools"],
+  "bin": {
+    "packing": "bin/packing.js",
+    "packing-serve": "bin/packing-serve.js"
+  },
   "author": "zhongzhi <zhong.zhi@163.com>",
   "license": "MIT",
   "scripts": {
@@ -21,13 +25,13 @@
   },
   "betterScripts": {
     "dll": {
-      "command": "babel-node tools/dll.js"
+      "command": "packing dll"
     },
     "serve": {
-      "command": "webpack-dashboard -- babel-node tools/serve.js"
+      "command": "packing serve"
     },
     "serve:dist": {
-      "command": "babel-node tools/serve:dist.js"
+      "command": "packing serve:dist"
     },
     "build": {
       "command": "webpack --verbose --colors --display-error-details --config config/webpack.build.babel.js"
@@ -56,24 +60,6 @@
     "eslint": {
       "command": "./node_modules/.bin/eslint src"
     }
-  },
-  "devDependencies": {
-    "express": "^4.14.0",
-    "mkdirp": "^0.5.1",
-    "open-browser-webpack-plugin": "^0.0.2",
-    "packing-template-artTemplate": "^1.0.1",
-    "packing-template-ejs": "^1.0.0",
-    "packing-template-handlebars": "^1.0.0",
-    "packing-template-pug": "^1.0.5",
-    "packing-template-smarty": "^1.0.3",
-    "packing-template-velocity": "^1.0.2",
-    "packing-urlrewrite": "^0.1.7",
-    "redux-devtools": "^3.3.1",
-    "redux-devtools-dock-monitor": "^1.1.1",
-    "redux-devtools-log-monitor": "^1.0.11",
-    "webpack-dashboard": "^0.2.0",
-    "webpack-dev-middleware": "^1.6.1",
-    "webpack-hot-middleware": "^2.12.1"
   },
   "dependencies": {
     "autoprefixer": "^6.4.0",
@@ -124,7 +110,24 @@
     "replace-hash-webpack-plugin": "^1.4.12",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
-    "webpack": "^1.13.2"
+    "webpack": "^1.13.2",
+    "commander": "^2.9.0",
+    "express": "^4.14.0",
+    "mkdirp": "^0.5.1",
+    "open-browser-webpack-plugin": "^0.0.2",
+    "packing-template-artTemplate": "^1.0.1",
+    "packing-template-ejs": "^1.0.0",
+    "packing-template-handlebars": "^1.0.0",
+    "packing-template-pug": "^1.0.5",
+    "packing-template-smarty": "^1.0.3",
+    "packing-template-velocity": "^1.0.2",
+    "packing-urlrewrite": "^0.1.7",
+    "redux-devtools": "^3.3.1",
+    "redux-devtools-dock-monitor": "^1.1.1",
+    "redux-devtools-log-monitor": "^1.0.11",
+    "webpack-dashboard": "^0.2.0",
+    "webpack-dev-middleware": "^1.6.1",
+    "webpack-hot-middleware": "^2.12.1"
   },
   "engines": {
     "node": ">=0.12.7"
