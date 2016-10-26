@@ -11,8 +11,7 @@ import DashboardPlugin from 'webpack-dashboard/plugin';
 import OpenBrowserPlugin from 'open-browser-webpack-plugin';
 import ProfilePlugin from 'packing-profile-webpack-plugin';
 import autoprefixer from 'autoprefixer';
-import pRequire from '../util/require';
-// import packing, { assetExtensions, localhost, port } from './packing';
+import pRequire from 'packing/util/require';
 
 const packing = pRequire('config/packing');
 const { assetExtensions, localhost, port } = packing;
@@ -65,7 +64,7 @@ const styleLoaderString = (cssPreprocessor) => {
  * @return {object}
  */
 const webpackConfig = (options) => {
-  const projectRootPath = path.resolve(__dirname, '../');
+  const projectRootPath = process.cwd();
   const assetsPath = path.resolve(projectRootPath, assetsDist);
   const dllPath = path.resolve(projectRootPath, dll);
   const context = projectRootPath;

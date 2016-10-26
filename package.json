@@ -34,7 +34,7 @@
       "command": "packing serve:dist"
     },
     "build": {
-      "command": "webpack --verbose --colors --display-error-details --config config/webpack.build.babel.js"
+      "command": "packing build"
     },
     "build:dev": {
       "command": "better-npm-run build",

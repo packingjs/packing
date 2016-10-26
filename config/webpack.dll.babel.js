@@ -16,7 +16,7 @@ const {
   dll
 } = packing.path;
 
-const projectRootPath = path.resolve(__dirname, '../');
+const projectRootPath = process.cwd();
 
 /**
  * 返回样式loader字符串
@@ -34,7 +34,7 @@ const styleLoaderString = (cssPreprocessor) => {
  * @return {object}
  */
 const webpackConfig = (options) => {
-  const context = path.resolve(__dirname, '..');
+  const context = process.cwd();
   const devtool = options.devtool;
 
   const entry = packing.commonChunks;

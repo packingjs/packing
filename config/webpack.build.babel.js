@@ -14,13 +14,15 @@ import ReplaceHashWebpackPlugin from 'replace-hash-webpack-plugin';
 import ProfilePlugin from 'packing-profile-webpack-plugin';
 // import RevWebpackPlugin from 'packing-rev-webpack-plugin';
 import autoprefixer from 'autoprefixer';
-import packing, { assetExtensions, fileHashLength, templateExtension } from './packing';
+import pRequire from 'packing/util/require';
 
 // js输出文件保持目录名称
 const JS_DIRECTORY_NAME = 'js';
 // js输出文件保持目录名称
 const CSS_DIRECTORY_NAME = 'css';
 
+const packing = pRequire('config/packing');
+const { assetExtensions, fileHashLength, templateExtension } = packing;
 const {
   src,
   templates,
@@ -46,11 +48,11 @@ const styleLoaderString = (cssPreprocessor) => {
  * @return {object}
  */
 const webpackConfig = (options) => {
-  const projectRootPath = path.resolve(__dirname, '../');
+  const projectRootPath = process.cwd();
   const assetsPath = path.resolve(projectRootPath, assetsDist);
   const chunkhash = options.longTermCaching ? `-[chunkhash:${fileHashLength}]` : '';
   const contenthash = options.longTermCaching ? `-[contenthash:${fileHashLength}]` : '';
-  const context = path.resolve(__dirname, '..');
+  const context = projectRootPath;
   const entry = isFunction(entries) ? entries() : entries;
 
   const output = {
