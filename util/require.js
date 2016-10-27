@@ -1,4 +1,3 @@
-require('./babel-register');
 var existsSync = require('fs').existsSync;
 var path = require('path');
 
