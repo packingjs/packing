@@ -11,5 +11,3 @@ program
   .command('dll', 'run webpack DllPlugin')
   .command('build', 'build project')
   .parse(process.argv);
-
-// process.exit(1);

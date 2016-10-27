@@ -28,7 +28,7 @@ const mockPageInit = packing.path.mockPageInit;
 const port = packing.port.dist;
 
 const app = new Express();
-app.use(Express.static(path.join(__dirname, '..', assetsDist)));
+app.use(Express.static(path.join(process.cwd(), assetsDist)));
 app.use(urlrewrite(rewriteRules));
 app.use(template({
   templates: templatesPagesDist,

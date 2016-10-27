@@ -40,8 +40,11 @@ const serverOptions = {
   stats: { colors: true }
 };
 
-const assetsPath = path.join(__dirname, '..', assets);
-const dllPath = path.join(__dirname, '..', dll);
+const cwd = process.cwd();
+const assetsPath = path.join(cwd, assets);
+const dllPath = path.join(cwd, dll);
+console.log(assetsPath);
+console.log(dllPath);
 
 const app = new Express();
 app.use(Express.static(assetsPath));
