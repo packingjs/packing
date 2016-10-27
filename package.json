@@ -1,7 +1,7 @@
 {
   "name": "packing",
-  "description": "",
-  "version": "0.3.1",
+  "description": "Webpack based web front-end development environment",
+  "version": "0.3.2",
   "repository": "zhongzhi107/packing",
   "keywords": [
     "packing",
@@ -77,9 +77,9 @@
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-0": "^6.5.0",
     "babel-runtime": "^6.9.2",
-    "better-npm-run": "^0.0.11",
+    "better-npm-run": "^0.0.12",
     "clean-webpack-plugin": "^0.1.10",
-    "copy-webpack-plugin": "^3.0.1",
+    "copy-webpack-plugin": "^4.0.0",
     "css-loader": "^0.25.0",
     "eslint": "^3.4.0",
     "eslint-config-airbnb": "^12.0.0",
