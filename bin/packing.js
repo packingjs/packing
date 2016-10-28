@@ -1,8 +1,7 @@
 #!/usr/bin/env babel-node
 
-var path = require('path');
-var program = require('commander');
-var pkg = require('packing/package.json');
+const pkg = require('packing/package.json');
+const program = require('commander');
 
 program
   .version(pkg.version)

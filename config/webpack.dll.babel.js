@@ -30,10 +30,11 @@ const styleLoaderString = (cssPreprocessor) => {
 
 /**
  * 生成webpack配置文件
+ * @param {object} program 程序进程，可以获取启动参数
  * @param {object} options 特征配置项
  * @return {object}
  */
-const webpackConfig = (options) => {
+const webpackConfig = (program, options) => {
   const context = process.cwd();
   const devtool = options.devtool;
 
@@ -91,9 +92,8 @@ const webpackConfig = (options) => {
   };
 };
 
-export default webpackConfig({
+export default program => webpackConfig(program, {
   hot: false,
-  // 检测到module有变化时，强制刷新页面
   reload: false,
   devtool: 'eval'
 });

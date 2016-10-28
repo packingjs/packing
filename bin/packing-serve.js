@@ -2,11 +2,12 @@
 
 require('packing/util/babel-register');
 
-const program = require('commander');
 const pkg = require('packing/package.json');
+const program = require('commander');
+
 program
   .version(pkg.version)
-  .option('-d, --dashboard', 'Disable webpack dashboard')
+  .option('-o, --open-browser', 'Open a browser when webpack starts')
   .parse(process.argv);
 
 const path = require('path');
@@ -16,8 +17,9 @@ const urlrewrite = require('packing-urlrewrite');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const pRequire = require('packing/util/require');
-const webpackConfig = pRequire('config/webpack.serve.babel');
-const packing = pRequire('config/packing');
+
+const webpackConfig = pRequire('config/webpack.serve.babel', program);
+const packing = pRequire('config/packing', program);
 const templateEngine = packing.templateEngine;
 const rewriteRules = packing.rewriteRules;
 const template = require(`packing-template-${templateEngine}`);
@@ -37,7 +39,7 @@ const serverOptions = {
   lazy: false,
   publicPath: webpackConfig.output.publicPath,
   headers: { 'Access-Control-Allow-Origin': '*' },
-  stats: { colors: true }
+  stats: { colors: true },
 };
 
 const cwd = process.cwd();
@@ -53,7 +55,7 @@ app.use(webpackHotMiddleware(compiler));
 app.use(template({
   templates: templatesPages,
   mockData: mockPageInit,
-  rewriteRules: rewriteRules
+  rewriteRules,
 }));
 
 app.listen(port, (err) => {

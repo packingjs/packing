@@ -11,14 +11,14 @@
 [![devDependency Status](https://david-dm.org/zhongzhi107/packing/dev-status.svg)](https://david-dm.org/zhongzhi107/packing#info=devDependencies)
 [![Inline docs](http://inch-ci.org/github/zhongzhi107/packing.svg?branch=master)](http://inch-ci.org/github/zhongzhi107/packing)
 
-## Introduction
+### Introduction
 * 由于react的流行，公司越来越多的项目都希望使用react来构建，但目前公司的前端工具FEKit不能很好的支持react开发和编译
 * 有些部门已经使用了react，但在实施过程中或多或少的遇到了一些问题，这些问题具有一些共性，其实可以使用统一的方案来解决
 * 无线touch团队在过往的工作中在前端工程化和react方面积累了不少经验，愿意进行技术分享和全公司内推广
 * 只关心通用的集成开发环境和编译过程，不关心网站的架构和目录结构
 * 部分灵感来源于grunt和Yeoman
 
-## Install
+### Install
 
 1. 安装`yo`和`generator-packing`
   ```
@@ -45,11 +45,11 @@
   # 编译并预览编译结果，端口8080
   npm run serve:dist
 
-  # 启动时自动打开浏览器功能
-  npm run serve -- --open-browser
+  # 禁用启动时自动打开浏览器功能
+  DISABLE_OPEN_BROWSER=true npm run serve
   ```
 
-## Features
+### Features
 - [x]react支持
 - [x]HMR
 - [x]动态加载
@@ -69,7 +69,6 @@
 - [x]预览编译后的内容
 - [x]不同环境使用profiles文件
 - [x]redux-devtools
-- [x]性能：不常修改的common包支持编译结果缓存
 - [x]支持多种模版
   - html
   - [pug](https://pugjs.org)
@@ -79,9 +78,10 @@
   - [velocity](http://velocity.apache.org/)
   - [artTemplate](https://github.com/aui/artTemplate)
 
-## Todo
+### Todo
 - [ ]文档
-- [ ]页面初始化数据支持代理服务器功能
+- [ ]自动化生成scheme和job
+- [ ]generator
 - [ ]example
   - [ ]base
   - [ ]custom template
@@ -92,7 +92,7 @@
   - [ ]profiles
 - [ ]unit test
 
-## Directory
+### Directory
 
 ```
 .
@@ -100,18 +100,16 @@
 ├── /config/                            # webpack配置文件
 │   ├── /packing.js                     # 和构建工具相关的配置
 │   ├── /webpack.build.babel.js         # webpack编译环境配置文件
-│   ├── /webpack.dll.babel.js           # DllPlugin插件编译配置
 │   └── /webpack.serve:dist.js          # webpack预览编译后结果的配置文件
 ├── /mock/                              # 模拟数据
 │   ├── /api/                           # API接口类型模拟数据
 │   └── /pages/                         # 页面初始化类型模拟数据
 ├── /prd/                               # 项目编译输出目录
 ├── /src/                               # 项目源码目录
-│   ├── /entries/                       # webpack打包入口js
-│   ├── /profiles/                      # 类似maven的profiles，设置不同环境下的配置
-│   └── /templates/                     # 后端模版，如jade、smarty
+│   ├── /entries/                       # webpack打包入口js（非必须）
+│   ├── /profiles/                      # 类似maven的profiles，设置不同环境下的配置（非必须）
+│   └── /templates/                     # 后端模版，如jade、smarty（非必须）
 ├── /tools/                             # packing脚本
-│   ├── /dll.js                         # 运行DllPlugin插件的入口脚本
 │   ├── /serve.js                       # serve脚本
 │   └── /serve:dist.js                  # serve:dist脚本
 ├── .babelrc                            # babel配置
@@ -122,31 +120,60 @@
 └── README.md                   
 ```
 
-## 约定
+### 约定
 * 网页模版中对静态资源引用时使用绝对路径，如 `<script src='/logo/qunar.png'>`
 * css中对静态资源引用时使用波浪线`~`开头相对路径，如 `background:url(~/logo.png)`
 
-## 使用镜像源安装npm
+### Others
 ```
 # npm使用qunar源
 npm install --registry http://registry.npm.corp.qunar.com --disturl=https://npm.taobao.org/dist --sass-binary-site=http://npm.taobao.org/mirrors/node-sass
-
-# 淘宝源
-npm install --registry https://registry.npm.taobao.org
+npm install --registry http://registry.npm.taobao.com
 
 # 只安装dependencies，不安装devDependencies，适用于QDR编译机
 npm install --registry http://registry.npm.corp.qunar.com --production
 ```
 
-## FAQ
+### Yeoman generator
+```
+npm install -g yo generator-packing
+yo packing
+```
 
-### 如何配置和线上环境一样的路由
+### npm-cache在QDR上部署
+使用npm-cache加速编译机上node_modules的安装速度
+```
+# 安装npm-cache
+npm install -g npm-cache
+
+# 安装依赖包，首次从线上下载，之后如果package.json文件不变，就走缓存
+# jenkins用户需要对 `NPM_CACHE_DIR` 目录有写入权限
+NPM_CACHE_DIR=/home/q/prj/npm npm-cache install npm --registry http://registry.npm.corp.qunar.com
+
+# 清空缓存
+NPM_CACHE_DIR=/home/q/prj/npm npm-cache clean
+```
+
+如果node < 4.0，还需要为npm-cache指定高版本的node编译器：
+1. 打开npm-cache
+```
+sodu vi `which npm-cache`
+```
+
+2. 将第一行换成下面的代码，根据服务器上的node路径修改
+```
+#! /home/q/node/node-v4.2.4-linux-x64/bin/node
+```
+
+### 常见问题
+
+#### 如何配置和线上环境一样的路由
 路由规则修改后需要重启`npm run serve`
 
-### eslint错误太多了
+#### eslint错误太多了
 根据团队的实际代码风格，修改 `.eslintrc`
 
-### js文件中如何使用图片、字体等静态资源
+#### js文件中如何使用图片、字体等静态资源
 假设文件目录结构如下：
 ```
 ├── /hotel/
@@ -194,7 +221,7 @@ npm install --registry http://registry.npm.corp.qunar.com --production
   ```
 
 
-### webpackJsonp is not defined
+#### webpackJsonp is not defined
 可能配置了common chunks，公共文件打到了vendor.js，需要在页面引用vendor.js，
 ```html
 <script src="/vendor.js"></script>
@@ -204,34 +231,12 @@ npm install --registry http://registry.npm.corp.qunar.com --production
 <link href="/vendor.css" media="all" rel="stylesheet" />
 ```
 
-### 网页需要引入一个less文件，但这个网页没有js文件，我应该如何把这个less编译成css
-在 config/packing.js 的 `entries` 添加这个less文件，如
-```js
-entries: {
-  abc: './src/entries/abc.less'
-  // 需要输出到不同路径的话可以随意修改key值
-  // 'test/abc': './src/entries/abc.less'
-}
-```
-编译时会把 `abc.less` 编译成 `prd/css/abc-xxxxxxxx.css`，同时html中的引用也会自动更新
+#### 迁移已有的项目
 
-```html
-<!--编译前html代码-->
-<link href="/abc.css" rel="stylesheet" />
-```
+#### 新建项目
 
-```html
-<!--编译后html代码-->
-<link href="/abc-xxxxxxxx.css" rel="stylesheet" />
-```
+#### 如何模拟数据
 
-### 如何模拟数据
+#### 如何让文件在编译过程不做reversion
 
-### 本地编译正常，在编译服务器上发布时却提示找不到某些依赖包
-本地开发时用的npm安装命令是 `npm install` ，它会`devDependencies`和`dependencies`包含的所有包，为了减少不必要的包安装、提高安装速度，在编译服务器上用的npm安装命令是 `npm install --production`，它只会安装`dependencies`下的包。出现这种情况是因为包的位置摆放错误，你需要把在编译服务器上提示找不到的这些包从`devDependencies`移动到`dependencies`下。
-
-### schema和job参数怎么配置
-```
-fe.xxx.build_method=node
-fe.xxx.build_command:
-```
+#### schema怎么配置

@@ -3,12 +3,12 @@
 /.github
 /.tmp
 /.idea
-/assets
-/mock
+/examples
+/generator-packing
 /node_modules
 /npm-debug.log
-/src
 /stats.json
+/scripts
 /sh
 /prd
 /.editorconfig
@@ -17,4 +17,3 @@
 /.npmignore
 /.travis.yml
 /appveyor.yml
-/pom.xml

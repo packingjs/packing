@@ -2,8 +2,9 @@
 
 require('packing/util/babel-register');
 
-const program = require('commander');
 const pkg = require('packing/package.json');
+const program = require('commander');
+
 program
   .version(pkg.version)
   .parse(process.argv);
@@ -14,8 +15,9 @@ const crypto = require('crypto');
 const mkdirp = require('mkdirp');
 const webpack = require('webpack');
 const pRequire = require('packing/util/require');
-const webpackConfig = pRequire('config/webpack.dll.babel');
-const packing = pRequire('config/packing');
+
+const webpackConfig = pRequire('config/webpack.dll.babel', program);
+const packing = pRequire('config/packing', program);
 const commonChunks = packing.commonChunks;
 const dll = packing.path.dll;
 
@@ -33,7 +35,7 @@ function execDll(destDir, hashFile, newHash) {
         mkdirp.sync(destDir);
       }
       fs.writeFileSync(hashFile, JSON.stringify({
-        hash: newHash
+        hash: newHash,
       }));
       console.log('💚  DllPlugin executed!');
     }

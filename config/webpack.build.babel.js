@@ -14,7 +14,7 @@ import ReplaceHashWebpackPlugin from 'replace-hash-webpack-plugin';
 import ProfilePlugin from 'packing-profile-webpack-plugin';
 // import RevWebpackPlugin from 'packing-rev-webpack-plugin';
 import autoprefixer from 'autoprefixer';
-import pRequire from 'packing/util/require';
+import pRequire from '../util/require';
 
 // js输出文件保持目录名称
 const JS_DIRECTORY_NAME = 'js';
@@ -29,7 +29,7 @@ const {
   entries,
   assets,
   assetsDist,
-  templatesDist
+  templatesDist,
 } = packing.path;
 
 /**
@@ -44,10 +44,11 @@ const styleLoaderString = (cssPreprocessor) => {
 
 /**
  * 生成webpack配置文件
+ * @param {object} program 程序进程，可以获取启动参数
  * @param {object} options 特征配置项
  * @return {object}
  */
-const webpackConfig = (options) => {
+const webpackConfig = (program, options) => {
   const projectRootPath = process.cwd();
   const assetsPath = path.resolve(projectRootPath, assetsDist);
   const chunkhash = options.longTermCaching ? `-[chunkhash:${fileHashLength}]` : '';
@@ -61,7 +62,7 @@ const webpackConfig = (options) => {
     // prd环境静态文件输出地址
     path: assetsPath,
     // dev环境下数据流访问地址
-    publicPath: ''
+    publicPath: '',
   };
 
   const moduleConfig = {
@@ -72,24 +73,24 @@ const webpackConfig = (options) => {
       { test: /\.scss$/i, loader: styleLoaderString('sass') },
       {
         test: new RegExp(`.(${assetExtensions.join('|')})$`, 'i'),
-        loader: `url?name=[path][name]-[hash:${fileHashLength}].[ext]&context=${assets}&limit=100!image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false`
-      }
-    ]
+        loader: `url?name=[path][name]-[hash:${fileHashLength}].[ext]&context=${assets}&limit=100!image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false`,
+      },
+    ],
   };
 
   const postcss = () => [autoprefixer];
 
   const resolve = {
-    modulesDirectories: [src, assets, 'node_modules']
+    modulesDirectories: [src, assets, 'node_modules'],
   };
 
   // const ignoreRevPattern = '**/big.jpg';
   const plugins = [
     new ProfilePlugin({
-      failOnMissing: true
+      failOnMissing: true,
     }),
     new CleanPlugin([assetsDist, templatesDist], {
-      root: projectRootPath
+      root: projectRootPath,
     }),
 
     // replace hash时也会将template生成一次，这次copy有些多余
@@ -101,23 +102,23 @@ const webpackConfig = (options) => {
 
     // css files from the extract-text-plugin loader
     new ExtractTextPlugin(`${CSS_DIRECTORY_NAME}/[name]${contenthash}.css`, {
-      allChunks: true
+      allChunks: true,
     }),
 
     new webpack.DefinePlugin({
       // '__DEVTOOLS__': false,
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-        CDN_ROOT: JSON.stringify(process.env.CDN_ROOT)
-      }
+        CDN_ROOT: JSON.stringify(process.env.CDN_ROOT),
+      },
     }),
 
     new ReplaceHashWebpackPlugin({
       assetsDomain: process.env.CDN_ROOT,
       cwd: templates,
       src: `**/*${templateExtension}`,
-      dest: templatesDist
-    })
+      dest: templatesDist,
+    }),
 
     // new RevWebpackPlugin({
     //   cwd: assets,
@@ -148,10 +149,10 @@ const webpackConfig = (options) => {
         compress: {
           warnings: false,
           drop_debugger: true,
-          drop_console: true
+          drop_console: true,
         },
         comments: /^!/,
-        sourceMap: options.sourceMap
+        sourceMap: options.sourceMap,
       })
     );
   }
@@ -174,13 +175,13 @@ const webpackConfig = (options) => {
     module: moduleConfig,
     postcss,
     resolve,
-    plugins
+    plugins,
   };
 };
 
-export default webpackConfig({
+export default program => webpackConfig(program, {
   devtool: false,
   longTermCaching: true,
   minimize: true,
-  sourceMap: false
+  sourceMap: false,
 });

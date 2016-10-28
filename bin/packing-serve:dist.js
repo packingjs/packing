@@ -7,8 +7,9 @@
  */
 require('packing/util/babel-register');
 
-const program = require('commander');
 const pkg = require('packing/package.json');
+const program = require('commander');
+
 program
   .version(pkg.version)
   .parse(process.argv);
@@ -17,7 +18,8 @@ const pRequire = require('packing/util/require');
 const path = require('path');
 const Express = require('express');
 const urlrewrite = require('packing-urlrewrite');
-const packing = pRequire('config/packing');
+
+const packing = pRequire('config/packing', program);
 const templateEngine = packing.templateEngine;
 const rewriteRules = packing.rewriteRules;
 // eslint-disable-next-line
@@ -33,7 +35,7 @@ app.use(urlrewrite(rewriteRules));
 app.use(template({
   templates: templatesPagesDist,
   mockData: mockPageInit,
-  rewriteRules: rewriteRules
+  rewriteRules,
 }));
 
 app.listen(port, (err) => {

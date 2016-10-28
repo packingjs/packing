@@ -11,7 +11,7 @@ import DashboardPlugin from 'webpack-dashboard/plugin';
 import OpenBrowserPlugin from 'open-browser-webpack-plugin';
 import ProfilePlugin from 'packing-profile-webpack-plugin';
 import autoprefixer from 'autoprefixer';
-import pRequire from 'packing/util/require';
+import pRequire from '../util/require';
 
 const packing = pRequire('config/packing');
 const { assetExtensions, localhost, port } = packing;
@@ -21,7 +21,7 @@ const {
   assets,
   assetsDist,
   dll,
-  entries
+  entries,
 } = packing.path;
 
  /**
@@ -60,10 +60,11 @@ const styleLoaderString = (cssPreprocessor) => {
 
 /**
  * 生成webpack配置文件
+ * @param {object} program 程序进程，可以获取启动参数
  * @param {object} options 特征配置项
  * @return {object}
  */
-const webpackConfig = (options) => {
+const webpackConfig = (program, options) => {
   const projectRootPath = process.cwd();
   const assetsPath = path.resolve(projectRootPath, assetsDist);
   const dllPath = path.resolve(projectRootPath, dll);
@@ -79,7 +80,7 @@ const webpackConfig = (options) => {
     // prd环境静态文件输出地址
     path: assetsPath,
     // dev环境下数据流访问地址
-    publicPath: ''
+    publicPath: '',
   };
 
   const moduleConfig = {
@@ -90,15 +91,15 @@ const webpackConfig = (options) => {
       { test: /\.scss$/i, loader: styleLoaderString('sass') },
       {
         test: new RegExp(`.(${assetExtensions.join('|')})$`, 'i'),
-        loader: `file?name=[path][name].[ext]&context=${assets}&emitFile=false`
-      }
-    ]
+        loader: `file?name=[path][name].[ext]&context=${assets}&emitFile=false`,
+      },
+    ],
   };
 
   const postcss = () => [autoprefixer];
 
   const resolve = {
-    modulesDirectories: [src, assets, 'node_modules']
+    modulesDirectories: [src, assets, 'node_modules'],
   };
 
   const plugins = [];
@@ -115,7 +116,7 @@ const webpackConfig = (options) => {
     // });
   }
 
-  if (!process.env.DISABLE_OPEN_BROWSER) {
+  if (program.browser) {
     plugins.push(
       new OpenBrowserPlugin({ url: `http://${localhost}:${port.dev}` })
     );
@@ -126,8 +127,8 @@ const webpackConfig = (options) => {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-        CDN_ROOT: JSON.stringify(process.env.CDN_ROOT)
-      }
+        CDN_ROOT: JSON.stringify(process.env.CDN_ROOT),
+      },
     }),
     new DashboardPlugin()
   );
@@ -153,13 +154,13 @@ const webpackConfig = (options) => {
     postcss,
     resolve,
     plugins,
-    devtool
+    devtool,
   };
 };
 
-export default webpackConfig({
+export default program => webpackConfig(program, {
   hot: false,
   // 检测到module有变化时，强制刷新页面
   reload: false,
-  devtool: 'eval'
+  devtool: 'eval',
 });

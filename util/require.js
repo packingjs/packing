@@ -1,19 +1,23 @@
-var path = require('path');
-var existsSync = require('fs').existsSync;
-var isFunction = require('util').isFunction;
+const path = require('path');
+const existsSync = require('fs').existsSync;
+const isFunction = require('util').isFunction;
 
-module.exports = function (file) {
+module.exports = function (file, program) {
+  let configFile = file;
   if (['.js', '.json'].indexOf(path.extname(file)) < 0) {
-    file += '.js'
+    configFile += '.js';
   }
-  var pathInProject = path.resolve(file);
-  var pathInLib = path.resolve(__dirname, '..', file);
-  var defaultConfig = require(pathInLib);
+  const pathInProject = path.resolve(configFile);
+  const pathInLib = path.resolve(__dirname, '..', configFile);
+  let defaultConfig = require(pathInLib);
+  if (isFunction(defaultConfig)) {
+    defaultConfig = defaultConfig(program);
+  }
 
   if (existsSync(pathInProject)) {
-    var projectConfig = require(pathInProject);
-    return isFunction(projectConfig) ? projectConfig(defaultConfig) : projectConfig;
-  } else {
-    return defaultConfig;
+    const projectConfig = require(pathInProject);
+    return isFunction(projectConfig) ? projectConfig(defaultConfig, program) : projectConfig;
   }
+
+  return defaultConfig;
 };

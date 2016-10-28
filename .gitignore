@@ -1,9 +1,9 @@
+.idea
+node_modules/
 npm-debug.log
 stats.json
-/.idea
-/sh
 /.gitlab
 /.github
 /.tmp
-/node_modules
 /prd
+/sh
