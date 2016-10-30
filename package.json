@@ -14,7 +14,7 @@
   "author": "zhongzhi <zhong.zhi@163.com>",
   "license": "MIT",
   "scripts": {
-    "start": "babel-node scripts/install-example.js"
+    "init-example": "babel-node scripts/init-example.js"
   },
   "dependencies": {
     "autoprefixer": "^6.4.0",
@@ -87,5 +87,9 @@
   "engines": {
     "node": ">=0.12.7",
     "npm": ">=3.0"
+  },
+  "devDependencies": {
+    "lodash": "^4.16.4",
+    "shelljs": "^0.7.5"
   }
 }
