@@ -11,7 +11,7 @@ import CleanPlugin from 'clean-webpack-plugin';
 // import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import ReplaceHashWebpackPlugin from 'replace-hash-webpack-plugin';
-import ProfilePlugin from 'packing-profile-webpack-plugin';
+// import ProfilePlugin from 'packing-profile-webpack-plugin';
 // import RevWebpackPlugin from 'packing-rev-webpack-plugin';
 import autoprefixer from 'autoprefixer';
 import pRequire from '../util/require';
@@ -86,9 +86,9 @@ const webpackConfig = (program, options) => {
 
   // const ignoreRevPattern = '**/big.jpg';
   const plugins = [
-    new ProfilePlugin({
-      failOnMissing: true,
-    }),
+    // new ProfilePlugin({
+    //   failOnMissing: true,
+    // }),
     new CleanPlugin([assetsDist, templatesDist], {
       root: projectRootPath,
     }),
