@@ -93,9 +93,9 @@ export default {
   // <script src="/vendor.js"></script>
   commonChunks: {
     vendor: [
-    //   'react',
-    //   'react-dom'
-      'packing-ajax',
+      // 'react',
+      // 'react-dom'
+      // 'packing-ajax',
     ],
   },
 
