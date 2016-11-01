@@ -43,10 +43,10 @@ export default {
     templatesDist: 'prd/templates',
 
     // 模版网页文件，如果没有使用layout的话，保持这个地址和`templates`一致
-    templatesPages: 'src/templates/pages',
+    templatesPages: 'src/templates',
 
     // 编译后的模版网页文件，如果没有使用layout的话，保持这个地址和`templatesDist`一致
-    templatesPagesDist: 'prd/templates/pages',
+    templatesPagesDist: 'prd/templates',
 
     // webpack打包入口JS文件目录
     // As value an object, a function is accepted.
@@ -65,13 +65,13 @@ export default {
         config[key] = path.join(cwd, page);
       });
       return config;
-    }
+    },
   },
 
   // 模版引擎类型，目前支持的类型有[html,pug,ejs,handlebars,smarty,velocity,artTemplate]
-  templateEngine: 'pug',
+  templateEngine: 'html',
   // 模版文件扩展名
-  templateExtension: '.pug',
+  templateExtension: '.html',
 
   // 本地访问的域名，为了调试方便，可能改成my.qunar.com
   localhost: 'localhost',
@@ -81,7 +81,7 @@ export default {
     // 开发环境端口号
     dev: 8081,
     // 预览编译后结果的端口号
-    dist: 8080
+    dist: 8080,
   },
 
   // 提取共用包有2个作用：
@@ -95,8 +95,8 @@ export default {
     vendor: [
     //   'react',
     //   'react-dom'
-      'packing-ajax'
-    ]
+      'packing-ajax',
+    ],
   },
 
   // 静态资源类型
@@ -110,7 +110,7 @@ export default {
     'woff',
     'woff2',
     'eot',
-    'svg'
+    'svg',
   ],
 
   // 静态文件md5保留长度
@@ -123,10 +123,10 @@ export default {
     '^/$': '/index.pug',
 
     // API转发
-    '^/api/(.*)': 'require!/mock/api/$1.js'
+    '^/api/(.*)': 'require!/mock/api/$1.js',
     // '^/api/(.*)': '/index.jade.html',
     // '^/api/(.*)': 'http://touch.qunar.com/api/hotel/findhotelcity?cityName=%E5%8C%97%E4%BA%AC',
     // '^/hello': 'http://localhost:3001/123/4.html',
-  }
+  },
 
 };

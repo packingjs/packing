@@ -19,7 +19,6 @@ if (process.argv.length < 4) {
 
 const example = process.argv[2];
 const destination = path.resolve(process.argv[3]);
-console.log('==', destination);
 const templateRoot = 'generator-packing/generators/app/templates';
 
 const name = path.basename(destination);
@@ -39,7 +38,14 @@ function copyTpl(source, target, data) {
   console.log(`${targetPath} created.`);
 }
 
+// 在控制台显示执行的命令
+shell.config.verbose = true;
 shell.mkdir('-p', destination);
+// 需要打开extglob模式
+shell.exec('shopt -s extglob');
+// 删除除node_modules之外的其他文件
+shell.rm('-rf', `${destination}/!(node_modules)`);
+// 部署example代码
 shell.cp('-R', `examples/${example}/*`, destination);
 
 copyTpl(
