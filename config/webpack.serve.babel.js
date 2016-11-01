@@ -9,7 +9,6 @@ import { isString, isArray, isObject, isFunction } from 'util';
 import webpack from 'webpack';
 import DashboardPlugin from 'webpack-dashboard/plugin';
 import OpenBrowserPlugin from 'open-browser-webpack-plugin';
-import ProfilePlugin from 'packing-profile-webpack-plugin';
 import autoprefixer from 'autoprefixer';
 import pRequire from '../util/require';
 
@@ -123,7 +122,6 @@ const webpackConfig = (program, options) => {
   }
 
   plugins.push(
-    new ProfilePlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
