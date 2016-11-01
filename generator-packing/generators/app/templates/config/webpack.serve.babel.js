@@ -5,8 +5,8 @@
  * @param object webpackConfig 默认配置对象
  */
 
-export default (webpackConfig) => {
-  return Object.assign({}, webpackConfig, {
-    // 在这里自定义配置
-  });
-};
+import assign from 'object-assign-deep';
+
+export default webpackConfig => assign({}, webpackConfig, {
+  // 在这里自定义配置
+});

@@ -5,11 +5,12 @@
  * @param object webpackConfig 默认配置对象
  */
 
+import assign from 'object-assign-deep';
 import ProfilesPlugin from 'packing-profile-webpack-plugin';
 
 export default (webpackConfig) => {
 
-  return Object.assign({}, webpackConfig, {
+  return assign({}, webpackConfig, {
     // 在这里自定义配置
     plugins: webpackConfig.plugins.concat(
       new ProfilesPlugin()

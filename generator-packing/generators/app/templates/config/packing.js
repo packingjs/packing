@@ -5,11 +5,11 @@
  * @param object packing 默认配置对象
  */
 
-export default (packing) => {
-  return Object.assign({}, packing, {
-    // 在这里自定义配置
-    // port: {
-    //   dev: 3000
-    // }
-  });
-};
+import assign from 'object-assign-deep';
+
+export default packing => assign({}, packing, {
+  // 在这里自定义配置
+  // port: {
+  //   dev: 3000
+  // }
+});
