@@ -92,11 +92,11 @@ export default {
   // 否则会报错
   // <script src="/vendor.js"></script>
   commonChunks: {
-    vendor: [
-      // 'react',
-      // 'react-dom'
-      // 'packing-ajax',
-    ],
+    // vendor: [
+    //   'react',
+    //   'react-dom'
+    //   'packing-ajax',
+    // ],
   },
 
   // 静态资源类型

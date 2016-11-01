@@ -1,1 +1,1 @@
-console.log('NODE_ENV: %s', __('name'));
+document.getElementById('output').innerHTML = __('name');
