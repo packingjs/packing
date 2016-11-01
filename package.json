@@ -14,7 +14,8 @@
   "author": "zhongzhi <zhong.zhi@163.com>",
   "license": "MIT",
   "scripts": {
-    "init-example": "babel-node scripts/init-example.js"
+    "test:example": "babel-node scripts/test:example.js",
+    "test:generator": "babel-node scripts/test:generator.js"
   },
   "dependencies": {
     "autoprefixer": "^6.4.0",

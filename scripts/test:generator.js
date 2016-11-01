@@ -1,6 +1,6 @@
 /**
  * 初始化一个示例工程
- * @axample npm run init-example ~/workspace/test
+ * @axample npm run test-generator ~/workspace/test
  */
 import fs from 'fs';
 import path from 'path';
