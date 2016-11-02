@@ -108,7 +108,7 @@ const webpackConfig = (program, options) => {
     // });
   }
 
-  if (program.browser) {
+  if (program['open-browser']) {
     plugins.push(
       new OpenBrowserPlugin({ url: `http://${localhost}:${port.dev}` })
     );

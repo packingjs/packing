@@ -2,13 +2,7 @@
 
 require('packing/util/babel-register');
 
-const pkg = require('packing/package.json');
-const program = require('commander');
-
-program
-  .version(pkg.version)
-  .parse(process.argv);
-
+const nopt = require('nopt');
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
@@ -16,6 +10,7 @@ const mkdirp = require('mkdirp');
 const webpack = require('webpack');
 const pRequire = require('packing/util/require');
 
+const program = nopt(process.argv, 2);
 const webpackConfig = pRequire('config/webpack.dll.babel', program);
 const packing = pRequire('config/packing', program);
 const commonChunks = packing.commonChunks;

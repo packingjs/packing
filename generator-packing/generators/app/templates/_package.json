@@ -9,6 +9,7 @@
     "build:beta": "better-npm-run build:beta",
     "build:prod": "better-npm-run build:prod",
     "serve": "better-npm-run dll && better-npm-run serve",
+    "serve:normal": "better-npm-run dll && better-npm-run serve:normal",
     "serve:dist": "better-npm-run build && better-npm-run serve:dist",
     "eslint": "better-npm-run eslint",
     "dll": "better-npm-run dll"

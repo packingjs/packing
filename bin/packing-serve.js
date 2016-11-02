@@ -2,14 +2,7 @@
 
 require('packing/util/babel-register');
 
-const pkg = require('packing/package.json');
-const program = require('commander');
-
-program
-  .version(pkg.version)
-  .option('-o, --open-browser', 'Open a browser when webpack starts')
-  .parse(process.argv);
-
+const nopt = require('nopt');
 const path = require('path');
 const Express = require('express');
 const webpack = require('webpack');
@@ -18,6 +11,7 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const pRequire = require('packing/util/require');
 
+const program = nopt(process.argv, 2);
 const webpackConfig = pRequire('config/webpack.serve.babel', program);
 const packing = pRequire('config/packing', program);
 const templateEngine = packing.templateEngine;

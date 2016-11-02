@@ -2,17 +2,13 @@
 
 require('packing/util/babel-register');
 
-const pkg = require('packing/package.json');
-const program = require('commander');
+const nopt = require('nopt');
 
-program
-  .version(pkg.version)
-  .parse(process.argv);
-
+const program = nopt(process.argv, 2);
 const webpack = require('webpack');
 const pRequire = require('packing/util/require');
-
 const webpackConfig = pRequire('config/webpack.build.babel', program);
+
 webpack(webpackConfig, (err) => {
   if (err) {
     console.log(err);

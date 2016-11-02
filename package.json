@@ -51,6 +51,7 @@
     "less-loader": "^2.2.3",
     "loader-utils": "^0.2.15",
     "move-webpack-plugin": "0.0.1",
+    "nopt": "^3.0.6",
     "object-assign-deep": "0.0.4",
     "packing-ajax": "^0.0.1",
     "packing-glob": "^1.0.1",
