@@ -8,6 +8,7 @@ const path = require('path');
 const crypto = require('crypto');
 const mkdirp = require('mkdirp');
 const webpack = require('webpack');
+const pkg = require('packing/package.json');
 const pRequire = require('packing/util/require');
 
 const program = nopt(process.argv, 2);
