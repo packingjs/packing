@@ -11,9 +11,8 @@ export default (packing) => {
   return assign({}, packing, {
     commonChunks: {
       vendor: [
-        // './src/a',
-        // './src/b',
-        'react',
+        './src/a',
+        './src/b',
       ],
     },
   });

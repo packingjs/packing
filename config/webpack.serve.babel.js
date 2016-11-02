@@ -14,14 +14,7 @@ import pRequire from '../util/require';
 
 const packing = pRequire('config/packing');
 const { assetExtensions, localhost, port } = packing;
-
-const {
-  src,
-  assets,
-  assetsDist,
-  dll,
-  entries,
-} = packing.path;
+const { src, assets, assetsDist, dll, entries } = packing.path;
 
  /**
   * 给所有入口js加上HRM的clientjs

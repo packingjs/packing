@@ -23,14 +23,7 @@ const CSS_DIRECTORY_NAME = 'css';
 
 const packing = pRequire('config/packing');
 const { assetExtensions, fileHashLength, templateExtension } = packing;
-const {
-  src,
-  templates,
-  entries,
-  assets,
-  assetsDist,
-  templatesDist,
-} = packing.path;
+const { src, templates, entries, assets, assetsDist, templatesDist } = packing.path;
 
 /**
  * 返回样式loader字符串

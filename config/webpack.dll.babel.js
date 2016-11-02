@@ -8,14 +8,11 @@ import path from 'path';
 import webpack from 'webpack';
 import CleanPlugin from 'clean-webpack-plugin';
 import autoprefixer from 'autoprefixer';
-import packing, { assetExtensions } from './packing';
+import pRequire from '../util/require';
 
-const {
-  src,
-  assets,
-  dll,
-} = packing.path;
-
+const packing = pRequire('config/packing');
+const { assetExtensions } = packing;
+const { src, assets, dll } = packing.path;
 const cwd = process.cwd();
 
 /**
@@ -65,21 +62,22 @@ const webpackConfig = (program, options) => {
     modulesDirectories: [src, assets, 'node_modules'],
   };
 
-  console.log('manifest.json: ', path.join(output.path, '[name]-manifest.json'));
-
   const plugins = [
     new CleanPlugin([dll], {
       root: cwd,
     }),
+
     new webpack.DllPlugin({
       path: path.join(output.path, '[name]-manifest.json'),
       name: '[name]_[hash]',
     }),
+
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
       },
     }),
+
   ];
 
   return {
