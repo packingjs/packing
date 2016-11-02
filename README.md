@@ -204,6 +204,9 @@ npm install --registry http://registry.npm.corp.qunar.com --production
 <link href="/vendor.css" media="all" rel="stylesheet" />
 ```
 
+### dll_vendor:Uncaught ReferenceError: __webpack_require__ is not defined
+vendor.js里没有打入任何js，检查packing.js的 `commonChunks.vendor` 配置
+
 ### 网页需要引入一个less文件，但这个网页没有js文件，我应该如何把这个less编译成css
 在 config/packing.js 的 `entries` 添加这个less文件，如
 ```js

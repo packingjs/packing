@@ -131,7 +131,9 @@ const webpackConfig = (program, options) => {
   if (packing.commonChunks) {
     const chunkKeys = Object.keys(packing.commonChunks);
     chunkKeys.forEach((key) => {
-      entry[key] = packing.commonChunks[key];
+      if (packing.commonChunks[key].length > 0) {
+        entry[key] = packing.commonChunks[key];
+      }
     });
 
     // 扩展阅读 http://webpack.github.io/docs/list-of-plugins.html#commonschunkplugin

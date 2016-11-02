@@ -10,7 +10,8 @@
     "build:prod": "better-npm-run build:prod",
     "serve": "better-npm-run dll && better-npm-run serve",
     "serve:dist": "better-npm-run build && better-npm-run serve:dist",
-    "eslint": "better-npm-run eslint"
+    "eslint": "better-npm-run eslint",
+    "dll": "better-npm-run dll"
   },
   "betterScripts": {
     "dll": {

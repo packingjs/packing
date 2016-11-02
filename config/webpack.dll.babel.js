@@ -13,10 +13,10 @@ import packing, { assetExtensions } from './packing';
 const {
   src,
   assets,
-  dll
+  dll,
 } = packing.path;
 
-const projectRootPath = process.cwd();
+const cwd = process.cwd();
 
 /**
  * 返回样式loader字符串
@@ -35,15 +35,15 @@ const styleLoaderString = (cssPreprocessor) => {
  * @return {object}
  */
 const webpackConfig = (program, options) => {
-  const context = process.cwd();
+  const context = cwd;
   const devtool = options.devtool;
 
   const entry = packing.commonChunks;
 
   const output = {
-    path: path.join(context, dll),
+    path: path.join(cwd, dll),
     filename: '[name].js',
-    library: '[name]_[hash]'
+    library: '[name]_[hash]',
   };
 
   const moduleConfig = {
@@ -54,30 +54,32 @@ const webpackConfig = (program, options) => {
       { test: /\.scss$/i, loader: styleLoaderString('sass') },
       {
         test: new RegExp(`.(${assetExtensions.join('|')})$`, 'i'),
-        loader: `file?name=[path][name].[ext]&context=${assets}&emitFile=false`
-      }
-    ]
+        loader: `file?name=[path][name].[ext]&context=${assets}&emitFile=false`,
+      },
+    ],
   };
 
   const postcss = () => [autoprefixer];
 
   const resolve = {
-    modulesDirectories: [src, assets, 'node_modules']
+    modulesDirectories: [src, assets, 'node_modules'],
   };
+
+  console.log('manifest.json: ', path.join(output.path, '[name]-manifest.json'));
 
   const plugins = [
     new CleanPlugin([dll], {
-      root: projectRootPath
+      root: cwd,
     }),
     new webpack.DllPlugin({
       path: path.join(output.path, '[name]-manifest.json'),
-      name: '[name]_[hash]'
+      name: '[name]_[hash]',
     }),
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV)
-      }
-    })
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+      },
+    }),
   ];
 
   return {
@@ -88,12 +90,12 @@ const webpackConfig = (program, options) => {
     postcss,
     resolve,
     plugins,
-    devtool
+    devtool,
   };
 };
 
 export default program => webpackConfig(program, {
   hot: false,
   reload: false,
-  devtool: 'eval'
+  devtool: 'eval',
 });
