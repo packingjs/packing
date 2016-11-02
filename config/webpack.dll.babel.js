@@ -28,15 +28,12 @@ const styleLoaderString = (cssPreprocessor) => {
 /**
  * 生成webpack配置文件
  * @param {object} program 程序进程，可以获取启动参数
- * @param {object} options 特征配置项
  * @return {object}
  */
-const webpackConfig = (program, options) => {
+const webpackConfig = () => {
   const context = cwd;
-  const devtool = options.devtool;
-
+  const devtool = 'eval';
   const entry = packing.commonChunks;
-
   const output = {
     path: path.join(cwd, dll),
     filename: '[name].js',
@@ -92,8 +89,4 @@ const webpackConfig = (program, options) => {
   };
 };
 
-export default program => webpackConfig(program, {
-  hot: false,
-  reload: false,
-  devtool: 'eval',
-});
+export default program => webpackConfig(program);

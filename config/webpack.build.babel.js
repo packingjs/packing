@@ -8,11 +8,8 @@ import path from 'path';
 import { isFunction } from 'util';
 import webpack from 'webpack';
 import CleanPlugin from 'clean-webpack-plugin';
-// import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import ReplaceHashWebpackPlugin from 'replace-hash-webpack-plugin';
-// import ProfilePlugin from 'packing-profile-webpack-plugin';
-// import RevWebpackPlugin from 'packing-rev-webpack-plugin';
 import autoprefixer from 'autoprefixer';
 import pRequire from '../util/require';
 
@@ -77,21 +74,10 @@ const webpackConfig = (program, options) => {
     modulesDirectories: [src, assets, 'node_modules'],
   };
 
-  // const ignoreRevPattern = '**/big.jpg';
   const plugins = [
-    // new ProfilePlugin({
-    //   failOnMissing: true,
-    // }),
     new CleanPlugin([assetsDist, templatesDist], {
       root: projectRootPath,
     }),
-
-    // replace hash时也会将template生成一次，这次copy有些多余
-    // new CopyWebpackPlugin([{
-    //   context: assets,
-    //   from: ignoreRevPattern,
-    //   to: path.resolve(cwd, assetsDist),
-    // }]),
 
     // css files from the extract-text-plugin loader
     new ExtractTextPlugin(`${CSS_DIRECTORY_NAME}/[name]${contenthash}.css`, {
@@ -99,7 +85,6 @@ const webpackConfig = (program, options) => {
     }),
 
     new webpack.DefinePlugin({
-      // '__DEVTOOLS__': false,
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
         CDN_ROOT: JSON.stringify(process.env.CDN_ROOT),
@@ -113,20 +98,13 @@ const webpackConfig = (program, options) => {
       dest: templatesDist,
     }),
 
-    // new RevWebpackPlugin({
-    //   cwd: assets,
-    //   src: ['**/*', '!**/*.md'], // 忽略md文件
-    //   dest: assetsDist,
-    // }),
   ];
 
   // 从配置文件中获取并生成webpack打包配置
   if (packing.commonChunks) {
     const chunkKeys = Object.keys(packing.commonChunks);
     chunkKeys.forEach((key) => {
-      if (packing.commonChunks[key].length > 0) {
-        entry[key] = packing.commonChunks[key];
-      }
+      entry[key] = packing.commonChunks[key];
     });
 
     // 扩展阅读 http://webpack.github.io/docs/list-of-plugins.html#commonschunkplugin

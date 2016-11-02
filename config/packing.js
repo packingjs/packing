@@ -84,9 +84,7 @@ export default {
     dist: 8080,
   },
 
-  // 提取共用包有2个作用：
-  // 1. 能提高开发环境的编译速度，运行`npm run serve`前先运行`npm run dll`来生成manifest.json
-  // 2. 能减少生产环境文件传输的size
+  // commonChunks配置，在serve任务中被DllPlugin调用，在build任务中被CommonsChunkPlugin调用
   // CommonsChunkPlugin会将最后一个当作Entry chunk
   // 注意，如果配置了commonChunks，所有网页模版需要引用公共包文件
   // 否则会报错

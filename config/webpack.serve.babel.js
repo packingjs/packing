@@ -127,15 +127,13 @@ const webpackConfig = (program, options) => {
    // 从配置文件中获取dll
   if (packing.commonChunks) {
     Object.keys(packing.commonChunks).forEach((key) => {
-      if (packing.commonChunks[key].length > 0) {
-        plugins.push(
-          new webpack.DllReferencePlugin({
-            context,
-            // eslint-disable-next-line
-            manifest: require(path.join(dllPath, `${key}-manifest.json`))
-          })
-        );
-      }
+      plugins.push(
+        new webpack.DllReferencePlugin({
+          context,
+          // eslint-disable-next-line
+          manifest: require(path.join(dllPath, `${key}-manifest.json`))
+        })
+      );
     });
   }
 
