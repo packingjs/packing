@@ -8,6 +8,7 @@ var mkdirp = require('mkdirp');
 var util = require('util');
 var assign = require('object-assign');
 var glob = require('packing-glob');
+var pkg = require('/package.json');
 
 /**
  * 将用户选择项信息打平
@@ -33,7 +34,9 @@ function flattenFeature(answers) {
 
 module.exports = yeoman.Base.extend({
   initializing: function () {
-    this.props = {};
+    this.props = {
+      packingVersion: pkg.version,
+    };
   },
 
   default: function () {
