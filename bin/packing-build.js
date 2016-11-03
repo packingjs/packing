@@ -10,7 +10,7 @@ const pRequire = require('packing/util/require');
 
 const webpackConfig = pRequire('config/webpack.build.babel', program);
 
-webpack(webpackConfig, (err, stats) => {
+webpack(webpackConfig, function (err, stats) {
   if (err) {
     console.log(err);
   } else if (stats.hasErrors() || stats.hasWarnings()) {

@@ -42,11 +42,19 @@
   # 编译工程
   npm run build
 
+  # 不同环境下编译工程
+  npm run build:dev
+  npm run build:beta
+  npm run build:prod
+
   # 编译并预览编译结果，端口8080
   npm run serve:dist
 
+  # 启动不带webpack-dashboard的开发环境
+  npm run serve:normal
+
   # 启动时自动打开浏览器功能
-  npm run serve -- --open-browser
+  npm run serve -- --open
   ```
 
 ## Features
@@ -85,8 +93,8 @@
 - [ ]example
   - [ ]base
   - [ ]custom template
-  - [ ]react+redus+redux-devtools
-  - [ ]commonChunk
+  - [ ]react + redus
+  - [ ]common chunks
   - [ ]url rules
   - [ ]data mock
   - [ ]profiles

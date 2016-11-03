@@ -23,7 +23,7 @@ function md5(string) {
 
 function execDll(destDir, hashFile, newHash) {
   // 写入newHash
-  webpack(webpackConfig, (err) => {
+  webpack(webpackConfig, function (err) {
     if (err) {
       console.log(err);
     } else {
@@ -41,10 +41,10 @@ function execDll(destDir, hashFile, newHash) {
 const allDependencies = Object.assign(pkg.dependencies, pkg.devDependencies);
 const dllDeps = {};
 const destDir = path.resolve(process.cwd(), dll);
-const hashFile = `${destDir}/hash.json`;
+const hashFile = destDir + '/hash.json';
 
-Object.keys(commonChunks).forEach((chunkName) => {
-  commonChunks[chunkName].forEach((d) => {
+Object.keys(commonChunks).forEach(function (chunkName) {
+  commonChunks[chunkName].forEach(function (d) {
     if (allDependencies[d]) {
       dllDeps[d] = allDependencies[d];
     }

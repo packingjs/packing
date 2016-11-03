@@ -1,6 +1,10 @@
 {
   "extends": "eslint-config-airbnb",
 
+  "env": {
+    "es6": false
+  },
+
   "rules": {
     "func-names": 0,
     "global-require": 0,
@@ -9,8 +13,8 @@
     "import/no-unresolved": 0,
     "no-console": 0
   },
-  
+
   "globals": {
-    __: true
+    "__": true
   }
 }

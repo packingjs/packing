@@ -52,7 +52,7 @@ app.use(template({
   rewriteRules,
 }));
 
-app.listen(port, (err) => {
+app.listen(port, function (err) {
   if (err) {
     console.error(err);
   } else {
