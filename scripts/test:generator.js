@@ -1,65 +1,14 @@
 /**
- * 初始化一个示例工程
- * @axample npm run test-generator ~/workspace/test
+ * 本地安装generator
+ * @axample npm run test:generator
  */
-import fs from 'fs';
-import path from 'path';
-import { template } from 'lodash';
 import shell from 'shelljs';
 
-if (process.argv.length < 3) {
-  console.log('Please specify the destination path');
-  process.exit(1);
-}
+// rm -rf /usr/local/lib/node_modules/generator-packing
+// cp -R ../generator-packing /usr/local/lib/node_modules
 
-const destination = path.resolve(process.argv[2]);
-const templateRoot = 'generator-packing/generators/app/templates';
-const name = path.basename(destination);
-const props = {
-  props: {
-    name,
-    react: false,
-  },
-};
+shell.exec('shopt -s extglob');
+shell.rm('-rf', '/usr/local/lib/node_modules/generator-packing/!(node_modules)');
+shell.cp('-R', 'generator-packing', '/usr/local/lib/node_modules');
 
-function copyTpl(source, target, data) {
-  const fsOptions = { encoding: 'utf8' };
-  const sourcePath = path.resolve(source);
-  const targetPath = path.resolve(destination, target);
-  const content = template(fs.readFileSync(sourcePath, fsOptions))(data);
-  fs.writeFileSync(targetPath, content, fsOptions);
-  console.log(`${targetPath} created.`);
-}
-
-copyTpl(
-  `${templateRoot}/babelrc`,
-  '.babelrc',
-  props
-);
-copyTpl(
-  `${templateRoot}/eslintrc`,
-  '.eslintrc',
-  props
-);
-copyTpl(
-  `${templateRoot}/_package.json`,
-  'package.json',
-  props
-);
-
-shell.rm('-rf', `${destination}/.tmp`);
-shell.rm('-rf', `${destination}/assets`);
-shell.rm('-rf', `${destination}/config`);
-shell.rm('-rf', `${destination}/mock`);
-shell.rm('-rf', `${destination}/src`);
-
-shell.cp('-R', `${templateRoot}/assets`, `${destination}/assets`);
-shell.cp('-R', `${templateRoot}/config`, `${destination}/config`);
-shell.cp('-R', `${templateRoot}/mock`, `${destination}/mock`);
-shell.cp('-R', `${templateRoot}/src`, `${destination}/src`);
-
-// 更新project中的node_modules
-shell.cp('package.json', `${destination}/node_modules/packing/package.json`);
-shell.cp('-R', 'bin', `${destination}/node_modules/packing`);
-shell.cp('-R', 'config', `${destination}/node_modules/packing`);
-shell.cp('-R', 'util', `${destination}/node_modules/packing`);
+console.log('✔ generator-packing install successfully');

@@ -10,3 +10,10 @@ require('babel-register')({
   presets: presets,
   plugins: babelrc.plugins
 });
+
+if (!{}.hasOwnProperty.call(process.env, 'NODE_ENV')) {
+  process.env.NODE_ENV = 'local';
+}
+if (!{}.hasOwnProperty.call(process.env, 'CDN_ROOT')) {
+  process.env.CDN_ROOT = '';
+}

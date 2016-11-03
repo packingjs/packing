@@ -8,7 +8,6 @@ var mkdirp = require('mkdirp');
 var util = require('util');
 var assign = require('object-assign');
 var glob = require('packing-glob');
-var pkg = require('/package.json');
 
 /**
  * 将用户选择项信息打平
@@ -34,9 +33,7 @@ function flattenFeature(answers) {
 
 module.exports = yeoman.Base.extend({
   initializing: function () {
-    this.props = {
-      packingVersion: pkg.version,
-    };
+    this.props = {};
   },
 
   default: function () {
@@ -159,7 +156,7 @@ module.exports = yeoman.Base.extend({
   writing: {
     folders: function () {
       // console.log('this.props: %s', this.props);
-      var folders = ['config', 'tools'];
+      var folders = ['config'];
       var pattern = '{' + folders.join( ',') + '}/**/*';
       var options = {
         cwd: this.sourceRoot()

@@ -1,12 +1,11 @@
 /**
  * 初始化一个示例工程
- * @axample npm run test-example profiles ~/workspace/test3
+ * @axample npm run test:example profiles ~/workspace/test3
  */
 import fs from 'fs';
 import path from 'path';
 import { template } from 'lodash';
 import shell from 'shelljs';
-import pkg from '../package.json';
 
 if (process.argv.length < 3) {
   console.log('Please specify example name');
@@ -26,8 +25,8 @@ const name = path.basename(destination);
 const props = {
   props: {
     name,
-    packingVersion: pkg.version,
     react: false,
+    template: 'html',
   },
 };
 

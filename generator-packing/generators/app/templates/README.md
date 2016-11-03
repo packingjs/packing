@@ -22,8 +22,11 @@
   # 编译并预览编译结果，端口8080
   npm run serve:dist
 
+  # 启动不带webpack-dashboard的开发环境
+  npm run serve:normal
+
   # 启动时自动打开浏览器功能
-  npm run serve -- --open-browser
+  npm run serve -- --open
   ```
 
 ## 目录结构
@@ -43,9 +46,6 @@
 │   ├── /entries/                       # webpack打包入口js
 │   ├── /profiles/                      # 类似maven的profiles，设置不同环境下的配置
 │   └── /templates/                     # 后端模版，如jade、smarty
-├── /tools/                             # packing脚本
-│   ├── /serve.js                       # serve脚本
-│   └── /serve:dist.js                  # serve:dist脚本
 ├── .babelrc                            # babel配置
 ├── .editorconfig                       # 代码编辑器配置
 ├── .eslintrc                           # eslint配置
