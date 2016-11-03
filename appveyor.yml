@@ -25,6 +25,6 @@ install:
   - npm install
 
   # Install our current directory as a dependency of itself
-  - npm run build:prod
+  - npm run eslint
 
 build: off

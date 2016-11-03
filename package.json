@@ -21,6 +21,7 @@
   "author": "zhongzhi <zhong.zhi@163.com>",
   "license": "MIT",
   "scripts": {
+    "eslint": "eslint bin config scripts util",
     "test:example": "babel-node scripts/test:example.js",
     "test:generator": "babel-node scripts/test:generator.js"
   },
