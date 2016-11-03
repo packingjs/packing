@@ -24,7 +24,7 @@
     "yeoman-generator": "^0.23.0",
     "yosay": "^1.0.0"
   },
-  "repository": "https://github.com/zhongzhi107/generator-packing",
+  "repository": "https://github.com/zhongzhi107/packing/tree/master/generator-packing",
   "license": "MIT",
   "preferGlobal": true
 }
