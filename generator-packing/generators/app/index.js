@@ -1,13 +1,13 @@
-'use strict';
 
-var path = require('path');
-var yeoman = require('yeoman-generator');
-var chalk = require('chalk');
-var yosay = require('yosay');
-var mkdirp = require('mkdirp');
-var util = require('util');
-var assign = require('object-assign');
-var glob = require('packing-glob');
+
+const path = require('path');
+const yeoman = require('yeoman-generator');
+const chalk = require('chalk');
+const yosay = require('yosay');
+const mkdirp = require('mkdirp');
+const util = require('util');
+const assign = require('object-assign');
+const glob = require('packing-glob');
 
 /**
  * 将用户选择项信息打平
@@ -18,10 +18,10 @@ var glob = require('packing-glob');
  *
  */
 function flattenFeature(answers) {
-  var features = {};
-  Object.keys(answers).forEach(function(key) {
+  const features = {};
+  Object.keys(answers).forEach(function (key) {
     if (util.isArray(answers[key])) {
-      answers[key].forEach(function(item) {
+      answers[key].forEach(function (item) {
         features[item] = true;
       });
     } else {
@@ -54,7 +54,7 @@ module.exports = yeoman.Base.extend({
     ));
 
     // @see https://github.com/SBoudrias/Inquirer.js
-    var prompts = [
+    const prompts = [
       {
         type: 'input',
         name: 'name',
@@ -65,7 +65,7 @@ module.exports = yeoman.Base.extend({
         type: 'confirm',
         name: 'react',
         message: 'Use react?',
-        default: true
+        default: true,
       },
       {
         type: 'confirm',
@@ -74,7 +74,7 @@ module.exports = yeoman.Base.extend({
         default: true,
         when: function (answers) {
           return answers.react;
-        }
+        },
       },
       {
         type: 'list',
@@ -83,23 +83,23 @@ module.exports = yeoman.Base.extend({
         choices: [
           {
             name: 'none',
-            value: ''
+            value: '',
           },
           {
             name: 'less',
-            value: 'less'
+            value: 'less',
           },
           {
             name: 'sass',
-            value: 'sass'
-          }
-        ]
+            value: 'sass',
+          },
+        ],
       },
       {
         type: 'confirm',
         name: 'maven',
         message: 'Use maven?',
-        default: true
+        default: true,
       },
       {
         type: 'list',
@@ -108,44 +108,45 @@ module.exports = yeoman.Base.extend({
         choices: [
           {
             name: 'ejs',
-            value: 'ejs'
+            value: 'ejs',
           },
           {
             name: 'handlebars',
-            value: 'handlebars'
+            value: 'handlebars',
           },
           {
             name: 'html',
-            value: 'html'
+            value: 'html',
           },
           {
             name: 'pug',
-            value: 'pug'
+            value: 'pug',
           },
           {
             name: 'smarty',
-            value: 'smarty'
+            value: 'smarty',
           },
           {
             name: 'velocity',
-            value: 'velocity'
+            value: 'velocity',
           },
           {
             name: 'artTemplate',
-            value: 'artTemplate'
-          }
+            value: 'artTemplate',
+          },
         ],
-        default: 2
+        default: 2,
       },
       {
         type: 'confirm',
         name: 'intranet',
         message: 'Are you in the QUNAR office network?',
-        default: false
-      }
+        default: false,
+      },
     ];
 
-    return this.prompt(prompts).then(function (answers) {
+    return this.prompt(prompts).then(function (a) {
+      const answers = a;
       this.props.name = answers.name;
       this.props.template = answers.template;
       delete answers.name;
@@ -156,13 +157,13 @@ module.exports = yeoman.Base.extend({
   writing: {
     folders: function () {
       // console.log('this.props: %s', this.props);
-      var folders = ['config'];
-      var pattern = '{' + folders.join( ',') + '}/**/*';
-      var options = {
-        cwd: this.sourceRoot()
+      const folders = ['config'];
+      const pattern = '{' + folders.join(',') + '}/**/*';
+      const options = {
+        cwd: this.sourceRoot(),
       };
       // copy and replace template
-      glob(pattern, options).forEach(function(file) {
+      glob(pattern, options).forEach(function (file) {
         this.fs.copyTpl(
           this.templatePath(file),
           this.destinationPath(file),
@@ -185,7 +186,6 @@ module.exports = yeoman.Base.extend({
         this.templatePath('assets'),
         this.destinationPath('assets')
       );
-
     },
 
     packageJSON: function () {
@@ -246,10 +246,10 @@ module.exports = yeoman.Base.extend({
   },
 
   install: function () {
-    var options = {
+    const options = {
       registry: 'https://registry.npm.taobao.org',
       disturl: 'https://npm.taobao.org/dist',
-      sassBinarySite: 'http://npm.taobao.org/mirrors/node-sass'
+      sassBinarySite: 'http://npm.taobao.org/mirrors/node-sass',
     };
     if (this.props.intranet) {
       options.registry = 'http://registry.npm.corp.qunar.com';
@@ -258,7 +258,7 @@ module.exports = yeoman.Base.extend({
     this.npmInstall('', options);
   },
 
-  end: function() {
+  end: function () {
     console.log('🔚');
-  }
+  },
 });

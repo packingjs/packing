@@ -1,4 +1,4 @@
-#!/usr/bin/env babel-node
+#!/usr/bin/env node
 
 /**
  * serve脚本
@@ -18,7 +18,7 @@ const packing = pRequire('config/packing', program);
 const templateEngine = packing.templateEngine;
 const rewriteRules = packing.rewriteRules;
 // eslint-disable-next-line
-const template = require(`packing-template-${templateEngine}`);
+const template = require('packing-template-' + templateEngine);
 const assetsDist = packing.path.assetsDist;
 const templatesPagesDist = packing.path.templatesPagesDist;
 const mockPageInit = packing.path.mockPageInit;
@@ -30,7 +30,7 @@ app.use(urlrewrite(rewriteRules));
 app.use(template({
   templates: templatesPagesDist,
   mockData: mockPageInit,
-  rewriteRules,
+  rewriteRules: rewriteRules,
 }));
 
 app.listen(port, function (err) {

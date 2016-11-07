@@ -1,4 +1,4 @@
-#!/usr/bin/env babel-node
+#!/usr/bin/env node
 
 const pkg = require('packing/package.json');
 const program = require('commander');

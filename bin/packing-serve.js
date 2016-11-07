@@ -1,4 +1,4 @@
-#!/usr/bin/env babel-node
+#!/usr/bin/env node
 
 require('packing/util/babel-register');
 
@@ -16,7 +16,7 @@ const webpackConfig = pRequire('config/webpack.serve.babel', program);
 const packing = pRequire('config/packing', program);
 const templateEngine = packing.templateEngine;
 const rewriteRules = packing.rewriteRules;
-const template = require(`packing-template-${templateEngine}`);
+const template = require('packing-template-' + templateEngine);
 const src = packing.path.src;
 const assets = packing.path.assets;
 const templatesPages = packing.path.templatesPages;
@@ -49,7 +49,7 @@ app.use(webpackHotMiddleware(compiler));
 app.use(template({
   templates: templatesPages,
   mockData: mockPageInit,
-  rewriteRules,
+  rewriteRules: rewriteRules,
 }));
 
 app.listen(port, function (err) {
