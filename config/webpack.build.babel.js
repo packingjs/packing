@@ -109,7 +109,7 @@ const webpackConfig = (program, options) => {
 
     // 扩展阅读 http://webpack.github.io/docs/list-of-plugins.html#commonschunkplugin
     plugins.push(
-      new webpack.optimize.CommonsChunkPlugin({ names: chunkKeys })
+      new webpack.optimize.CommonsChunkPlugin({ names: chunkKeys, children: true })
     );
   }
 
