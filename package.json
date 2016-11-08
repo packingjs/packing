@@ -49,7 +49,7 @@
     "copy-webpack-plugin": "^4.0.0",
     "css-loader": "^0.25.0",
     "eslint": "^3.4.0",
-    "eslint-config-airbnb": "^12.0.0",
+    "eslint-config-airbnb": "^13.0.0",
     "eslint-loader": "^1.5.0",
     "eslint-plugin-import": "^2.0.0",
     "extract-text-webpack-plugin": "^1.0.1",

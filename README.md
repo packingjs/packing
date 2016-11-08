@@ -99,6 +99,8 @@
   - [ ]data mock
   - [ ]profiles
 - [ ]unit test
+- [ ]es6 decorator
+- [ ]动态require，更新reduce
 
 ## Directory
 
