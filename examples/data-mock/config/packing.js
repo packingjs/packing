@@ -31,5 +31,15 @@ export default (packing) => {
     templateEngine: 'pug',
     // 模版文件扩展名
     templateExtension: '.pug',
+
+    // URL转发路由规则配置
+    // require! 表示使用本地mock文件
+    rewriteRules: {
+      // 网站URL与模版的对应路由关系
+      '^/$': '/index.pug',
+      // API转发
+      '^/api/(.*)': 'require!/mock/api/$1.js',
+    },
+
   });
 };

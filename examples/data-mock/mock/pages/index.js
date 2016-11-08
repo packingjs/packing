@@ -15,6 +15,9 @@
        'JavaScript',
        'CSS',
        'HTML'
-     ]
+     ],
+     deep: {
+       c: 'cc'
+     }
    };
  };
