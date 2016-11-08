@@ -58,6 +58,9 @@
 * 网页模版中对静态资源引用时使用绝对路径，如 `<script src='/logo/qunar.png'>`
 * css中对静态资源引用时使用波浪线`~`开头相对路径，如 `background:url(~/logo.png)`
 
+## Examples
+https://github.com/zhongzhi107/packing/tree/master/examples
+
 ## 使用其他npm源
 ```
 # npm使用qunar源
