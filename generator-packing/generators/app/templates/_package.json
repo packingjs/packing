@@ -70,7 +70,7 @@
     "react-transform-catch-errors": "^1.0.2",<% } if (props.redux) { %>
     "react-redux": "^4.4.5",
     "redux": "^3.5.2",<% } %>
-    "packing": "^0.3.6"
+    "packing": "^0.3.7"
   },
   "devDependencies": {
     "express": "^4.14.0",
