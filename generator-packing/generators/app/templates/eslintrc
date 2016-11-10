@@ -2,8 +2,7 @@
   "extends": "eslint-config-airbnb",
   "parser": "babel-eslint",
   "env": {
-    "browser": true,
-    "node": true
+    "browser": true
   },
   "rules": {
     "react/no-multi-comp": 0,
