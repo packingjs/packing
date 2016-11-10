@@ -8,6 +8,7 @@
     ".babelrc",
     "bin/",
     "config/",
+    "src/profiles/",
     "util/"
   ],
   "keywords": [

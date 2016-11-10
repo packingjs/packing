@@ -33,22 +33,19 @@
     "build:dev": {
       "command": "better-npm-run build",
       "env": {
-        "NODE_ENV": "development",
-        "CDN_ROOT": "//l-wap1.wap.dev.cn6.qunar.com/xxx/dev/assets"
+        "NODE_ENV": "development"
       }
     },
     "build:beta": {
       "command": "better-npm-run build",
       "env": {
-        "NODE_ENV": "beta",
-        "CDN_ROOT": "//mobileqzz.beta.qunar.com/xxx/prd/assets"
+        "NODE_ENV": "beta"
       }
     },
     "build:prod": {
       "command": "better-npm-run build",
       "env": {
-        "NODE_ENV": "production",
-        "CDN_ROOT": "//q.qunarzz.com/xxx/prd/assets"
+        "NODE_ENV": "production"
       }
     },
     "eslint": {

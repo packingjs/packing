@@ -1,60 +1,37 @@
----
-parser: babel-eslint
-
-plugins:
-  - react
-#  - react-internal
-
-# We're stricter than the default config, mostly. We'll override a few rules and
-# then enable some React specific ones.
-rules:
-  accessor-pairs: 0
-  #brace-style: [2, 1tbs]
-  #comma-dangle: [2, always-multiline]
-  #consistent-return: 2
-  dot-location: [2, property]
-  dot-notation: 2
-  #eol-last: 2
-  #indent: [2, 2]
-  jsx-quotes: [2, prefer-double]
-  no-bitwise: 0
-  no-dupe-class-members: 2
-  no-multi-spaces: 2
-  no-restricted-syntax: [2, WithStatement]
-  no-shadow: 2
-  #no-unused-expressions: 2
-  no-unused-vars: [2, {args: none}]
-  quotes: [2, single, avoid-escape]
-  #space-after-keywords: 2
-  #space-before-blocks: 2
-  # TODO: enable this rule after https://github.com/eslint/eslint/pull/3768 lands
-  space-before-keywords: 0
-  # strict: [2, global]
-
-  # JSX
-  # Our transforms set this automatically
-  react/display-name: 0
-  react/jsx-boolean-value: [2, always]
-  react/jsx-no-undef: 2
-  # We don't care to do this
-  react/jsx-sort-prop-types: 0
-  react/jsx-sort-props: 0
-  react/jsx-uses-react: 2
-  react/jsx-uses-vars: 2
-  # It's easier to test some things this way
-  react/no-did-mount-set-state: 0
-  react/no-did-update-set-state: 0
-  # We define multiple components in test files
-  react/no-multi-comp: 0
-  react/no-unknown-property: 2
-  # This isn't useful in our test code
-  react/prop-types: 0
-  react/react-in-jsx-scope: 2
-  react/self-closing-comp: 2
-  # We don't care to do this
-  react/sort-comp: 0
-  react/wrap-multilines: [2, {declaration: false, assignment: false}]
-
-  # CUSTOM RULES
-  # the second argument of warning/invariant should be a literal string
-#react-internal/warning-and-invariant-args: 2
+{
+  "extends": "eslint-config-airbnb",
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "rules": {
+    "react/no-multi-comp": 0,
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "import/default": 0,
+    "import/no-duplicates": 0,
+    "import/named": 0,
+    "import/namespace": 0,
+    "import/no-unresolved": 0,
+    "import/no-extraneous-dependencies": 0,
+    "comma-dangle": [2, "never"],
+    "complexity": ["error", { "max": 10 }],
+    "indent": [2, 2, {"SwitchCase": 1}],
+    "no-console": 0,
+    "no-alert": 0,
+    "no-warning-comments": 2,
+    "semi": 2
+  },
+  "plugins": [
+    "react", "import"
+  ],
+  "settings": {
+    "import/parser": "babel-eslint",
+    "import/resolve": {
+      "moduleDirectory": ["node_modules", "src"]
+    }
+  },
+  "globals": {
+    __: true
+  }
+}

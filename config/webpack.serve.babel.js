@@ -9,10 +9,12 @@ import { isString, isArray, isObject, isFunction } from 'util';
 import webpack from 'webpack';
 import DashboardPlugin from 'webpack-dashboard/plugin';
 import OpenBrowserPlugin from 'open-browser-webpack-plugin';
+import ProfilesPlugin from 'packing-profile-webpack-plugin';
 import autoprefixer from 'autoprefixer';
 import pRequire from '../util/require';
 
 const packing = pRequire('config/packing');
+const { cdnRoot } = pRequire(`src/profiles/${process.env.NODE_ENV}`);
 const { assetExtensions, localhost, port } = packing;
 const { src, assets, assetsDist, dll, entries } = packing.path;
 
@@ -94,7 +96,9 @@ const webpackConfig = (program, options) => {
     modulesDirectories: [src, assets, 'node_modules'],
   };
 
-  const plugins = [];
+  const plugins = [
+    new ProfilesPlugin(),
+  ];
 
   if (options.hot) {
     entry = pushClientJS(entry, options.reload);
@@ -118,7 +122,7 @@ const webpackConfig = (program, options) => {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-        CDN_ROOT: JSON.stringify(process.env.CDN_ROOT),
+        CDN_ROOT: JSON.stringify(cdnRoot),
       },
     }),
     new DashboardPlugin()

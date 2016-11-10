@@ -1,8 +1,4 @@
 export default {
-
   // CDN根目录
-  cdnRoot: 'http://dev.test.com',
-  me: {
-    name: 'dev'
-  }
+  cdnRoot: '//l-wap1.wap.dev.cn6.qunar.com/<%= props.name %>/dev/assets',
 };

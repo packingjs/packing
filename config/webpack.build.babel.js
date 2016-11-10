@@ -19,6 +19,7 @@ const JS_DIRECTORY_NAME = 'js';
 const CSS_DIRECTORY_NAME = 'css';
 
 const packing = pRequire('config/packing');
+const { cdnRoot } = pRequire(`src/profiles/${process.env.NODE_ENV}`);
 const { assetExtensions, fileHashLength, templateExtension } = packing;
 const { src, templates, entries, assets, assetsDist, templatesDist } = packing.path;
 
@@ -87,12 +88,12 @@ const webpackConfig = (program, options) => {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-        CDN_ROOT: JSON.stringify(process.env.CDN_ROOT),
+        CDN_ROOT: JSON.stringify(cdnRoot),
       },
     }),
 
     new ReplaceHashWebpackPlugin({
-      assetsDomain: process.env.CDN_ROOT,
+      assetsDomain: cdnRoot,
       cwd: templates,
       src: `**/*${templateExtension}`,
       dest: templatesDist,
