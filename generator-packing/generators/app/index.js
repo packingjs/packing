@@ -156,21 +156,6 @@ module.exports = yeoman.Base.extend({
 
   writing: {
     folders: function () {
-      // console.log('this.props: %s', this.props);
-      const folders = ['config'];
-      const pattern = '{' + folders.join(',') + '}/**/*';
-      const options = {
-        cwd: this.sourceRoot(),
-      };
-      // copy and replace template
-      glob(pattern, options).forEach(function (file) {
-        this.fs.copyTpl(
-          this.templatePath(file),
-          this.destinationPath(file),
-          { props: this.props }
-        );
-      }.bind(this));
-
       // copy only
       this.fs.copy(
         this.templatePath('mock'),
@@ -186,6 +171,20 @@ module.exports = yeoman.Base.extend({
         this.templatePath('assets'),
         this.destinationPath('assets')
       );
+
+      const folders = ['config', 'src/profiles'];
+      const pattern = '{' + folders.join(',') + '}/**/*';
+      const options = {
+        cwd: this.sourceRoot(),
+      };
+      // copy and replace template
+      glob(pattern, options).forEach(function (file) {
+        this.fs.copyTpl(
+          this.templatePath(file),
+          this.destinationPath(file),
+          { props: this.props }
+        );
+      }.bind(this));
     },
 
     packageJSON: function () {
