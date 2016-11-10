@@ -74,3 +74,4 @@ shell.cp('package.json', `${destination}/node_modules/packing`);
 shell.cp('-R', 'bin', `${destination}/node_modules/packing`);
 shell.cp('-R', 'config', `${destination}/node_modules/packing`);
 shell.cp('-R', 'util', `${destination}/node_modules/packing`);
+shell.cp('-R', 'src', `${destination}/node_modules/packing`);

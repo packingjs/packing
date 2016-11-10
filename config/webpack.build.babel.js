@@ -10,6 +10,7 @@ import webpack from 'webpack';
 import CleanPlugin from 'clean-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import ReplaceHashWebpackPlugin from 'replace-hash-webpack-plugin';
+import ProfilesPlugin from 'packing-profile-webpack-plugin';
 import autoprefixer from 'autoprefixer';
 import pRequire from '../util/require';
 
@@ -97,6 +98,10 @@ const webpackConfig = (program, options) => {
       cwd: templates,
       src: `**/*${templateExtension}`,
       dest: templatesDist,
+    }),
+
+    new ProfilesPlugin({
+      failOnMissing: true,
     }),
 
   ];

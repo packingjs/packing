@@ -1,14 +1,14 @@
 {
   "name": "packing",
   "description": "Webpack based web front-end development environment",
-  "version": "0.3.8",
+  "version": "0.3.9",
   "repository": "zhongzhi107/packing",
   "files": [
     ".eslintrc",
     ".babelrc",
     "bin/",
     "config/",
-    "src/profiles/",
+    "src/",
     "util/"
   ],
   "keywords": [
@@ -61,7 +61,7 @@
     "object-assign-deep": "0.0.4",
     "packing-ajax": "^0.0.1",
     "packing-glob": "^1.0.1",
-    "packing-profile-webpack-plugin": "^1.0.3",
+    "packing-profile-webpack-plugin": "^1.0.4",
     "packing-rev-webpack-plugin": "^1.0.7",
     "postcss-loader": "^1.0.0",
     "replace-hash-webpack-plugin": "^1.4.12",
