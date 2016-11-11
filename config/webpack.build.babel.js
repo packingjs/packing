@@ -65,7 +65,7 @@ const webpackConfig = (program, options) => {
       { test: /\.scss$/i, loader: styleLoaderString('sass') },
       {
         test: new RegExp(`.(${assetExtensions.join('|')})$`, 'i'),
-        loader: `url?name=[path][name]-[hash:${fileHashLength}].[ext]&context=${assets}&limit=100!image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false`,
+        loader: `url?name=[path][name]-[hash:${fileHashLength}].[ext]&context=${assets}&limit=100`,
       },
     ],
   };
