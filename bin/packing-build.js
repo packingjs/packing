@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/home/q/node/node-v4.2.4-linux-x64/bin/node
 
 require('packing/util/babel-register');
 
