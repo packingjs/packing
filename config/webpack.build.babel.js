@@ -59,11 +59,12 @@ const webpackConfig = (program, options) => {
 
   const moduleConfig = {
     loaders: [
-      { test: /\.js?$/i, loaders: ['babel'], exclude: /node_modules/ },
-      { test: /\.css$/i, loader: styleLoaderString() },
-      { test: /\.less$/i, loader: styleLoaderString('less') },
-      { test: /\.scss$/i, loader: styleLoaderString('sass') },
+      { id: 'js', test: /\.js?$/i, loaders: ['babel'], exclude: /node_modules/ },
+      { id: 'css', test: /\.css$/i, loader: styleLoaderString() },
+      { id: 'less', test: /\.less$/i, loader: styleLoaderString('less') },
+      { id: 'sass', test: /\.scss$/i, loader: styleLoaderString('sass') },
       {
+        id: 'assets',
         test: new RegExp(`.(${assetExtensions.join('|')})$`, 'i'),
         loader: `url?name=[path][name]-[hash:${fileHashLength}].[ext]&context=${assets}&limit=100`,
       },
