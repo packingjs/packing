@@ -81,8 +81,8 @@ const webpackConfig = (program, options) => {
     loaders: [
       { id: 'js', test: /\.js?$/i, loaders: ['babel', 'eslint'], exclude: /node_modules/ },
       { id: 'css', test: /\.css$/i, loader: styleLoaderString() },
-      { id: 'less', test: /\.less$/i, loader: styleLoaderString('less') },
       { id: 'sass', test: /\.scss$/i, loader: styleLoaderString('sass') },
+      { id: 'less', test: /\.less$/i, loader: styleLoaderString('less') },
       {
         id: 'assets',
         test: new RegExp(`.(${assetExtensions.join('|')})$`, 'i'),

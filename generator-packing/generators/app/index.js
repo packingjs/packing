@@ -203,6 +203,14 @@ module.exports = yeoman.Base.extend({
       );
     },
 
+
+    buildShell: function () {
+      this.fs.copy(
+        this.templatePath('build.sh'),
+        this.destinationPath('build.sh')
+      );
+    },
+
     editorConfig: function () {
       this.fs.copy(
         this.templatePath('editorconfig'),

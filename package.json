@@ -1,7 +1,7 @@
 {
   "name": "packing",
   "description": "Webpack based web front-end development environment",
-  "version": "0.5.0",
+  "version": "0.6.2",
   "repository": "zhongzhi107/packing",
   "files": [
     ".eslintrc",

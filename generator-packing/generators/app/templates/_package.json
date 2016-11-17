@@ -52,6 +52,9 @@
       "command": "./node_modules/.bin/eslint src"
     }
   },
+  "pre-commit": [
+    "eslint"
+  ],
   "dependencies": {<% if (props.css === 'less') { %>
     "less": "^2.7.1",
     "less-loader": "^2.2.3",<% } if (props.css === 'sass') { %>
