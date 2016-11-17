@@ -11,9 +11,14 @@ export default (packing) => {
   return assign({}, packing, {
     commonChunks: {
       vendor: [
+        // 里面包含react和react-dom
+        // 但不包含antd组件所需要的css
+        'antd/lib',
+        // antd的css导入机制还没有深入了解
+        // 显式声明antd.css
+        'antd/dist/antd.less',
         './src/a',
         './src/b',
-        'antd/lib'
         // './src/lib ^\.\/.*$'
         // './src/lib/*.js'
       ],
