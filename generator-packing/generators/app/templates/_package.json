@@ -91,7 +91,7 @@
     "webpack-hot-middleware": "^2.12.1"
   },
   "engines": {
-    "node": ">=0.12.7",
+    "node": ">=4.0",
     "npm": ">=3.0"
   }
 }

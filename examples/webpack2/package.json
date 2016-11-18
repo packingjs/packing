@@ -1,15 +1,9 @@
 {
   "name": "webpack2",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "zhongzhi <zhong.zhi@163.com>",
-  "license": "ISC",
   "devDependencies": {
     "antd": "^2.4.3",
+    "extract-text-webpack-plugin": "^2.0.0-beta",
     "webpack": "2.1.0-beta.27"
   }
 }

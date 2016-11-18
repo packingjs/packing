@@ -2,6 +2,7 @@
 
 require('packing/util/babel-register');
 
+const chalk = require('chalk');
 const webpack = require('webpack');
 const pRequire = require('packing/util/require');
 
@@ -57,7 +58,7 @@ webpack(webpackConfig, function (err, stats) {
     // console.log(stats.compilation.errors);
     stats.compilation.errors.map(formatError).forEach((error) => {
       console.log('\n');
-      console.log('ERROR in ' + error);
+      console.log(chalk.red('ERROR in ' + error));
       console.log('\n');
     });
     console.log('💔  webpack: bundle is now INVALID.');

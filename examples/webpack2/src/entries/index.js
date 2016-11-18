@@ -1,4 +1,5 @@
-import a from '../a';
+import { foo } from '../a';
 import b from '../b';
+// import { Button } from 'antd';
 
-document.getElementById('output').innerHTML = a + b;
+document.getElementById('output').innerHTML = foo() + b;
