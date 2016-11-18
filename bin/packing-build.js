@@ -61,7 +61,7 @@ webpack(webpackConfig, function (err, stats) {
       console.log(chalk.red('ERROR in ' + error));
       console.log('\n');
     });
-    console.log('💔  webpack: bundle is now INVALID.');
+    console.log(chalk.red('💔  webpack: bundle is now INVALID.'));
   } else {
     console.log(stats.toString(stats));
     console.log('💚  webpack: bundle is now VALID.');
