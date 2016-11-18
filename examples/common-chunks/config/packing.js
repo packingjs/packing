@@ -13,7 +13,7 @@ export default (packing) => {
       vendor: [
         './src/a',
         './src/b',
-        'antd/lib'
+        // 'antd/lib'
         // './src/lib ^\.\/.*$'
         // './src/lib/*.js'
       ],
