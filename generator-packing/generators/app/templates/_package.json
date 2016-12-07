@@ -82,7 +82,8 @@
     "packing-template-pug": "^1.0.6",<% } if (props.template === 'smarty') { %>
     "packing-template-smarty": "^1.0.4",<% } if (props.template === 'velocity') { %>
     "packing-template-velocity": "^1.0.3",<% } %>
-    "packing-urlrewrite": "^0.1.7",<% if (props.redux) { %>
+    "packing-urlrewrite": "^0.1.7",
+    "pre-commit": "^1.1.3",<% if (props.redux) { %>
     "redux-devtools": "^3.3.1",
     "redux-devtools-dock-monitor": "^1.1.1",
     "redux-devtools-log-monitor": "^1.0.11",<% } %>
