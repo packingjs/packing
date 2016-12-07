@@ -1,0 +1,39 @@
+
+
+{
+  "presets": [
+    "react",
+    "es2015",
+    "stage-0"
+  ],
+
+  "plugins": [
+    "transform-runtime",
+    "add-module-exports",
+    "transform-react-display-name",
+    "transform-object-rest-spread",
+    "babel-plugin-transform-decorators-legacy",
+    [
+      "import",
+      { "libraryName": "antd", "style": "css" }
+    ]
+  ],
+
+  "env": {
+    "development": {
+      "plugins": [
+        [
+          "react-transform",
+          {
+            "transforms": [
+              {
+                "transform": "react-transform-catch-errors",
+                "imports": ["react", "redbox-react"]
+              }
+            ]
+          }
+        ]
+      ]
+    }
+  }
+}
