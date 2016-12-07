@@ -135,3 +135,6 @@ npm install --registry http://registry.npm.corp.qunar.com --production
 ```html
 <link href="/vendor.css" media="all" rel="stylesheet" />
 ```
+
+### package.json中依赖包的版本更新了，但DLL不更新，还是走的缓存
+手动删除项目根目录下的 `.tmp` 目录
