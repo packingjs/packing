@@ -1,7 +1,7 @@
 {
   "name": "packing",
   "description": "Webpack based web front-end development environment",
-  "version": "0.6.4",
+  "version": "0.7.0",
   "repository": "zhongzhi107/packing",
   "files": [
     ".eslintrc",
@@ -52,7 +52,7 @@
     "eslint-config-qunar": "^0.0.3",
     "eslint-loader": "^1.5.0",
     "eslint-plugin-import": "^2.0.0",
-    "extract-text-webpack-plugin": "^1.0.1",
+    "extract-text-webpack-plugin": "^2.0.0-beta.4",
     "file-loader": "^0.9.0",
     "loader-utils": "^0.2.15",
     "mkdirp": "^0.5.1",
@@ -67,14 +67,14 @@
     "replace-hash-webpack-plugin": "^1.4.12",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
-    "webpack": "^1.13.2"
+    "webpack": "^2.1.0-beta.27"
   },
   "devDependencies": {
     "lodash": "^4.16.4",
     "shelljs": "^0.7.5"
   },
   "engines": {
-    "node": ">=0.12.7",
+    "node": ">=4.0",
     "npm": ">=3.0"
   }
 }

@@ -16,16 +16,6 @@ const { src, assets, dll } = packing.path;
 const cwd = process.cwd();
 
 /**
- * 返回样式loader字符串
- * @param {string} cssPreprocessor css预处理器类型
- * @return {string}
- */
-const styleLoaderString = (cssPreprocessor) => {
-  const query = cssPreprocessor ? `!${cssPreprocessor}` : '';
-  return `style!css?importLoaders=2!postcss${query}`;
-};
-
-/**
  * 生成webpack配置文件
  * @param {object} program 程序进程，可以获取启动参数
  * @return {object}
@@ -41,26 +31,72 @@ const webpackConfig = () => {
   };
 
   const moduleConfig = {
-    loaders: [
-      { id: 'js', test: /\.js?$/i, loaders: ['babel', 'eslint'], exclude: /node_modules/ },
-      { id: 'css', test: /\.css$/i, loader: styleLoaderString() },
-      { id: 'less', test: /\.less$/i, loader: styleLoaderString('less') },
-      { id: 'sass', test: /\.scss$/i, loader: styleLoaderString('sass') },
+    rules: [
+      {
+        id: 'js',
+        test: /\.js?$/i,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'babel-loader',
+          },
+          {
+            loader: 'eslint-loader',
+          },
+        ],
+      },
+      {
+        id: 'css',
+        test: /\.css$/i,
+        use: [
+          { loader: 'style-loader' },
+          { loader: 'css-loader', query: { importLoaders: 2 } },
+          { loader: 'postcss-loader' },
+        ],
+      },
+      {
+        id: 'sass',
+        test: /\.scss$/i,
+        use: [
+          { loader: 'style-loader' },
+          { loader: 'css-loader', query: { importLoaders: 2 } },
+          { loader: 'postcss-loader' },
+          { loader: 'sass-loader' },
+        ],
+      },
+      {
+        id: 'less',
+        test: /\.less$/i,
+        use: [
+          { loader: 'style-loader' },
+          { loader: 'css-loader', query: { importLoaders: 2 } },
+          { loader: 'postcss-loader' },
+          { loader: 'less-loader' },
+        ],
+      },
       {
         id: 'assets',
         test: new RegExp(`.(${assetExtensions.join('|')})$`, 'i'),
-        loader: `file?name=[path][name].[ext]&context=${assets}&emitFile=false`,
+        loader: 'file-loader',
+        query: {
+          name: '[path][name].[ext]',
+          context: assets,
+          emitFile: false,
+        },
       },
     ],
   };
 
-  const postcss = () => [autoprefixer];
-
   const resolve = {
-    modulesDirectories: [src, assets, 'node_modules'],
+    modules: [src, assets, 'node_modules'],
   };
 
   const plugins = [
+    new webpack.LoaderOptionsPlugin({
+      options: {
+        postcss: [autoprefixer],
+      },
+    }),
     new CleanPlugin([dll], {
       root: cwd,
     }),
