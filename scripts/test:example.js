@@ -25,7 +25,7 @@ const name = path.basename(destination);
 const props = {
   props: {
     name,
-    react: false,
+    react: true,
     template: 'html',
   },
 };

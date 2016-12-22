@@ -11,12 +11,20 @@ export default (packing) => {
   return assign({}, packing, {
     commonChunks: {
       vendor: [
-        './src/a',
-        './src/b',
-        // 'antd/lib'
-        // './src/lib ^\.\/.*$'
-        // './src/lib/*.js'
+        'react',
+        'react-dom',
+        // 'antd/lib/select',
+        // 'antd/lib/checkbox',
+        // 'antd/lib/tree',
+        // 'antd/lib/table',
+        'antd/lib/button',
+        // 'antd/lib/icon',
+        // 'antd/lib/modal',
       ],
+    },
+    rewriteRules: {
+        // 网站URL与模版的对应路由关系
+      '^/$': '/index.html',
     },
   });
 };

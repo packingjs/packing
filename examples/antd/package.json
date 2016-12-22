@@ -1,0 +1,10 @@
+{
+  "name": "antd",
+  "version": "1.0.0",
+  "dependencies": {
+    "antd": "^2.4.3",
+    "packing": "^0.6.5",
+    "react": "^15.3.1",
+    "react-dom": "^15.3.1"
+  }
+}
