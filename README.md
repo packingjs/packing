@@ -55,6 +55,9 @@
 
   # 启动时自动打开浏览器功能
   npm run serve -- --open
+
+  # 启动时强制清除DLL缓存功能
+  npm run serve -- --clean
   ```
 
 ## Features
@@ -90,17 +93,20 @@
 ## Todo
 - [ ]文档
 - [ ]页面初始化数据支持代理服务器功能
-- [ ]example
-  - [ ]base
-  - [ ]custom template
-  - [ ]react + redus
-  - [ ]common chunks
-  - [ ]url rules
-  - [ ]data mock
-  - [ ]profiles
+- [x]example
+  - [x]base
+  - [x]custom template
+  - [x]react + redus
+  - [x]common chunks
+  - [x]url rules
+  - [x]data mock
+  - [x]profiles
 - [ ]unit test
-- [ ]es6 decorator
+- [x]es6 decorator
 - [ ]动态require，更新reduce
+- [ ]packing-profile-webpack-plugin支持webpack2
+- [ ]升级eslint-plugin-jsx-a11y@^3.0.2(eslint-config-airbnb@13.0.0配置有误，暂不升级)
+- [ ]--clean功能
 
 ## Directory
 

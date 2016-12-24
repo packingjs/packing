@@ -33,8 +33,7 @@ const webpackConfig = () => {
   const moduleConfig = {
     rules: [
       {
-        id: 'js',
-        test: /\.js?$/i,
+        test: /\.js$/i,
         exclude: /node_modules/,
         use: [
           {
@@ -46,7 +45,6 @@ const webpackConfig = () => {
         ],
       },
       {
-        id: 'css',
         test: /\.css$/i,
         use: [
           { loader: 'style-loader' },
@@ -55,7 +53,6 @@ const webpackConfig = () => {
         ],
       },
       {
-        id: 'sass',
         test: /\.scss$/i,
         use: [
           { loader: 'style-loader' },
@@ -65,7 +62,6 @@ const webpackConfig = () => {
         ],
       },
       {
-        id: 'less',
         test: /\.less$/i,
         use: [
           { loader: 'style-loader' },
@@ -75,7 +71,6 @@ const webpackConfig = () => {
         ],
       },
       {
-        id: 'assets',
         test: new RegExp(`.(${assetExtensions.join('|')})$`, 'i'),
         loader: 'file-loader',
         query: {
@@ -119,7 +114,6 @@ const webpackConfig = () => {
     entry,
     output,
     module: moduleConfig,
-    postcss,
     resolve,
     plugins,
     devtool,

@@ -51,7 +51,7 @@ const webpackConfig = (program, options) => {
     rules: [
       {
         id: 'js',
-        test: /\.js?$/i,
+        test: /\.js$/i,
         exclude: /node_modules/,
         use: [
           {
@@ -60,36 +60,38 @@ const webpackConfig = (program, options) => {
         ],
       },
       {
-        id: 'css',
         test: /\.css$/i,
-        use: [
-          { loader: 'style-loader' },
-          { loader: 'css-loader', query: { importLoaders: 2 } },
-          { loader: 'postcss-loader' },
-        ],
+        loader: ExtractTextPlugin.extract({
+          fallbackLoader: 'style-loader',
+          loader: [
+            { loader: 'css-loader', query: { importLoaders: 2 } },
+            { loader: 'postcss-loader' },
+          ],
+        }),
       },
       {
-        id: 'sass',
         test: /\.scss$/i,
-        use: [
-          { loader: 'style-loader' },
-          { loader: 'css-loader', query: { importLoaders: 2 } },
-          { loader: 'postcss-loader' },
-          { loader: 'sass-loader' },
-        ],
+        loader: ExtractTextPlugin.extract({
+          fallbackLoader: 'style-loader',
+          loader: [
+            { loader: 'css-loader', query: { importLoaders: 2 } },
+            { loader: 'postcss-loader' },
+            { loader: 'sass-loader' },
+          ],
+        }),
       },
       {
-        id: 'less',
         test: /\.less$/i,
-        use: [
-          { loader: 'style-loader' },
-          { loader: 'css-loader', query: { importLoaders: 2 } },
-          { loader: 'postcss-loader' },
-          { loader: 'less-loader' },
-        ],
+        loader: ExtractTextPlugin.extract({
+          fallbackLoader: 'style-loader',
+          loader: [
+            { loader: 'css-loader', query: { importLoaders: 2 } },
+            { loader: 'postcss-loader' },
+            { loader: 'less-loader' },
+          ],
+        }),
       },
       {
-        id: 'assets',
         test: new RegExp(`.(${assetExtensions.join('|')})$`, 'i'),
         loader: 'url-loader',
         query: {
@@ -117,7 +119,8 @@ const webpackConfig = (program, options) => {
     }),
 
     // css files from the extract-text-plugin loader
-    new ExtractTextPlugin(`${CSS_DIRECTORY_NAME}/[name]${contenthash}.css`, {
+    new ExtractTextPlugin({
+      filename: `${CSS_DIRECTORY_NAME}/[name]${contenthash}.css`,
       allChunks: true,
     }),
 
@@ -187,7 +190,6 @@ const webpackConfig = (program, options) => {
     entry,
     output,
     module: moduleConfig,
-    postcss,
     resolve,
     plugins,
   };
