@@ -170,7 +170,6 @@ const webpackConfig = (program, options) => {
   if (options.minimize) {
     plugins.push(
       // optimizations
-      new webpack.optimize.DedupePlugin(),
       new webpack.optimize.OccurrenceOrderPlugin(),
       new webpack.optimize.UglifyJsPlugin({
         compress: {
