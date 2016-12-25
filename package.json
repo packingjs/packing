@@ -1,7 +1,7 @@
 {
   "name": "packing",
   "description": "Webpack based web front-end development environment",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "repository": "zhongzhi107/packing",
   "files": [
     ".eslintrc",
@@ -18,7 +18,6 @@
   "bin": {
     "packing": "bin/packing.js",
     "packing-build": "bin/packing-build.js",
-    "packing-dll": "bin/packing-dll.js",
     "packing-serve:dist": "bin/packing-serve:dist.js",
     "packing-serve": "bin/packing-serve.js"
   },
