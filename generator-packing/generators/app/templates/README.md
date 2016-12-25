@@ -26,7 +26,12 @@
   npm run serve:normal
 
   # 启动时自动打开浏览器功能
-  npm run serve -- --open
+  npm run serve -- --open_browser
+  npm run serve -- -o
+
+  # 启动时强制清除DLL缓存功能
+  npm run serve -- --clean_cache
+  npm run serve -- -c
   ```
 
 ## 目录结构
@@ -137,4 +142,40 @@ npm install --registry http://registry.npm.corp.qunar.com --production
 ```
 
 ### package.json中依赖包的版本更新了，但DLL不更新，还是走的缓存
-手动删除项目根目录下的 `.tmp` 目录
+启动时使用参数强制删除缓存
+```
+npm run serve -- --clean_cache
+```
+
+### dll_vendor:Uncaught ReferenceError: __webpack_require__ is not defined
+vendor.js里没有打入任何js，检查packing.js的 `commonChunks.vendor` 配置
+
+### 网页需要引入一个less文件，但这个网页没有js文件，我应该如何把这个less编译成css
+在 config/packing.js 的 `entries` 添加这个less文件，如
+```js
+entries: {
+  abc: './src/entries/abc.less'
+  // 需要输出到不同路径的话可以随意修改key值
+  // 'test/abc': './src/entries/abc.less'
+}
+```
+编译时会把 `abc.less` 编译成 `prd/css/abc-xxxxxxxx.css`，同时html中的引用也会自动更新
+
+```html
+<!--编译前html代码-->
+<link href="/abc.css" rel="stylesheet" />
+```
+
+```html
+<!--编译后html代码-->
+<link href="/abc-xxxxxxxx.css" rel="stylesheet" />
+```
+
+### 本地编译正常，在编译服务器上发布时却提示找不到某些依赖包
+本地开发时用的npm安装命令是 `npm install` ，它会`devDependencies`和`dependencies`包含的所有包，为了减少不必要的包安装、提高安装速度，在编译服务器上用的npm安装命令是 `npm install --production`，它只会安装`dependencies`下的包。出现这种情况是因为包的位置摆放错误，你需要把在编译服务器上提示找不到的这些包从`devDependencies`移动到`dependencies`下。
+
+### schema和job参数怎么配置
+```
+fe.xxx.build_method=node
+fe.xxx.build_command:
+```

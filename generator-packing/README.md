@@ -1,10 +1,6 @@
-# generator-packing [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][coveralls-image]][coveralls-url]
->Yeoman generator for [Packing](https://github.com/zhongzhi107/packing)
+# generator-packing
 
-## Todo List
-- [ ]installDependencies可以指定--registry
-- [ ]根据不同的模版生成不同的src目录
-- [ ]获取appname
+Yeoman generator for [packing](https://github.com/zhongzhi107/packing)
 
 ## Installation
 

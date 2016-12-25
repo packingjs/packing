@@ -54,7 +54,12 @@
   npm run serve:normal
 
   # 启动时自动打开浏览器功能
-  npm run serve -- --open
+  npm run serve -- --open_browser
+  npm run serve -- -o
+
+  # 启动时强制清除DLL缓存功能
+  npm run serve -- --clean_cache
+  npm run serve -- -c
   ```
 
 ## Features
@@ -90,17 +95,19 @@
 ## Todo
 - [ ]文档
 - [ ]页面初始化数据支持代理服务器功能
-- [ ]example
-  - [ ]base
-  - [ ]custom template
-  - [ ]react + redus
-  - [ ]common chunks
-  - [ ]url rules
-  - [ ]data mock
-  - [ ]profiles
+- [x]example
+  - [x]base
+  - [x]custom template
+  - [x]react + redus
+  - [x]common chunks
+  - [x]url rules
+  - [x]data mock
+  - [x]profiles
 - [ ]unit test
-- [ ]es6 decorator
+- [x]es6 decorator
 - [ ]动态require，更新reduce
+- [x]packing-profile-webpack-plugin支持webpack2
+- [ ]升级eslint-plugin-jsx-a11y@^3.0.2(eslint-config-airbnb@13.0.0配置有误，暂不升级)
 
 ## Directory
 
@@ -108,7 +115,6 @@
 .
 ├── /bin/
 │   ├── /packing-build.js
-│   ├── /packing-dll.js
 │   ├── /packing-serve:dist.js
 │   ├── /packing-serve.js
 │   └── /packing.js
@@ -146,6 +152,9 @@ npm install --registry http://registry.npm.corp.qunar.com --production
 ## FAQ
 
 ### 如何配置和线上环境一样的路由
+在config/packing中配置路由规则
+
+### 路由规则修改后不生效
 路由规则修改后需要重启`npm run serve`
 
 ### eslint错误太多了
@@ -234,6 +243,7 @@ entries: {
 ```
 
 ### 如何模拟数据
+请查看[数据模拟文档](generator-packing/generator/app/templates/mock)
 
 ### 本地编译正常，在编译服务器上发布时却提示找不到某些依赖包
 本地开发时用的npm安装命令是 `npm install` ，它会`devDependencies`和`dependencies`包含的所有包，为了减少不必要的包安装、提高安装速度，在编译服务器上用的npm安装命令是 `npm install --production`，它只会安装`dependencies`下的包。出现这种情况是因为包的位置摆放错误，你需要把在编译服务器上提示找不到的这些包从`devDependencies`移动到`dependencies`下。

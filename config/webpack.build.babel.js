@@ -19,20 +19,21 @@ const JS_DIRECTORY_NAME = 'js';
 // js输出文件保持目录名称
 const CSS_DIRECTORY_NAME = 'css';
 
-const packing = pRequire('config/packing');
 const { cdnRoot } = pRequire(`src/profiles/${process.env.NODE_ENV}`);
-const { assetExtensions, fileHashLength, templateExtension } = packing;
-const { src, templates, entries, assets, assetsDist, templatesDist } = packing.path;
-
-/**
- * 返回样式loader字符串
- * @param {string} cssPreprocessor css预处理器类型
- * @return {string}
- */
-const styleLoaderString = (cssPreprocessor) => {
-  const query = cssPreprocessor ? `!${cssPreprocessor}` : '';
-  return ExtractTextPlugin.extract('style', `css?importLoaders=2!postcss${query}`);
-};
+const {
+  assetExtensions,
+  commonChunks,
+  fileHashLength,
+  templateExtension,
+  path: {
+    src,
+    templates,
+    entries,
+    assets,
+    assetsDist,
+    templatesDist,
+  },
+} = pRequire('config/packing');
 
 /**
  * 生成webpack配置文件
@@ -58,32 +59,78 @@ const webpackConfig = (program, options) => {
   };
 
   const moduleConfig = {
-    loaders: [
-      { id: 'js', test: /\.js?$/i, loaders: ['babel'], exclude: /node_modules/ },
-      { id: 'css', test: /\.css$/i, loader: styleLoaderString() },
-      { id: 'less', test: /\.less$/i, loader: styleLoaderString('less') },
-      { id: 'sass', test: /\.scss$/i, loader: styleLoaderString('sass') },
+    rules: [
       {
-        id: 'assets',
+        test: /\.js$/i,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'babel-loader',
+          },
+        ],
+      },
+      {
+        test: /\.css$/i,
+        loader: ExtractTextPlugin.extract({
+          fallbackLoader: 'style-loader',
+          loader: [
+            { loader: 'css-loader', query: { importLoaders: 2, minimize: true } },
+            { loader: 'postcss-loader' },
+          ],
+        }),
+      },
+      {
+        test: /\.scss$/i,
+        loader: ExtractTextPlugin.extract({
+          fallbackLoader: 'style-loader',
+          loader: [
+            { loader: 'css-loader', query: { importLoaders: 2, minimize: true } },
+            { loader: 'postcss-loader' },
+            { loader: 'sass-loader' },
+          ],
+        }),
+      },
+      {
+        test: /\.less$/i,
+        loader: ExtractTextPlugin.extract({
+          fallbackLoader: 'style-loader',
+          loader: [
+            { loader: 'css-loader', query: { importLoaders: 2, minimize: true } },
+            { loader: 'postcss-loader' },
+            { loader: 'less-loader' },
+          ],
+        }),
+      },
+      {
         test: new RegExp(`.(${assetExtensions.join('|')})$`, 'i'),
-        loader: `url?name=[path][name]-[hash:${fileHashLength}].[ext]&context=${assets}&limit=100`,
+        loader: 'url-loader',
+        query: {
+          name: `[path][name]-[hash:${fileHashLength}].[ext]`,
+          context: assets,
+          limit: 100,
+        },
       },
     ],
   };
 
-  const postcss = () => [autoprefixer];
-
   const resolve = {
-    modulesDirectories: [src, assets, 'node_modules'],
+    modules: [src, assets, 'node_modules'],
   };
 
   const plugins = [
+    new webpack.LoaderOptionsPlugin({
+      options: {
+        postcss: [autoprefixer],
+      },
+    }),
+
     new CleanPlugin([assetsDist, templatesDist], {
       root: projectRootPath,
     }),
 
     // css files from the extract-text-plugin loader
-    new ExtractTextPlugin(`${CSS_DIRECTORY_NAME}/[name]${contenthash}.css`, {
+    new ExtractTextPlugin({
+      filename: `${CSS_DIRECTORY_NAME}/[name]${contenthash}.css`,
       allChunks: true,
     }),
 
@@ -108,10 +155,10 @@ const webpackConfig = (program, options) => {
   ];
 
   // 从配置文件中获取并生成webpack打包配置
-  if (packing.commonChunks) {
-    const chunkKeys = Object.keys(packing.commonChunks);
+  if (commonChunks) {
+    const chunkKeys = Object.keys(commonChunks);
     chunkKeys.forEach((key) => {
-      entry[key] = packing.commonChunks[key];
+      entry[key] = commonChunks[key];
     });
 
     // 扩展阅读 http://webpack.github.io/docs/list-of-plugins.html#commonschunkplugin
@@ -153,7 +200,6 @@ const webpackConfig = (program, options) => {
     entry,
     output,
     module: moduleConfig,
-    postcss,
     resolve,
     plugins,
   };

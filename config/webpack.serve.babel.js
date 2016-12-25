@@ -15,8 +15,18 @@ import pRequire from '../util/require';
 
 const packing = pRequire('config/packing');
 const { cdnRoot } = pRequire(`src/profiles/${process.env.NODE_ENV}`);
-const { assetExtensions, localhost, port } = packing;
-const { src, assets, assetsDist, dll, entries } = packing.path;
+const {
+  assetExtensions,
+  localhost,
+  port,
+  path: {
+    src,
+    assets,
+    assetsDist,
+    dll,
+    entries,
+  },
+} = pRequire('config/packing');
 
  /**
   * 给所有入口js加上HRM的clientjs
@@ -40,16 +50,6 @@ const pushClientJS = (entry, reload) => {
     });
   }
   return newEntry;
-};
-
-/**
- * 返回样式loader字符串
- * @param {string} cssPreprocessor css预处理器类型
- * @return {string}
- */
-const styleLoaderString = (cssPreprocessor) => {
-  const query = cssPreprocessor ? `!${cssPreprocessor}` : '';
-  return `style!css?importLoaders=2!postcss${query}`;
 };
 
 /**
@@ -78,26 +78,67 @@ const webpackConfig = (program, options) => {
   };
 
   const moduleConfig = {
-    loaders: [
-      { id: 'js', test: /\.js?$/i, loaders: ['babel', 'eslint'], exclude: /node_modules/ },
-      { id: 'css', test: /\.css$/i, loader: styleLoaderString() },
-      { id: 'sass', test: /\.scss$/i, loader: styleLoaderString('sass') },
-      { id: 'less', test: /\.less$/i, loader: styleLoaderString('less') },
+    rules: [
       {
-        id: 'assets',
+        test: /\.js$/i,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'babel-loader',
+          },
+          {
+            loader: 'eslint-loader',
+          },
+        ],
+      },
+      {
+        test: /\.css$/i,
+        use: [
+          { loader: 'style-loader' },
+          { loader: 'css-loader', query: { importLoaders: 2 } },
+          { loader: 'postcss-loader' },
+        ],
+      },
+      {
+        test: /\.scss$/i,
+        use: [
+          { loader: 'style-loader' },
+          { loader: 'css-loader', query: { importLoaders: 2 } },
+          { loader: 'postcss-loader' },
+          { loader: 'sass-loader' },
+        ],
+      },
+      {
+        test: /\.less$/i,
+        use: [
+          { loader: 'style-loader' },
+          { loader: 'css-loader', query: { importLoaders: 2 } },
+          { loader: 'postcss-loader' },
+          { loader: 'less-loader' },
+        ],
+      },
+      {
         test: new RegExp(`.(${assetExtensions.join('|')})$`, 'i'),
-        loader: `file?name=[path][name].[ext]&context=${assets}&emitFile=false`,
+        loader: 'file-loader',
+        query: {
+          name: '[path][name].[ext]',
+          context: assets,
+          emitFile: false,
+        },
       },
     ],
   };
 
-  const postcss = () => [autoprefixer];
-
   const resolve = {
-    modulesDirectories: [src, assets, 'node_modules'],
+    modules: [src, assets, 'node_modules'],
   };
 
   const plugins = [
+    new webpack.LoaderOptionsPlugin({
+      options: {
+        postcss: [autoprefixer],
+      },
+    }),
     new ProfilesPlugin(),
   ];
 
@@ -113,7 +154,7 @@ const webpackConfig = (program, options) => {
     // });
   }
 
-  if (program.open) {
+  if (program.open_browser) {
     plugins.push(
       new OpenBrowserPlugin({ url: `http://${localhost}:${port.dev}` })
     );
@@ -147,7 +188,6 @@ const webpackConfig = (program, options) => {
     entry,
     output,
     module: moduleConfig,
-    postcss,
     resolve,
     plugins,
     devtool,
