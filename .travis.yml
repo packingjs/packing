@@ -1,22 +1,22 @@
 sudo: false
 language: node_js
 node_js:
-  - "4.0"
-  - "4.1"
-  - "4.2"
-  - "5"
+  - "4"
   - "6"
-  - "iojs"
 
 branches:
   only:
     - master
+    - webpack2
 
 cache:
   directories:
     - node_modules
 
 install:
+  - npm install -g npm
+  - node --version
+  - npm --version
   - npm install --production
 
 script:
