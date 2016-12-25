@@ -52,19 +52,19 @@ shell.cp('-R', `examples/${example}/*`, destination);
 copyTpl(
   `${templateRoot}/babelrc`,
   '.babelrc',
-  props
+  props,
 );
 
 copyTpl(
   `${templateRoot}/eslintrc`,
   '.eslintrc',
-  props
+  props,
 );
 
 copyTpl(
   `${templateRoot}/_package.json`,
   'package.json',
-  props
+  props,
 );
 
 // 更新project中的node_modules

@@ -7,7 +7,9 @@
 import path from 'path';
 import { isString, isArray, isObject, isFunction } from 'util';
 import webpack from 'webpack';
+// eslint-disable-next-line
 import DashboardPlugin from 'webpack-dashboard/plugin';
+// eslint-disable-next-line
 import OpenBrowserPlugin from 'open-browser-webpack-plugin';
 import ProfilesPlugin from 'packing-profile-webpack-plugin';
 import autoprefixer from 'autoprefixer';
@@ -145,7 +147,7 @@ const webpackConfig = (program, options) => {
   if (options.hot) {
     entry = pushClientJS(entry, options.reload);
     plugins.push(
-      new webpack.HotModuleReplacementPlugin()
+      new webpack.HotModuleReplacementPlugin(),
     );
     // moduleConfig.loaders.unshift({
     //   test: /\.js$/,
@@ -156,7 +158,7 @@ const webpackConfig = (program, options) => {
 
   if (program.open_browser) {
     plugins.push(
-      new OpenBrowserPlugin({ url: `http://${localhost}:${port.dev}` })
+      new OpenBrowserPlugin({ url: `http://${localhost}:${port.dev}` }),
     );
   }
 
@@ -167,7 +169,7 @@ const webpackConfig = (program, options) => {
         CDN_ROOT: JSON.stringify(cdnRoot),
       },
     }),
-    new DashboardPlugin()
+    new DashboardPlugin(),
   );
 
    // 从配置文件中获取dll
@@ -178,7 +180,7 @@ const webpackConfig = (program, options) => {
           context,
           // eslint-disable-next-line
           manifest: require(path.join(dllPath, `${key}-manifest.json`))
-        })
+        }),
       );
     });
   }
