@@ -7,7 +7,6 @@ node_js:
 branches:
   only:
     - master
-    - webpack2
 
 cache:
   directories:
