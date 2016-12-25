@@ -7,13 +7,12 @@
  */
 require('packing/util/babel-register');
 
-const nopt = require('nopt');
 const pRequire = require('packing/util/require');
 const path = require('path');
 const Express = require('express');
 const urlrewrite = require('packing-urlrewrite');
 
-const program = nopt(process.argv, 2);
+const program = {};
 const packing = pRequire('config/packing', program);
 const templateEngine = packing.templateEngine;
 const rewriteRules = packing.rewriteRules;

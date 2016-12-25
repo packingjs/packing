@@ -57,7 +57,6 @@
     "loader-utils": "^0.2.16",
     "mkdirp": "^0.5.1",
     "move-webpack-plugin": "0.0.1",
-    "nopt": "^4.0.1",
     "object-assign-deep": "0.0.4",
     "packing-ajax": "^0.0.1",
     "packing-glob": "^1.0.1",
