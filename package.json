@@ -60,7 +60,7 @@
     "object-assign-deep": "0.0.4",
     "packing-ajax": "^0.0.1",
     "packing-glob": "^1.0.1",
-    "packing-profile-webpack-plugin": "^1.0.4",
+    "packing-profile-webpack-plugin": "^2.0.0",
     "packing-rev-webpack-plugin": "^1.0.7",
     "postcss-loader": "^1.0.0",
     "replace-hash-webpack-plugin": "^1.4.12",
