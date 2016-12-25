@@ -137,12 +137,12 @@ module.exports = yeoman.Base.extend({
         ],
         default: 2,
       },
-      {
-        type: 'confirm',
-        name: 'intranet',
-        message: 'Are you in the QUNAR office network?',
-        default: false,
-      },
+      // {
+      //   type: 'confirm',
+      //   name: 'intranet',
+      //   message: 'Are you in the QUNAR office network?',
+      //   default: false,
+      // },
     ];
 
     return this.prompt(prompts).then(function (a) {
@@ -258,9 +258,9 @@ module.exports = yeoman.Base.extend({
       disturl: 'https://npm.taobao.org/dist',
       sassBinarySite: 'http://npm.taobao.org/mirrors/node-sass',
     };
-    if (this.props.intranet) {
-      options.registry = 'http://registry.npm.corp.qunar.com';
-    }
+    // if (this.props.intranet) {
+    //   options.registry = 'http://registry.npm.corp.qunar.com';
+    // }
 
     this.npmInstall('', options);
   },
