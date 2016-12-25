@@ -50,7 +50,6 @@ const webpackConfig = (program, options) => {
   const moduleConfig = {
     rules: [
       {
-        id: 'js',
         test: /\.js$/i,
         exclude: /node_modules/,
         use: [
@@ -64,7 +63,7 @@ const webpackConfig = (program, options) => {
         loader: ExtractTextPlugin.extract({
           fallbackLoader: 'style-loader',
           loader: [
-            { loader: 'css-loader', query: { importLoaders: 2 } },
+            { loader: 'css-loader', query: { importLoaders: 2, minimize: true } },
             { loader: 'postcss-loader' },
           ],
         }),
@@ -74,7 +73,7 @@ const webpackConfig = (program, options) => {
         loader: ExtractTextPlugin.extract({
           fallbackLoader: 'style-loader',
           loader: [
-            { loader: 'css-loader', query: { importLoaders: 2 } },
+            { loader: 'css-loader', query: { importLoaders: 2, minimize: true } },
             { loader: 'postcss-loader' },
             { loader: 'sass-loader' },
           ],
@@ -85,7 +84,7 @@ const webpackConfig = (program, options) => {
         loader: ExtractTextPlugin.extract({
           fallbackLoader: 'style-loader',
           loader: [
-            { loader: 'css-loader', query: { importLoaders: 2 } },
+            { loader: 'css-loader', query: { importLoaders: 2, minimize: true } },
             { loader: 'postcss-loader' },
             { loader: 'less-loader' },
           ],
