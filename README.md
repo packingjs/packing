@@ -108,7 +108,6 @@
 - [ ]动态require，更新reduce
 - [ ]packing-profile-webpack-plugin支持webpack2
 - [ ]升级eslint-plugin-jsx-a11y@^3.0.2(eslint-config-airbnb@13.0.0配置有误，暂不升级)
-- [ ]--clean功能
 
 ## Directory
 

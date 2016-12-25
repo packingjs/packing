@@ -20,9 +20,6 @@ program
   .option('-o, --open_browser', 'open browser')
   .parse(process.argv);
 
-console.log('---program.open_browser', program.open_browser);
-console.log('---program.clean_cache', program.clean_cache);
-
 const webpackConfigDll = pRequire('config/webpack.dll.babel', program);
 const packing = pRequire('config/packing', program);
 const commonChunks = packing.commonChunks;
