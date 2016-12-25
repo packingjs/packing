@@ -54,14 +54,15 @@ function formatError(e1) {
 webpack(webpackConfig, function (err, stats) {
   if (err) {
     console.log(err);
-  } else if (stats.hasErrors() || stats.hasWarnings()) {
-    // console.log(stats.compilation.errors);
+  } else if (stats.hasErrors()) {
     stats.compilation.errors.map(formatError).forEach((error) => {
       console.log('\n');
       console.log(chalk.red('ERROR in ' + error));
       console.log('\n');
     });
     console.log(chalk.red('💔  webpack: bundle is now INVALID.'));
+  } else if (stats.hasWarnings()) {
+    console.log(chalk.yellow('⚠️  webpack: ', stats.compilation.warnings));
   } else {
     console.log(stats.toString(stats));
     console.log('💚  webpack: bundle is now VALID.');
