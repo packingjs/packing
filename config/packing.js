@@ -111,7 +111,7 @@ export default {
   // require! 表示使用本地mock文件
   rewriteRules: {
     // 网站URL与模版的对应路由关系
-    // '^/$': '/index.html',
+    '^/$': '/index.html',
 
     // API转发
     '^/api/(.*)': 'require!/mock/api/$1.js',
