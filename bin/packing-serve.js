@@ -16,9 +16,12 @@ const mkdirp = require('mkdirp');
 const pkg = require('packing/package.json');
 
 program
-  .option('-c, --clean', 'clean dll cache')
-  .option('-o, --open', 'open browser')
+  .option('-c, --clean_cache', 'clean dll cache')
+  .option('-o, --open_browser', 'open browser')
   .parse(process.argv);
+
+console.log('---program.open_browser', program.open_browser);
+console.log('---program.clean_cache', program.clean_cache);
 
 const webpackConfigDll = pRequire('config/webpack.dll.babel', program);
 const packing = pRequire('config/packing', program);
@@ -101,7 +104,7 @@ const dllDeps = {};
 const destDir = path.resolve(process.cwd(), dll);
 const hashFile = destDir + '/hash.json';
 
-if (program.clean) {
+if (program.clean_cache) {
   fs.unlinkSync(hashFile);
 }
 

@@ -14,9 +14,6 @@
     "eslint": "better-npm-run eslint"
   },
   "betterScripts": {
-    "dll": {
-      "command": "packing dll"
-    },
     "serve": {
       "command": "webpack-dashboard --title <%= props.name %> -- packing serve"
     },
