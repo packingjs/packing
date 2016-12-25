@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset='utf-8'>
-    <title>html test</title>
+    <title>smarty test</title>
   </head>
 
   <body>
