@@ -15,8 +15,18 @@ import pRequire from '../util/require';
 
 const packing = pRequire('config/packing');
 const { cdnRoot } = pRequire(`src/profiles/${process.env.NODE_ENV}`);
-const { assetExtensions, localhost, port } = packing;
-const { src, assets, assetsDist, dll, entries } = packing.path;
+const {
+  assetExtensions,
+  localhost,
+  port,
+  path: {
+    src,
+    assets,
+    assetsDist,
+    dll,
+    entries,
+  },
+} = pRequire('config/packing');
 
  /**
   * 给所有入口js加上HRM的clientjs

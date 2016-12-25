@@ -19,10 +19,21 @@ const JS_DIRECTORY_NAME = 'js';
 // js输出文件保持目录名称
 const CSS_DIRECTORY_NAME = 'css';
 
-const packing = pRequire('config/packing');
 const { cdnRoot } = pRequire(`src/profiles/${process.env.NODE_ENV}`);
-const { assetExtensions, fileHashLength, templateExtension } = packing;
-const { src, templates, entries, assets, assetsDist, templatesDist } = packing.path;
+const {
+  assetExtensions,
+  commonChunks,
+  fileHashLength,
+  templateExtension,
+  path: {
+    src,
+    templates,
+    entries,
+    assets,
+    assetsDist,
+    templatesDist,
+  },
+} = pRequire('config/packing');
 
 /**
  * 生成webpack配置文件
@@ -144,10 +155,10 @@ const webpackConfig = (program, options) => {
   ];
 
   // 从配置文件中获取并生成webpack打包配置
-  if (packing.commonChunks) {
-    const chunkKeys = Object.keys(packing.commonChunks);
+  if (commonChunks) {
+    const chunkKeys = Object.keys(commonChunks);
     chunkKeys.forEach((key) => {
-      entry[key] = packing.commonChunks[key];
+      entry[key] = commonChunks[key];
     });
 
     // 扩展阅读 http://webpack.github.io/docs/list-of-plugins.html#commonschunkplugin

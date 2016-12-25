@@ -10,9 +10,15 @@ import CleanPlugin from 'clean-webpack-plugin';
 import autoprefixer from 'autoprefixer';
 import pRequire from '../util/require';
 
-const packing = pRequire('config/packing');
-const { assetExtensions } = packing;
-const { src, assets, dll } = packing.path;
+const {
+  assetExtensions,
+  commonChunks,
+  path: {
+    src,
+    assets,
+    dll,
+  },
+} = pRequire('config/packing');
 const cwd = process.cwd();
 
 /**
@@ -23,7 +29,7 @@ const cwd = process.cwd();
 const webpackConfig = () => {
   const context = cwd;
   const devtool = 'eval';
-  const entry = packing.commonChunks;
+  const entry = commonChunks;
   const output = {
     path: path.join(cwd, dll),
     filename: '[name].js',
