@@ -26,6 +26,7 @@ const props = {
   props: {
     name,
     react: true,
+    less: true,
     template: 'html',
   },
 };
