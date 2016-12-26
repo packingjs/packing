@@ -69,7 +69,6 @@
 - [x]动态加载
 - [x]支持自定义打包规则和指定common.js
 - [x]yo-generator
-- [x]工程新增的node_modules也能顺利在QDR中发布
 - [x]urlrewrite/自定义路由规则
 - [x]支持SPA／多入口网站／React Native
 - [x]支持多种资源的引入，如images、fonts、json
@@ -109,6 +108,7 @@
 - [ ]动态require，更新reduce
 - [x]packing-profile-webpack-plugin支持webpack2
 - [ ]升级eslint-plugin-jsx-a11y@^3.0.2(eslint-config-airbnb@13.0.0配置有误，暂不升级)
+- [ ]Replace NPM with yarn(Nested bin bug https://github.com/yarnpkg/yarn/pull/1210)
 
 ## Directory
 
