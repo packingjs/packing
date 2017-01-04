@@ -185,6 +185,8 @@ const webpackConfig = (program, options) => {
     });
   }
 
+  const performance = { hints: false };
+
   return {
     context,
     entry,
@@ -193,6 +195,7 @@ const webpackConfig = (program, options) => {
     resolve,
     plugins,
     devtool,
+    performance,
   };
 };
 
