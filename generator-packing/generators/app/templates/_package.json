@@ -57,7 +57,7 @@
     "node-sass": "^4.1.1",
     "sass-loader": "^4.1.1",<% } if (props.react) { %>
     "babel-plugin-react-transform": "^2.0.2",
-    "eslint-plugin-jsx-a11y": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^2.2.1",
     "eslint-plugin-react": "^6.8.0",
     "react": "^15.4.1",
     "react-a11y": "^0.3.3",
