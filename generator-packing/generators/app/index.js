@@ -9,6 +9,16 @@ const util = require('util');
 const assign = require('object-assign');
 const glob = require('packing-glob');
 
+const templateExtensions = {
+  html: 'html',
+  ejs: 'ejs',
+  handlebars: 'hbs',
+  pug: 'pug',
+  smarty: 'tpl',
+  velocity: 'vm',
+  artTemplate: 'html',
+};
+
 /**
  * 将用户选择项信息打平
  * 便于在模版替换时使用
@@ -163,8 +173,31 @@ module.exports = yeoman.Base.extend({
       );
 
       this.fs.copy(
-        this.templatePath('src'),
-        this.destinationPath('src')
+        this.templatePath('src/entries'),
+        this.destinationPath('src/entries')
+      );
+
+      this.fs.copy(
+        this.templatePath('src/profiles'),
+        this.destinationPath('src/profiles')
+      );
+
+      if (this.props.template === 'pug') {
+        this.fs.copy(
+          this.templatePath('src/templates/layout'),
+          this.destinationPath('src/templates/layout')
+        );
+      }
+
+      const ext = templateExtensions[this.props.template];
+      this.fs.copy(
+        this.templatePath('src/templates/pages/index.' + ext),
+        this.destinationPath('src/templates/pages/index.' + ext)
+      );
+
+      this.fs.copy(
+        this.templatePath('src/README.md'),
+        this.destinationPath('src/README.md')
       );
 
       this.fs.copy(

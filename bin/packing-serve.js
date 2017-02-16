@@ -96,35 +96,39 @@ function execDll(destDir, hashFile, newHash) {
   });
 }
 
-const allDependencies = Object.assign(pkg.dependencies, pkg.devDependencies);
-const dllDeps = {};
-const destDir = path.resolve(process.cwd(), dll);
-const hashFile = destDir + '/hash.json';
-
-if (program.clean_cache) {
-  fs.unlinkSync(hashFile);
-}
-
-Object.keys(commonChunks).forEach(function (chunkName) {
-  commonChunks[chunkName].forEach(function (d) {
-    if (allDependencies[d]) {
-      dllDeps[d] = allDependencies[d];
-    }
-  });
-});
-
-const newHash = md5(JSON.stringify(dllDeps));
-
-if (fs.existsSync(hashFile)) {
-  // eslint-disable-next-line
-  const oldHash = require(hashFile).hash;
-  if (oldHash !== newHash) {
-    execDll(destDir, hashFile, newHash);
-  } else {
-    console.log('💛  DllPlugin skipped!');
-    // start httpd
-    httpd();
-  }
+if (Object.keys(commonChunks).length === 0) {
+  httpd();
 } else {
-  execDll(destDir, hashFile, newHash);
+  const allDependencies = Object.assign(pkg.dependencies, pkg.devDependencies);
+  const dllDeps = {};
+  const destDir = path.resolve(process.cwd(), dll);
+  const hashFile = destDir + '/hash.json';
+
+  if (program.clean_cache) {
+    fs.unlinkSync(hashFile);
+  }
+
+  Object.keys(commonChunks).forEach(function (chunkName) {
+    commonChunks[chunkName].forEach(function (d) {
+      if (allDependencies[d]) {
+        dllDeps[d] = allDependencies[d];
+      }
+    });
+  });
+
+  const newHash = md5(JSON.stringify(dllDeps));
+
+  if (fs.existsSync(hashFile)) {
+    // eslint-disable-next-line
+    const oldHash = require(hashFile).hash;
+    if (oldHash !== newHash) {
+      execDll(destDir, hashFile, newHash);
+    } else {
+      console.log('💛  DllPlugin skipped!');
+      // start httpd
+      httpd();
+    }
+  } else {
+    execDll(destDir, hashFile, newHash);
+  }
 }

@@ -1,7 +1,7 @@
 {
   "name": "<%= props.name %>",
   "description": "",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "scripts": {
     "start": "npm run serve",
     "build": "better-npm-run build",
@@ -66,13 +66,13 @@
     "react-transform-catch-errors": "^1.0.2",<% } if (props.redux) { %>
     "react-redux": "^5.0.1",
     "redux": "^3.6.0",<% } %>
-    "packing": "^0.7.5"
+    "packing": "^1.0.3"
   },
   "devDependencies": {
     "express": "^4.14.0",
     "open-browser-webpack-plugin": "^0.0.3",<% if (props.template === 'artTemplate') { %>
     "packing-template-artTemplate": "^1.0.2",<% } if (props.template === 'ejs') { %>
-    "packing-template-ejs": "^1.0.1",<% } if (props.template === 'handlebars') { %>
+    "packing-template-ejs": "^1.0.2",<% } if (props.template === 'handlebars') { %>
     "packing-template-handlebars": "^1.0.1",<% } if (props.template === 'html') { %>
     "packing-template-html": "^1.0.0",<% } if (props.template === 'pug') { %>
     "packing-template-pug": "^1.0.6",<% } if (props.template === 'smarty') { %>
