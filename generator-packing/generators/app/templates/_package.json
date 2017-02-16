@@ -66,7 +66,7 @@
     "react-transform-catch-errors": "^1.0.2",<% } if (props.redux) { %>
     "react-redux": "^5.0.2",
     "redux": "^3.6.0",<% } %>
-    "packing": "^1.0.3"
+    "packing": "^1.0.4"
   },
   "devDependencies": {
     "express": "^4.14.1",
