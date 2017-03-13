@@ -16,7 +16,6 @@ install:
   - npm install -g npm
   - node --version
   - npm --version
-  - npm install --production
 
 script:
-  - npm run eslint
+  - npm test
