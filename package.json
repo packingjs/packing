@@ -27,7 +27,9 @@
     "eslint": "eslint bin config scripts util",
     "test": "echo \"Error: no test specified\"",
     "test:example": "babel-node scripts/test:example.js",
-    "test:generator": "babel-node scripts/test:generator.js"
+    "test:generator": "babel-node scripts/test:generator.js",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "dependencies": {
     "autoprefixer": "^6.7.3",
@@ -66,7 +68,8 @@
     "replace-hash-webpack-plugin": "^1.4.12",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
-    "webpack": "^2.2.1"
+    "webpack": "^2.2.1",
+    "snyk": "^1.25.2"
   },
   "devDependencies": {
     "lodash": "^4.17.4",
@@ -75,5 +78,6 @@
   "engines": {
     "node": ">=4.0",
     "npm": ">=3.0"
-  }
+  },
+  "snyk": true
 }
