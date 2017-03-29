@@ -69,6 +69,18 @@ export default {
   // 本地访问的域名，为了调试方便，可能改成my.qunar.com
   localhost: 'localhost',
 
+  // dev环境启用 hmr
+  hot: true,
+
+  // 编译时做文件 md5
+  longTermCaching: true,
+
+  // 编译时做代码压缩
+  minimize: true,
+
+  // 编译时启用source map
+  sourceMap: false,
+
   // webserver端口
   port: {
     // 开发环境端口号

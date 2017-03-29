@@ -25,6 +25,9 @@ const {
   commonChunks,
   fileHashLength,
   templateExtension,
+  longTermCaching,
+  minimize,
+  sourceMap,
   path: {
     src,
     templates,
@@ -44,8 +47,8 @@ const {
 const webpackConfig = (program, options) => {
   const projectRootPath = process.cwd();
   const assetsPath = path.resolve(projectRootPath, assetsDist);
-  const chunkhash = options.longTermCaching ? `-[chunkhash:${fileHashLength}]` : '';
-  const contenthash = options.longTermCaching ? `-[contenthash:${fileHashLength}]` : '';
+  const chunkhash = longTermCaching ? `-[chunkhash:${fileHashLength}]` : '';
+  const contenthash = longTermCaching ? `-[contenthash:${fileHashLength}]` : '';
   const context = projectRootPath;
   const entry = isFunction(entries) ? entries() : entries;
 
@@ -167,7 +170,7 @@ const webpackConfig = (program, options) => {
     );
   }
 
-  if (options.minimize) {
+  if (minimize) {
     plugins.push(
       // optimizations
       new webpack.optimize.OccurrenceOrderPlugin(),
@@ -178,7 +181,7 @@ const webpackConfig = (program, options) => {
           drop_console: true,
         },
         comments: /^!/,
-        sourceMap: options.sourceMap,
+        sourceMap,
       }),
     );
   }
@@ -204,9 +207,4 @@ const webpackConfig = (program, options) => {
   };
 };
 
-export default program => webpackConfig(program, {
-  devtool: false,
-  longTermCaching: true,
-  minimize: true,
-  sourceMap: false,
-});
+export default program => webpackConfig(program);

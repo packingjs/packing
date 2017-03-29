@@ -21,6 +21,7 @@ const {
   assetExtensions,
   localhost,
   port,
+  hot,
   path: {
     src,
     assets,
@@ -33,14 +34,10 @@ const {
  /**
   * 给所有入口js加上HRM的clientjs
   * @param {string|array|object} entry 页面入口列表
-  * @param {boolean} reload 是否强制刷新页面
   * @return {array}
   */
-const pushClientJS = (entry, reload) => {
+const pushClientJS = (entry) => {
   let clientJS = 'webpack-hot-middleware/client';
-  if (reload) {
-    clientJS += '?reload=true';
-  }
   let newEntry = entry;
   if (isString(newEntry)) {
     newEntry = [clientJS, newEntry];
@@ -48,7 +45,7 @@ const pushClientJS = (entry, reload) => {
     newEntry.unshift(clientJS);
   } else if (isObject(newEntry)) {
     Object.keys(newEntry).forEach((key) => {
-      newEntry[key] = pushClientJS(newEntry[key], reload);
+      newEntry[key] = pushClientJS(newEntry[key]);
     });
   }
   return newEntry;
@@ -65,7 +62,7 @@ const webpackConfig = (program, options) => {
   const assetsPath = path.resolve(projectRootPath, assetsDist);
   const dllPath = path.resolve(projectRootPath, dll);
   const context = projectRootPath;
-  const devtool = options.devtool;
+  const devtool = 'eval';
   // eslint-disable-next-line
 
   let entry = isFunction(entries) ? entries() : entries;
@@ -144,16 +141,11 @@ const webpackConfig = (program, options) => {
     new ProfilesPlugin(),
   ];
 
-  if (options.hot) {
-    entry = pushClientJS(entry, options.reload);
+  if (hot) {
+    entry = pushClientJS(entry);
     plugins.push(
       new webpack.HotModuleReplacementPlugin(),
     );
-    // moduleConfig.loaders.unshift({
-    //   test: /\.js$/,
-    //   loader: 'react-hot',
-    //   exclude: nodeModuleReg
-    // });
   }
 
   if (program.open_browser) {
@@ -199,9 +191,4 @@ const webpackConfig = (program, options) => {
   };
 };
 
-export default program => webpackConfig(program, {
-  hot: false,
-  // 检测到module有变化时，强制刷新页面
-  reload: false,
-  devtool: 'eval',
-});
+export default program => webpackConfig(program);
