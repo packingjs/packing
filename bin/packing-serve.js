@@ -13,7 +13,9 @@ const pRequire = require('packing/util/require');
 const fs = require('fs');
 const crypto = require('crypto');
 const mkdirp = require('mkdirp');
-const pkg = require('packing/package.json');
+const packingPackage = require('packing/package.json');
+
+const projectPackage = require(path.resolve('./package.json'));
 
 program
   .option('-c, --clean_cache', 'clean dll cache')
@@ -99,7 +101,12 @@ function execDll(destDir, hashFile, newHash) {
 if (Object.keys(commonChunks).length === 0) {
   httpd();
 } else {
-  const allDependencies = Object.assign(pkg.dependencies, pkg.devDependencies);
+  const allDependencies = Object.assign(
+    packingPackage.dependencies,
+    packingPackage.devDependencies,
+    projectPackage.dependencies,
+    projectPackage.devDependencies
+  );
   const dllDeps = {};
   const destDir = path.resolve(process.cwd(), dll);
   const hashFile = destDir + '/hash.json';
@@ -121,6 +128,7 @@ if (Object.keys(commonChunks).length === 0) {
   if (fs.existsSync(hashFile)) {
     // eslint-disable-next-line
     const oldHash = require(hashFile).hash;
+    console.log('oldHash:%s, newHash:%s', oldHash, newHash);
     if (oldHash !== newHash) {
       execDll(destDir, hashFile, newHash);
     } else {
