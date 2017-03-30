@@ -74,6 +74,7 @@ function httpd() {
       console.error(err);
     } else {
       console.info('==> 🚧  Webpack development server listening on port %s', port);
+      console.log('webpack is building...');
     }
   });
 }
