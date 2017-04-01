@@ -70,7 +70,7 @@ export default {
   localhost: 'localhost',
 
   // dev环境启用 hmr
-  hot: true,
+  hot: false,
 
   // 编译时做文件 md5
   longTermCaching: true,
