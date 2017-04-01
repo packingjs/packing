@@ -58,7 +58,7 @@ const webpackConfig = (program, options) => {
     // prd环境静态文件输出地址
     path: assetsPath,
     // dev环境下数据流访问地址
-    publicPath: '',
+    publicPath: cdnRoot,
   };
 
   const moduleConfig = {
@@ -145,7 +145,6 @@ const webpackConfig = (program, options) => {
     }),
 
     new ReplaceHashWebpackPlugin({
-      assetsDomain: cdnRoot,
       cwd: templates,
       src: `**/*${templateExtension}`,
       dest: templatesDist,

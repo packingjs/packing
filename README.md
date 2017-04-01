@@ -136,7 +136,10 @@
 
 ## 约定
 * 网页模版中对静态资源引用时使用绝对路径，如 `<script src='/logo/qunar.png'>`
-* css中对静态资源引用时使用波浪线`~`开头相对路径，如 `background:url(~/logo.png)`
+* **CSS文件引用 `assets` 中的静态资源时使用波浪线 `~` 开头的相对路径**，下面的css能引用到 `assets/images/packing-logo.png`
+```css
+background: url(~/images/packing-logo.png)
+```
 
 ## 使用镜像源安装npm
 ```
