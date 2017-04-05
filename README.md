@@ -255,5 +255,8 @@ entries: {
 ### schema和job参数怎么配置
 ```
 fe.xxx.build_method=node
-fe.xxx.build_command:
+#fe.xxx.build_command:
 ```
+
+### npm-cache打包成功，但解压失败
+可能是 `npm-cache` 内部指定的node版本和 `build.sh`中指定的node版本不一致，改成相同的node版本即可
