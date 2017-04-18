@@ -1,3 +1,6 @@
-{
-  "extends": "eslint-config-qunar"
-}
+module.exports = {
+  extends: [<% if (props.react) { %>
+    'eslint-config-qunar'<% } else { %>
+    'eslint-config-qunar/base'<% } %>
+  ].map(require.resolve)
+};

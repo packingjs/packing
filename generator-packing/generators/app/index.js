@@ -236,6 +236,13 @@ module.exports = yeoman.Base.extend({
       );
     },
 
+    eslintrc: function () {
+      this.fs.copyTpl(
+        this.templatePath('eslintrc'),
+        this.destinationPath('.eslintrc.js'),
+        { props: this.props }
+      );
+    },
 
     buildShell: function () {
       this.fs.copy(
@@ -248,13 +255,6 @@ module.exports = yeoman.Base.extend({
       this.fs.copy(
         this.templatePath('editorconfig'),
         this.destinationPath('.editorconfig')
-      );
-    },
-
-    eslintrc: function () {
-      this.fs.copy(
-        this.templatePath('eslintrc'),
-        this.destinationPath('.eslintrc')
       );
     },
 
