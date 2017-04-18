@@ -87,6 +87,12 @@ module.exports = yeoman.Base.extend({
         },
       },
       {
+        type: 'confirm',
+        name: 'maven',
+        message: 'Use maven?',
+        default: true,
+      },
+      {
         type: 'list',
         name: 'css',
         message: 'Choose a CSS Preprocessor:',
@@ -104,12 +110,6 @@ module.exports = yeoman.Base.extend({
             value: 'sass',
           },
         ],
-      },
-      {
-        type: 'confirm',
-        name: 'maven',
-        message: 'Use maven?',
-        default: true,
       },
       {
         type: 'list',
