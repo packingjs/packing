@@ -106,7 +106,7 @@ if (Object.keys(commonChunks).length === 0) {
     packingPackage.dependencies,
     packingPackage.devDependencies,
     projectPackage.dependencies,
-    projectPackage.devDependencies
+    projectPackage.devDependencies,
   );
   const dllDeps = {};
   const destDir = path.resolve(process.cwd(), dll);

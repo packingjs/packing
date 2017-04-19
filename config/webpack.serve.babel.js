@@ -37,7 +37,7 @@ const {
   * @return {array}
   */
 const pushClientJS = (entry) => {
-  let clientJS = 'webpack-hot-middleware/client';
+  const clientJS = 'webpack-hot-middleware/client';
   let newEntry = entry;
   if (isString(newEntry)) {
     newEntry = [clientJS, newEntry];
@@ -57,7 +57,7 @@ const pushClientJS = (entry) => {
  * @param {object} options 特征配置项
  * @return {object}
  */
-const webpackConfig = (program, options) => {
+const webpackConfig = (program) => {
   const projectRootPath = process.cwd();
   const assetsPath = path.resolve(projectRootPath, assetsDist);
   const dllPath = path.resolve(projectRootPath, dll);

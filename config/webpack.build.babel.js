@@ -44,7 +44,7 @@ const {
  * @param {object} options 特征配置项
  * @return {object}
  */
-const webpackConfig = (program, options) => {
+const webpackConfig = () => {
   const projectRootPath = process.cwd();
   const assetsPath = path.resolve(projectRootPath, assetsDist);
   const chunkhash = longTermCaching ? `-[chunkhash:${fileHashLength}]` : '';

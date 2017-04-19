@@ -1,5 +1,5 @@
-{
-  "extends": "eslint-config-airbnb",
+module.exports = {
+  "extends": "eslint-config-airbnb-base",
 
   "rules": {
     "func-names": 0,
@@ -12,4 +12,4 @@
     "prefer-arrow-callback": 0,
     "object-shorthand": 0
   }
-}
+};
