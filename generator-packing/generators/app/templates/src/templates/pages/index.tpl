@@ -3,6 +3,7 @@
   <head>
     <meta charset='utf-8'>
     <title>smarty test</title>
+    <link rel=stylesheet type=text/css href="/index.css">
   </head>
 
   <body>
