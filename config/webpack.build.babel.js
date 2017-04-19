@@ -83,7 +83,7 @@ const webpackConfig = (program, options) => {
         }),
       },
       {
-        test: /\.scss$/i,
+        test: /\.(scss|sass)$/i,
         loader: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [

@@ -1,4 +1,5 @@
 import ajax from 'packing-ajax';
+import './test.<%= props.css%>';
 
 // 获取profile变量
 console.log('cdnRoot: %s, me.name: %s', __('cdnRoot'), __('me.name'));

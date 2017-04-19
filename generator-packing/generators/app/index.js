@@ -98,8 +98,8 @@ module.exports = yeoman.Base.extend({
         message: 'Choose a CSS Preprocessor:',
         choices: [
           {
-            name: 'none',
-            value: '',
+            name: 'css',
+            value: 'css',
           },
           {
             name: 'less',
@@ -172,9 +172,15 @@ module.exports = yeoman.Base.extend({
         this.destinationPath('mock')
       );
 
+      this.fs.copyTpl(
+        this.templatePath('src/entries/index.js'),
+        this.destinationPath('src/entries/index.js'),
+        { props: this.props }
+      );
+
       this.fs.copy(
-        this.templatePath('src/entries'),
-        this.destinationPath('src/entries')
+        this.templatePath('src/entries/test.css'),
+        this.destinationPath('src/entries/test.' + this.props.css)
       );
 
       this.fs.copy(

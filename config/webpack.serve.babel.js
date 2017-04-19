@@ -99,7 +99,7 @@ const webpackConfig = (program, options) => {
         ],
       },
       {
-        test: /\.scss$/i,
+        test: /\.(scss|sass)$/i,
         use: [
           { loader: 'style-loader' },
           { loader: 'css-loader', query: { importLoaders: 2 } },
