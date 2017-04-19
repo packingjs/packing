@@ -76,7 +76,7 @@
     "packing-template-handlebars": "^1.0.2",<% } if (props.template === 'html') { %>
     "packing-template-html": "^1.0.0",<% } if (props.template === 'pug') { %>
     "packing-template-pug": "^1.0.6",<% } if (props.template === 'smarty') { %>
-    "packing-template-smarty": "^1.1.0",<% } if (props.template === 'velocity') { %>
+    "packing-template-smarty": "^1.2.0",<% } if (props.template === 'velocity') { %>
     "packing-template-velocity": "^1.0.4",<% } %>
     "packing-urlrewrite": "^0.1.7",
     "pre-commit": "^1.2.2",<% if (props.redux) { %>
