@@ -3,10 +3,11 @@ version: "{build}"
 environment:
   matrix:
     - nodejs_version: "4"
-    - nodejs_version: "6"
 
 matrix:
   fast_finish: true
+
+build: off
 
 install:
   # Install Node.js
@@ -15,14 +16,32 @@ install:
   # Upgrade npm
   - npm install -g npm
 
+test_script:
   # Output our current versions for debugging
   - node --version
   - npm --version
+  - npm install -g yo generator-packing
 
-  # Install our package dependencies
-  # - npm install --production
+  - yo packing --features="{\"name\":\"x\",\"template\":\"html\",\"react\":true,\"redux\":true,\"maven\":true,\"css\":\"css\"}"
+  - cd x
+  - npm build
+  - cd ..
+  - rm -rf x
 
-  # Install our current directory as a dependency of itself
-  - npm test
+  - yo packing --features="{\"name\":\"x\",\"template\":\"pug\",\"react\":true,\"redux\":false,\"maven\":true,\"css\":\"less\"}"
+  - cd x
+  - npm build
+  - cd ..
+  - rm -rf x
 
-build: off
+  - yo packing --features="{\"name\":\"x\",\"template\":\"ejs\",\"react\":false,\"redux\":false,\"maven\":true,\"css\":\"sass\"}"
+  - cd x
+  - npm build
+  - cd ..
+  - rm -rf x
+
+  - yo packing --features="{\"name\":\"x\",\"template\":\"velocity\",\"react\":false,\"redux\":false,\"maven\":false,\"css\":\"css\"}"
+  - cd x
+  - npm build
+  - cd ..
+  - rm -rf x
