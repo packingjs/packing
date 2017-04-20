@@ -1,5 +1,3 @@
-
-
 const path = require('path');
 const yeoman = require('yeoman-generator');
 const chalk = require('chalk');
@@ -8,6 +6,7 @@ const mkdirp = require('mkdirp');
 const util = require('util');
 const assign = require('object-assign');
 const glob = require('packing-glob');
+const os = require('os');
 
 const templateExtensions = {
   html: 'html',
@@ -42,6 +41,28 @@ function flattenFeature(answers) {
 }
 
 module.exports = yeoman.Base.extend({
+  constructor: function () {
+    yeoman.Base.apply(this, arguments);
+
+    this.option('skip-welcome-message', {
+      desc: 'Skips the welcome message',
+      type: Boolean
+    });
+
+    this.option('features', {
+      desc: 'Set feature list',
+      type: String
+    });
+
+    if (this.options.features) {
+      try {
+        this.options.features = JSON.parse(this.options.features);
+      } catch (e) {
+        throw new Error('JSON.parse failed: ', this.options.features);
+      }
+    }
+  },
+
   initializing: function () {
     this.props = {};
   },
@@ -58,115 +79,121 @@ module.exports = yeoman.Base.extend({
   },
 
   prompting: function () {
-    // Have Yeoman greet the user.
-    this.log(yosay(
-      'Welcome to the breathtaking ' + chalk.red('generator-packing') + ' generator!'
-    ));
+    if (this.options['skip-welcome-message'] !== 'true') {
+      // Have Yeoman greet the user.
+      this.log(yosay(
+        'Welcome to the breathtaking ' + chalk.red('generator-packing') + ' generator!'
+      ));
+    }
 
-    // @see https://github.com/SBoudrias/Inquirer.js
-    const prompts = [
-      {
-        type: 'input',
-        name: 'name',
-        message: 'name',
-        default: this.appname,
-      },
-      {
-        type: 'confirm',
-        name: 'react',
-        message: 'Use react?',
-        default: true,
-      },
-      {
-        type: 'confirm',
-        name: 'redux',
-        message: 'Use redux?',
-        default: true,
-        when: function (answers) {
-          return answers.react;
+    if (this.options.features) {
+      this.props = this.options.features;
+    } else {
+      // @see https://github.com/SBoudrias/Inquirer.js
+      const prompts = [
+        {
+          type: 'input',
+          name: 'name',
+          message: 'name',
+          default: this.appname,
         },
-      },
-      {
-        type: 'confirm',
-        name: 'maven',
-        message: 'Use maven?',
-        default: true,
-      },
-      {
-        type: 'list',
-        name: 'css',
-        message: 'Choose a CSS Preprocessor:',
-        choices: [
-          {
-            name: 'css',
-            value: 'css',
+        {
+          type: 'confirm',
+          name: 'react',
+          message: 'Use react?',
+          default: true,
+        },
+        {
+          type: 'confirm',
+          name: 'redux',
+          message: 'Use redux?',
+          default: true,
+          when: function (answers) {
+            return answers.react;
           },
-          {
-            name: 'less',
-            value: 'less',
-          },
-          {
-            name: 'sass',
-            value: 'sass',
-          },
-        ],
-      },
-      {
-        type: 'list',
-        name: 'template',
-        message: 'Choose a template:',
-        choices: [
-          {
-            name: 'ejs',
-            value: 'ejs',
-          },
-          {
-            name: 'handlebars',
-            value: 'handlebars',
-          },
-          {
-            name: 'html',
-            value: 'html',
-          },
-          {
-            name: 'pug',
-            value: 'pug',
-          },
-          {
-            name: 'smarty',
-            value: 'smarty',
-          },
-          {
-            name: 'velocity',
-            value: 'velocity',
-          },
-          {
-            name: 'artTemplate',
-            value: 'artTemplate',
-          },
-        ],
-        default: 2,
-      },
-      // {
-      //   type: 'confirm',
-      //   name: 'intranet',
-      //   message: 'Are you in the QUNAR office network?',
-      //   default: false,
-      // },
-    ];
+        },
+        {
+          type: 'confirm',
+          name: 'maven',
+          message: 'Use maven?',
+          default: true,
+        },
+        {
+          type: 'list',
+          name: 'css',
+          message: 'Choose a CSS Preprocessor:',
+          choices: [
+            {
+              name: 'css',
+              value: 'css',
+            },
+            {
+              name: 'less',
+              value: 'less',
+            },
+            {
+              name: 'sass',
+              value: 'sass',
+            },
+          ],
+        },
+        {
+          type: 'list',
+          name: 'template',
+          message: 'Choose a template:',
+          choices: [
+            {
+              name: 'ejs',
+              value: 'ejs',
+            },
+            {
+              name: 'handlebars',
+              value: 'handlebars',
+            },
+            {
+              name: 'html',
+              value: 'html',
+            },
+            {
+              name: 'pug',
+              value: 'pug',
+            },
+            {
+              name: 'smarty',
+              value: 'smarty',
+            },
+            {
+              name: 'velocity',
+              value: 'velocity',
+            },
+            {
+              name: 'artTemplate',
+              value: 'artTemplate',
+            },
+          ],
+          default: 2,
+        },
+        // {
+        //   type: 'confirm',
+        //   name: 'intranet',
+        //   message: 'Are you in the QUNAR office network?',
+        //   default: false,
+        // },
+      ];
 
-    return this.prompt(prompts).then(function (a) {
-      const answers = a;
-      this.props.name = answers.name;
-      this.props.template = answers.template;
-      delete answers.name;
-      assign(this.props, flattenFeature(answers));
-    }.bind(this));
+      return this.prompt(prompts).then(function (a) {
+        const answers = a;
+        this.props.name = answers.name;
+        this.props.template = answers.template;
+        delete answers.name;
+        assign(this.props, flattenFeature(answers));
+      }.bind(this));
+    }
   },
 
   writing: {
     folders: function () {
-      // copy only
+    // copy only
       this.fs.copy(
         this.templatePath('mock'),
         this.destinationPath('mock')
@@ -292,15 +319,14 @@ module.exports = yeoman.Base.extend({
   },
 
   install: function () {
-    const options = {
+    let options = {
       registry: 'https://registry.npm.taobao.org',
       disturl: 'https://npm.taobao.org/dist',
       sassBinarySite: 'http://npm.taobao.org/mirrors/node-sass',
     };
-    // if (this.props.intranet) {
-    //   options.registry = 'http://registry.npm.corp.qunar.com';
-    // }
-
+    if (/^APPVYR-/.test(os.hostname())) {
+      options = {};
+    }
     this.npmInstall('', options);
   },
 
