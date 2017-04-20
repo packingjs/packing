@@ -1,14 +1,14 @@
-const path = require('path');
-const yeoman = require('yeoman-generator');
-const chalk = require('chalk');
-const yosay = require('yosay');
-const mkdirp = require('mkdirp');
-const util = require('util');
-const assign = require('object-assign');
-const glob = require('packing-glob');
-const os = require('os');
+var path = require('path');
+var yeoman = require('yeoman-generator');
+var chalk = require('chalk');
+var yosay = require('yosay');
+var mkdirp = require('mkdirp');
+var util = require('util');
+var assign = require('object-assign');
+var glob = require('packing-glob');
+var os = require('os');
 
-const templateExtensions = {
+var templateExtensions = {
   html: 'html',
   ejs: 'ejs',
   handlebars: 'hbs',
@@ -27,7 +27,7 @@ const templateExtensions = {
  *
  */
 function flattenFeature(answers) {
-  const features = {};
+  var features = {};
   Object.keys(answers).forEach(function (key) {
     if (util.isArray(answers[key])) {
       answers[key].forEach(function (item) {
@@ -90,7 +90,7 @@ module.exports = yeoman.Base.extend({
       this.props = this.options.features;
     } else {
       // @see https://github.com/SBoudrias/Inquirer.js
-      const prompts = [
+      var prompts = [
         {
           type: 'input',
           name: 'name',
@@ -182,7 +182,7 @@ module.exports = yeoman.Base.extend({
       ];
 
       return this.prompt(prompts).then(function (a) {
-        const answers = a;
+        var answers = a;
         this.props.name = answers.name;
         this.props.template = answers.template;
         delete answers.name;
@@ -222,7 +222,7 @@ module.exports = yeoman.Base.extend({
         );
       }
 
-      const ext = templateExtensions[this.props.template];
+      var ext = templateExtensions[this.props.template];
       this.fs.copy(
         this.templatePath('src/templates/pages/index.' + ext),
         this.destinationPath('src/templates/pages/index.' + ext)
@@ -238,9 +238,9 @@ module.exports = yeoman.Base.extend({
         this.destinationPath('assets')
       );
 
-      const folders = ['config', 'src/profiles'];
-      const pattern = '{' + folders.join(',') + '}/**/*';
-      const options = {
+      var folders = ['config', 'src/profiles'];
+      var pattern = '{' + folders.join(',') + '}/**/*';
+      var options = {
         cwd: this.sourceRoot(),
       };
       // copy and replace template
@@ -319,7 +319,7 @@ module.exports = yeoman.Base.extend({
   },
 
   install: function () {
-    let options = {
+    var options = {
       registry: 'https://registry.npm.taobao.org',
       disturl: 'https://npm.taobao.org/dist',
       sassBinarySite: 'http://npm.taobao.org/mirrors/node-sass',
