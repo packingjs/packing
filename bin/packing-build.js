@@ -8,48 +8,52 @@ const pRequire = require('packing/util/require');
 
 const webpackConfig = pRequire('config/webpack.build.babel', {});
 
-function formatError(e1) {
-  // eslint-disable-next-line
-  var e = e1, text = '';
-  if (typeof e === 'string') {
-    e = { message: e };
+/* eslint-disable */
+function formatError(e) {
+  var text = '';
+	if(typeof e === 'string') {
+		e = {
+			message: e
+		};
   }
-  if (e.chunk) {
-    text += 'chunk ' + (e.chunk.name || e.chunk.id) +
-      // eslint-disable-next-line
-      (e.chunk.entry ? ' [entry]' : e.chunk.initial ? ' [initial]' : '') + '\n';
-  }
-  if (e.file) {
-    text += e.file + '\n';
-  }
-  text += e.message;
-  if (e.details) {
-    text += '\n' + e.details;
-  }
-  if (e.missing) {
-    text += e.missing.map(item => '\n[' + item + ']').join('');
-  }
-  if (e.dependencies && e.origin) {
-    text += '\n @ ';
-    e.dependencies.forEach((dep) => {
-      if (!dep.loc) {
-        return;
-      }
-      if (typeof dep.loc === 'string') {
-        return;
-      }
-      if (!dep.loc.start) {
-        return;
-      }
-      if (!dep.loc.end) {
-        return;
-      }
-      text += ' ' + dep.loc.start.line + ':' + dep.loc.start.column + '-' +
-        (dep.loc.start.line !== dep.loc.end.line ? dep.loc.end.line + ':' : '') + dep.loc.end.column;
-    });
-  }
+	if(e.chunk) {
+		text += 'chunk ' + (e.chunk.name || e.chunk.id);
+    if (e.chunk.hasRuntime()) {
+      text += ' [entry]';
+    } else {
+      text += e.chunk.isInitial() ? ' [initial]' : '';
+    }
+    text += '\n';
+	}
+	if(e.file) {
+		text += e.file + '\n';
+	}
+	if(e.module && e.module.readableIdentifier && typeof e.module.readableIdentifier === 'function') {
+		text += e.module.readableIdentifier(requestShortener) + '\n';
+	}
+	text += e.message;
+	if(e.details) text += '\n' + e.details;
+	if(e.missing) text += e.missing.map(function(item) {
+    return '\n[' + item + ']';
+  }).join('');
+	if(e.dependencies && e.origin) {
+		text += '\n @ ' + e.origin.readableIdentifier(requestShortener);
+		e.dependencies.forEach(function(dep) {
+			if(!dep.loc) return;
+			if(typeof dep.loc === 'string') return;
+			var locInfo = formatLocation(dep.loc);
+			if(!locInfo) return;
+			text += ' ' + locInfo;
+		});
+		var current = e.origin;
+		while(current.issuer) {
+			current = current.issuer;
+			text += '\n @ ' + current.readableIdentifier(requestShortener);
+		}
+	}
   return text;
 }
+/* eslint-enable */
 
 webpack(webpackConfig, function (err, stats) {
   if (err) {
