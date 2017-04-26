@@ -17,5 +17,5 @@ export default webpackConfig => {
   //     allChunks: true
   //   })
   // )
-   return webpackConfig;
+  return webpackConfig;
 };
