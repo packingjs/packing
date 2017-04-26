@@ -1,7 +1,5 @@
 /.tmp/**
 /docs/**
 /mock/**
-/examples/**
 /prd/**
-/generator-packing
 /node_modules/**

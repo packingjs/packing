@@ -277,6 +277,13 @@ module.exports = yeoman.Base.extend({
       );
     },
 
+    eslintignore: function () {
+      this.fs.copy(
+        this.templatePath('eslintignore'),
+        this.destinationPath('.eslintignore')
+      );
+    },
+
     buildShell: function () {
       this.fs.copy(
         this.templatePath('build.sh'),
