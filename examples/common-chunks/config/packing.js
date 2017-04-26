@@ -4,19 +4,18 @@
  *
  * @param object packing 默认配置对象
  */
-import assign from 'object-assign-deep';
-
 export default (packing) => {
+  const p = packing;
 
-  return assign({}, packing, {
-    commonChunks: {
-      vendor: [
-        './src/a',
-        './src/b',
-        // 'antd/lib'
-        // './src/lib ^\.\/.*$'
-        // './src/lib/*.js'
-      ],
-    },
-  });
+  p.commonChunks = {
+    vendor: [
+      './src/a',
+      './src/b',
+      // 'antd/lib'
+      // './src/lib ^\.\/.*$'
+      // './src/lib/*.js'
+    ],
+  };
+
+  return p;
 };

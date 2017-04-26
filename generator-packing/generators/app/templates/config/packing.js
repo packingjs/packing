@@ -28,20 +28,23 @@
      break;
  } %>
 
-import assign from 'object-assign-deep';
-
-export default packing => assign({}, packing, {
+export default (packing) => {
+  const p = packing;
   // 模版引擎类型，目前支持的类型有[html,pug,ejs,handlebars,smarty,velocity,artTemplate]
-  templateEngine: '<%= props.template%>',
+  p.templateEngine = '<%= props.template%>';
   // 模版文件扩展名
-  templateExtension: '.<%= templateExtension%>',
+  p.templateExtension = '.<%= templateExtension%>';
   // 网站自定义配置
-  rewriteRules: {
+  p.rewriteRules = {
     // 网站URL与模版的对应路由关系
     '^/$': '/index.<%= templateExtension%>'
-  }
+  };
+
+  return p;
+};
 
   /**
+  // 其他可用配置项及其默认值
   // 文件路径，所有目录都使用相对于项目根目录的相对目录格式
   path: {
     // 源文件目录
@@ -156,4 +159,3 @@ export default packing => assign({}, packing, {
     // '^/hello': 'http://localhost:3001/123/4.html',
   },
    */
-});
