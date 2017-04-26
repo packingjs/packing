@@ -52,7 +52,7 @@
     "eslint"
   ],
   "dependencies": {
-    "packing": "../"
+    "packing": "../.."
   },
   "devDependencies": {
     "express": "^4.14.1",
