@@ -5,6 +5,8 @@
 1. 启动开发模式
   ```
   npm run serve
+  # window系统使用下面的命令
+  # npm run serve:normal
   ```
 
 2. 在浏览器中预览网站 `http://localhost:8081`
