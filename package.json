@@ -1,7 +1,7 @@
 {
   "name": "packing",
   "description": "Webpack based web front-end development environment",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "repository": "zhongzhi107/packing",
   "files": [
     ".eslintrc",
@@ -18,7 +18,7 @@
   "bin": {
     "packing": "bin/packing.js",
     "packing-build": "bin/packing-build.js",
-    "packing-serve:dist": "bin/packing-serve:dist.js",
+    "packing-serve-dist": "bin/packing-serve-dist.js",
     "packing-serve": "bin/packing-serve.js"
   },
   "author": "zhongzhi <zhong.zhi@163.com>",
