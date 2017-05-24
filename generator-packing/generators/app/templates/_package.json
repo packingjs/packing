@@ -4,46 +4,14 @@
   "version": "1.0.0",
   "scripts": {
     "start": "npm run serve",
-    "build": "node_modules/packing/node_modules/.bin/better-npm-run build",
-    "build:dev": "node_modules/packing/node_modules/.bin/better-npm-run build:dev",
-    "build:beta": "node_modules/packing/node_modules/.bin/better-npm-run build:beta",
-    "build:prod": "node_modules/packing/node_modules/.bin/better-npm-run build:prod",
-    "serve": "node_modules/packing/node_modules/.bin/better-npm-run serve",
-    "serve:normal": "node_modules/packing/node_modules/.bin/better-npm-run serve:normal",
-    "serve:dist": "node_modules/packing/node_modules/.bin/better-npm-run build && node_modules/packing/node_modules/.bin/better-npm-run serve:dist",
-    "eslint": "node_modules/packing/node_modules/.bin/eslint src"
-  },
-  "betterScripts": {
-    "serve": {
-      "command": "webpack-dashboard --title <%= props.name %> -- packing serve"
-    },
-    "serve:normal": {
-      "command": "packing serve"
-    },
-    "serve:dist": {
-      "command": "packing serve-dist"
-    },
-    "build": {
-      "command": "packing build"
-    },
-    "build:dev": {
-      "command": "node_modules/packing/node_modules/.bin/better-npm-run build",
-      "env": {
-        "NODE_ENV": "development"
-      }
-    },
-    "build:beta": {
-      "command": "node_modules/packing/node_modules/.bin/better-npm-run build",
-      "env": {
-        "NODE_ENV": "beta"
-      }
-    },
-    "build:prod": {
-      "command": "node_modules/packing/node_modules/.bin/better-npm-run build",
-      "env": {
-        "NODE_ENV": "production"
-      }
-    }
+    "build": "packing build",
+    "build:dev": "NODE_ENV=development packing build",
+    "build:beta": "NODE_ENV=beta packing build",
+    "build:prod": "NODE_ENV=production packing build",
+    "serve": "webpack-dashboard --title a -- packing serve",
+    "serve:normal": "packing serve",
+    "serve:dist": "packing build && packing serve-dist",
+    "eslint": "packing lint src"
   },
   "pre-commit": [
     "eslint"
@@ -63,7 +31,7 @@
     "react-transform-catch-errors": "^1.0.2",<% } if (props.redux) { %>
     "react-redux": "^5.0.2",
     "redux": "^3.6.0",<% } %>
-    "packing": "^2.1.0"
+    "packing": "^2.1.1"
   },
   "devDependencies": {
     "express": "^4.14.1",

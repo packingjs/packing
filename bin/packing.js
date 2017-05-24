@@ -11,4 +11,5 @@ program
   .command('serve', 'start dev web server', { isDefault: true })
   .command('serve:dist', 'review build output')
   .command('build', 'build project')
+  .command('lint', 'lint code')
   .parse(process.argv);
