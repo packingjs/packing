@@ -4,14 +4,14 @@
   "version": "1.0.0",
   "scripts": {
     "start": "npm run serve",
-    "build": "better-npm-run build",
-    "build:dev": "better-npm-run build:dev",
-    "build:beta": "better-npm-run build:beta",
-    "build:prod": "better-npm-run build:prod",
-    "serve": "better-npm-run serve",
-    "serve:normal": "better-npm-run serve:normal",
-    "serve:dist": "better-npm-run build && better-npm-run serve:dist",
-    "eslint": "better-npm-run eslint"
+    "build": "node_modules/packing/node_modules/.bin/better-npm-run build",
+    "build:dev": "node_modules/packing/node_modules/.bin/better-npm-run build:dev",
+    "build:beta": "node_modules/packing/node_modules/.bin/better-npm-run build:beta",
+    "build:prod": "node_modules/packing/node_modules/.bin/better-npm-run build:prod",
+    "serve": "node_modules/packing/node_modules/.bin/better-npm-run serve",
+    "serve:normal": "node_modules/packing/node_modules/.bin/better-npm-run serve:normal",
+    "serve:dist": "node_modules/packing/node_modules/.bin/better-npm-run build && node_modules/packing/node_modules/.bin/better-npm-run serve:dist",
+    "eslint": "node_modules/packing/node_modules/.bin/eslint src"
   },
   "betterScripts": {
     "serve": {
@@ -27,25 +27,22 @@
       "command": "packing build"
     },
     "build:dev": {
-      "command": "better-npm-run build",
+      "command": "node_modules/packing/node_modules/.bin/better-npm-run build",
       "env": {
         "NODE_ENV": "development"
       }
     },
     "build:beta": {
-      "command": "better-npm-run build",
+      "command": "node_modules/packing/node_modules/.bin/better-npm-run build",
       "env": {
         "NODE_ENV": "beta"
       }
     },
     "build:prod": {
-      "command": "better-npm-run build",
+      "command": "node_modules/packing/node_modules/.bin/better-npm-run build",
       "env": {
         "NODE_ENV": "production"
       }
-    },
-    "eslint": {
-      "command": "eslint src"
     }
   },
   "pre-commit": [
@@ -53,12 +50,12 @@
   ],
   "dependencies": {<% if (props.css === 'less') { %>
     "less": "^2.7.2",
-    "less-loader": "^2.2.3",<% } if (props.css === 'sass') { %>
+    "less-loader": "^4.0.3",<% } if (props.css === 'sass') { %>
     "node-sass": "^4.5.0",
     "sass-loader": "^6.0.0",<% } if (props.react) { %>
     "babel-plugin-react-transform": "^2.0.2",
     "eslint-plugin-jsx-a11y": "^4.0.0",
-    "eslint-plugin-react": "^6.10.0",
+    "eslint-plugin-react": "^7.0.1",
     "react": "^15.4.2",
     "react-a11y": "^0.3.3",
     "react-dom": "^15.4.2",
@@ -66,7 +63,7 @@
     "react-transform-catch-errors": "^1.0.2",<% } if (props.redux) { %>
     "react-redux": "^5.0.2",
     "redux": "^3.6.0",<% } %>
-    "packing": "^2.0.2"
+    "packing": "^2.1.0"
   },
   "devDependencies": {
     "express": "^4.14.1",
@@ -83,7 +80,7 @@
     "redux-devtools": "^3.3.2",
     "redux-devtools-dock-monitor": "^1.1.1",
     "redux-devtools-log-monitor": "^1.2.0",<% } %>
-    "webpack-dashboard": "^0.3.0",
+    "webpack-dashboard": "^0.4.0",
     "webpack-dev-middleware": "^1.10.0",
     "webpack-hot-middleware": "^2.17.0"
   },
