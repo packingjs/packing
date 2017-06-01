@@ -11,7 +11,7 @@
     "serve": "webpack-dashboard --title a -- packing serve",
     "serve:normal": "packing serve",
     "serve:dist": "packing build && packing serve-dist",
-    "eslint": "packing lint src"
+    "eslint": "eslint src"
   },
   "pre-commit": [
     "eslint"

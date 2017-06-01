@@ -19,7 +19,8 @@
     "packing": "bin/packing.js",
     "packing-build": "bin/packing-build.js",
     "packing-serve-dist": "bin/packing-serve-dist.js",
-    "packing-serve": "bin/packing-serve.js"
+    "packing-serve": "bin/packing-serve.js",
+    "eslint": "./node_modules/.bin/eslint"
   },
   "author": "zhongzhi <zhong.zhi@163.com>",
   "license": "MIT",
