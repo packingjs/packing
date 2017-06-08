@@ -2,7 +2,7 @@
   "name": "packing",
   "description": "Webpack based web front-end development environment",
   "version": "2.1.2",
-  "repository": "zhongzhi107/packing",
+  "repository": "packingjs/packing",
   "files": [
     ".eslintrc",
     ".babelrc",
