@@ -1,8 +1,8 @@
-# Examples: mock-ajax
+# Examples: mock-page-context-global
 
-该例子演示了使用 packing 模拟 ajax 异步请求数据返回。
+该例子演示了使用全局变量初始化页面模版变量。
 
-这类数据放在 `mock/api` 目录，目录位置也可以通过 [packing.js](../../config/packing.js#L128) 文件来配置
+这个数据放在 `mock/pages/__global.js`。这个的好处是如果多个文件都需要某些公共变量时，只需要在__global.js中写一次就够了，当然，你在mock文件中使用require也能完成类似的功能。
 
 ## 参数
 模拟数据文件可以会接收2个参数：
