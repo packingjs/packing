@@ -26,7 +26,9 @@
   "license": "MIT",
   "scripts": {
     "eslint": "eslint bin config scripts util",
-    "test": "echo \"Error: no test specified\""
+    "test": "echo \"Error: no test specified\"",
+    "release": "standard-version",
+    "postrelease": "git push && git push origin --tags"
   },
   "dependencies": {
     "autoprefixer": "^7.1.1",
