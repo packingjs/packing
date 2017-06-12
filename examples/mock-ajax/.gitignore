@@ -1,0 +1,7 @@
+npm-debug.log
+node_modules/
+/prd/
+/dist/
+/stats.json
+.idea/
+/.tmp/

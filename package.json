@@ -26,12 +26,10 @@
   "license": "MIT",
   "scripts": {
     "eslint": "eslint bin config scripts util",
-    "test": "echo \"Error: no test specified\"",
-    "test:example": "babel-node scripts/test:example.js",
-    "test:generator": "babel-node scripts/test:generator.js"
+    "test": "echo \"Error: no test specified\""
   },
   "dependencies": {
-    "autoprefixer": "^6.7.3",
+    "autoprefixer": "^7.1.1",
     "babel-cli": "^6.23.0",
     "babel-core": "^6.23.1",
     "babel-eslint": "^7.1.1",
@@ -44,16 +42,16 @@
     "babel-preset-react": "^6.23.0",
     "babel-preset-stage-0": "^6.22.0",
     "chalk": "^1.1.3",
-    "clean-webpack-plugin": "^0.1.15",
+    "clean-webpack-plugin": "^0.1.16",
     "commander": "^2.9.0",
     "copy-webpack-plugin": "^4.0.1",
-    "css-loader": "^0.28.0",
-    "eslint": "^3.17.1",
+    "css-loader": "^0.28.4",
+    "eslint": "^4.0.0",
     "eslint-config-qunar": "^1.1.4",
     "eslint-loader": "^1.7.1",
-    "eslint-plugin-import": "^2.2.0",
-    "extract-text-webpack-plugin": "^2.1.0",
-    "file-loader": "^0.11.1",
+    "eslint-plugin-import": "^2.3.0",
+    "extract-text-webpack-plugin": "^2.1.2",
+    "file-loader": "^1.0.0-beta.1",
     "loader-utils": "^1.1.0",
     "mkdirp": "^0.5.1",
     "move-webpack-plugin": "0.0.1",
@@ -61,11 +59,11 @@
     "packing-glob": "^1.0.1",
     "packing-profile-webpack-plugin": "^2.0.1",
     "packing-rev-webpack-plugin": "^1.0.7",
-    "postcss-loader": "^1.3.0",
+    "postcss-loader": "^2.0.5",
     "replace-hash-webpack-plugin": "^2.3.1",
-    "style-loader": "^0.16.1",
-    "url-loader": "^0.5.7",
-    "webpack": "^2.4.1"
+    "style-loader": "^0.18.2",
+    "url-loader": "^0.5.8",
+    "webpack": "^2.6.1"
   },
   "devDependencies": {
     "lodash": "^4.17.4",

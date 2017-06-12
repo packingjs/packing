@@ -1,0 +1,13 @@
+extends ../layout/default.pug
+
+block title
+  title 模拟异步请求数据
+
+block append script
+  script(src="/index.js")
+
+block content
+  h1 模拟异步请求数据
+  div
+    span /api/getTimestamp 返回的时间戳为：
+    span#now
