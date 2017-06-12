@@ -1,0 +1,36 @@
+{
+  "name": "build-library",
+  "description": "",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "npm run serve",
+    "build": "packing build",
+    "build:dev": "NODE_ENV=development packing build",
+    "build:beta": "NODE_ENV=beta packing build",
+    "build:prod": "NODE_ENV=production packing build",
+    "serve": "webpack-dashboard --title a -- packing serve",
+    "serve:normal": "packing serve",
+    "serve:dist": "packing build && packing serve-dist",
+    "eslint": "eslint src"
+  },
+  "pre-commit": [
+    "eslint"
+  ],
+  "dependencies": {
+    "packing": "../.."
+  },
+  "devDependencies": {
+    "express": "^4.14.1",
+    "open-browser-webpack-plugin": "^0.0.5",
+    "packing-template-html": "^1.0.0",
+    "packing-urlrewrite": "^0.1.7",
+    "pre-commit": "^1.2.2",
+    "webpack-dashboard": "^0.3.0",
+    "webpack-dev-middleware": "^1.10.0",
+    "webpack-hot-middleware": "^2.17.0"
+  },
+  "engines": {
+    "node": ">=4.0",
+    "npm": ">=3.0"
+  }
+}

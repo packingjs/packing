@@ -1,4 +1,4 @@
-# Library example
+# Examples: build-library
 
 ## 目的
 将js文件打包成基础库，引用页面直接通过 `<script>` 标签引入即可，类似 jQuery 的基础类

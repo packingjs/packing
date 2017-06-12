@@ -4,7 +4,6 @@
 
 [![NPM](https://nodei.co/npm/packing.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/packing/)
 
-[![Build Status](https://travis-ci.org/zhongzhi107/packing.svg?branch=master)](https://travis-ci.org/zhongzhi107/packing)
 [![Build status](https://ci.appveyor.com/api/projects/status/52hgp0fv4bmjjq25?svg=true)](https://ci.appveyor.com/project/zhongzhi107/packing)
 [![Dependency Status](https://david-dm.org/zhongzhi107/packing.svg)](https://david-dm.org/zhongzhi107/packing)
 [![devDependency Status](https://david-dm.org/zhongzhi107/packing/dev-status.svg)](https://david-dm.org/zhongzhi107/packing#info=devDependencies)
@@ -94,7 +93,7 @@
 
 ## Todo
 - [ ]文档
-- [ ]页面初始化数据支持代理服务器功能
+- [x]页面初始化数据支持代理服务器功能
 - [x]example
   - [x]base
   - [x]custom template
@@ -125,14 +124,22 @@
 │   ├── /webpack.dll.babel.js    # DllPlugin插件编译配置
 │   └── /webpack.serve:dist.js   # webpack预览编译后结果的配置文件
 ├── /examples/                   # 例子
-├── /generator-packing/          # Yeoman generator
-├── /scripts/                    # 开发辅助工具脚本
+├── /src/                        # 项目代码容器目录
 ├── /util/                       # util
 ├── .babelrc                     # babel配置
-├── .eslintrc                    # eslint配置
+├── .eslintrc.js                 # eslint配置
 ├── package.json
 └── README.md                   
 ```
+
+## 例子
+- [antd](examples/antd)<br/>和antd组件库一起使用
+- [build-library](examples/build-library)<br/>输出一个工具类库
+- [common-chunks](examples/common-chunks)<br/>将共用代码打包成common包
+- [decorator](examples/decorator)<br/>配合装饰器一起编程
+- [mock-ajax](examples/mock-ajax)<br/>模拟异步请求
+- [mock-page-context-global](examples/mock-page-context-global)<br/>模拟共用的模版数据
+- [mock-page-context-promise](examples/mock-page-context-promise)<br/>模拟从其他服务获取模版数据
 
 ## 约定
 * 网页模版中对静态资源引用时使用绝对路径，如 `<script src='/logo/qunar.png'>`
