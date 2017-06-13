@@ -19,15 +19,14 @@
     "packing": "bin/packing.js",
     "packing-build": "bin/packing-build.js",
     "packing-serve-dist": "bin/packing-serve-dist.js",
-    "packing-serve": "bin/packing-serve.js",
-    "eslint": "./node_modules/.bin/eslint"
+    "packing-serve": "bin/packing-serve.js"
   },
   "author": "zhongzhi <zhong.zhi@163.com>",
   "license": "MIT",
   "scripts": {
     "eslint": "eslint bin config scripts util",
     "test": "echo \"Error: no test specified\"",
-    "release": "standard-version",
+    "release": "standard-version && npm publish",
     "postrelease": "git push && git push origin --tags"
   },
   "dependencies": {
@@ -48,8 +47,7 @@
     "commander": "^2.9.0",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.28.4",
-    "eslint": "^4.0.0",
-    "eslint-config-qunar": "^1.1.4",
+    "eslint-config-qunar": "^1.2.0",
     "eslint-loader": "^1.7.1",
     "eslint-plugin-import": "^2.3.0",
     "extract-text-webpack-plugin": "^2.1.2",
@@ -68,6 +66,7 @@
     "webpack": "^2.6.1"
   },
   "devDependencies": {
+    "eslint": "^3.19.0",
     "lodash": "^4.17.4",
     "shelljs": "^0.7.6"
   },
