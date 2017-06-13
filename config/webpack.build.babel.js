@@ -77,7 +77,7 @@ const webpackConfig = () => {
         loader: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [
-            { loader: 'css-loader', query: { importLoaders: 2, minimize: true } },
+            { loader: 'css-loader', options: { importLoaders: 2, minimize: true } },
             { loader: 'postcss-loader' },
           ],
         }),
@@ -87,7 +87,7 @@ const webpackConfig = () => {
         loader: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [
-            { loader: 'css-loader', query: { importLoaders: 2, minimize: true } },
+            { loader: 'css-loader', options: { importLoaders: 2, minimize: true } },
             { loader: 'postcss-loader' },
             { loader: 'sass-loader' },
           ],
@@ -98,7 +98,7 @@ const webpackConfig = () => {
         loader: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [
-            { loader: 'css-loader', query: { importLoaders: 2, minimize: true } },
+            { loader: 'css-loader', options: { importLoaders: 2, minimize: true } },
             { loader: 'postcss-loader' },
             { loader: 'less-loader' },
           ],
@@ -107,7 +107,7 @@ const webpackConfig = () => {
       {
         test: new RegExp(`.(${assetExtensions.join('|')})$`, 'i'),
         loader: 'url-loader',
-        query: {
+        options: {
           name: `[path][name]-[hash:${fileHashLength}].[ext]`,
           context: assets,
           limit: 100,

@@ -94,7 +94,7 @@ const webpackConfig = (program) => {
         test: /\.css$/i,
         use: [
           { loader: 'style-loader' },
-          { loader: 'css-loader', query: { importLoaders: 2 } },
+          { loader: 'css-loader', options: { importLoaders: 2 } },
           { loader: 'postcss-loader' },
         ],
       },
@@ -102,8 +102,8 @@ const webpackConfig = (program) => {
         test: /\.(scss|sass)$/i,
         use: [
           { loader: 'style-loader' },
-          { loader: 'css-loader', query: { importLoaders: 2 } },
-          { loader: 'postcss-loader' },
+          { loader: 'css-loader', options: { importLoaders: 2 } },
+          { loader: 'postcss-loader', options: { parser: 'sugarss' } },
           { loader: 'sass-loader' },
         ],
       },
@@ -111,7 +111,7 @@ const webpackConfig = (program) => {
         test: /\.less$/i,
         use: [
           { loader: 'style-loader' },
-          { loader: 'css-loader', query: { importLoaders: 2 } },
+          { loader: 'css-loader', options: { importLoaders: 2 } },
           { loader: 'postcss-loader' },
           { loader: 'less-loader' },
         ],
@@ -119,7 +119,7 @@ const webpackConfig = (program) => {
       {
         test: new RegExp(`.(${assetExtensions.join('|')})$`, 'i'),
         loader: 'file-loader',
-        query: {
+        options: {
           name: '[path][name].[ext]',
           context: assets,
           emitFile: false,
