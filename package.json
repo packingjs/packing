@@ -47,7 +47,7 @@
     "commander": "^2.9.0",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.28.4",
-    "eslint-config-qunar": "^1.2.0",
+    "eslint-config-qunar": "1.1.4",
     "eslint-loader": "^1.7.1",
     "eslint-plugin-import": "^2.3.0",
     "extract-text-webpack-plugin": "^2.1.2",

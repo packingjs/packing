@@ -31,11 +31,11 @@ const {
   },
 } = pRequire('config/packing');
 
- /**
-  * 给所有入口js加上HRM的clientjs
-  * @param {string|array|object} entry 页面入口列表
-  * @return {array}
-  */
+/**
+ * 给所有入口js加上HRM的clientjs
+ * @param {string|array|object} entry 页面入口列表
+ * @return {array}
+ */
 const pushClientJS = (entry) => {
   const clientJS = 'webpack-hot-middleware/client';
   let newEntry = entry;
