@@ -103,7 +103,7 @@ const webpackConfig = (program) => {
         use: [
           { loader: 'style-loader' },
           { loader: 'css-loader', options: { importLoaders: 2 } },
-          { loader: 'postcss-loader', options: { parser: 'sugarss' } },
+          { loader: 'postcss-loader' },
           { loader: 'sass-loader' },
         ],
       },
@@ -164,7 +164,7 @@ const webpackConfig = (program) => {
     new DashboardPlugin(),
   );
 
-   // 从配置文件中获取dll
+  // 从配置文件中获取dll
   if (packing.commonChunks) {
     Object.keys(packing.commonChunks).forEach((key) => {
       plugins.push(
