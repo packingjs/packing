@@ -8,7 +8,7 @@ import path from 'path';
 import webpack from 'webpack';
 import CleanPlugin from 'clean-webpack-plugin';
 import autoprefixer from 'autoprefixer';
-import pRequire from '../util/require';
+import pRequire from '../../util/require';
 
 const {
   assetExtensions,

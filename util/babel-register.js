@@ -7,7 +7,6 @@ const presets = babelrc.presets.filter(function (item) {
 });
 
 require('babel-register')({
-  only: /\/(node_modules\/packing|profiles|mock|config)\//,
   presets: presets,
   plugins: babelrc.plugins,
 });

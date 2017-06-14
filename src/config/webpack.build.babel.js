@@ -12,7 +12,7 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import ReplaceHashWebpackPlugin from 'replace-hash-webpack-plugin';
 import ProfilesPlugin from 'packing-profile-webpack-plugin';
 import autoprefixer from 'autoprefixer';
-import pRequire from '../util/require';
+import pRequire from '../../util/require';
 
 // js输出文件保持目录名称
 const JS_DIRECTORY_NAME = 'js';
