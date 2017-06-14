@@ -2,7 +2,7 @@
 
 支持 yarn 是 v2 的一个重要功能。
 
-由于 yarn 对多级依赖 node_modules 中 `bin` 文件的处理和 npm 存在差异，所以在 v2 版本中将以下几个依赖包从 packing 中移除了
+由于 yarn 对多级依赖 node_modules 中 `bin` 文件的处理和 npm 存在差异 [#1210](https://github.com/yarnpkg/yarn/pull/1210)，所以在 v2 版本中将以下几个依赖包从 packing 中移除了
 
 - eslint
 - better-npm-run
