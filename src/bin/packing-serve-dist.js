@@ -5,9 +5,9 @@
  * @author Joe Zhong <zhong.zhi@163.com>
  * @module tools/serve
  */
-require('packing/util/babel-register');
+require('../util/babel-register');
 
-const pRequire = require('packing/util/require');
+const pRequire = require('../util/require');
 const path = require('path');
 const Express = require('express');
 const urlrewrite = require('packing-urlrewrite');

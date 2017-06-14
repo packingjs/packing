@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-require('packing/util/babel-register');
+require('../util/babel-register');
 
 const program = require('commander');
 const path = require('path');
@@ -9,11 +9,11 @@ const webpack = require('webpack');
 const urlrewrite = require('packing-urlrewrite');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
-const pRequire = require('packing/util/require');
+const pRequire = require('../util/require');
 const fs = require('fs');
 const crypto = require('crypto');
 const mkdirp = require('mkdirp');
-const packingPackage = require('packing/package.json');
+const packingPackage = require('../../package.json');
 
 const projectPackage = require(path.resolve('./package.json'));
 

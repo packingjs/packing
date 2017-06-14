@@ -1,33 +1,29 @@
 {
   "name": "packing",
   "description": "Webpack based web front-end development environment",
-  "version": "2.2.7",
+  "version": "2.2.8",
   "repository": "packingjs/packing",
   "files": [
-    ".eslintrc",
-    ".babelrc",
-    "bin/",
-    "dist/",
-    "util/"
+    "dist"
   ],
   "keywords": [
     "packing",
     "webpack"
   ],
   "bin": {
-    "packing": "bin/packing.js",
-    "packing-build": "bin/packing-build.js",
-    "packing-serve-dist": "bin/packing-serve-dist.js",
-    "packing-serve": "bin/packing-serve.js"
+    "packing": "dist/bin/packing.js",
+    "packing-build": "dist/bin/packing-build.js",
+    "packing-serve-dist": "dist/bin/packing-serve-dist.js",
+    "packing-serve": "dist/bin/packing-serve.js"
   },
   "author": "zhongzhi <zhong.zhi@163.com>",
   "license": "MIT",
   "scripts": {
-    "eslint": "eslint bin config scripts util",
-    "test": "echo \"Error: no test specified\"",
-    "release": "standard-version && npm publish",
+    "build": "babel src -d dist",
+    "eslint": "eslint src",
     "postrelease": "git push && git push origin --tags",
-    "prepublish": "babel src -d dist"
+    "prepublish": "npm run build",
+    "release": "standard-version && npm publish"
   },
   "dependencies": {
     "autoprefixer": "^6.7.3",

@@ -8,7 +8,7 @@ module.exports = function (file, program) {
     configFile += '.js';
   }
   const pathInProject = path.resolve(configFile);
-  const pathInLib = path.resolve(__dirname, '../dist', configFile);
+  const pathInLib = path.resolve(__dirname, '..', configFile);
   let defaultConfig = require(pathInLib);
   if (isFunction(defaultConfig)) {
     defaultConfig = defaultConfig(program);

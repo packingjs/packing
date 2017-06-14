@@ -13,7 +13,7 @@ import DashboardPlugin from 'webpack-dashboard/plugin';
 import OpenBrowserPlugin from 'open-browser-webpack-plugin';
 import ProfilesPlugin from 'packing-profile-webpack-plugin';
 import autoprefixer from 'autoprefixer';
-import pRequire from '../../util/require';
+import pRequire from '../util/require';
 
 const packing = pRequire('config/packing');
 const { cdnRoot } = pRequire(`src/profiles/${process.env.NODE_ENV}`);

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const program = require('commander');
-const pkg = require('../package.json');
+const pkg = require('../../package.json');
 
 console.log('Versions:');
 console.log(` user-agent: ${process.env.npm_config_user_agent}`);
