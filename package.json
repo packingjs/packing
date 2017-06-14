@@ -1,7 +1,7 @@
 {
   "name": "packing",
   "description": "Webpack based web front-end development environment",
-  "version": "2.2.6",
+  "version": "2.2.7",
   "repository": "packingjs/packing",
   "files": [
     ".eslintrc",
