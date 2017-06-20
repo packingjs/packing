@@ -27,8 +27,8 @@ const {
     assets,
     assetsDist,
     dll,
-    entries,
-  },
+    entries
+  }
 } = pRequire('config/packing');
 
 /**
@@ -73,7 +73,7 @@ const webpackConfig = (program) => {
     // prd环境静态文件输出地址
     path: assetsPath,
     // dev环境下数据流访问地址
-    publicPath: '/',
+    publicPath: '/'
   };
 
   const moduleConfig = {
@@ -83,20 +83,20 @@ const webpackConfig = (program) => {
         exclude: /node_modules/,
         use: [
           {
-            loader: 'babel-loader',
+            loader: 'babel-loader'
           },
           {
-            loader: 'eslint-loader',
-          },
-        ],
+            loader: 'eslint-loader'
+          }
+        ]
       },
       {
         test: /\.css$/i,
         use: [
           { loader: 'style-loader' },
           { loader: 'css-loader', options: { importLoaders: 2 } },
-          { loader: 'postcss-loader' },
-        ],
+          { loader: 'postcss-loader' }
+        ]
       },
       {
         test: /\.(scss|sass)$/i,
@@ -104,8 +104,8 @@ const webpackConfig = (program) => {
           { loader: 'style-loader' },
           { loader: 'css-loader', options: { importLoaders: 2 } },
           { loader: 'postcss-loader' },
-          { loader: 'sass-loader' },
-        ],
+          { loader: 'sass-loader' }
+        ]
       },
       {
         test: /\.less$/i,
@@ -113,8 +113,8 @@ const webpackConfig = (program) => {
           { loader: 'style-loader' },
           { loader: 'css-loader', options: { importLoaders: 2 } },
           { loader: 'postcss-loader' },
-          { loader: 'less-loader' },
-        ],
+          { loader: 'less-loader' }
+        ]
       },
       {
         test: new RegExp(`.(${assetExtensions.join('|')})$`, 'i'),
@@ -122,23 +122,23 @@ const webpackConfig = (program) => {
         options: {
           name: '[path][name].[ext]',
           context: assets,
-          emitFile: false,
-        },
-      },
-    ],
+          emitFile: false
+        }
+      }
+    ]
   };
 
   const resolve = {
-    modules: [src, assets, 'node_modules'],
+    modules: [src, assets, 'node_modules']
   };
 
   const plugins = [
     new webpack.LoaderOptionsPlugin({
       options: {
-        postcss: [autoprefixer],
-      },
+        postcss: [autoprefixer]
+      }
     }),
-    new ProfilesPlugin(),
+    new ProfilesPlugin()
   ];
 
   if (hot) {
@@ -158,8 +158,8 @@ const webpackConfig = (program) => {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-        CDN_ROOT: JSON.stringify(cdnRoot),
-      },
+        CDN_ROOT: JSON.stringify(cdnRoot)
+      }
     }),
     new DashboardPlugin(),
   );
@@ -187,7 +187,7 @@ const webpackConfig = (program) => {
     resolve,
     plugins,
     devtool,
-    performance,
+    performance
   };
 };
 

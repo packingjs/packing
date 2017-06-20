@@ -1,15 +1,3 @@
 module.exports = {
-  "extends": "eslint-config-airbnb-base",
-
-  "rules": {
-    "func-names": 0,
-    "global-require": 0,
-    "import/no-dynamic-require": 0,
-    "import/no-extraneous-dependencies": 0,
-    "import/no-unresolved": 0,
-    "no-console": 0,
-    "prefer-template": 0,
-    "prefer-arrow-callback": 0,
-    "object-shorthand": 0
-  }
+  extends: 'eslint-config-qunar/base'
 };

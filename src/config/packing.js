@@ -58,7 +58,7 @@ export default {
         config[key] = path.join(cwd, page);
       });
       return config;
-    },
+    }
   },
 
   // 模版引擎类型，目前支持的类型有[html,pug,ejs,handlebars,smarty,velocity,artTemplate]
@@ -86,7 +86,7 @@ export default {
     // 开发环境端口号
     dev: 8081,
     // 预览编译后结果的端口号
-    dist: 8080,
+    dist: 8080
   },
 
   // commonChunks配置，在serve任务中被DllPlugin调用，在build任务中被CommonsChunkPlugin调用
@@ -98,8 +98,8 @@ export default {
     vendor: [
     //   'react',
     //   'react-dom'
-      'packing-ajax',
-    ],
+      'packing-ajax'
+    ]
   },
 
   // 静态资源类型
@@ -113,7 +113,7 @@ export default {
     'woff',
     'woff2',
     'eot',
-    'svg',
+    'svg'
   ],
 
   // 静态文件md5保留长度
@@ -126,10 +126,10 @@ export default {
     '^/$': '/index.html',
 
     // API转发
-    '^/api/(.*)': 'require!/mock/api/$1.js',
+    '^/api/(.*)': 'require!/mock/api/$1.js'
     // '^/api/(.*)': '/index.jade.html',
     // '^/api/(.*)': 'http://touch.qunar.com/api/hotel/findhotelcity?cityName=%E5%8C%97%E4%BA%AC',
     // '^/hello': 'http://localhost:3001/123/4.html',
-  },
+  }
 
 };

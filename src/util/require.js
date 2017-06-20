@@ -1,20 +1,22 @@
-const path = require('path');
-const existsSync = require('fs').existsSync;
-const isFunction = require('util').isFunction;
+import { resolve, extname } from 'path';
+import { existsSync } from 'fs';
+import { isFunction } from 'util';
 
-module.exports = function (file, program) {
+export default (file, program) => {
   let configFile = file;
-  if (['.js', '.json'].indexOf(path.extname(file)) < 0) {
+  if (['.js', '.json'].indexOf(extname(file)) < 0) {
     configFile += '.js';
   }
-  const pathInProject = path.resolve(configFile);
-  const pathInLib = path.resolve(__dirname, '..', configFile);
+  const pathInProject = resolve(configFile);
+  const pathInLib = resolve(__dirname, '..', configFile);
+  // eslint-disable-next-line
   let defaultConfig = require(pathInLib);
   if (isFunction(defaultConfig)) {
     defaultConfig = defaultConfig(program);
   }
 
   if (existsSync(pathInProject)) {
+    // eslint-disable-next-line
     const projectConfig = require(pathInProject);
     return isFunction(projectConfig) ? projectConfig(defaultConfig, program) : projectConfig;
   }

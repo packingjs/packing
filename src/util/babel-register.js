@@ -1,14 +1,12 @@
-const fs = require('fs');
-const path = require('path');
+import { readFileSync } from 'fs';
+import { resolve } from 'path';
 
-const babelrc = JSON.parse(fs.readFileSync(path.resolve('.babelrc'), 'utf8'));
-const presets = babelrc.presets.filter(function (item) {
-  return item !== 'react';
-});
+const babelrc = JSON.parse(readFileSync(resolve('.babelrc'), 'utf8'));
+const presets = babelrc.presets.filter(item => item !== 'react');
 
 require('babel-register')({
-  presets: presets,
-  plugins: babelrc.plugins,
+  presets,
+  plugins: babelrc.plugins
 });
 
 if (!{}.hasOwnProperty.call(process.env, 'NODE_ENV')) {

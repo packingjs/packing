@@ -34,8 +34,8 @@ const {
     entries,
     assets,
     assetsDist,
-    templatesDist,
-  },
+    templatesDist
+  }
 } = pRequire('config/packing');
 
 /**
@@ -58,7 +58,7 @@ const webpackConfig = () => {
     // prd环境静态文件输出地址
     path: assetsPath,
     // dev环境下数据流访问地址
-    publicPath: cdnRoot,
+    publicPath: cdnRoot
   };
 
   const moduleConfig = {
@@ -68,9 +68,9 @@ const webpackConfig = () => {
         exclude: /node_modules/,
         use: [
           {
-            loader: 'babel-loader',
-          },
-        ],
+            loader: 'babel-loader'
+          }
+        ]
       },
       {
         test: /\.css$/i,
@@ -78,9 +78,9 @@ const webpackConfig = () => {
           fallback: 'style-loader',
           use: [
             { loader: 'css-loader', options: { importLoaders: 2, minimize: true } },
-            { loader: 'postcss-loader' },
-          ],
-        }),
+            { loader: 'postcss-loader' }
+          ]
+        })
       },
       {
         test: /\.(scss|sass)$/i,
@@ -89,9 +89,9 @@ const webpackConfig = () => {
           use: [
             { loader: 'css-loader', options: { importLoaders: 2, minimize: true } },
             { loader: 'postcss-loader' },
-            { loader: 'sass-loader' },
-          ],
-        }),
+            { loader: 'sass-loader' }
+          ]
+        })
       },
       {
         test: /\.less$/i,
@@ -100,9 +100,9 @@ const webpackConfig = () => {
           use: [
             { loader: 'css-loader', options: { importLoaders: 2, minimize: true } },
             { loader: 'postcss-loader' },
-            { loader: 'less-loader' },
-          ],
-        }),
+            { loader: 'less-loader' }
+          ]
+        })
       },
       {
         test: new RegExp(`.(${assetExtensions.join('|')})$`, 'i'),
@@ -110,49 +110,49 @@ const webpackConfig = () => {
         options: {
           name: `[path][name]-[hash:${fileHashLength}].[ext]`,
           context: assets,
-          limit: 100,
-        },
-      },
-    ],
+          limit: 100
+        }
+      }
+    ]
   };
 
   const resolve = {
-    modules: [src, assets, 'node_modules'],
+    modules: [src, assets, 'node_modules']
   };
 
   const plugins = [
     new webpack.LoaderOptionsPlugin({
       options: {
-        postcss: [autoprefixer],
-      },
+        postcss: [autoprefixer]
+      }
     }),
 
     new CleanPlugin([assetsDist, templatesDist], {
-      root: projectRootPath,
+      root: projectRootPath
     }),
 
     // css files from the extract-text-plugin loader
     new ExtractTextPlugin({
       filename: `${CSS_DIRECTORY_NAME}/[name]${contenthash}.css`,
-      allChunks: true,
+      allChunks: true
     }),
 
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-        CDN_ROOT: JSON.stringify(cdnRoot),
-      },
+        CDN_ROOT: JSON.stringify(cdnRoot)
+      }
     }),
 
     new ReplaceHashWebpackPlugin({
       cwd: templates,
       src: `**/*${templateExtension}`,
-      dest: templatesDist,
+      dest: templatesDist
     }),
 
     new ProfilesPlugin({
-      failOnMissing: true,
-    }),
+      failOnMissing: true
+    })
 
   ];
 
@@ -177,10 +177,10 @@ const webpackConfig = () => {
         compress: {
           warnings: false,
           drop_debugger: true,
-          drop_console: true,
+          drop_console: true
         },
         comments: /^!/,
-        sourceMap,
+        sourceMap
       }),
     );
   }
@@ -202,7 +202,7 @@ const webpackConfig = () => {
     output,
     module: moduleConfig,
     resolve,
-    plugins,
+    plugins
   };
 };
 

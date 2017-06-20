@@ -1,21 +1,23 @@
 #!/usr/bin/env node
 
-require('../util/babel-register');
+import { existsSync, writeFileSync, unlinkSync } from 'fs';
+import { resolve, join } from 'path';
+import program from 'commander';
+import webpack from 'webpack';
+/* eslint-disable */
+import Express from 'express';
+import urlrewrite from 'packing-urlrewrite';
+import webpackDevMiddleware from 'webpack-dev-middleware';
+import webpackHotMiddleware from 'webpack-hot-middleware';
+/* eslint-enable */
+import crypto from 'crypto';
+import mkdirp from 'mkdirp';
+import '../util/babel-register';
+import pRequire from '../util/require';
+import packingPackage from '../../package.json';
 
-const program = require('commander');
-const path = require('path');
-const Express = require('express');
-const webpack = require('webpack');
-const urlrewrite = require('packing-urlrewrite');
-const webpackDevMiddleware = require('webpack-dev-middleware');
-const webpackHotMiddleware = require('webpack-hot-middleware');
-const pRequire = require('../util/require');
-const fs = require('fs');
-const crypto = require('crypto');
-const mkdirp = require('mkdirp');
-const packingPackage = require('../../package.json');
-
-const projectPackage = require(path.resolve('./package.json'));
+// eslint-disable-next-line
+const projectPackage = require(resolve('./package.json'));
 
 program
   .option('-c, --clean_cache', 'clean dll cache')
@@ -23,9 +25,21 @@ program
   .parse(process.argv);
 
 const webpackConfigDll = pRequire('config/webpack.dll.babel', program);
-const packing = pRequire('config/packing', program);
-const commonChunks = packing.commonChunks;
-const dll = packing.path.dll;
+const {
+  commonChunks,
+  templateEngine,
+  rewriteRules,
+  path: {
+    dll,
+    src,
+    assets,
+    templatesPages,
+    mockPageInit
+  },
+  port: {
+    dev
+  }
+} = pRequire('config/packing', program);
 
 function md5(string) {
   return crypto.createHash('md5').update(string).digest('hex');
@@ -33,15 +47,10 @@ function md5(string) {
 
 function httpd() {
   const webpackConfig = pRequire('config/webpack.serve.babel', program);
-  const templateEngine = packing.templateEngine;
-  const rewriteRules = packing.rewriteRules;
-  const template = require('packing-template-' + templateEngine);
-  const src = packing.path.src;
-  const assets = packing.path.assets;
-  const templatesPages = packing.path.templatesPages;
-  const mockPageInit = packing.path.mockPageInit;
+  // eslint-disable-next-line
+  const template = require(`packing-template-${templateEngine}`);
   const compiler = webpack(webpackConfig);
-  const port = packing.port.dev;
+  const port = dev;
   const serverOptions = {
     contentBase: src,
     quiet: false,
@@ -51,11 +60,11 @@ function httpd() {
     lazy: false,
     publicPath: webpackConfig.output.publicPath,
     headers: { 'Access-Control-Allow-Origin': '*' },
-    stats: { colors: true },
+    stats: { colors: true }
   };
   const cwd = process.cwd();
-  const assetsPath = path.join(cwd, assets);
-  const dllPath = path.join(cwd, dll);
+  const assetsPath = join(cwd, assets);
+  const dllPath = join(cwd, dll);
 
   const app = new Express();
   app.use(Express.static(assetsPath));
@@ -66,10 +75,10 @@ function httpd() {
   app.use(template({
     templates: templatesPages,
     mockData: mockPageInit,
-    rewriteRules: rewriteRules,
+    rewriteRules
   }));
 
-  app.listen(port, function (err) {
+  app.listen(port, (err) => {
     if (err) {
       console.error(err);
     } else {
@@ -81,15 +90,15 @@ function httpd() {
 
 function execDll(destDir, hashFile, newHash) {
   // 写入newHash
-  webpack(webpackConfigDll, function (err) {
+  webpack(webpackConfigDll, (err) => {
     if (err) {
       console.log(err);
     } else {
-      if (!fs.existsSync(destDir)) {
+      if (!existsSync(destDir)) {
         mkdirp.sync(destDir);
       }
-      fs.writeFileSync(hashFile, JSON.stringify({
-        hash: newHash,
+      writeFileSync(hashFile, JSON.stringify({
+        hash: newHash
       }));
       console.log('💚  DllPlugin executed!');
 
@@ -110,15 +119,15 @@ if (Object.keys(commonChunks).length === 0) {
     projectPackage.devDependencies
   );
   const dllDeps = {};
-  const destDir = path.resolve(process.cwd(), dll);
-  const hashFile = destDir + '/hash.json';
+  const destDir = resolve(process.cwd(), dll);
+  const hashFile = `${destDir}/hash.json`;
 
   if (program.clean_cache) {
-    fs.unlinkSync(hashFile);
+    unlinkSync(hashFile);
   }
 
-  Object.keys(commonChunks).forEach(function (chunkName) {
-    commonChunks[chunkName].forEach(function (d) {
+  Object.keys(commonChunks).forEach((chunkName) => {
+    commonChunks[chunkName].forEach((d) => {
       if (allDependencies[d]) {
         dllDeps[d] = allDependencies[d];
       }
@@ -127,7 +136,7 @@ if (Object.keys(commonChunks).length === 0) {
 
   const newHash = md5(JSON.stringify(dllDeps));
 
-  if (fs.existsSync(hashFile)) {
+  if (existsSync(hashFile)) {
     // eslint-disable-next-line
     const oldHash = require(hashFile).hash;
     console.log('oldHash:%s, newHash:%s', oldHash, newHash);

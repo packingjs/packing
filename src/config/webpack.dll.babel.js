@@ -16,8 +16,8 @@ const {
   path: {
     src,
     assets,
-    dll,
-  },
+    dll
+  }
 } = pRequire('config/packing');
 const cwd = process.cwd();
 
@@ -33,7 +33,7 @@ const webpackConfig = () => {
   const output = {
     path: path.join(cwd, dll),
     filename: '[name].js',
-    library: '[name]_[hash]',
+    library: '[name]_[hash]'
   };
 
   const moduleConfig = {
@@ -43,20 +43,20 @@ const webpackConfig = () => {
         exclude: /node_modules/,
         use: [
           {
-            loader: 'babel-loader',
+            loader: 'babel-loader'
           },
           {
-            loader: 'eslint-loader',
-          },
-        ],
+            loader: 'eslint-loader'
+          }
+        ]
       },
       {
         test: /\.css$/i,
         use: [
           { loader: 'style-loader' },
           { loader: 'css-loader', options: { importLoaders: 2 } },
-          { loader: 'postcss-loader' },
-        ],
+          { loader: 'postcss-loader' }
+        ]
       },
       {
         test: /\.(scss|sass)$/i,
@@ -64,8 +64,8 @@ const webpackConfig = () => {
           { loader: 'style-loader' },
           { loader: 'css-loader', options: { importLoaders: 2 } },
           { loader: 'postcss-loader' },
-          { loader: 'sass-loader' },
-        ],
+          { loader: 'sass-loader' }
+        ]
       },
       {
         test: /\.less$/i,
@@ -73,8 +73,8 @@ const webpackConfig = () => {
           { loader: 'style-loader' },
           { loader: 'css-loader', options: { importLoaders: 2 } },
           { loader: 'postcss-loader' },
-          { loader: 'less-loader' },
-        ],
+          { loader: 'less-loader' }
+        ]
       },
       {
         test: new RegExp(`.(${assetExtensions.join('|')})$`, 'i'),
@@ -82,36 +82,36 @@ const webpackConfig = () => {
         options: {
           name: '[path][name].[ext]',
           context: assets,
-          emitFile: false,
-        },
-      },
-    ],
+          emitFile: false
+        }
+      }
+    ]
   };
 
   const resolve = {
-    modules: [src, assets, 'node_modules'],
+    modules: [src, assets, 'node_modules']
   };
 
   const plugins = [
     new webpack.LoaderOptionsPlugin({
       options: {
-        postcss: [autoprefixer],
-      },
+        postcss: [autoprefixer]
+      }
     }),
     new CleanPlugin([dll], {
-      root: cwd,
+      root: cwd
     }),
 
     new webpack.DllPlugin({
       path: path.join(output.path, '[name]-manifest.json'),
-      name: '[name]_[hash]',
+      name: '[name]_[hash]'
     }),
 
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-      },
-    }),
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+      }
+    })
 
   ];
 
@@ -122,7 +122,7 @@ const webpackConfig = () => {
     module: moduleConfig,
     resolve,
     plugins,
-    devtool,
+    devtool
   };
 };
 

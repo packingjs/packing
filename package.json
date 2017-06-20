@@ -20,7 +20,7 @@
   "license": "MIT",
   "scripts": {
     "build": "babel src -d dist",
-    "eslint": "eslint src",
+    "lint": "eslint --quiet \"src/**/*.js\"",
     "postrelease": "git push && git push origin --tags",
     "prepublish": "npm run build",
     "release": "standard-version && npm publish"
@@ -62,8 +62,10 @@
     "webpack": "^3.0.0"
   },
   "devDependencies": {
+    "express": "^4.14.1",
     "eslint": "^3.19.0",
     "lodash": "^4.17.4",
+    "packing-urlrewrite": "^0.1.7",
     "shelljs": "^0.7.6"
   },
   "engines": {
