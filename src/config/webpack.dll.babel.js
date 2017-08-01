@@ -7,7 +7,6 @@
 import path from 'path';
 import webpack from 'webpack';
 import CleanPlugin from 'clean-webpack-plugin';
-import autoprefixer from 'autoprefixer';
 import pRequire from '../util/require';
 
 const {
@@ -93,11 +92,6 @@ const webpackConfig = () => {
   };
 
   const plugins = [
-    new webpack.LoaderOptionsPlugin({
-      options: {
-        postcss: [autoprefixer],
-      },
-    }),
     new CleanPlugin([dll], {
       root: cwd,
     }),
