@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.2.9"></a>
+## [2.2.9](https://github.com/packingjs/packing/compare/v2.2.7...v2.2.9) (2017-08-03)
+
+
+### Bug Fixes
+
+* fixed the formatError when packing build failed ([5548135](https://github.com/packingjs/packing/commit/5548135))
+* Remove LoaderOptionsPlugin which only exists for migration. As a result, this fixs the problem that the file "postcss.config.js" dose not work. ([b8f37f8](https://github.com/packingjs/packing/commit/b8f37f8))
+
+
+### Performance Improvements
+
+* 优化目录结构，工程层级更加清晰 ([2058ebc](https://github.com/packingjs/packing/commit/2058ebc))
+* 升级到 webpack 3.0 ([540bf74](https://github.com/packingjs/packing/commit/540bf74))
+
+
+
 <a name="2.2.7"></a>
 ## [2.2.7](https://github.com/packingjs/packing/compare/v2.2.5...v2.2.7) (2017-06-14)
 
