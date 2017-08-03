@@ -12,7 +12,6 @@ import DashboardPlugin from 'webpack-dashboard/plugin';
 // eslint-disable-next-line
 import OpenBrowserPlugin from 'open-browser-webpack-plugin';
 import ProfilesPlugin from 'packing-profile-webpack-plugin';
-import autoprefixer from 'autoprefixer';
 import pRequire from '../util/require';
 
 const packing = pRequire('config/packing');
@@ -133,11 +132,6 @@ const webpackConfig = (program) => {
   };
 
   const plugins = [
-    new webpack.LoaderOptionsPlugin({
-      options: {
-        postcss: [autoprefixer]
-      }
-    }),
     new ProfilesPlugin()
   ];
 

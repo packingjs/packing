@@ -11,7 +11,6 @@ import CleanPlugin from 'clean-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import ReplaceHashWebpackPlugin from 'replace-hash-webpack-plugin';
 import ProfilesPlugin from 'packing-profile-webpack-plugin';
-import autoprefixer from 'autoprefixer';
 import pRequire from '../util/require';
 
 // js输出文件保持目录名称
@@ -121,12 +120,6 @@ const webpackConfig = () => {
   };
 
   const plugins = [
-    new webpack.LoaderOptionsPlugin({
-      options: {
-        postcss: [autoprefixer]
-      }
-    }),
-
     new CleanPlugin([assetsDist, templatesDist], {
       root: projectRootPath
     }),
