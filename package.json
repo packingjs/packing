@@ -26,27 +26,26 @@
     "release": "standard-version && npm publish"
   },
   "dependencies": {
-    "autoprefixer": "^6.7.3",
-    "babel-cli": "^6.23.0",
-    "babel-core": "^6.23.1",
-    "babel-eslint": "^7.1.1",
-    "babel-loader": "^6.3.1",
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.25.0",
+    "babel-eslint": "^7.2.3",
+    "babel-loader": "^7.1.1",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
-    "babel-plugin-transform-react-display-name": "^6.23.0",
+    "babel-plugin-transform-react-display-name": "^6.25.0",
     "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-es2015": "^6.22.0",
-    "babel-preset-react": "^6.23.0",
-    "babel-preset-stage-0": "^6.22.0",
-    "chalk": "^1.1.3",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "chalk": "^2.0.1",
     "clean-webpack-plugin": "^0.1.16",
-    "commander": "^2.9.0",
+    "commander": "^2.11.0",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.28.4",
     "eslint-config-qunar": "^1.2.1",
-    "eslint-loader": "^1.7.1",
-    "extract-text-webpack-plugin": "^2.1.2",
-    "file-loader": "^0.11.2",
+    "eslint-loader": "^1.9.0",
+    "extract-text-webpack-plugin": "^3.0.0",
+    "file-loader": "^1.0.0",
     "loader-utils": "^1.1.0",
     "mkdirp": "^0.5.1",
     "move-webpack-plugin": "0.0.1",
@@ -55,21 +54,18 @@
     "packing-glob": "^1.0.1",
     "packing-profile-webpack-plugin": "^2.0.1",
     "packing-rev-webpack-plugin": "^1.0.7",
-    "postcss-loader": "^1.3.3",
-    "replace-hash-webpack-plugin": "^2.3.1",
+    "postcss-loader": "^2.0.6",
+    "replace-hash-webpack-plugin": "^2.4.0",
     "style-loader": "^0.18.2",
-    "url-loader": "^0.5.8",
-    "webpack": "^3.0.0"
+    "url-loader": "^0.5.9",
+    "webpack": "^3.4.1"
   },
   "devDependencies": {
     "express": "^4.14.1",
-    "eslint": "^3.19.0",
-    "lodash": "^4.17.4",
-    "packing-urlrewrite": "^0.1.7",
-    "shelljs": "^0.7.6"
+    "eslint": "^4.3.0"
   },
   "engines": {
-    "node": ">=4.0",
+    "node": ">=5.10",
     "npm": ">=3.0"
   }
 }
