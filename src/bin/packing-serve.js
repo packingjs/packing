@@ -10,7 +10,7 @@ import urlrewrite from 'packing-urlrewrite';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 /* eslint-enable */
-import crypto from 'crypto';
+import { createHash } from 'crypto';
 import mkdirp from 'mkdirp';
 import '../util/babel-register';
 import pRequire from '../util/require';
@@ -42,7 +42,7 @@ const {
 } = pRequire('config/packing', program);
 
 function md5(string) {
-  return crypto.createHash('md5').update(string).digest('hex');
+  return createHash('md5').update(string).digest('hex');
 }
 
 function httpd() {
@@ -82,8 +82,8 @@ function httpd() {
     if (err) {
       console.error(err);
     } else {
-      console.info('==> 🚧  Webpack development server listening on port %s', port);
-      console.log('webpack is building...');
+      console.info('==> 🚧  Listening on port %s\n', port);
+      console.log('webpack: Compiling...');
     }
   });
 }
