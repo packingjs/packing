@@ -5,10 +5,10 @@
  * @param object webpackConfig 默认配置对象
  */
 
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
-
 export default (webpackConfig) => {
   const config = webpackConfig;
-  config.plugins = config.plugins.filter(plugin => !(plugin instanceof ExtractTextPlugin));
+  config.plugins = config.plugins.filter(
+    plugin => plugin.constructor.name !== 'ExtractTextPlugin'
+  );
   return config;
 };
