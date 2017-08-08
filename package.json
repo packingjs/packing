@@ -38,6 +38,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "chalk": "^2.0.1",
+    "cli-spinner": "^0.2.6",
     "clean-webpack-plugin": "^0.1.16",
     "commander": "^2.11.0",
     "copy-webpack-plugin": "^4.0.1",

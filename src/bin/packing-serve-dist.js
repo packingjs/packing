@@ -42,6 +42,6 @@ app.listen(port, (err) => {
   if (err) {
     console.error(err);
   } else {
-    console.info('==> 🚧  Webpack development server listening on port %s', port);
+    console.info('==> 🚧  Listening on port %s', port);
   }
 });

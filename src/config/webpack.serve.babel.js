@@ -7,6 +7,7 @@
 import path from 'path';
 import { isString, isArray, isObject, isFunction } from 'util';
 import webpack from 'webpack';
+// eslint-disable-next-line
 import OpenBrowserPlugin from 'open-browser-webpack-plugin';
 import ProfilesPlugin from 'packing-profile-webpack-plugin';
 import pRequire from '../util/require';

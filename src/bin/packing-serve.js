@@ -9,6 +9,7 @@ import Express from 'express';
 import urlrewrite from 'packing-urlrewrite';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
+import { Spinner } from 'cli-spinner';
 /* eslint-enable */
 import { createHash } from 'crypto';
 import mkdirp from 'mkdirp';
@@ -66,11 +67,20 @@ function httpd() {
   const assetsPath = join(cwd, assets);
   const dllPath = join(cwd, dll);
 
+  const spinner = new Spinner('webpack: Compiling.. %s');
+  spinner.setSpinnerString('|/-\\');
+  spinner.start();
+
+  const webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, serverOptions);
+  webpackDevMiddlewareInstance.waitUntilValid(() => {
+    spinner.stop();
+  });
+
   const app = new Express();
   app.use(Express.static(assetsPath));
   app.use(Express.static(dllPath));
   app.use(urlrewrite(rewriteRules));
-  app.use(webpackDevMiddleware(compiler, serverOptions));
+  app.use(webpackDevMiddlewareInstance);
   app.use(webpackHotMiddleware(compiler));
   app.use(template({
     templates: templatesPages,
@@ -83,7 +93,6 @@ function httpd() {
       console.error(err);
     } else {
       console.info('==> 🚧  Listening on port %s\n', port);
-      console.log('webpack: Compiling...');
     }
   });
 }
