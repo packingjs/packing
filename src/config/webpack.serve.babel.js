@@ -7,9 +7,6 @@
 import path from 'path';
 import { isString, isArray, isObject, isFunction } from 'util';
 import webpack from 'webpack';
-// eslint-disable-next-line
-import DashboardPlugin from 'webpack-dashboard/plugin';
-// eslint-disable-next-line
 import OpenBrowserPlugin from 'open-browser-webpack-plugin';
 import ProfilesPlugin from 'packing-profile-webpack-plugin';
 import pRequire from '../util/require';
@@ -154,8 +151,7 @@ const webpackConfig = (program) => {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
         CDN_ROOT: JSON.stringify(cdnRoot)
       }
-    }),
-    new DashboardPlugin(),
+    })
   );
 
   // 从配置文件中获取dll
