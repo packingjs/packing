@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.2.11"></a>
+## [2.2.11](https://github.com/packingjs/packing/compare/v2.2.10...v2.2.11) (2017-08-08)
+
+
+### Bug Fixes
+
+* Remove DashboardPlugin from webpack.serve.babel.js ([4444d53](https://github.com/packingjs/packing/commit/4444d53))
+
+
+
 <a name="2.2.10"></a>
 ## [2.2.10](https://github.com/packingjs/packing/compare/v2.2.9...v2.2.10) (2017-08-03)
 
