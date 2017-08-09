@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.3.0"></a>
+# [2.3.0](https://github.com/packingjs/packing/compare/v2.2.11...v2.3.0) (2017-08-09)
+
+
+### Features
+
+* 在webpack配置文件中增加了packing.js配置的参数 ([aa49c58](https://github.com/packingjs/packing/commit/aa49c58))
+* 开发环境增加编译loading动画 ([938dc73](https://github.com/packingjs/packing/commit/938dc73))
+
+
+
 <a name="2.2.11"></a>
 ## [2.2.11](https://github.com/packingjs/packing/compare/v2.2.10...v2.2.11) (2017-08-08)
 
