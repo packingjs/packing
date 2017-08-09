@@ -26,6 +26,7 @@ program
   .parse(process.argv);
 
 const webpackConfigDll = pRequire('config/webpack.dll.babel', program);
+const appConfig = pRequire('config/packing');
 const {
   commonChunks,
   templateEngine,
@@ -40,14 +41,14 @@ const {
   port: {
     dev
   }
-} = pRequire('config/packing', program);
+} = appConfig;
 
 function md5(string) {
   return createHash('md5').update(string).digest('hex');
 }
 
 function httpd() {
-  const webpackConfig = pRequire('config/webpack.serve.babel', program);
+  const webpackConfig = pRequire('config/webpack.serve.babel', program, appConfig);
   // eslint-disable-next-line
   const template = require(`packing-template-${templateEngine}`);
   const compiler = webpack(webpackConfig);

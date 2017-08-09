@@ -5,7 +5,8 @@ import webpack from 'webpack';
 import '../util/babel-register';
 import pRequire from '../util/require';
 
-const webpackConfig = pRequire('config/webpack.build.babel', {});
+const appConfig = pRequire('config/packing');
+const webpackConfig = pRequire('config/webpack.build.babel', {}, appConfig);
 
 webpack(webpackConfig, (err, stats) => {
   if (err) {
