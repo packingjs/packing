@@ -9,7 +9,8 @@ console.log(` packing: ${pkg.version}`);
 
 program
   .command('serve', 'start dev web server', { isDefault: true })
-  .command('serve:dist', 'review build output')
+  .command('serve-dist', 'review build output')
+  .alias('serve:dist')
   .command('build', 'build project')
-  .command('lint', 'lint code')
+  .command('lint', 'lint code(**Deprecated**)')
   .parse(process.argv);
