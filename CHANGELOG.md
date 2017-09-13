@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.3.1"></a>
+## [2.3.1](https://github.com/packingjs/packing/compare/v2.3.0...v2.3.1) (2017-09-13)
+
+
+### Bug Fixes
+
+* 增加向下兼容性 ([8dafa6f](https://github.com/packingjs/packing/commit/8dafa6f))
+
+
+
 <a name="2.3.0"></a>
 # [2.3.0](https://github.com/packingjs/packing/compare/v2.2.11...v2.3.0) (2017-08-09)
 
