@@ -27,6 +27,8 @@ const {
   longTermCaching,
   minimize,
   sourceMap,
+  cssModules,
+  cssModulesIdentName,
   path: {
     src,
     templates,
@@ -60,6 +62,18 @@ const webpackConfig = () => {
     publicPath: cdnRoot
   };
 
+  // 开启css-modules时的配置
+  const cssModulesOptions = {};
+  if (cssModules) {
+    let usedCssModulesIdentName = cssModulesIdentName;
+    if (!usedCssModulesIdentName) {
+      usedCssModulesIdentName = '[path][name]__[local]--[hash:base64:5]';
+    }
+    cssModulesOptions.module = true;
+    cssModulesOptions.localIdentName = usedCssModulesIdentName;
+  }
+  const cssLoaderOptions = Object.assign({ importLoaders: 2, minimize: true }, cssModulesOptions);
+
   const moduleConfig = {
     rules: [
       {
@@ -76,7 +90,7 @@ const webpackConfig = () => {
         loader: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [
-            { loader: 'css-loader', options: { importLoaders: 2, minimize: true } },
+            { loader: 'css-loader', options: cssLoaderOptions },
             { loader: 'postcss-loader' }
           ]
         })
@@ -86,7 +100,7 @@ const webpackConfig = () => {
         loader: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [
-            { loader: 'css-loader', options: { importLoaders: 2, minimize: true } },
+            { loader: 'css-loader', options: cssLoaderOptions },
             { loader: 'postcss-loader' },
             { loader: 'sass-loader' }
           ]
@@ -97,7 +111,7 @@ const webpackConfig = () => {
         loader: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [
-            { loader: 'css-loader', options: { importLoaders: 2, minimize: true } },
+            { loader: 'css-loader', options: cssLoaderOptions },
             { loader: 'postcss-loader' },
             { loader: 'less-loader' }
           ]
