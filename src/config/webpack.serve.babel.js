@@ -19,6 +19,8 @@ const {
   localhost,
   port,
   hot,
+  cssModules,
+  cssModulesIdentName = '[path][name]__[local]--[hash:base64:5]',
   path: {
     src,
     assets,
@@ -73,6 +75,10 @@ const webpackConfig = (program) => {
     publicPath: '/'
   };
 
+  // 开启css-modules时的配置
+  const cssModulesOptions = cssModules ? { module: true, localIdentName: cssModulesIdentName } : {};
+  const cssLoaderOptions = Object.assign({ importLoaders: 2 }, cssModulesOptions);
+
   const moduleConfig = {
     rules: [
       {
@@ -91,7 +97,7 @@ const webpackConfig = (program) => {
         test: /\.css$/i,
         use: [
           { loader: 'style-loader' },
-          { loader: 'css-loader', options: { importLoaders: 2 } },
+          { loader: 'css-loader', options: cssLoaderOptions },
           { loader: 'postcss-loader' }
         ]
       },
@@ -99,7 +105,7 @@ const webpackConfig = (program) => {
         test: /\.(scss|sass)$/i,
         use: [
           { loader: 'style-loader' },
-          { loader: 'css-loader', options: { importLoaders: 2 } },
+          { loader: 'css-loader', options: cssLoaderOptions },
           { loader: 'postcss-loader' },
           { loader: 'sass-loader' }
         ]
@@ -108,7 +114,7 @@ const webpackConfig = (program) => {
         test: /\.less$/i,
         use: [
           { loader: 'style-loader' },
-          { loader: 'css-loader', options: { importLoaders: 2 } },
+          { loader: 'css-loader', options: cssLoaderOptions },
           { loader: 'postcss-loader' },
           { loader: 'less-loader' }
         ]

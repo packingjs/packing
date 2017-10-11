@@ -81,6 +81,12 @@ export default {
   // 编译时启用source map
   sourceMap: false,
 
+  // 启用css-loader的css-modules功能
+  cssModules: false,
+
+  // 自定义css-modules类标识命名规则
+  cssModulesIdentName: '[path][name]__[local]--[hash:base64:5]',
+
   // webserver端口
   port: {
     // 开发环境端口号
