@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.4.0"></a>
+# [2.4.0](https://github.com/packingjs/packing/compare/v2.3.1...v2.4.0) (2017-10-11)
+
+
+### Features
+
+* 增加css-modules支持，通过packing.js配置 ([3784300](https://github.com/packingjs/packing/commit/3784300))
+
+
+
 <a name="2.3.1"></a>
 ## [2.3.1](https://github.com/packingjs/packing/compare/v2.3.0...v2.3.1) (2017-09-13)
 
