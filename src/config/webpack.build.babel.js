@@ -28,7 +28,7 @@ const {
   minimize,
   sourceMap,
   cssModules,
-  cssModulesIdentName,
+  cssModulesIdentName = '[path][name]__[local]--[hash:base64:5]',
   path: {
     src,
     templates,
@@ -63,15 +63,7 @@ const webpackConfig = () => {
   };
 
   // 开启css-modules时的配置
-  const cssModulesOptions = {};
-  if (cssModules) {
-    let usedCssModulesIdentName = cssModulesIdentName;
-    if (!usedCssModulesIdentName) {
-      usedCssModulesIdentName = '[path][name]__[local]--[hash:base64:5]';
-    }
-    cssModulesOptions.module = true;
-    cssModulesOptions.localIdentName = usedCssModulesIdentName;
-  }
+  const cssModulesOptions = cssModules ? { module: true, localIdentName: cssModulesIdentName } : {};
   const cssLoaderOptions = Object.assign({ importLoaders: 2, minimize: true }, cssModulesOptions);
 
   const moduleConfig = {
