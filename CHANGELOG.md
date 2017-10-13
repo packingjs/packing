@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.5.0"></a>
+# [2.5.0](https://github.com/packingjs/packing/compare/v2.4.0...v2.5.0) (2017-10-13)
+
+
+### Features
+
+* uncomment specified code blocks in templates after build ([13d1079](https://github.com/packingjs/packing/commit/13d1079))
+
+
+
 <a name="2.4.0"></a>
 # [2.4.0](https://github.com/packingjs/packing/compare/v2.3.1...v2.4.0) (2017-10-11)
 
