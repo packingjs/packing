@@ -47,6 +47,7 @@
     "eslint-config-qunar": "^1.2.1",
     "eslint-loader": "^1.9.0",
     "extract-text-webpack-plugin": "^3.0.0",
+    "webpack-uncomment-block": "^0.0.4",
     "file-loader": "^1.0.0",
     "loader-utils": "^1.1.0",
     "mkdirp": "^0.5.1",
