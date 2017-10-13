@@ -136,6 +136,14 @@ export default {
     // '^/api/(.*)': '/index.jade.html',
     // '^/api/(.*)': 'http://touch.qunar.com/api/hotel/findhotelcity?cityName=%E5%8C%97%E4%BA%AC',
     // '^/hello': 'http://localhost:3001/123/4.html',
-  }
+  },
+
+  // 用于在build中打开模板注释的配置
+  // 可选值
+  // String: 'html', 'js', 'css'；预置对3种代码处理。
+  // RegExp: 使用正则来替换注释代码。
+  // Function: 接受一个字符串参数，该参数为文件内容，返回处理后的字符串。
+  // 参考：https://github.com/LHoin/webpack-uncomment-block
+  uncommentPattern: 'html'
 
 };

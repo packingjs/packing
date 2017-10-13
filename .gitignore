@@ -9,3 +9,4 @@ yarn.lock
 /.tmp
 /prd
 /sh
+*.swp

@@ -9,6 +9,7 @@ import { isFunction } from 'util';
 import webpack from 'webpack';
 import CleanPlugin from 'clean-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import UncommentBlock from 'webpack-uncomment-block';
 import ReplaceHashWebpackPlugin from 'replace-hash-webpack-plugin';
 import ProfilesPlugin from 'packing-profile-webpack-plugin';
 import pRequire from '../util/require';
@@ -29,6 +30,7 @@ const {
   sourceMap,
   cssModules,
   cssModulesIdentName = '[path][name]__[local]--[hash:base64:5]',
+  uncommentPattern,
   path: {
     src,
     templates,
@@ -135,7 +137,7 @@ const webpackConfig = () => {
       filename: `${CSS_DIRECTORY_NAME}/[name]${contenthash}.css`,
       allChunks: true
     }),
-
+  
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
@@ -143,8 +145,15 @@ const webpackConfig = () => {
       }
     }),
 
-    new ReplaceHashWebpackPlugin({
+    new UncommentBlock({
       cwd: templates,
+      src: `**/*${templateExtension}`,
+      dest: templatesDist,
+      pattern: uncommentPattern
+    }),
+
+    new ReplaceHashWebpackPlugin({
+      cwd: templatesDist,
       src: `**/*${templateExtension}`,
       dest: templatesDist
     }),
