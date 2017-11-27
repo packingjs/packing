@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.5.1"></a>
+## [2.5.1](https://github.com/packingjs/packing/compare/v2.5.0...v2.5.1) (2017-11-27)
+
+
+### Bug Fixes
+
+* [#13](https://github.com/packingjs/packing/issues/13) ([eac3367](https://github.com/packingjs/packing/commit/eac3367))
+
+
+
 <a name="2.5.0"></a>
 # [2.5.0](https://github.com/packingjs/packing/compare/v2.4.0...v2.5.0) (2017-10-13)
 
