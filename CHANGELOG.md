@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Bug Fixes
 
-* [#13](https://github.com/packingjs/packing/issues/13) ([eac3367](https://github.com/packingjs/packing/commit/eac3367))
+* [#13](https://github.com/packingjs/packing/issues/13) packing 打包错误之后没有退出，没有被阻断jenkins编译([eac3367](https://github.com/packingjs/packing/commit/eac3367))
 
 
 
