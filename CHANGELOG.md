@@ -9,7 +9,8 @@ All notable changes to this project will be documented in this file. See [standa
 ### Bug Fixes
 
 *  用babel-preset-env代替babel-preset-es2015 [#15](https://github.com/packingjs/packing/issues/15) ([8edb8db](https://github.com/packingjs/packing/commit/8edb8db))
-* [#14](https://github.com/packingjs/packing/issues/14) 页面代码变更也会影响到vendor.js版本号 ([54ae56e](https://github.com/packingjs/packing/commit/54ae56e))
+
+* 修复页面代码（非vendor）变化会影响到vendor.js hash变化 [#14](https://github.com/packingjs/packing/issues/14)  ([54ae56e](https://github.com/packingjs/packing/commit/54ae56e))
 
 
 
