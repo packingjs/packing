@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.5.2"></a>
+## [2.5.2](https://github.com/packingjs/packing/compare/v2.5.1...v2.5.2) (2017-12-06)
+
+
+### Bug Fixes
+
+*  用babel-preset-env代替babel-preset-es2015 [#15](https://github.com/packingjs/packing/issues/15) ([8edb8db](https://github.com/packingjs/packing/commit/8edb8db))
+* [#14](https://github.com/packingjs/packing/issues/14) 页面代码变更也会影响到vendor.js版本号 ([54ae56e](https://github.com/packingjs/packing/commit/54ae56e))
+
+
+
 <a name="2.5.1"></a>
 ## [2.5.1](https://github.com/packingjs/packing/compare/v2.5.0...v2.5.1) (2017-11-27)
 
