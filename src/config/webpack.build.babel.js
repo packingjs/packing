@@ -6,6 +6,7 @@
 
 import path from 'path';
 import { isFunction } from 'util';
+import { yellow } from 'chalk';
 import webpack from 'webpack';
 import CleanPlugin from 'clean-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
@@ -165,15 +166,29 @@ const webpackConfig = () => {
   ];
 
   // 从配置文件中获取并生成webpack打包配置
+  // fix: #14
+  let chunkNames = [];
   if (commonChunks) {
-    const chunkKeys = Object.keys(commonChunks);
-    chunkKeys.forEach((key) => {
+    const manifestChunkName = 'manifest';
+    chunkNames = Object.keys(commonChunks);
+    const lastChunkName = chunkNames[chunkNames.length - 1];
+    // 确保manifest放在最后
+    if (lastChunkName !== manifestChunkName) {
+      chunkNames.push(manifestChunkName);
+    }
+    // 检测chunk配置的有效性
+    const index = chunkNames.indexOf(manifestChunkName);
+    if (index !== chunkNames.length - 1) {
+      // manifest位置不对时，校正配置并给出提示
+      chunkNames.splice(index, 1);
+      console.log(yellow('⚠️  There is a problem with the manifest package configuration. Packing has automatically repaired the error configuration'));
+    }
+    chunkNames.filter(name => name !== manifestChunkName).forEach((key) => {
       entry[key] = commonChunks[key];
     });
-
-    // 扩展阅读 http://webpack.github.io/docs/list-of-plugins.html#commonschunkplugin
-    plugins.push(new webpack.optimize.CommonsChunkPlugin({ names: chunkKeys }));
   }
+  // 扩展阅读 http://webpack.github.io/docs/list-of-plugins.html#commonschunkplugin
+  plugins.push(new webpack.optimize.CommonsChunkPlugin({ names: chunkNames }));
 
   if (minimize) {
     plugins.push(
