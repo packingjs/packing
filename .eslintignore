@@ -5,3 +5,4 @@
 /prd/**
 /generator-packing
 /node_modules/**
+/dist

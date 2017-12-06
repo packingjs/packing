@@ -137,7 +137,7 @@ const webpackConfig = () => {
       filename: `${CSS_DIRECTORY_NAME}/[name]${contenthash}.css`,
       allChunks: true
     }),
-  
+
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
@@ -172,9 +172,7 @@ const webpackConfig = () => {
     });
 
     // 扩展阅读 http://webpack.github.io/docs/list-of-plugins.html#commonschunkplugin
-    plugins.push(
-      new webpack.optimize.CommonsChunkPlugin({ names: chunkKeys }),
-    );
+    plugins.push(new webpack.optimize.CommonsChunkPlugin({ names: chunkKeys }));
   }
 
   if (minimize) {

@@ -1,12 +1,9 @@
 {
   "presets": [
-    "es2015",
-    "stage-0"
-  ],
-
-  "plugins": [
-    "transform-runtime",
-    "add-module-exports",
-    "transform-decorators-legacy"
+    ["env", {
+      "targets": {
+        "node": "4.0"
+      }
+    }]
   ]
 }

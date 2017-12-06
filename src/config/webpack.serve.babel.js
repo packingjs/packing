@@ -62,7 +62,6 @@ const webpackConfig = (program) => {
   const dllPath = path.resolve(projectRootPath, dll);
   const context = projectRootPath;
   const devtool = 'eval';
-  // eslint-disable-next-line
 
   let entry = isFunction(entries) ? entries() : entries;
 
@@ -141,36 +140,28 @@ const webpackConfig = (program) => {
 
   if (hot) {
     entry = pushClientJS(entry);
-    plugins.push(
-      new webpack.HotModuleReplacementPlugin(),
-    );
+    plugins.push(new webpack.HotModuleReplacementPlugin());
   }
 
   if (program.open_browser) {
-    plugins.push(
-      new OpenBrowserPlugin({ url: `http://${localhost}:${port.dev}` }),
-    );
+    plugins.push(new OpenBrowserPlugin({ url: `http://${localhost}:${port.dev}` }));
   }
 
-  plugins.push(
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-        CDN_ROOT: JSON.stringify(cdnRoot)
-      }
-    })
-  );
+  plugins.push(new webpack.DefinePlugin({
+    'process.env': {
+      NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+      CDN_ROOT: JSON.stringify(cdnRoot)
+    }
+  }));
 
   // 从配置文件中获取dll
   if (packing.commonChunks) {
     Object.keys(packing.commonChunks).forEach((key) => {
-      plugins.push(
-        new webpack.DllReferencePlugin({
-          context,
-          // eslint-disable-next-line
-          manifest: require(path.join(dllPath, `${key}-manifest.json`))
-        }),
-      );
+      plugins.push(new webpack.DllReferencePlugin({
+        context,
+        // eslint-disable-next-line
+        manifest: require(path.join(dllPath, `${key}-manifest.json`))
+      }));
     });
   }
 
