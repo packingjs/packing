@@ -41,6 +41,7 @@ graphiqlEndpoint: '/graphiql'
     ```
 
 5. 通常我们需要对字段返回结果有一定的格式要求，这时可以通过自定义 resolver 函数来解决。在 `mock` 目录创建 `resolver.js`，在这里定义每一个字段的返回，不定义的字段还会使用默认值。
+
     ```js
     export default {
       User: () => ({
@@ -48,7 +49,8 @@ graphiqlEndpoint: '/graphiql'
       })
     };
     ```
-如果需要返回动态数据，可以通过使用一些数据模拟的库，如 [casual](https://github.com/boo1ean/casual)，或者自己编程实现。
+
+    如果需要返回动态数据，可以通过使用一些数据模拟的库，如 [casual](https://github.com/boo1ean/casual)，或者自己编程实现。
 
     ```js
     import { name } from 'casual';
