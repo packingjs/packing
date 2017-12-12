@@ -51,7 +51,6 @@ graphiqlEndpoint: '/graphiql'
 如果需要返回动态数据，可以通过使用一些数据模拟的库，如 [casual](https://github.com/boo1ean/casual)，或者自己编程实现。
     ```
     import { name } from 'casual';
-
     export default {
       User: (_, { id }) => {
         return {
