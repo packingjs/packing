@@ -1,5 +1,5 @@
 {
-  "name": "packing-test",
+  "name": "mock-graphql",
   "scripts": {
     "start": "packing serve",
     "build": "packing build"
