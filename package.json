@@ -60,7 +60,13 @@
     "webpack-uncomment-block": "^0.0.4"
   },
   "devDependencies": {
+    "apollo-server-express": "^1.2.0",
+    "body-parser": "^1.18.2",
+    "casual": "^1.5.17",
     "express": "^4.14.1",
+    "graphql": "^0.11.7",
+    "graphql-tools": "^2.12.0",
+    "merge-graphql-schemas": "^1.4.0",
     "open-browser-webpack-plugin": "^0.0.5",
     "packing-template-html": "^1.1.2",
     "packing-urlrewrite": "^0.1.7",

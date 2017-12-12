@@ -1,12 +1,13 @@
 .idea
-node_modules/
+.tmp/
 dist/
+node_modules/
+prd/
 npm-debug.log
+examples/**/package-lock.json
 stats.json
 yarn.lock
 /.gitlab
 /.github
-/.tmp
-/prd
 /sh
 *.swp

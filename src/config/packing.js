@@ -144,6 +144,15 @@ export default {
   // RegExp: 使用正则来替换注释代码。
   // Function: 接受一个字符串参数，该参数为文件内容，返回处理后的字符串。
   // 参考：https://github.com/LHoin/webpack-uncomment-block
-  uncommentPattern: 'html'
+  uncommentPattern: 'html',
+
+  // 是否使用GraphQL-mock-server
+  graphqlMockServer: false,
+
+  // GraphQL 地址
+  graphqlEndpoint: '/graphql',
+
+  // GraphiQL 地址
+  graphiqlEndpoint: '/graphiql'
 
 };
