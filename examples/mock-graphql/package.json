@@ -11,6 +11,6 @@
     "graphql": "^0.11.7",
     "graphql-tools": "^2.12.0",
     "merge-graphql-schemas": "^1.4.0",
-    "packing": "^2.5.1-beta.0"
+    "packing": "^2.6.0"
   }
 }
