@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.6.0"></a>
+# [2.6.0](https://github.com/packingjs/packing/compare/v2.5.2...v2.6.0) (2017-12-12)
+
+
+### Features
+
+* 支持模拟 GraphQL 接口数据 ([b307a5f](https://github.com/packingjs/packing/commit/b307a5f))
+
+
+
 <a name="2.5.2"></a>
 ## [2.5.2](https://github.com/packingjs/packing/compare/v2.5.1...v2.5.2) (2017-12-06)
 
