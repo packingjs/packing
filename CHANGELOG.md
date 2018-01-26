@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.6.2"></a>
+## [2.6.2](https://github.com/packingjs/packing/compare/v2.6.1...v2.6.2) (2018-01-26)
+
+
+### Bug Fixes
+
+* 当loader的options.name包含[path]时，hash替换有问题 ([3666cda](https://github.com/packingjs/packing/commit/3666cda))
+
+
+
 <a name="2.6.1"></a>
 ## [2.6.1](https://github.com/packingjs/packing/compare/v2.6.0...v2.6.1) (2018-01-26)
 
