@@ -12,7 +12,6 @@ import OpenBrowserPlugin from 'open-browser-webpack-plugin';
 import ProfilesPlugin from 'packing-profile-webpack-plugin';
 import pRequire from '../util/require';
 
-const packing = pRequire('config/packing');
 const { cdnRoot } = pRequire(`src/profiles/${process.env.NODE_ENV}`);
 const {
   assetExtensions,
@@ -21,6 +20,7 @@ const {
   hot,
   cssModules,
   cssModulesIdentName = '[path][name]__[local]--[hash:base64:5]',
+  commonChunks,
   path: {
     src,
     assets,
@@ -155,8 +155,8 @@ const webpackConfig = (program) => {
   }));
 
   // 从配置文件中获取dll
-  if (packing.commonChunks) {
-    Object.keys(packing.commonChunks).forEach((key) => {
+  if (commonChunks && Object.keys(commonChunks).length > 0) {
+    Object.keys(commonChunks).forEach((key) => {
       plugins.push(new webpack.DllReferencePlugin({
         context,
         // eslint-disable-next-line

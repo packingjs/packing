@@ -168,7 +168,7 @@ const webpackConfig = () => {
   // 从配置文件中获取并生成webpack打包配置
   // fix: #14
   let chunkNames = [];
-  if (commonChunks) {
+  if (commonChunks && Object.keys(commonChunks).length > 0) {
     const manifestChunkName = 'manifest';
     chunkNames = Object.keys(commonChunks);
     const lastChunkName = chunkNames[chunkNames.length - 1];
