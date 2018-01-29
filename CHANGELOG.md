@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.6.3"></a>
+## [2.6.3](https://github.com/packingjs/packing/compare/v2.6.2...v2.6.3) (2018-01-29)
+
+
+### Bug Fixes
+
+* 当packing.commonChunks为空时，不应该输出manifest.js ([6c20f4c](https://github.com/packingjs/packing/commit/6c20f4c))
+
+
+
 <a name="2.6.2"></a>
 ## [2.6.2](https://github.com/packingjs/packing/compare/v2.6.1...v2.6.2) (2018-01-26)
 
