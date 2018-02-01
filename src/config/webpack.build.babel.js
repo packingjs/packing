@@ -67,7 +67,10 @@ const webpackConfig = () => {
 
   // 开启css-modules时的配置
   const cssModulesOptions = cssModules ? { module: true, localIdentName: cssModulesIdentName } : {};
-  const cssLoaderOptions = Object.assign({ importLoaders: 2, minimize: true }, cssModulesOptions);
+  const cssLoaderOptions = Object.assign({
+    importLoaders: 2,
+    minimize: { minifyFontValues: false }
+  }, cssModulesOptions);
 
   const moduleConfig = {
     rules: [
