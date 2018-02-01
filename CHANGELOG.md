@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.6.4"></a>
+## [2.6.4](https://github.com/packingjs/packing/compare/v2.6.3...v2.6.4) (2018-02-01)
+
+
+### Bug Fixes
+
+* 关闭 cssnano minifyFontValues 功能 ([14c0738](https://github.com/packingjs/packing/commit/14c0738))
+
+
+
 <a name="2.6.3"></a>
 ## [2.6.3](https://github.com/packingjs/packing/compare/v2.6.2...v2.6.3) (2018-01-29)
 
