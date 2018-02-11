@@ -75,6 +75,12 @@ export default {
   // 编译时做文件 md5
   longTermCaching: true,
 
+  // 文件名与 md5 连接使用的字符串
+  longTermCachingSymbol: '_',
+
+  // 静态文件md5保留长度
+  fileHashLength: 8,
+
   // 编译时做代码压缩
   minimize: true,
 
@@ -121,9 +127,6 @@ export default {
     'eot',
     'svg'
   ],
-
-  // 静态文件md5保留长度
-  fileHashLength: 8,
 
   // URL转发路由规则配置
   // require! 表示使用本地mock文件

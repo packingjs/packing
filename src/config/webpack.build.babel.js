@@ -20,13 +20,16 @@ const JS_DIRECTORY_NAME = 'js';
 // js输出文件保持目录名称
 const CSS_DIRECTORY_NAME = 'css';
 
-const { cdnRoot } = pRequire(`src/profiles/${process.env.NODE_ENV}`);
+const { NODE_ENV } = process.env;
+
+const { cdnRoot } = pRequire(`src/profiles/${NODE_ENV}`);
 const {
   assetExtensions,
   commonChunks,
-  fileHashLength,
   templateExtension,
   longTermCaching,
+  longTermCachingSymbol,
+  fileHashLength,
   minimize,
   sourceMap,
   cssModules,
@@ -42,6 +45,15 @@ const {
   }
 } = pRequire('config/packing');
 
+const getHashPattern = (type) => {
+  let hashPattern = '';
+
+  if (longTermCaching) {
+    hashPattern = `${longTermCachingSymbol}[${type}:${fileHashLength}]`;
+  }
+  return hashPattern;
+};
+
 /**
  * 生成webpack配置文件
  * @param {object} program 程序进程，可以获取启动参数
@@ -51,8 +63,8 @@ const {
 const webpackConfig = () => {
   const projectRootPath = process.cwd();
   const assetsPath = path.resolve(projectRootPath, assetsDist);
-  const chunkhash = longTermCaching ? `-[chunkhash:${fileHashLength}]` : '';
-  const contenthash = longTermCaching ? `-[contenthash:${fileHashLength}]` : '';
+  const chunkhash = getHashPattern('chunkhash');
+  const contenthash = getHashPattern('contenthash');
   const context = projectRootPath;
   const entry = isFunction(entries) ? entries() : entries;
 
@@ -119,7 +131,7 @@ const webpackConfig = () => {
         test: new RegExp(`.(${assetExtensions.join('|')})$`, 'i'),
         loader: 'url-loader',
         options: {
-          name: `[path][name]-[hash:${fileHashLength}].[ext]`,
+          name: `[path][name]${getHashPattern('hash')}.[ext]`,
           context: assets,
           limit: 100
         }
@@ -144,7 +156,7 @@ const webpackConfig = () => {
 
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+        NODE_ENV: JSON.stringify(NODE_ENV),
         CDN_ROOT: JSON.stringify(cdnRoot)
       }
     }),
@@ -208,17 +220,6 @@ const webpackConfig = () => {
       }),
     );
   }
-
-  // 在编译机上编译需要调整目录结构
-  // 把编译后的模版目录移动到根目录
-  // if (process.env.NODE_ENV !== '') {
-  //   plugins.push(
-  //     new MoveWebpackPlugin({
-  //       src: templatesDist,
-  //       dest: ''
-  //     }, 'done')
-  //   );
-  // }
 
   return {
     context,
