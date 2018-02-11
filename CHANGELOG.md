@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.6.5"></a>
+## [2.6.5](https://github.com/packingjs/packing/compare/v2.6.4...v2.6.5) (2018-02-11)
+
+
+### Bug Fixes
+
+* [#16](https://github.com/packingjs/packing/issues/16) 增加longTermCachingSymbol参数，让编译产物名称具有更多灵活性 ([f3e2440](https://github.com/packingjs/packing/commit/f3e2440))
+
+
+
 <a name="2.6.4"></a>
 ## [2.6.4](https://github.com/packingjs/packing/compare/v2.6.3...v2.6.4) (2018-02-01)
 
