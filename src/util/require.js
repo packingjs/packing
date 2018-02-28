@@ -1,17 +1,23 @@
 /* eslint import/no-dynamic-require: 0 */
 /* eslint global-require: 0 */
 
-import { resolve, extname } from 'path';
+import { resolve, extname, join } from 'path';
 import { existsSync } from 'fs';
 import { isFunction } from 'util';
 
 export default (file, program, appConfig) => {
+  const { CONTEXT } = process.env;
+
   let configFile = file;
   if (['.js', '.json'].indexOf(extname(file)) < 0) {
     configFile += '.js';
   }
-  const pathInProject = resolve(configFile);
+  // 为了测试方便，增加 `process.env.CONTEXT`
+  const pathInProject = resolve(CONTEXT ? join(CONTEXT, configFile) : configFile);
   const pathInLib = resolve(__dirname, '..', configFile);
+  // console.log('==pathInProject:', pathInProject);
+  // console.log('==pathInLib:', pathInLib);
+
   let defaultConfig = require(pathInLib);
   defaultConfig = defaultConfig.default || defaultConfig;
   if (isFunction(defaultConfig)) {

@@ -10,4 +10,5 @@ yarn.lock
 /.gitlab
 /.github
 /sh
+/test/src
 *.swp

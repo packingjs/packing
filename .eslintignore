@@ -3,6 +3,6 @@
 /mock/**
 /examples/**
 /prd/**
-/generator-packing
 /node_modules/**
 /dist
+/test/src

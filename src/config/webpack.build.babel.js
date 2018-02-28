@@ -10,7 +10,7 @@ import { yellow } from 'chalk';
 import webpack from 'webpack';
 import CleanPlugin from 'clean-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import UncommentBlock from 'webpack-uncomment-block';
+// import UncommentBlock from 'webpack-uncomment-block';
 import ReplaceHashWebpackPlugin from 'replace-hash-webpack-plugin';
 import ProfilesPlugin from 'packing-profile-webpack-plugin';
 import pRequire from '../util/require';
@@ -20,7 +20,7 @@ const JS_DIRECTORY_NAME = 'js';
 // js输出文件保持目录名称
 const CSS_DIRECTORY_NAME = 'css';
 
-const { NODE_ENV } = process.env;
+const { NODE_ENV, CONTEXT } = process.env;
 
 const { cdnRoot } = pRequire(`src/profiles/${NODE_ENV}`);
 const {
@@ -34,10 +34,10 @@ const {
   sourceMap,
   cssModules,
   cssModulesIdentName = '[path][name]__[local]--[hash:base64:5]',
-  uncommentPattern,
+  // uncommentPattern,
   path: {
     src,
-    templates,
+    // templates,
     entries,
     assets,
     assetsDist,
@@ -65,7 +65,7 @@ const webpackConfig = () => {
   const assetsPath = path.resolve(projectRootPath, assetsDist);
   const chunkhash = getHashPattern('chunkhash');
   const contenthash = getHashPattern('contenthash');
-  const context = projectRootPath;
+  const context = CONTEXT ? path.resolve(CONTEXT) : projectRootPath;
   const entry = isFunction(entries) ? entries() : entries;
 
   const output = {
@@ -161,12 +161,12 @@ const webpackConfig = () => {
       }
     }),
 
-    new UncommentBlock({
-      cwd: templates,
-      src: `**/*${templateExtension}`,
-      dest: templatesDist,
-      pattern: uncommentPattern
-    }),
+    // new UncommentBlock({
+    //   cwd: templates,
+    //   src: `**/*${templateExtension}`,
+    //   dest: templatesDist,
+    //   pattern: uncommentPattern
+    // }),
 
     new ReplaceHashWebpackPlugin({
       cwd: templatesDist,

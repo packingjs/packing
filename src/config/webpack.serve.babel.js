@@ -57,10 +57,11 @@ const pushClientJS = (entry) => {
  * @return {object}
  */
 const webpackConfig = (program) => {
+  const { CONTEXT } = process.env;
   const projectRootPath = process.cwd();
   const assetsPath = path.resolve(projectRootPath, assetsDist);
   const dllPath = path.resolve(projectRootPath, dll);
-  const context = projectRootPath;
+  const context = CONTEXT ? path.resolve(CONTEXT) : projectRootPath;
   const devtool = 'eval';
 
   let entry = isFunction(entries) ? entries() : entries;

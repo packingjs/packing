@@ -26,7 +26,8 @@ const cwd = process.cwd();
  * @return {object}
  */
 const webpackConfig = () => {
-  const context = cwd;
+  const { CONTEXT } = process.env;
+  const context = CONTEXT ? path.resolve(CONTEXT) : cwd;
   const devtool = 'eval';
   const entry = commonChunks;
   const output = {
