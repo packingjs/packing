@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.6.6"></a>
+## [2.6.6](https://github.com/packingjs/packing/compare/v2.6.5...v2.6.6) (2018-02-28)
+
+
+### Bug Fixes
+
+* [#18](https://github.com/packingjs/packing/issues/18) 修复在开发环境中，commonChunk中引用的资源文件通过webapck.dll打包后未能生成实体文件，导致开发环境无法正确访问的问题 ([97dd090](https://github.com/packingjs/packing/commit/97dd090))
+
+
+
 <a name="2.6.5"></a>
 ## [2.6.5](https://github.com/packingjs/packing/compare/v2.6.4...v2.6.5) (2018-02-11)
 
