@@ -80,8 +80,7 @@ const webpackConfig = () => {
         loader: 'file-loader',
         options: {
           name: '[path][name].[ext]',
-          context: assets,
-          emitFile: false
+          publicPath: '/'
         }
       }
     ]
