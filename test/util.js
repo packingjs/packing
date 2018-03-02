@@ -1,6 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 
 import { exec as execute } from 'child_process';
+import webpack from 'webpack';
 import path from 'path';
 import fs from 'fs';
 import mkdirp from 'mkdirp';
@@ -15,7 +16,8 @@ export const exec = command => new Promise((resolve, reject) => {
 });
 
 export const createFile = (file, content) => {
-  const fullname = path.resolve(path.join('test/src', file));
+  const parentId = module.parent.id;
+  const fullname = path.resolve(path.dirname(parentId), file);
   const dir = path.dirname(fullname);
 
   // 确保文件目录存在
@@ -49,3 +51,18 @@ export const createWebpackConfig = (file, content) => {
 export const createServeConfig = content => createWebpackConfig('config/webpack.serve.babel.js', content);
 
 export const createBuildConfig = content => createWebpackConfig('config/webpack.build.babel.js', content);
+
+export const execWebpack = config => new Promise((resolve, reject) => {
+  webpack(config, (err, stats) => {
+    if (err) {
+      reject(err);
+    } else {
+      resolve(stats);
+    }
+  });
+});
+
+export const getTestCaseName = () => {
+  const folders = process.env.CONTEXT.split(path.sep);
+  return folders[folders.length - 1];
+};

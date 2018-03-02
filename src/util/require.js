@@ -6,14 +6,14 @@ import { existsSync } from 'fs';
 import { isFunction } from 'util';
 
 export default (file, program, appConfig) => {
-  const { CONTEXT } = process.env;
+  const context = process.env.CONTEXT || global.CONTEXT || process.cwd();
 
   let configFile = file;
   if (['.js', '.json'].indexOf(extname(file)) < 0) {
     configFile += '.js';
   }
   // 为了测试方便，增加 `process.env.CONTEXT`
-  const pathInProject = resolve(CONTEXT ? join(CONTEXT, configFile) : configFile);
+  const pathInProject = resolve(context ? join(context, configFile) : configFile);
   const pathInLib = resolve(__dirname, '..', configFile);
   // console.log('==pathInProject:', pathInProject);
   // console.log('==pathInLib:', pathInLib);

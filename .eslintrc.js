@@ -6,6 +6,7 @@ module.exports = {
     mocha: true
   },
   rules: {
-    complexity: 0
+    complexity: 0,
+    "no-unused-vars": ["error", { "varsIgnorePattern": "should" }]
   }
 };

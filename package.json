@@ -21,11 +21,11 @@
   "license": "MIT",
   "scripts": {
     "build": "rimraf dist && babel src -d dist",
-    "lint": "eslint --quiet \"src/**/*.js\"",
+    "lint": "eslint --fix --quiet \"src/**/*.js\"",
     "postrelease": "git push && git push origin --tags",
     "prepare": "npm run build",
     "release": "standard-version && npm publish",
-    "test": "mocha test/index.js",
+    "test": "mocha test/cases/multiple-html-templates/index.js",
     "cover": "rimraf ./.tmp && mkdirp ./.tmp/.nyc_output && nyc npm test",
     "coveralls": "npm run cover && cat ./.tmp/coverage/lcov.info | coveralls",
     "update": "sh ./scripts/npm-update.sh"
@@ -47,13 +47,12 @@
     "css-loader": "^0.28.9",
     "eslint-config-qunar": "^2.0.0",
     "eslint-loader": "^2.0.0",
-    "extract-text-webpack-plugin": "^3.0.0",
+    "extract-text-webpack-plugin": "^4.0.0-alpha.0",
     "file-loader": "^1.1.6",
-    "html-webpack-plugin": "^2.30.1",
+    "html-webpack-plugin": "^3.0.1",
     "loader-utils": "^1.1.0",
     "mkdirp": "^0.5.1",
     "packing-glob": "^1.0.1",
-    "packing-profile-webpack-plugin": "^2.0.1",
     "postcss-loader": "^2.1.0",
     "replace-hash-webpack-plugin": "^2.4.2",
     "rimraf": "^2.6.2",
@@ -79,8 +78,9 @@
     "redux-devtools-dock-monitor": "^1.1.3",
     "redux-devtools-log-monitor": "^1.2.0",
     "should": "^13.2.1",
-    "webpack-dev-middleware": "^2.0.5",
-    "webpack-hot-middleware": "^2.17.0"
+    "supertest": "^3.0.0",
+    "webpack-dev-middleware": "^3.0.0",
+    "webpack-hot-middleware": "^2.21.1"
   },
   "engines": {
     "node": ">=5.10",

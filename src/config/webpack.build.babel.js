@@ -5,14 +5,12 @@
  */
 
 import path from 'path';
-import { isFunction } from 'util';
+import { isFunction, isObject } from 'util';
 import { yellow } from 'chalk';
 import webpack from 'webpack';
 import CleanPlugin from 'clean-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
-// import UncommentBlock from 'webpack-uncomment-block';
 import ReplaceHashWebpackPlugin from 'replace-hash-webpack-plugin';
-import ProfilesPlugin from 'packing-profile-webpack-plugin';
 import pRequire from '../util/require';
 
 // js输出文件保持目录名称
@@ -21,6 +19,7 @@ const JS_DIRECTORY_NAME = 'js';
 const CSS_DIRECTORY_NAME = 'css';
 
 const { NODE_ENV, CONTEXT } = process.env;
+const context = CONTEXT || process.cwd();
 
 const { cdnRoot } = pRequire(`src/profiles/${NODE_ENV}`);
 const {
@@ -31,13 +30,10 @@ const {
   longTermCachingSymbol,
   fileHashLength,
   minimize,
-  sourceMap,
   cssModules,
   cssModulesIdentName = '[path][name]__[local]--[hash:base64:5]',
-  // uncommentPattern,
   path: {
     src,
-    // templates,
     entries,
     assets,
     assetsDist,
@@ -61,12 +57,10 @@ const getHashPattern = (type) => {
  * @return {object}
  */
 const webpackConfig = () => {
-  const projectRootPath = process.cwd();
-  const assetsPath = path.resolve(projectRootPath, assetsDist);
+  const assetsPath = path.resolve(context, assetsDist);
   const chunkhash = getHashPattern('chunkhash');
   const contenthash = getHashPattern('contenthash');
-  const context = CONTEXT ? path.resolve(CONTEXT) : projectRootPath;
-  const entry = isFunction(entries) ? entries() : entries;
+  let entry = isFunction(entries) ? entries() : entries;
 
   const output = {
     chunkFilename: `${JS_DIRECTORY_NAME}/[name]${chunkhash}.js`,
@@ -145,7 +139,7 @@ const webpackConfig = () => {
 
   const plugins = [
     new CleanPlugin([assetsDist, templatesDist], {
-      root: projectRootPath
+      root: context
     }),
 
     // css files from the extract-text-plugin loader
@@ -156,28 +150,15 @@ const webpackConfig = () => {
 
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify(NODE_ENV),
         CDN_ROOT: JSON.stringify(cdnRoot)
       }
     }),
-
-    // new UncommentBlock({
-    //   cwd: templates,
-    //   src: `**/*${templateExtension}`,
-    //   dest: templatesDist,
-    //   pattern: uncommentPattern
-    // }),
 
     new ReplaceHashWebpackPlugin({
       cwd: templatesDist,
       src: `**/*${templateExtension}`,
       dest: templatesDist
-    }),
-
-    new ProfilesPlugin({
-      failOnMissing: true
     })
-
   ];
 
   // 从配置文件中获取并生成webpack打包配置
@@ -199,32 +180,53 @@ const webpackConfig = () => {
       console.log(yellow('⚠️  There is a problem with the manifest package configuration. Packing has automatically repaired the error configuration'));
     }
     chunkNames.filter(name => name !== manifestChunkName).forEach((key) => {
-      entry[key] = commonChunks[key];
+      if (isObject(entry)) {
+        entry[key] = commonChunks[key];
+      } else {
+        entry = {
+          main: entry,
+          [key]: commonChunks[key]
+        };
+      }
     });
   }
-  // 扩展阅读 http://webpack.github.io/docs/list-of-plugins.html#commonschunkplugin
-  plugins.push(new webpack.optimize.CommonsChunkPlugin({ names: chunkNames }));
+  // // 扩展阅读 http://webpack.github.io/docs/list-of-plugins.html#commonschunkplugin
+  // plugins.push(new webpack.optimize.CommonsChunkPlugin({ names: chunkNames }));
 
-  if (minimize) {
-    plugins.push(
-      // optimizations
-      new webpack.optimize.OccurrenceOrderPlugin(),
-      new webpack.optimize.UglifyJsPlugin({
-        compress: {
-          warnings: false,
-          drop_debugger: true,
-          drop_console: true
-        },
-        comments: /^!/,
-        sourceMap
-      }),
-    );
-  }
+  // if (minimize) {
+  //   plugins.push(
+  //     // optimizations
+  //     new webpack.optimize.OccurrenceOrderPlugin(),
+  //     new webpack.optimize.UglifyJsPlugin({
+  //       compress: {
+  //         warnings: false,
+  //         drop_debugger: true,
+  //         drop_console: true
+  //       },
+  //       comments: /^!/,
+  //       sourceMap
+  //     }),
+  //   );
+  // }
 
   return {
+    mode: NODE_ENV !== 'production' ? 'development' : 'production',
     context,
     entry,
     output,
+    optimization: {
+      splitChunks: {
+        cacheGroups: {
+          vendor: {
+            chunks: 'initial',
+            test: 'vendor',
+            name: 'vendor',
+            enforce: true
+          }
+        }
+      },
+      minimize
+    },
     module: moduleConfig,
     resolve,
     plugins

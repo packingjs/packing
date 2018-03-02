@@ -9,10 +9,10 @@ import { isString, isArray, isObject, isFunction } from 'util';
 import webpack from 'webpack';
 // eslint-disable-next-line
 import OpenBrowserPlugin from 'open-browser-webpack-plugin';
-import ProfilesPlugin from 'packing-profile-webpack-plugin';
 import pRequire from '../util/require';
 
-const { cdnRoot } = pRequire(`src/profiles/${process.env.NODE_ENV}`);
+const { NODE_ENV } = process.env;
+const { cdnRoot } = pRequire(`src/profiles/${NODE_ENV}`);
 const {
   assetExtensions,
   localhost,
@@ -58,11 +58,10 @@ const pushClientJS = (entry) => {
  */
 const webpackConfig = (program) => {
   const { CONTEXT } = process.env;
-  const projectRootPath = process.cwd();
+  const projectRootPath = CONTEXT ? path.resolve(CONTEXT) : process.cwd();
   const assetsPath = path.resolve(projectRootPath, assetsDist);
   const dllPath = path.resolve(projectRootPath, dll);
-  const context = CONTEXT ? path.resolve(CONTEXT) : projectRootPath;
-  const devtool = 'eval';
+  const context = projectRootPath;
 
   let entry = isFunction(entries) ? entries() : entries;
 
@@ -79,7 +78,7 @@ const webpackConfig = (program) => {
   const cssModulesOptions = cssModules ? { module: true, localIdentName: cssModulesIdentName } : {};
   const cssLoaderOptions = Object.assign({ importLoaders: 2 }, cssModulesOptions);
 
-  const moduleConfig = {
+  const module = {
     rules: [
       {
         test: /\.js$/i,
@@ -124,8 +123,7 @@ const webpackConfig = (program) => {
         loader: 'file-loader',
         options: {
           name: '[path][name].[ext]',
-          context: assets,
-          emitFile: false
+          publicPath: '/'
         }
       }
     ]
@@ -136,7 +134,11 @@ const webpackConfig = (program) => {
   };
 
   const plugins = [
-    new ProfilesPlugin()
+    new webpack.DefinePlugin({
+      'process.env': {
+        CDN_ROOT: JSON.stringify(cdnRoot)
+      }
+    })
   ];
 
   if (hot) {
@@ -147,13 +149,6 @@ const webpackConfig = (program) => {
   if (program.open_browser) {
     plugins.push(new OpenBrowserPlugin({ url: `http://${localhost}:${port.dev}` }));
   }
-
-  plugins.push(new webpack.DefinePlugin({
-    'process.env': {
-      NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-      CDN_ROOT: JSON.stringify(cdnRoot)
-    }
-  }));
 
   // 从配置文件中获取dll
   if (commonChunks && Object.keys(commonChunks).length > 0) {
@@ -169,13 +164,13 @@ const webpackConfig = (program) => {
   const performance = { hints: false };
 
   return {
+    mode: 'development',
     context,
     entry,
     output,
-    module: moduleConfig,
+    module,
     resolve,
     plugins,
-    devtool,
     performance
   };
 };

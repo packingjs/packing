@@ -10,5 +10,6 @@ yarn.lock
 /.gitlab
 /.github
 /sh
-/test/src
+!/test/cases/**/index.js
+/test/cases/**/prd
 *.swp
