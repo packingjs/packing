@@ -2,7 +2,7 @@ export default (packing) => {
   const p = packing;
 
   p.path.entries = {
-    a: './a.js',
+    c: './a.js',
     b: './b.js'
   };
 

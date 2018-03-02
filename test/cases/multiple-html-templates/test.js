@@ -25,23 +25,19 @@ describe(getTestCaseName(), function main() { // eslint-disable-line
   const app = new Express();
   app.use(webpackDevMiddlewareInstance);
 
-  // webpackDevMiddlewareInstance.waitUntilValid(() => {
-  //   console.log('--1--');
-  // });
-
-  it('应该能访问到/a.html', async () => {
+  it.skip('应该能访问到/a.html', async () => {
     const { status, text } = await request(app.listen()).get('/a.html');
     console.log(text);
     status.should.eql(200);
   });
 
-  it('应该在/a.html找到a.js', async () => {
+  it.skip('应该在/a.html找到a.js', async () => {
     const { text } = await request(app.listen()).get('/a.html');
     text.should.match(/<script type="text\/javascript" src="\/a\.js">/);
     // console.log(text);
   });
 
-  it('应该能访问到/a.js', async () => {
+  it.skip('应该能访问到/a.js', async () => {
     const { header, text, status } = await request(app.listen()).get('/a.js');
     status.should.eql(200);
     text.length.toString().should.eql(header['content-length']);
