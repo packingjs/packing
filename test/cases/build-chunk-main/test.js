@@ -25,7 +25,7 @@ describe(getTestCaseName(), function main() { // eslint-disable-line
       const files = glob('main_*.js', { cwd: `${__dirname}/prd/assets/js` });
 
       // 测试 entries 配置
-      should(files).with.lengthOf(1);
+      files.should.with.lengthOf(1);
       // 测试 md5 文件名
       files[0].should.with.lengthOf(16);
     });

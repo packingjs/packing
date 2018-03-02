@@ -25,7 +25,7 @@
     "postrelease": "git push && git push origin --tags",
     "prepare": "npm run build",
     "release": "standard-version && npm publish",
-    "test": "mocha test/cases/**/index.js",
+    "test": "mocha test/cases/build-chunk-css/index.js",
     "cover": "rimraf ./.tmp && mkdirp ./.tmp/.nyc_output && nyc npm test",
     "coveralls": "npm run cover && cat ./.tmp/coverage/lcov.info | coveralls",
     "update": "sh ./scripts/npm-update.sh"
