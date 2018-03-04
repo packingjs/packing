@@ -1,4 +1,3 @@
-import should from 'should';
 import request from 'supertest';
 import webpack from 'webpack';
 import Express from 'express';
@@ -7,37 +6,41 @@ import '../../../src/util/babel-register';
 import pRequire from '../../../src/util/require';
 import { getTestCaseName } from '../../util';
 
-describe(getTestCaseName(), function main() { // eslint-disable-line
-  const appConfig = pRequire('config/packing');
+describe(getTestCaseName(), async () => { // eslint-disable-line
+  let app;
+  before(() => {
+    process.env.CONTEXT = __dirname;
+    const appConfig = pRequire('config/packing');
+    const webpackConfig = pRequire('config/webpack.serve.babel', {}, appConfig);
+    const mwOptions = {
+      // 禁止 webpack-dev-middleware 输出日志
+      logger: {
+        info: () => {}
+      }
+    };
 
-  const webpackConfig = pRequire('config/webpack.serve.babel', {}, appConfig);
-  const mwOptions = {
-    // 禁止 webpack-dev-middleware 输出日志
-    logger: {
-      info: () => {}
-    }
-  };
+    // eslint-disable-next-line
+    const compiler = webpack(webpackConfig);
+    const webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, mwOptions);
+    app = new Express();
+    app.use(webpackDevMiddlewareInstance);
+  });
 
-  // eslint-disable-next-line
-  const compiler = webpack(webpackConfig);
+  beforeEach(() => {
+    process.env.CONTEXT = __dirname;
+  });
 
-  const webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, mwOptions);
-  const app = new Express();
-  app.use(webpackDevMiddlewareInstance);
-
-  it.skip('应该能访问到/a.html', async () => {
-    const { status, text } = await request(app.listen()).get('/a.html');
-    console.log(text);
+  it('应该能访问到/a.html', async () => {
+    const { status } = await request(app.listen()).get('/a.html');
     status.should.eql(200);
   });
 
-  it.skip('应该在/a.html找到a.js', async () => {
+  it('应该在/a.html找到a.js', async () => {
     const { text } = await request(app.listen()).get('/a.html');
     text.should.match(/<script type="text\/javascript" src="\/a\.js">/);
-    // console.log(text);
   });
 
-  it.skip('应该能访问到/a.js', async () => {
+  it('应该能访问到/a.js', async () => {
     const { header, text, status } = await request(app.listen()).get('/a.js');
     status.should.eql(200);
     text.length.toString().should.eql(header['content-length']);
@@ -46,13 +49,11 @@ describe(getTestCaseName(), function main() { // eslint-disable-line
   it('应该能访问到/b.html', async () => {
     const { status } = await request(app.listen()).get('/b.html');
     status.should.eql(200);
-    // console.log(text);
   });
 
   it('应该在/b.html找到b.js', async () => {
     const { text } = await request(app.listen()).get('/b.html');
     text.should.match(/<script type="text\/javascript" src="\/b\.js">/);
-    // console.log(text);
   });
 
   it('应该能访问到/b.js', async () => {

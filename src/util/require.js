@@ -4,6 +4,7 @@
 import { resolve, extname, join } from 'path';
 import { existsSync } from 'fs';
 import { isFunction } from 'util';
+import importFresh from 'import-fresh';
 
 export default (file, program, appConfig) => {
   const context = process.env.CONTEXT || global.CONTEXT || process.cwd();
@@ -15,10 +16,12 @@ export default (file, program, appConfig) => {
   // 为了测试方便，增加 `process.env.CONTEXT`
   const pathInProject = resolve(context ? join(context, configFile) : configFile);
   const pathInLib = resolve(__dirname, '..', configFile);
-  // console.log('==pathInProject:', pathInProject);
-  // console.log('==pathInLib:', pathInLib);
 
-  let defaultConfig = require(pathInLib);
+  // 此处不能使用 require.cache
+  // 因为该方法依赖 process.env.CONTEXT
+  // 而在跑测试用例时会在不同的用例设置不同的 process.env.CONTEXT
+  // 使用 require.cache 就会导致除第一次外的所有结果都从缓存中加载，从而引发错误
+  let defaultConfig = importFresh(pathInLib);
   defaultConfig = defaultConfig.default || defaultConfig;
   if (isFunction(defaultConfig)) {
     defaultConfig = defaultConfig(program, appConfig);

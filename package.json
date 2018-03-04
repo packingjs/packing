@@ -25,7 +25,8 @@
     "postrelease": "git push && git push origin --tags",
     "prepare": "npm run build",
     "release": "standard-version && npm publish",
-    "test": "mocha test/cases/build-chunk-css/index.js",
+    "test": "mocha test/cases/**/index.js",
+    "testmocha": "mocha testmocha",
     "cover": "rimraf ./.tmp && mkdirp ./.tmp/.nyc_output && nyc npm test",
     "coveralls": "npm run cover && cat ./.tmp/coverage/lcov.info | coveralls",
     "update": "sh ./scripts/npm-update.sh"
@@ -50,6 +51,7 @@
     "extract-text-webpack-plugin": "^4.0.0-alpha.0",
     "file-loader": "^1.1.6",
     "html-webpack-plugin": "^3.0.1",
+    "import-fresh": "^2.0.0",
     "loader-utils": "^1.1.0",
     "mkdirp": "^0.5.1",
     "packing-glob": "^1.0.1",

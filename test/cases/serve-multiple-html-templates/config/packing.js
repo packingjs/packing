@@ -2,9 +2,11 @@ export default (packing) => {
   const p = packing;
 
   p.path.entries = {
-    c: './a.js',
+    a: './a.js',
     b: './b.js'
   };
+
+  // p.commonChunks = {};
 
   return p;
 };

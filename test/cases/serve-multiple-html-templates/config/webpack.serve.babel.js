@@ -10,23 +10,19 @@
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 export default (webpackConfig, program, packing) => {
-  const { plugins } = webpackConfig;
   const { entries } = packing.path;
+
+  webpackConfig.plugins = [];
 
   // 先只考虑 object 类型的 entries
   Object.keys(entries).forEach((chunkName) => {
-    plugins.push(new HtmlWebpackPlugin({
+    webpackConfig.plugins.push(new HtmlWebpackPlugin({
       filename: `${chunkName}.html`,
       template: 'template.html',
       title: chunkName,
       chunks: ['vendor', chunkName]
     }));
   });
-
-  // plugins.push(new webpack.DllPlugin({
-  //   path: path.join(packing.path.dll, '[name]-manifest.json'),
-  //   name: '[name]_[hash]'
-  // }));
 
   return webpackConfig;
 };

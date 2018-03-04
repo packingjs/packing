@@ -62,7 +62,7 @@ export const execWebpack = config => new Promise((resolve, reject) => {
   });
 });
 
-export const getTestCaseName = () => {
-  const folders = process.env.CONTEXT.split(path.sep);
+export const getTestCaseName = (dirname = process.env.CONTEXT) => {
+  const folders = dirname.split(path.sep);
   return folders[folders.length - 1];
 };

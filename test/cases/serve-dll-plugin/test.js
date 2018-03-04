@@ -1,14 +1,11 @@
-import should from 'should';
-// import { join } from 'path';
 import { existsSync } from 'fs';
 // import rimraf from 'rimraf';
 import pRequire from '../../../src/util/require';
-import { execWebpack } from '../../util';
-import { getTestCaseName } from '../../util';
+import { execWebpack, getTestCaseName } from '../../util';
 
-describe(getTestCaseName(), function main() { // eslint-disable-line
-  // this.timeout(30 * 1000);
+describe(getTestCaseName(), async () => { // eslint-disable-line
   before(async () => {
+    process.env.CONTEXT = __dirname;
     await execWebpack(pRequire('config/webpack.dll.babel'));
   });
 

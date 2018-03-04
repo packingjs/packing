@@ -5,7 +5,7 @@ export default (packing) => {
     b: './b.js'
   };
 
-  p.path.dll = '../dll-plugin/.tmp/dll';
+  p.path.dll = '../serve-dll-plugin/.tmp/dll';
 
   p.commonChunks = {
     vendor: [
