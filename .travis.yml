@@ -4,10 +4,19 @@ node_js:
   - "6"
   - "8"
 
-after_success:
+# env:
+#   - CONTEXT=XXX
+
+# before_install:
+#   - stty columns 120
+
+install:
+  - npm install
+
+script:
   - npm test
 
-sudo: false
+# sudo: false
 
 # notifications:
 #   email: false
