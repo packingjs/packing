@@ -7,6 +7,8 @@ module.exports = {
   },
   rules: {
     complexity: 0,
-    "no-unused-vars": ["error", { "varsIgnorePattern": "should" }]
+    "global-require": 0,
+    "no-unused-vars": ["error", { "varsIgnorePattern": "should" }],
+    "import/no-dynamic-require": 0
   }
 };
