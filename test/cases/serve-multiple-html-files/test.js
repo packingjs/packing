@@ -15,7 +15,8 @@ describe(getTestCaseName(), async () => { // eslint-disable-line
     const mwOptions = {
       // 禁止 webpack-dev-middleware 输出日志
       logger: {
-        info: () => {}
+        info: () => {},
+        error: console.log
       }
     };
 
@@ -31,8 +32,9 @@ describe(getTestCaseName(), async () => { // eslint-disable-line
   });
 
   it('应该能访问到/a.html', async () => {
-    const { status } = await request(app.listen()).get('/a.html');
+    const { status, text } = await request(app.listen()).get('/a.html');
     status.should.eql(200);
+    console.log(text);
   });
 
   it('应该在/a.html找到a.js', async () => {

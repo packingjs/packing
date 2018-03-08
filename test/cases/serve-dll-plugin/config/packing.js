@@ -3,7 +3,7 @@ export default (packing) => {
 
   p.commonChunks = {
     vendor: [
-      './a'
+      './v'
     ]
   };
 

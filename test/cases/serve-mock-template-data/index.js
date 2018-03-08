@@ -1,2 +1,3 @@
 process.env.CONTEXT = __dirname;
-require('./test');
+// require('./test');
+require('./build');

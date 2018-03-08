@@ -4,11 +4,13 @@
  * @module config/webpack.serve.babel
  */
 
+// import fs from 'fs';
 import path from 'path';
 import { isString, isArray, isObject, isFunction } from 'util';
 import webpack from 'webpack';
-// eslint-disable-next-line
 import OpenBrowserPlugin from 'open-browser-webpack-plugin';
+// import HtmlWebpackPlugin from 'html-webpack-plugin';
+// import importFresh from 'import-fresh';
 import pRequire from '../util/require';
 
 const { NODE_ENV } = process.env;
@@ -140,6 +142,37 @@ const webpackConfig = (program) => {
       }
     })
   ];
+
+  // 添加 html 模版
+  // 先只考虑 object 类型的 entries
+  // Object.keys(entry).forEach((chunkName) => {
+  //   const globalMockFile = path.resolve(projectRootPath, 'mock/pages/__global.js');
+  //   const mockFile = path.resolve(projectRootPath, `mock/pages/${chunkName}.js`);
+  //   let globalMockData = {};
+  //   let mockData = {};
+  //   if (fs.existsSync(globalMockFile)) {
+  //     // globalMockData = importFresh(globalMockFile);
+  //     globalMockData = require(globalMockFile); // eslint-disable-line
+  //     if (globalMockData.default) {
+  //       globalMockData = globalMockData.default;
+  //     }
+  //   }
+  //   if (fs.existsSync(mockFile)) {
+  //     // mockData = importFresh(mockFile);
+  //     mockData = require(mockFile); // eslint-disable-line
+  //     if (mockData.default) {
+  //       mockData = mockData.default;
+  //     }
+  //   }
+  //   const mock = { ...mockData, ...globalMockData };
+  //   plugins.push(new HtmlWebpackPlugin({
+  //     filename: `${chunkName}.html`,
+  //     template: 'template.html',
+  //     title: chunkName,
+  //     chunks: Object.keys(commonChunks || {}).concat(chunkName),
+  //     mock
+  //   }));
+  // });
 
   if (hot) {
     entry = pushClientJS(entry);

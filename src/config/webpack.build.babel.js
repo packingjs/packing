@@ -7,10 +7,11 @@
 import path from 'path';
 import { isFunction, isObject } from 'util';
 import { yellow } from 'chalk';
-import webpack from 'webpack';
+// import webpack from 'webpack';
 import CleanPlugin from 'clean-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import ReplaceHashWebpackPlugin from 'replace-hash-webpack-plugin';
+// import ReplaceHashWebpackPlugin from 'replace-hash-webpack-plugin';
+import { plugin as TemplateWebpackPlugin } from 'packing-template';
 import pRequire from '../util/require';
 
 // js输出文件保持目录名称
@@ -22,10 +23,11 @@ const { NODE_ENV, CONTEXT } = process.env;
 const context = CONTEXT || process.cwd();
 
 const { cdnRoot } = pRequire(`src/profiles/${NODE_ENV}`);
+const appConfig = pRequire('config/packing');
 const {
   assetExtensions,
   commonChunks,
-  templateExtension,
+  // templateExtension,
   longTermCaching,
   longTermCachingSymbol,
   fileHashLength,
@@ -39,7 +41,7 @@ const {
     assetsDist,
     templatesDist
   }
-} = pRequire('config/packing');
+} = appConfig;
 
 const getHashPattern = (type) => {
   let hashPattern = '';
@@ -78,7 +80,7 @@ const webpackConfig = () => {
     minimize: { minifyFontValues: false }
   }, cssModulesOptions);
 
-  const moduleConfig = {
+  const module = {
     rules: [
       {
         test: /\.js$/i,
@@ -142,23 +144,19 @@ const webpackConfig = () => {
       root: context
     }),
 
+    new TemplateWebpackPlugin(appConfig),
+
     // css files from the extract-text-plugin loader
     new ExtractTextPlugin({
       filename: `${CSS_DIRECTORY_NAME}/[name]${contenthash}.css`,
       allChunks: true
-    }),
-
-    new webpack.DefinePlugin({
-      'process.env': {
-        CDN_ROOT: JSON.stringify(cdnRoot)
-      }
-    }),
-
-    new ReplaceHashWebpackPlugin({
-      cwd: templatesDist,
-      src: `**/*${templateExtension}`,
-      dest: templatesDist
     })
+
+    // new ReplaceHashWebpackPlugin({
+    //   cwd: templatesDist,
+    //   src: `**/*${templateExtension}`,
+    //   dest: templatesDist
+    // })
   ];
 
   // 从配置文件中获取并生成webpack打包配置
@@ -227,7 +225,7 @@ const webpackConfig = () => {
       },
       minimize
     },
-    module: moduleConfig,
+    module,
     resolve,
     plugins
   };
