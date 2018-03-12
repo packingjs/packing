@@ -213,16 +213,16 @@ const webpackConfig = () => {
     entry,
     output,
     optimization: {
-      splitChunks: {
-        cacheGroups: {
-          vendor: {
-            chunks: 'initial',
-            test: 'vendor',
-            name: 'vendor',
-            enforce: true
-          }
-        }
-      },
+      // splitChunks: {
+      //   cacheGroups: {
+      //     vendor: {
+      //       chunks: 'initial',
+      //       test: 'vendor1',
+      //       name: 'vendor1',
+      //       enforce: true
+      //     }
+      //   }
+      // },
       minimize
     },
     module,

@@ -9,7 +9,6 @@ import path from 'path';
 import { isString, isArray, isObject, isFunction } from 'util';
 import webpack from 'webpack';
 import OpenBrowserPlugin from 'open-browser-webpack-plugin';
-// import HtmlWebpackPlugin from 'html-webpack-plugin';
 // import importFresh from 'import-fresh';
 import pRequire from '../util/require';
 

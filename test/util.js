@@ -15,6 +15,9 @@ export const exec = command => new Promise((resolve, reject) => {
   });
 });
 
+// 随机返回 true/false
+export const random = () => parseInt((Math.random() * 10) % 2, 10);
+
 export const createFile = (file, content) => {
   const parentId = module.parent.id;
   const fullname = path.resolve(path.dirname(parentId), file);
@@ -25,32 +28,6 @@ export const createFile = (file, content) => {
 
   fs.writeFileSync(fullname, content);
 };
-
-export const createPackingConfig = (content) => {
-  content = `
-    export default (packing) => {
-      const p = packing;
-      ${content}
-      return p;
-    }
-  `;
-  createFile('config/packing.js', content);
-};
-
-export const createWebpackConfig = (file, content) => {
-  content = `
-    export default (webpackConfig, program, appConfig) => {
-      const p = webpackConfig;
-      ${content}
-      return p;
-    };
-  `;
-  createFile(file, content);
-};
-
-export const createServeConfig = content => createWebpackConfig('config/webpack.serve.babel.js', content);
-
-export const createBuildConfig = content => createWebpackConfig('config/webpack.build.babel.js', content);
 
 export const execWebpack = config => new Promise((resolve, reject) => {
   webpack(config, (err, stats) => {
