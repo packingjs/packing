@@ -2,7 +2,7 @@
 /docs/**
 /mock/**
 /examples/**
-/prd/**
+prd/
 /node_modules/**
 /dist
 /test/src

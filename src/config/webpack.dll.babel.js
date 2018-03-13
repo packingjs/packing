@@ -101,6 +101,7 @@ export default () => {
   ];
 
   return {
+    mode: 'development',
     context,
     entry: commonChunks,
     output,

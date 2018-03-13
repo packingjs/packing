@@ -11,7 +11,7 @@ import { yellow } from 'chalk';
 import CleanPlugin from 'clean-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 // import ReplaceHashWebpackPlugin from 'replace-hash-webpack-plugin';
-import { plugin as TemplateWebpackPlugin } from 'packing-template';
+import { plugin as PackingTemplatePlugin } from 'packing-template';
 import pRequire from '../util/require';
 
 // js输出文件保持目录名称
@@ -127,8 +127,8 @@ const webpackConfig = () => {
         test: new RegExp(`.(${assetExtensions.join('|')})$`, 'i'),
         loader: 'url-loader',
         options: {
+          // context 参数会影响静态文件打包输出的路径
           name: `[path][name]${getHashPattern('hash')}.[ext]`,
-          context: assets,
           limit: 100
         }
       }
@@ -144,7 +144,7 @@ const webpackConfig = () => {
       root: context
     }),
 
-    new TemplateWebpackPlugin(appConfig),
+    new PackingTemplatePlugin(appConfig),
 
     // css files from the extract-text-plugin loader
     new ExtractTextPlugin({

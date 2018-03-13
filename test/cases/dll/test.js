@@ -3,7 +3,7 @@ import { existsSync } from 'fs';
 import pRequire from '../../../src/util/require';
 import { execWebpack, getTestCaseName } from '../../util';
 
-describe(getTestCaseName(), async () => { // eslint-disable-line
+describe(getTestCaseName(), async () => {
   before(async () => {
     if (process.env.DEBUG) {
       const stdout = await execWebpack(pRequire('config/webpack.dll.babel'));

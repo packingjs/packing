@@ -40,6 +40,7 @@ describe('serve', async () => {
     let res;
     before(async () => {
       res = await request(app.listen()).get('/a');
+      console.log(res.text);
     });
 
     it('应该正常返回网页', async () => {
@@ -56,6 +57,10 @@ describe('serve', async () => {
 
     it('应该包含网页描述', async () => {
       res.text.should.match(/<meta name="description" content="A simple text">/);
+    });
+
+    it('应该不引用 __.js', async () => {
+      res.text.should.not.match(/<script src="__\.js"><\/script>/);
     });
 
     it('应该引用了 vendor.js', async () => {

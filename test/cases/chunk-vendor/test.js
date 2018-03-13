@@ -17,7 +17,6 @@ describe(getTestCaseName(), async () => {
     // 删除临时文件
     if (!process.env.DEBUG) {
       rimraf.sync(`${__dirname}/prd`);
-      rimraf.sync(`${__dirname}/.tmp`);
     }
   });
 
@@ -25,6 +24,6 @@ describe(getTestCaseName(), async () => {
     const files = glob('vendor_*.js', { cwd: `${__dirname}/prd/assets/js` });
 
     // 测试 entries 配置
-    files.should.with.lengthOf(1);
+    files.should.have.length(1);
   });
 });

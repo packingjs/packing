@@ -7,7 +7,7 @@ import '../../../src/util/babel-register';
 import pRequire from '../../../src/util/require';
 import { getTestCaseName } from '../../util';
 
-describe(getTestCaseName(), async () => { // eslint-disable-line
+describe(getTestCaseName(), async () => {
   let app;
 
   before(() => {
