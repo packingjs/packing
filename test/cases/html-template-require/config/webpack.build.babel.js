@@ -5,16 +5,19 @@
  * @param object webpackConfig 默认配置对象
  */
 
-import path from 'path';
+// import path from 'path';
 
 export default (webpackConfig/* , program, appConfig */) => {
-  webpackConfig.plugins.forEach((plugin) => {
-    if (plugin.constructor.name === 'PackingTemplatePlugin') {
-      plugin.options = {
-        template: path.resolve(__dirname, '../template.html'),
-        favicon: 'images/favico.jpg'
-      };
-    }
-  });
+  // webpackConfig.plugins.forEach((plugin) => {
+  //   if (plugin.constructor.name === 'PackingTemplatePlugin') {
+  //     plugin.options = {
+  //       ...plugin.options,
+  //       ...{
+  //         template: path.resolve(__dirname, '../template.html'),
+  //         favicon: 'images/favico.jpg'
+  //       }
+  //     };
+  //   }
+  // });
   return webpackConfig;
 };
