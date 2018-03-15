@@ -37,7 +37,7 @@ const {
   path: {
     dll,
     src,
-    assets,
+    // assets,
     templatesPages,
     mockPageInit
   },
@@ -68,7 +68,7 @@ function httpd() {
     stats: { colors: true }
   };
   const cwd = process.cwd();
-  const assetsPath = join(cwd, assets);
+  // const assetsPath = join(cwd, assets);
   const dllPath = join(cwd, dll);
 
   const spinner = new Spinner('webpack: Compiling.. %s');
@@ -81,7 +81,7 @@ function httpd() {
   });
 
   const app = new Express();
-  app.use(Express.static(assetsPath));
+  app.use(Express.static(cwd));
   app.use(Express.static(dllPath));
   app.use(urlrewrite(rewriteRules));
   app.use(webpackDevMiddlewareInstance);
