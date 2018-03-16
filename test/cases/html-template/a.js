@@ -1,5 +1,5 @@
-import x from './x.css';
+import '3.css';
+import './x.css';
 import './v';
 
-console.log(x);
 export default 'a';

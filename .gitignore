@@ -1,10 +1,11 @@
 .idea
 .tmp/
 dist/
-node_modules/
+/node_modules
 prd/
 npm-debug.log
 examples/**/package-lock.json
+examples/**/node_modules
 stats.json
 yarn.lock
 /.gitlab
