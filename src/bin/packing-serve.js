@@ -78,61 +78,61 @@ function httpd() {
   const webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, serverOptions);
   webpackDevMiddlewareInstance.waitUntilValid(() => {
     spinner.stop();
-  });
 
-  const app = new Express();
-  app.use(Express.static(cwd));
-  app.use(Express.static(dllPath));
-  app.use(urlrewrite(rewriteRules));
-  app.use(webpackDevMiddlewareInstance);
-  app.use(webpackHotMiddleware(compiler));
-  app.use(template({
-    templates: templatesPages,
-    mockData: mockPageInit,
-    rewriteRules
-  }));
+    const app = new Express();
+    app.use(Express.static(cwd));
+    app.use(Express.static(dllPath));
+    app.use(urlrewrite(rewriteRules));
+    app.use(webpackDevMiddlewareInstance);
+    app.use(webpackHotMiddleware(compiler));
+    app.use(template({
+      templates: templatesPages,
+      mockData: mockPageInit,
+      rewriteRules
+    }));
 
-  if (graphqlMockServer) {
-    try {
-      /* eslint-disable */
-      const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
-      const { addMockFunctionsToSchema, makeExecutableSchema } = require('graphql-tools');
-      const { mergeTypes, mergeResolvers, fileLoader } = require('merge-graphql-schemas');
-      const bodyParser = require('body-parser');
-      /* eslint-enable */
-
-      let typesArray = '';
-      let mocks = {};
+    if (graphqlMockServer) {
       try {
-        typesArray = fileLoader(resolve('mock/**/schema.js'));
-        mocks = mergeResolvers(fileLoader(resolve('mock/**/resolver.js')));
-      } catch (e) {
-        console.log(e);
-      }
+        /* eslint-disable */
+        const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
+        const { addMockFunctionsToSchema, makeExecutableSchema } = require('graphql-tools');
+        const { mergeTypes, mergeResolvers, fileLoader } = require('merge-graphql-schemas');
+        const bodyParser = require('body-parser');
+        /* eslint-enable */
 
-      try {
-        const schema = makeExecutableSchema({ typeDefs: mergeTypes(typesArray) });
-        addMockFunctionsToSchema({ schema, mocks });
-        app.use(graphqlEndpoint, bodyParser.json(), graphqlExpress(() => ({ schema })));
-        app.use(graphiqlEndpoint, graphiqlExpress({
-          endpointURL: graphqlEndpoint,
-          query: ''
-        }));
-      } catch (e) {
-        console.log(e);
-      }
-    } catch (e) {
-      console.log('\n缺少依赖包，请先安装 npm i --dev apollo-server-express graphql-tools merge-graphql-schemas body-parser \n');
-      process.exit(1);
-    }
-  }
+        let typesArray = '';
+        let mocks = {};
+        try {
+          typesArray = fileLoader(resolve('mock/**/schema.js'));
+          mocks = mergeResolvers(fileLoader(resolve('mock/**/resolver.js')));
+        } catch (e) {
+          console.log(e);
+        }
 
-  app.listen(port, (err) => {
-    if (err) {
-      console.error(err);
-    } else {
-      console.info('==> 🚧  Listening on port %s\n', port);
+        try {
+          const schema = makeExecutableSchema({ typeDefs: mergeTypes(typesArray) });
+          addMockFunctionsToSchema({ schema, mocks });
+          app.use(graphqlEndpoint, bodyParser.json(), graphqlExpress(() => ({ schema })));
+          app.use(graphiqlEndpoint, graphiqlExpress({
+            endpointURL: graphqlEndpoint,
+            query: ''
+          }));
+        } catch (e) {
+          console.log(e);
+        }
+      } catch (e) {
+        console.log('\n缺少依赖包，请先安装 npm i --dev apollo-server-express graphql-tools merge-graphql-schemas body-parser \n');
+        process.exit(1);
+      }
     }
+
+    app.listen(port, (err) => {
+      if (err) {
+        console.error(err);
+      } else {
+        console.info('==> 🚧  Listening on port %s\n', port);
+      }
+    });
   });
 }
 
