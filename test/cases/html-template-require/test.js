@@ -1,5 +1,6 @@
 import { readFileSync, existsSync } from 'fs';
 import rimraf from 'rimraf';
+import glob from 'packing-glob';
 import { exec, getTestCaseName, random } from '../../util';
 
 process.env.NODE_ENV = random() ? 'local' : 'production';
@@ -73,5 +74,9 @@ describe(`${getTestCaseName()}(${process.env.NODE_ENV})`, async () => {
 
   it('应该替换 node_modules 中的图片', async () => {
     html.should.match(new RegExp(`src="${publicPath}node_modules/3_\\w{8}.png"`));
+  });
+
+  it('应该得到和 webpack\'s require 处理一致的 hash', async () => {
+    glob('prd/assets/1_*.jpg', { cwd: __dirname }).should.have.length(1);
   });
 });
