@@ -74,7 +74,7 @@
     "mocha": "^5.0.0",
     "open-browser-webpack-plugin": "^0.0.5",
     "packing-template-html": "^1.1.2",
-    "packing-urlrewrite": "^0.1.7",
+    "packing-urlrewrite": "^0.1.8",
     "redux-devtools": "^3.3.2",
     "redux-devtools-dock-monitor": "^1.1.3",
     "redux-devtools-log-monitor": "^1.2.0",
