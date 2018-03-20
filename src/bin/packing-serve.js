@@ -171,7 +171,9 @@ if (Object.keys(commonChunks).length === 0) {
   const hashFile = `${destDir}/hash.json`;
 
   if (program.clean_cache) {
-    unlinkSync(hashFile);
+    if (existsSync(hashFile)) {
+      unlinkSync(hashFile);
+    }
   }
 
   Object.keys(commonChunks).forEach((chunkName) => {
