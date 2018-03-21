@@ -4,13 +4,11 @@ export default (packing) => {
   p.path.entries = {
     a: './a.js',
     b: './b.js',
-    'c/d': './c/d.js',
-    __: './__.js'
+    'c/d': './c/d.js'
   };
-
+  p.path.templates = 'templates';
+  p.path.templatesPages = 'templates/pages';
   p.path.dll = '../dll/.tmp/dll';
-  p.path.templatesPages = '.';
-  p.path.templatesPagesDist = 'prd/templates';
 
   p.commonChunks = {
     vendor: ['./v']
@@ -18,9 +16,8 @@ export default (packing) => {
 
   p.longTermCaching = false;
 
-  p.rewriteRules = {
-    '^/zhong$': '/a'
-  };
+  p.templateEngine = 'pug';
+  p.templateExtension = '.pug';
 
   return p;
 };

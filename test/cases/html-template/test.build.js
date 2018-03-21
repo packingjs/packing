@@ -102,7 +102,7 @@ describe(`build:(${process.env.NODE_ENV})`, async () => {
     });
 
     it('应该包含网页标题', async () => {
-      html.should.match(/<title>untitled<\/title>/);
+      html.should.match(/<title><\/title>/);
     });
 
     it('应该不包含网页关键字', async () => {

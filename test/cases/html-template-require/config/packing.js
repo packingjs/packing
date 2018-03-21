@@ -4,6 +4,7 @@ export default (packing) => {
   p.path.entries = {
     a: './a.js'
   };
+  p.path.templatesPagesDist = 'prd/templates';
 
   return p;
 };

@@ -33,13 +33,15 @@ const {
   fileHashLength,
   minimize,
   cssModules,
-  cssModulesIdentName = '[path][name]__[local]--[hash:base64:5]',
+  cssModulesIdentName,
+  templateEngine,
   path: {
     src,
     entries,
     assets,
     assetsDist,
-    templatesDist
+    templatesDist,
+    templatesPages
   }
 } = appConfig;
 

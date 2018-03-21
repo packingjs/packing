@@ -2,7 +2,7 @@ import request from 'supertest';
 import webpack from 'webpack';
 import Express from 'express';
 import webpackDevMiddleware from 'webpack-dev-middleware';
-import urlrewrite from 'packing-urlrewrite';
+// import urlrewrite from 'packing-urlrewrite';
 import { middleware } from 'packing-template';
 import '../../../src/util/babel-register';
 import pRequire from '../../../src/util/require';
@@ -60,10 +60,6 @@ describe('serve', async () => {
       res.text.should.match(/<meta name="description" content="A simple text">/);
     });
 
-    it('应该不引用 __.js', async () => {
-      res.text.should.not.match(/<script src="\/__\.js"><\/script>/);
-    });
-
     it('应该引用了 vendor.js', async () => {
       res.text.should.match(/<script src="\/vendor\.js"><\/script>/);
     });
@@ -89,8 +85,8 @@ describe('serve', async () => {
       res.status.should.eql(200);
     });
 
-    it('应该包含网页标题', async () => {
-      res.text.should.match(/<title><\/title>/);
+    it('应该包含网页默认标题', async () => {
+      res.text.should.match(/<title>Default title<\/title>/);
     });
 
     it('应该不包含网页关键字', async () => {

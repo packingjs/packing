@@ -54,6 +54,7 @@
     "mkdirp": "^0.5.1",
     "packing-glob": "^1.0.1",
     "packing-template": "^1.1.0",
+    "packing-template-pug": "^2.0.0",
     "postcss-loader": "^2.1.0",
     "pug": "^2.0.0-rc.4",
     "pug-loader": "^2.3.0",
