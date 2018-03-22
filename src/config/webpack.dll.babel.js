@@ -85,11 +85,6 @@ export default () => {
   };
 
   const plugins = [
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify(NODE_ENV)
-      }
-    }),
     new CleanPlugin(dll, {
       root: context,
       verbose: false

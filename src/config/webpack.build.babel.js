@@ -7,10 +7,8 @@
 import path from 'path';
 import { isFunction, isObject } from 'util';
 import { yellow } from 'chalk';
-// import webpack from 'webpack';
 import CleanPlugin from 'clean-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
-// import ReplaceHashWebpackPlugin from 'replace-hash-webpack-plugin';
 import { plugin as PackingTemplatePlugin } from 'packing-template';
 import pRequire from '../util/require';
 
@@ -34,14 +32,12 @@ const {
   minimize,
   cssModules,
   cssModulesIdentName,
-  templateEngine,
   path: {
     src,
     entries,
     assets,
     assetsDist,
-    templatesDist,
-    templatesPages
+    templatesDist
   }
 } = appConfig;
 
@@ -153,12 +149,6 @@ const webpackConfig = () => {
       filename: `${CSS_DIRECTORY_NAME}/[name]${contenthash}.css`,
       allChunks: true
     })
-
-    // new ReplaceHashWebpackPlugin({
-    //   cwd: templatesDist,
-    //   src: `**/*${templateExtension}`,
-    //   dest: templatesDist
-    // })
   ];
 
   // 从配置文件中获取并生成webpack打包配置
@@ -190,24 +180,6 @@ const webpackConfig = () => {
       }
     });
   }
-  // // 扩展阅读 http://webpack.github.io/docs/list-of-plugins.html#commonschunkplugin
-  // plugins.push(new webpack.optimize.CommonsChunkPlugin({ names: chunkNames }));
-
-  // if (minimize) {
-  //   plugins.push(
-  //     // optimizations
-  //     new webpack.optimize.OccurrenceOrderPlugin(),
-  //     new webpack.optimize.UglifyJsPlugin({
-  //       compress: {
-  //         warnings: false,
-  //         drop_debugger: true,
-  //         drop_console: true
-  //       },
-  //       comments: /^!/,
-  //       sourceMap
-  //     }),
-  //   );
-  // }
 
   return {
     mode: NODE_ENV !== 'production' ? 'development' : 'production',

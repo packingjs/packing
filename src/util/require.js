@@ -7,7 +7,7 @@ import { isFunction } from 'util';
 import importFresh from 'import-fresh';
 
 export default (file, program, appConfig) => {
-  const context = process.env.CONTEXT || global.CONTEXT || process.cwd();
+  const context = process.env.CONTEXT || process.cwd();
 
   let configFile = file;
   if (['.js', '.json'].indexOf(extname(file)) < 0) {

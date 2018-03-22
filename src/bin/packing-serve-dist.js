@@ -5,16 +5,21 @@
  * @author Joe Zhong <zhong.zhi@163.com>
  * @module tools/serve
  */
-import { join } from 'path';
-/* eslint-disable */
+import { resolve } from 'path';
+import { existsSync, readFileSync } from 'fs';
+import pug from 'pug';
 import Express from 'express';
 import urlrewrite from 'packing-urlrewrite';
-/* eslint-enable */
+import { getPath, getContext } from 'packing-template-util';
 import '../util/babel-register';
 import pRequire from '../util/require';
 
+const { CONTEXT } = process.env;
+const context = CONTEXT ? resolve(CONTEXT) : process.cwd();
+const appConfig = pRequire('config/packing', {});
 const {
   templateEngine,
+  templateExtension,
   rewriteRules,
   path: {
     assetsDist,
@@ -24,19 +29,45 @@ const {
   port: {
     dist
   }
-} = pRequire('config/packing', {});
-// eslint-disable-next-line
-const template = require(`packing-template-${templateEngine}`);
+} = appConfig;
+// const template = require(`packing-template-${templateEngine}`);
 const port = dist;
 
+const template = () => async (req, res, next) => {
+  const { templatePath, pageDataPath, globalDataPath } = getPath(req, {
+    templates: templatesPagesDist,
+    mockData: mockPageInit,
+    extension: templateExtension,
+    globalData: '__global.js',
+    rewriteRules
+  });
+  let globals = {};
+  try {
+    globals = await getContext(req, res, pageDataPath, globalDataPath);
+  } catch (e) {
+    console.log(e);
+  }
+  if (existsSync(templatePath)) {
+    try {
+      if (templateEngine === 'html') {
+        const output = readFileSync(templatePath, { encoding: 'utf-8' });
+        res.end(output);
+      } else {
+        res.end(pug.renderFile(templatePath, globals));
+      }
+    } catch (e) {
+      console.log(e);
+      next();
+    }
+  } else {
+    next();
+  }
+};
+
 const app = new Express();
-app.use(Express.static(join(process.cwd(), assetsDist)));
+app.use(Express.static(resolve(context, assetsDist)));
 app.use(urlrewrite(rewriteRules));
-app.use(template({
-  templates: templatesPagesDist,
-  mockData: mockPageInit,
-  rewriteRules
-}));
+app.use(template());
 
 app.listen(port, (err) => {
   if (err) {

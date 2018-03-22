@@ -18,7 +18,6 @@ import '../util/babel-register';
 import pRequire from '../util/require';
 import packingPackage from '../../package.json';
 
-// eslint-disable-next-line
 const projectPackage = require(resolve('./package.json'));
 
 program
@@ -47,6 +46,9 @@ const {
   }
 } = appConfig;
 
+const { CONTEXT } = process.env;
+const context = CONTEXT ? resolve(CONTEXT) : process.cwd();
+
 function md5(string) {
   return createHash('md5').update(string).digest('hex');
 }
@@ -69,9 +71,7 @@ function httpd() {
     stats: { colors: true },
     serverSideRender: true
   };
-  const cwd = process.cwd();
-  // const assetsPath = join(cwd, assets);
-  const dllPath = join(cwd, dll);
+  const dllPath = join(context, dll);
 
   const spinner = new Spinner('webpack: Compiling.. %s');
   spinner.setSpinnerString('|/-\\');
@@ -82,7 +82,7 @@ function httpd() {
     spinner.stop();
 
     const app = new Express();
-    app.use(Express.static(cwd));
+    app.use(Express.static(context));
     app.use(Express.static(dllPath));
     app.use(urlrewrite(rewriteRules));
     app.use(webpackDevMiddlewareInstance);
@@ -170,7 +170,7 @@ if (Object.keys(commonChunks).length === 0) {
     projectPackage.devDependencies
   );
   const dllDeps = {};
-  const destDir = resolve(process.cwd(), dll);
+  const destDir = resolve(context, dll);
   const hashFile = `${destDir}/hash.json`;
 
   if (program.clean_cache) {
