@@ -38,11 +38,11 @@ describe('serve', async () => {
     app.use(webpackDevMiddlewareInstance);
   });
 
-  describe.skip('单层目录', async () => {
+  describe('单层目录', async () => {
     let res;
     before(async () => {
       res = await request(app.listen()).get('/a');
-      console.log(res.text);
+      // console.log(res.text);
     });
 
     it('应该正常返回网页', async () => {
@@ -84,7 +84,7 @@ describe('serve', async () => {
     });
   });
 
-  describe.skip('多层目录', async () => {
+  describe('多层目录', async () => {
     let res;
     before(async () => {
       res = await request(app.listen()).get('/c/d');
@@ -133,11 +133,12 @@ describe('serve', async () => {
     let res;
     before(async () => {
       res = await request(app.listen()).get('/test');
-      console.log(res.text);
+      // console.log(res.text);
     });
 
-    it('aa', async () => {
-      true.should.be.true();
+    it('/test 应该转发到 /a', async () => {
+      res.status.should.eql(200);
+      res.text.should.match(/<title>Page A<\/title>/);
     });
   });
 });
