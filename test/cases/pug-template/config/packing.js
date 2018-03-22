@@ -19,5 +19,9 @@ export default (packing) => {
   p.templateEngine = 'pug';
   p.templateExtension = '.pug';
 
+  p.rewriteRules = {
+    '^/test$': '/a'
+  };
+
   return p;
 };

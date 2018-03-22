@@ -2,7 +2,7 @@ import request from 'supertest';
 import webpack from 'webpack';
 import Express from 'express';
 import webpackDevMiddleware from 'webpack-dev-middleware';
-// import urlrewrite from 'packing-urlrewrite';
+import urlrewrite from 'packing-urlrewrite';
 import { middleware } from 'packing-template';
 import '../../../src/util/babel-register';
 import pRequire from '../../../src/util/require';
@@ -27,21 +27,22 @@ describe('serve', async () => {
     const compiler = webpack(webpackConfig);
     const webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, mwOptions);
     webpackDevMiddlewareInstance.waitUntilValid(async () => {
+      app.use(urlrewrite(appConfig.rewriteRules));
       middleware(app, appConfig, {
         // template: path.resolve(__dirname, 'template.html') // ,
         // inject: 'head',
         // favicon: 'xxx.png'
         // charset: 'gb2312'
       });
-      // app.use(urlrewrite(appConfig.rewriteRules));
     });
     app.use(webpackDevMiddlewareInstance);
   });
 
-  describe('单层目录', async () => {
+  describe.skip('单层目录', async () => {
     let res;
     before(async () => {
       res = await request(app.listen()).get('/a');
+      console.log(res.text);
     });
 
     it('应该正常返回网页', async () => {
@@ -73,9 +74,17 @@ describe('serve', async () => {
       const aMatches = res.text.match('<script src="/a.js"></script>');
       (vendorMatches.index < aMatches.index).should.be.true();
     });
+
+    it('应该能获取到 __global.js 中的页面模拟数据', async () => {
+      res.text.should.match(/<li>global<\/li>/);
+    });
+
+    it('应该能获取到特定页面的模拟数据', async () => {
+      res.text.should.match(/<li>a<\/li>/);
+    });
   });
 
-  describe('多层目录', async () => {
+  describe.skip('多层目录', async () => {
     let res;
     before(async () => {
       res = await request(app.listen()).get('/c/d');
@@ -109,6 +118,26 @@ describe('serve', async () => {
       const vendorMatches = res.text.match('<script src="/vendor.js"></script>');
       const aMatches = res.text.match('<script src="/c/d.js"></script>');
       (vendorMatches.index < aMatches.index).should.be.true();
+    });
+
+    it('应该能获取到 __global.js 中的页面模拟数据', async () => {
+      res.text.should.match(/<li>global<\/li>/);
+    });
+
+    it('应该能获取到特定页面的模拟数据', async () => {
+      res.text.should.match(/<li>c\/d<\/li>/);
+    });
+  });
+
+  describe('网址转发', async () => {
+    let res;
+    before(async () => {
+      res = await request(app.listen()).get('/test');
+      console.log(res.text);
+    });
+
+    it('aa', async () => {
+      true.should.be.true();
     });
   });
 });

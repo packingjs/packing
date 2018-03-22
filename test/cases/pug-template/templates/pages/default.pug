@@ -2,7 +2,9 @@ extends ../layout/default.pug
 
 block content
   div#root
-  span 后端返回code: #{code} #{message}
+  ul
+    li #{global}
+    li #{page}
   img(src="1.jpg" data-src="images/2.jpg")
   img(src="images/1.jpg" alt="images/1.jpg")
   img(alt="abc" src="images/2.jpg")

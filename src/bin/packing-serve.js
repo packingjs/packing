@@ -13,6 +13,7 @@ import { Spinner } from 'cli-spinner';
 /* eslint-enable */
 import { createHash } from 'crypto';
 import mkdirp from 'mkdirp';
+import { middleware as packingTemplate } from 'packing-template';
 import '../util/babel-register';
 import pRequire from '../util/require';
 import packingPackage from '../../package.json';
@@ -36,10 +37,10 @@ const {
   graphiqlEndpoint,
   path: {
     dll,
-    src,
+    src // ,
     // assets,
-    templatesPages,
-    mockPageInit
+    // templatesPages,
+    // mockPageInit
   },
   port: {
     dev
@@ -56,7 +57,7 @@ function httpd() {
   const template = require(`packing-template-${templateEngine}`);
   const compiler = webpack(webpackConfig);
   const port = dev;
-  const serverOptions = {
+  const mwOptions = {
     contentBase: src,
     quiet: false,
     noInfo: false,
@@ -65,7 +66,8 @@ function httpd() {
     lazy: false,
     publicPath: webpackConfig.output.publicPath,
     headers: { 'Access-Control-Allow-Origin': '*' },
-    stats: { colors: true }
+    stats: { colors: true },
+    serverSideRender: true
   };
   const cwd = process.cwd();
   // const assetsPath = join(cwd, assets);
@@ -75,7 +77,7 @@ function httpd() {
   spinner.setSpinnerString('|/-\\');
   spinner.start();
 
-  const webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, serverOptions);
+  const webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, mwOptions);
   webpackDevMiddlewareInstance.waitUntilValid(() => {
     spinner.stop();
 
@@ -85,11 +87,12 @@ function httpd() {
     app.use(urlrewrite(rewriteRules));
     app.use(webpackDevMiddlewareInstance);
     app.use(webpackHotMiddleware(compiler));
-    app.use(template({
-      templates: templatesPages,
-      mockData: mockPageInit,
-      rewriteRules
-    }));
+    packingTemplate(app, appConfig);
+    // app.use(template({
+    //   templates: templatesPages,
+    //   mockData: mockPageInit,
+    //   rewriteRules
+    // }));
 
     if (graphqlMockServer) {
       try {
