@@ -12,7 +12,6 @@
   ],
   "bin": {
     "packing": "dist/bin/packing.js",
-    "packing-lint": "dist/bin/packing-lint.js",
     "packing-build": "dist/bin/packing-build.js",
     "packing-serve-dist": "dist/bin/packing-serve-dist.js",
     "packing-serve": "dist/bin/packing-serve.js"
