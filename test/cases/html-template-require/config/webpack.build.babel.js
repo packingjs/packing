@@ -7,7 +7,7 @@
 
 // import path from 'path';
 
-export default (webpackConfig/* , program, appConfig */) => {
+export default webpackConfig =>
   // webpackConfig.plugins.forEach((plugin) => {
   //   if (plugin.constructor.name === 'PackingTemplatePlugin') {
   //     plugin.options = {
@@ -19,5 +19,5 @@ export default (webpackConfig/* , program, appConfig */) => {
   //     };
   //   }
   // });
-  return webpackConfig;
-};
+  webpackConfig;
+

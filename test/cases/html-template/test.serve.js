@@ -2,7 +2,6 @@ import request from 'supertest';
 import webpack from 'webpack';
 import Express from 'express';
 import webpackDevMiddleware from 'webpack-dev-middleware';
-import urlrewrite from 'packing-urlrewrite';
 import { middleware } from 'packing-template';
 import '../../../src/util/babel-register';
 import pRequire from '../../../src/util/require';
@@ -27,13 +26,7 @@ describe('serve', async () => {
     const compiler = webpack(webpackConfig);
     const webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, mwOptions);
     webpackDevMiddlewareInstance.waitUntilValid(async () => {
-      middleware(app, appConfig, {
-        // template: path.resolve(__dirname, 'template.html') // ,
-        // inject: 'head',
-        // favicon: 'xxx.png'
-        // charset: 'gb2312'
-      });
-      // app.use(urlrewrite(appConfig.rewriteRules));
+      middleware(app, appConfig);
     });
     app.use(webpackDevMiddlewareInstance);
   });

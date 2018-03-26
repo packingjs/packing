@@ -18,7 +18,7 @@ const {
   port,
   hot,
   cssModules,
-  cssModulesIdentName = '[path][name]__[local]--[hash:base64:5]',
+  cssModulesIdentName,
   commonChunks,
   path: {
     src,

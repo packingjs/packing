@@ -21,7 +21,7 @@
   "license": "MIT",
   "scripts": {
     "build": "rimraf dist && babel src -d dist",
-    "lint": "eslint --fix --quiet \"src/**/*.js\"",
+    "lint": "eslint --fix --quiet \"src/**/*.js\" \"test/**/*.js\"",
     "postrelease": "git push && git push origin --tags",
     "prepare": "npm run build",
     "release": "standard-version && npm publish",

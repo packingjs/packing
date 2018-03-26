@@ -16,7 +16,7 @@ import pRequire from '../util/require';
  */
 
 export default () => {
-  const { CONTEXT, NODE_ENV } = process.env;
+  const { CONTEXT } = process.env;
   const context = CONTEXT || process.cwd();
 
   const {

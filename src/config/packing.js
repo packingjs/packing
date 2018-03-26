@@ -63,8 +63,15 @@ export default {
 
   // 模版引擎类型，目前支持的类型有[html,pug,ejs,handlebars,smarty,velocity,artTemplate]
   templateEngine: 'html',
+
   // 模版文件扩展名
   templateExtension: '.html',
+
+  // 是否往模版中注入 assets [bool | string]
+  // false: 不注入
+  // 'head': 在</head>前注入
+  // 'body': 在</body>前注入
+  templateInjectPosition: 'body',
 
   // 本地访问的域名，为了调试方便，可能改成my.qunar.com
   localhost: 'localhost',
@@ -140,14 +147,6 @@ export default {
     // '^/api/(.*)': 'http://touch.qunar.com/api/hotel/findhotelcity?cityName=%E5%8C%97%E4%BA%AC',
     // '^/hello': 'http://localhost:3001/123/4.html',
   },
-
-  // 用于在build中打开模板注释的配置
-  // 可选值
-  // String: 'html', 'js', 'css'；预置对3种代码处理。
-  // RegExp: 使用正则来替换注释代码。
-  // Function: 接受一个字符串参数，该参数为文件内容，返回处理后的字符串。
-  // 参考：https://github.com/LHoin/webpack-uncomment-block
-  // uncommentPattern: 'html',
 
   // 是否使用GraphQL-mock-server
   graphqlMockServer: false,
