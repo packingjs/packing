@@ -1,7 +1,7 @@
 {
   "name": "packing",
   "description": "Webpack based web front-end development environment",
-  "version": "2.6.6",
+  "version": "3.0.0-beta.0",
   "repository": "packingjs/packing",
   "files": [
     "dist"
@@ -53,7 +53,7 @@
     "loader-utils": "^1.1.0",
     "mkdirp": "^0.5.1",
     "packing-glob": "^1.0.1",
-    "packing-template": "^1.2.0",
+    "packing-template": "^1.2.1",
     "postcss-loader": "^2.1.3",
     "rimraf": "^2.6.2",
     "style-loader": "^0.20.3",
@@ -71,7 +71,7 @@
     "mocha": "^5.0.4",
     "open-browser-webpack-plugin": "^0.0.5",
     "packing-template-html": "^1.1.2",
-    "packing-template-pug": "^2.0.1",
+    "packing-template-pug": "^2.0.2",
     "packing-urlrewrite": "^0.1.8",
     "redux-devtools": "^3.3.2",
     "redux-devtools-dock-monitor": "^1.1.3",
