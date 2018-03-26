@@ -5,22 +5,6 @@ All notable changes to this project will be documented in this file. See [standa
 <a name="3.0.0-beta.0"></a>
 # [3.0.0-beta.0](https://github.com/packingjs/packing/compare/v2.6.6...v3.0.0-beta.0) (2018-03-26)
 
-
-### Bug Fixes
-
-* 修复当 `.tmp` 不存在时 `packing serve -c` 报错 ([464c613](https://github.com/packingjs/packing/commit/464c613))
-
-
-### Features
-
-* 兼容 packing v3 以下版本的 pug 模版工程 ([a413e22](https://github.com/packingjs/packing/commit/a413e22))
-* 增加测试用例 ([fc8406c](https://github.com/packingjs/packing/commit/fc8406c))
-* 支持 https 请求转发 ([fca12f2](https://github.com/packingjs/packing/commit/fca12f2))
-* **config:** 增加 `templateInjectPosition` 参数，用来控制生成网页时是否往html中注入 assets ([03b4b16](https://github.com/packingjs/packing/commit/03b4b16))
-
-
-
-<a name="3.0.0-beta.0"></a>
 ### 重大改变
 - 能根据 `entry points` 自动生成网页文件
 - node@>=6.11.5
@@ -31,7 +15,8 @@ All notable changes to this project will be documented in this file. See [standa
 - 能根据 `entry points` 自动生成网页文件
 - 增加 `process.env.CONTEXT`，可以在运行时指定工程位置
 - 将开发环境下的工程根目录设置为虚拟目录，取消assets虚拟目录
-- 支持 https 请求转发
+- 支持 https 请求转发 ([fca12f2](https://github.com/packingjs/packing/commit/fca12f2))
+- **config:** 增加 `templateInjectPosition` 参数，用来控制生成网页时是否往html中注入 assets ([03b4b16](https://github.com/packingjs/packing/commit/03b4b16))
 
 ### 优化
 - 在 webpack-dev-middleware 编译后再启动 express 服务
@@ -40,7 +25,7 @@ All notable changes to this project will be documented in this file. See [standa
 - 使用 `travis-ci` 做为集成工具
 
 # Bugfixes
-- 当 `.tmp/vendor` 目录不存在时执行 `packing serve -c` 不再报错
+- 当 `.tmp/vendor` 目录不存在时执行 `packing serve -c` 不再报错 ([464c613](https://github.com/packingjs/packing/commit/464c613))
 - 修复 `packing-urlrewrite` 不能转发 `https://` 请求的问题
 - 修复了默认 `profiles` 中 `cdnRoot` 路径错误
 -
