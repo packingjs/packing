@@ -23,6 +23,7 @@ const {
   rewriteRules,
   path: {
     assetsDist,
+    templatesDist,
     templatesPagesDist,
     mockPageInit
   },
@@ -53,7 +54,10 @@ const template = () => async (req, res, next) => {
         const output = readFileSync(templatePath, { encoding: 'utf-8' });
         res.end(output);
       } else {
-        res.end(pug.renderFile(templatePath, globals));
+        res.end(pug.renderFile(templatePath, {
+          ...globals,
+          ...{ basedir: templatesDist }
+        }));
       }
     } catch (e) {
       console.log(e);

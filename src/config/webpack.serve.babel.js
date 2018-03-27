@@ -10,8 +10,6 @@ import webpack from 'webpack';
 import OpenBrowserPlugin from 'open-browser-webpack-plugin';
 import pRequire from '../util/require';
 
-const { NODE_ENV } = process.env;
-const { cdnRoot } = pRequire(`src/profiles/${NODE_ENV}`);
 const {
   assetExtensions,
   localhost,
@@ -131,13 +129,7 @@ const webpackConfig = (program) => {
     modules: [src, assets, 'node_modules']
   };
 
-  const plugins = [
-    new webpack.DefinePlugin({
-      'process.env': {
-        CDN_ROOT: JSON.stringify(cdnRoot)
-      }
-    })
-  ];
+  const plugins = [];
 
   if (hot) {
     entry = pushClientJS(entry);
