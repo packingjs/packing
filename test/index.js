@@ -1,8 +1,10 @@
 const cp = require('child_process');
 const chalk = require('chalk');
 const glob = require('glob');
+const path = require('path');
 
 const files = glob.sync('cases/**/index.js', { cwd: __dirname });
+files.sort((a, b) => path.dirname(a) > path.dirname(b));
 
 let failed = 0;
 files.forEach((file, i) => {
