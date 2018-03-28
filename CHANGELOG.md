@@ -81,6 +81,14 @@ All notable changes to this project will be documented in this file. See [standa
 
 - 设置 `packing/config/packing.js` 中的 `templateInjectPosition: false` 来关闭生成网页文件时自动注入 assets 的功能
 
+- 如果使用 `packing` 自动生成的模版，需要修改 node 工程的 pug 代码，需要增加 `basedir` 参数，值为模版的目录
+```js
+new Pug({
+    viewPath: 'templates',
+    basedir: 'templates'
+})
+```
+
 <a name="2.6.6"></a>
 ## [2.6.6](https://github.com/packingjs/packing/compare/v2.6.5...v2.6.6) (2018-02-28)
 
