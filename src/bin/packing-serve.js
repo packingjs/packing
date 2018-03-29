@@ -1,206 +1,126 @@
 #!/usr/bin/env node
 
-import { existsSync, writeFileSync, unlinkSync } from 'fs';
+import { execSync } from 'child_process';
 import { resolve, join } from 'path';
 import program from 'commander';
 import webpack from 'webpack';
-/* eslint-disable */
 import Express from 'express';
 import urlrewrite from 'packing-urlrewrite';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import { Spinner } from 'cli-spinner';
-/* eslint-enable */
-import { createHash } from 'crypto';
-import mkdirp from 'mkdirp';
 import { middleware as packingTemplate } from 'packing-template';
 import '../util/babel-register';
 import pRequire from '../util/require';
-import packingPackage from '../../package.json';
-
-const projectPackage = require(resolve('./package.json'));
 
 program
   .option('-c, --clean_cache', 'clean dll cache')
   .option('-o, --open_browser', 'open browser')
   .parse(process.argv);
 
-const webpackConfigDll = pRequire('config/webpack.dll.babel', program);
+const { env: { CONTEXT } } = process;
+const context = CONTEXT ? resolve(CONTEXT) : process.cwd();
+
+const parser = __dirname.indexOf('/dist/') === 0 ?
+  'node' :
+  'node_modules/.bin/babel-node';
+
+let cmd = `${parser} ${__dirname}/packing-dll.js`;
+if (CONTEXT) {
+  cmd = `CONTEXT=${CONTEXT} ${cmd}`;
+}
+if (program.clean_cache) {
+  cmd = `${cmd} -c`;
+}
+try {
+  const stdout = execSync(cmd, { encoding: 'utf-8' });
+  console.log(stdout);
+} catch (e) {
+  console.log(e.stdout);
+  process.exit(1);
+}
+
 const appConfig = pRequire('config/packing');
 const {
-  commonChunks,
-  templateEngine,
   rewriteRules,
   graphqlMockServer,
   graphqlEndpoint,
   graphiqlEndpoint,
-  path: {
-    dll,
-    src // ,
-    // assets,
-    // templatesPages,
-    // mockPageInit
-  },
-  port: {
-    dev
-  }
+  path: { dll, src },
+  port: { dev }
 } = appConfig;
 
-const { CONTEXT } = process.env;
-const context = CONTEXT ? resolve(CONTEXT) : process.cwd();
+const webpackConfig = pRequire('config/webpack.serve.babel', program, appConfig);
+const compiler = webpack(webpackConfig);
+const port = dev;
+const mwOptions = {
+  contentBase: src,
+  quiet: false,
+  noInfo: false,
+  hot: true,
+  inline: true,
+  lazy: false,
+  publicPath: webpackConfig.output.publicPath,
+  headers: { 'Access-Control-Allow-Origin': '*' },
+  stats: { colors: true },
+  serverSideRender: true
+};
+const dllPath = join(context, dll);
 
-function md5(string) {
-  return createHash('md5').update(string).digest('hex');
-}
+const spinner = new Spinner('webpack: Compiling.. %s');
+spinner.setSpinnerString('|/-\\');
+spinner.start();
 
-function httpd() {
-  const webpackConfig = pRequire('config/webpack.serve.babel', program, appConfig);
-  // eslint-disable-next-line
-  const template = require(`packing-template-${templateEngine}`);
-  const compiler = webpack(webpackConfig);
-  const port = dev;
-  const mwOptions = {
-    contentBase: src,
-    quiet: false,
-    noInfo: false,
-    hot: true,
-    inline: true,
-    lazy: false,
-    publicPath: webpackConfig.output.publicPath,
-    headers: { 'Access-Control-Allow-Origin': '*' },
-    stats: { colors: true },
-    serverSideRender: true
-  };
-  const dllPath = join(context, dll);
+const webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, mwOptions);
+webpackDevMiddlewareInstance.waitUntilValid(() => {
+  spinner.stop();
 
-  const spinner = new Spinner('webpack: Compiling.. %s');
-  spinner.setSpinnerString('|/-\\');
-  spinner.start();
+  const app = new Express();
+  app.use(Express.static(context));
+  app.use(Express.static(dllPath));
+  app.use(urlrewrite(rewriteRules));
+  app.use(webpackDevMiddlewareInstance);
+  app.use(webpackHotMiddleware(compiler));
+  packingTemplate(app, appConfig);
 
-  const webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, mwOptions);
-  webpackDevMiddlewareInstance.waitUntilValid(() => {
-    spinner.stop();
+  if (graphqlMockServer) {
+    try {
+      const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
+      const { addMockFunctionsToSchema, makeExecutableSchema } = require('graphql-tools');
+      const { mergeTypes, mergeResolvers, fileLoader } = require('merge-graphql-schemas');
+      const bodyParser = require('body-parser');
 
-    const app = new Express();
-    app.use(Express.static(context));
-    app.use(Express.static(dllPath));
-    app.use(urlrewrite(rewriteRules));
-    app.use(webpackDevMiddlewareInstance);
-    app.use(webpackHotMiddleware(compiler));
-    packingTemplate(app, appConfig);
-    // app.use(template({
-    //   templates: templatesPages,
-    //   mockData: mockPageInit,
-    //   rewriteRules
-    // }));
-
-    if (graphqlMockServer) {
+      let typesArray = '';
+      let mocks = {};
       try {
-        /* eslint-disable */
-        const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
-        const { addMockFunctionsToSchema, makeExecutableSchema } = require('graphql-tools');
-        const { mergeTypes, mergeResolvers, fileLoader } = require('merge-graphql-schemas');
-        const bodyParser = require('body-parser');
-        /* eslint-enable */
-
-        let typesArray = '';
-        let mocks = {};
-        try {
-          typesArray = fileLoader(resolve('mock/**/schema.js'));
-          mocks = mergeResolvers(fileLoader(resolve('mock/**/resolver.js')));
-        } catch (e) {
-          console.log(e);
-        }
-
-        try {
-          const schema = makeExecutableSchema({ typeDefs: mergeTypes(typesArray) });
-          addMockFunctionsToSchema({ schema, mocks });
-          app.use(graphqlEndpoint, bodyParser.json(), graphqlExpress(() => ({ schema })));
-          app.use(graphiqlEndpoint, graphiqlExpress({
-            endpointURL: graphqlEndpoint,
-            query: ''
-          }));
-        } catch (e) {
-          console.log(e);
-        }
+        typesArray = fileLoader(resolve('mock/**/schema.js'));
+        mocks = mergeResolvers(fileLoader(resolve('mock/**/resolver.js')));
       } catch (e) {
-        console.log('\n缺少依赖包，请先安装 npm i --dev apollo-server-express graphql-tools merge-graphql-schemas body-parser \n');
-        process.exit(1);
+        console.log(e);
       }
+
+      try {
+        const schema = makeExecutableSchema({ typeDefs: mergeTypes(typesArray) });
+        addMockFunctionsToSchema({ schema, mocks });
+        app.use(graphqlEndpoint, bodyParser.json(), graphqlExpress(() => ({ schema })));
+        app.use(graphiqlEndpoint, graphiqlExpress({
+          endpointURL: graphqlEndpoint,
+          query: ''
+        }));
+      } catch (e) {
+        console.log(e);
+      }
+    } catch (e) {
+      console.log('\n缺少依赖包，请先安装 npm i --dev apollo-server-express graphql-tools merge-graphql-schemas body-parser \n');
+      process.exit(1);
     }
+  }
 
-    app.listen(port, (err) => {
-      if (err) {
-        console.error(err);
-      } else {
-        console.info('==> 🚧  Listening on port %s\n', port);
-      }
-    });
-  });
-}
-
-function execDll(destDir, hashFile, newHash) {
-  // 写入newHash
-  webpack(webpackConfigDll, (err) => {
+  app.listen(port, (err) => {
     if (err) {
-      console.log(err);
+      console.error(err);
     } else {
-      if (!existsSync(destDir)) {
-        mkdirp.sync(destDir);
-      }
-      writeFileSync(hashFile, JSON.stringify({
-        hash: newHash
-      }));
-      console.log('💚  DllPlugin executed!');
-
-      // start httpd
-      httpd();
+      console.info('==> 🚧  Listening on port %s\n', port);
     }
   });
-}
-
-if (Object.keys(commonChunks).length === 0) {
-  httpd();
-} else {
-  const allDependencies = Object.assign(
-    packingPackage.dependencies,
-    packingPackage.devDependencies,
-    projectPackage.dependencies,
-    // eslint-disable-next-line
-    projectPackage.devDependencies
-  );
-  const dllDeps = {};
-  const destDir = resolve(context, dll);
-  const hashFile = `${destDir}/hash.json`;
-
-  if (program.clean_cache) {
-    if (existsSync(hashFile)) {
-      unlinkSync(hashFile);
-    }
-  }
-
-  Object.keys(commonChunks).forEach((chunkName) => {
-    commonChunks[chunkName].forEach((d) => {
-      if (allDependencies[d]) {
-        dllDeps[d] = allDependencies[d];
-      }
-    });
-  });
-
-  const newHash = md5(JSON.stringify(dllDeps));
-
-  if (existsSync(hashFile)) {
-    // eslint-disable-next-line
-    const oldHash = require(hashFile).hash;
-    console.log('oldHash:%s, newHash:%s', oldHash, newHash);
-    if (oldHash !== newHash) {
-      execDll(destDir, hashFile, newHash);
-    } else {
-      console.log('💛  DllPlugin skipped!');
-      // start httpd
-      httpd();
-    }
-  } else {
-    execDll(destDir, hashFile, newHash);
-  }
-}
+});

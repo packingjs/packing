@@ -13,6 +13,7 @@
   "bin": {
     "packing": "dist/bin/packing.js",
     "packing-build": "dist/bin/packing-build.js",
+    "packing-dll": "dist/bin/packing-dll.js",
     "packing-serve-dist": "dist/bin/packing-serve-dist.js",
     "packing-serve": "dist/bin/packing-serve.js"
   },
@@ -79,7 +80,7 @@
     "redux-devtools-log-monitor": "^1.2.0",
     "should": "^13.2.1",
     "supertest": "^3.0.0",
-    "webpack-dev-middleware": "^3.0.1",
+    "webpack-dev-middleware": "^3.1.0",
     "webpack-hot-middleware": "^2.21.2"
   },
   "engines": {

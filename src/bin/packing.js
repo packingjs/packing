@@ -12,5 +12,5 @@ program
   .command('serve-dist', 'review build output')
   .alias('serve:dist')
   .command('build', 'build project')
-  .command('lint', 'lint code(**Deprecated**)')
+  .command('dll', 'build dll')
   .parse(process.argv);
