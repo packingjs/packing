@@ -5,11 +5,9 @@ import { execWebpack, getTestCaseName } from '../../util';
 
 describe(getTestCaseName(), async () => {
   before(async () => {
+    const stdout = await execWebpack(pRequire('config/webpack.dll.babel'));
     if (process.env.DEBUG) {
-      const stdout = await execWebpack(pRequire('config/webpack.dll.babel'));
       console.log(stdout);
-    } else {
-      await execWebpack(pRequire('config/webpack.dll.babel'));
     }
   });
 

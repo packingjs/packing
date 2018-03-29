@@ -42,7 +42,6 @@ describe('serve', async () => {
     let res;
     before(async () => {
       res = await request(app.listen()).get('/a');
-      // console.log(res.text);
     });
 
     it('应该正常返回网页', async () => {
@@ -133,7 +132,6 @@ describe('serve', async () => {
     let res;
     before(async () => {
       res = await request(app.listen()).get('/test');
-      // console.log(res.text);
     });
 
     it('/test 应该转发到 /a', async () => {

@@ -34,7 +34,7 @@ if (program.clean_cache) {
 }
 try {
   const stdout = execSync(cmd, { encoding: 'utf-8' });
-  console.log(stdout);
+  // console.log(stdout);
 } catch (e) {
   console.log(e.stdout);
   process.exit(1);

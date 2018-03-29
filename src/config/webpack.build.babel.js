@@ -8,7 +8,7 @@ import path from 'path';
 import { isFunction, isObject } from 'util';
 import { yellow } from 'chalk';
 import CleanPlugin from 'clean-webpack-plugin';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { plugin as PackingTemplatePlugin } from 'packing-template';
 import pRequire from '../util/require';
 
@@ -91,35 +91,29 @@ const webpackConfig = () => {
       },
       {
         test: /\.css$/i,
-        loader: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            { loader: 'css-loader', options: cssLoaderOptions },
-            { loader: 'postcss-loader' }
-          ]
-        })
+        use: [
+          { loader: MiniCssExtractPlugin.loader },
+          { loader: 'css-loader', options: cssLoaderOptions },
+          { loader: 'postcss-loader' }
+        ]
       },
       {
         test: /\.(scss|sass)$/i,
-        loader: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            { loader: 'css-loader', options: cssLoaderOptions },
-            { loader: 'postcss-loader' },
-            { loader: 'sass-loader' }
-          ]
-        })
+        use: [
+          { loader: MiniCssExtractPlugin.loader },
+          { loader: 'css-loader', options: cssLoaderOptions },
+          { loader: 'postcss-loader' },
+          { loader: 'sass-loader' }
+        ]
       },
       {
         test: /\.less$/i,
-        loader: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            { loader: 'css-loader', options: cssLoaderOptions },
-            { loader: 'postcss-loader' },
-            { loader: 'less-loader' }
-          ]
-        })
+        use: [
+          { loader: MiniCssExtractPlugin.loader },
+          { loader: 'css-loader', options: cssLoaderOptions },
+          { loader: 'postcss-loader' },
+          { loader: 'less-loader' }
+        ]
       },
       {
         test: new RegExp(`.(${assetExtensions.join('|')})$`, 'i'),
@@ -144,10 +138,12 @@ const webpackConfig = () => {
 
     new PackingTemplatePlugin(appConfig),
 
-    // css files from the extract-text-plugin loader
-    new ExtractTextPlugin({
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
       filename: `${CSS_DIRECTORY_NAME}/[name]${contenthash}.css`,
-      allChunks: true
+      // filename: '[name].css',
+      chunkFilename: '[id].css'
     })
   ];
 
@@ -181,24 +177,33 @@ const webpackConfig = () => {
     });
   }
 
+  const optimization = {
+    // splitChunks: {
+    //   cacheGroups: {
+    //     vendor: {
+    //       chunks: 'initial',
+    //       test: 'vendor1',
+    //       name: 'vendor1',
+    //       enforce: true
+    //     }
+    //   }
+    // },
+    // minimizer: [
+    //   new UglifyJsPlugin({
+    //     cache: true,
+    //     parallel: true,
+    //     sourceMap: true // set to true if you want JS source maps
+    //   })
+    // ],
+    minimize
+  };
+
   return {
     mode: NODE_ENV !== 'production' ? 'development' : 'production',
     context,
     entry,
     output,
-    optimization: {
-      // splitChunks: {
-      //   cacheGroups: {
-      //     vendor: {
-      //       chunks: 'initial',
-      //       test: 'vendor1',
-      //       name: 'vendor1',
-      //       enforce: true
-      //     }
-      //   }
-      // },
-      minimize
-    },
+    optimization,
     module,
     resolve,
     plugins

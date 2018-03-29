@@ -67,7 +67,7 @@ export default {
   // 模版文件扩展名
   templateExtension: '.html',
 
-  // 是否往模版中注入 assets [bool | string]
+  // 是否往模版中注入 assets [bool|string]
   // false: 不注入
   // 'head': 在</head>前注入
   // 'body': 在</body>前注入
