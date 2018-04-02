@@ -10,9 +10,8 @@ import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import { Spinner } from 'cli-spinner';
 import { middleware as packingTemplate } from '..';
-import '../util/babel-register';
-import pRequire from '../util/require';
-import { getContext } from '../util';
+import '../bootstrap';
+import { pRequire, getContext } from '..';
 
 program
   .option('-c, --clean_cache', 'clean dll cache')

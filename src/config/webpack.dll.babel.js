@@ -7,8 +7,8 @@
 import { resolve } from 'path';
 import webpack from 'webpack';
 import CleanPlugin from 'clean-webpack-plugin';
-import pRequire from '../util/require';
-import { getContext } from '../util';
+import '../bootstrap';
+import { pRequire, getContext } from '..';
 
 /**
  * 生成webpack配置文件

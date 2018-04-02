@@ -6,8 +6,9 @@ export default (packing) => {
     a: './a.js'
   };
   p.path.src.templates = '.';
-  p.path.src.templatesPages = '.';
-  p.path.dist.templatesPages = 'templates';
+  p.path.dist.templates = 'templates';
+  p.templateEngine = 'html';
+  p.templateExtension = '.html';
 
   return p;
 };

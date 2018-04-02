@@ -43,15 +43,16 @@ export default class PackingTemplatePlugin {
   constructor(appConfig, options = {}) {
     const { CONTEXT } = process.env;
     const {
-      path: { src: { templatesPages } },
+      path: { src: { root: src, templates } },
       templateExtension,
       templateInjectPosition
     } = appConfig;
+    const templatePages = isString(templates) ? templates : templates.pages;
     this.context = CONTEXT ? resolve(CONTEXT) : process.cwd();
     this.appConfig = appConfig;
     this.options = {
       ...{
-        template: resolve(this.context, `${templatesPages}/default${templateExtension}`),
+        template: resolve(this.context, src, `${templatePages}/default${templateExtension}`),
         inject: templateInjectPosition,
         charset: 'UTF-8',
         title: '',
@@ -254,11 +255,13 @@ export default class PackingTemplatePlugin {
 
   output(compiler, stats) {
     const {
-      path: { dist: { root: dist, templatesPages } },
+      path: { dist: { root: dist, templates } },
       commonChunks,
       templateExtension,
       templateInjectPosition
     } = this.appConfig;
+
+    const templatePages = isString(templates) ? templates : templates.pages;
     let { publicPath } = compiler.options.output;
     if (!publicPath.endsWith('/')) {
       publicPath = `${publicPath}/`;
@@ -303,7 +306,7 @@ export default class PackingTemplatePlugin {
         html = this.injectScripts(html, chunkName, allChunks, commonChunks, publicPath, inject);
       }
 
-      const filename = resolve(this.context, dist, templatesPages, `${chunkName + templateExtension}`);
+      const filename = resolve(this.context, dist, templatePages, `${chunkName + templateExtension}`);
       mkdirp.sync(dirname(filename));
       writeFileSync(filename, html);
     });
@@ -314,11 +317,15 @@ export default class PackingTemplatePlugin {
       path: {
         src: {
           root: src,
-          templates
+          templates: {
+            layout: srcLayout
+          }
         },
         dist: {
           root: distRoot,
-          templates: templatesDist
+          templates: {
+            layout: distLayout
+          }
         }
       },
       fileHashLength
@@ -330,10 +337,10 @@ export default class PackingTemplatePlugin {
       publicPath = `${publicPath}/`;
     }
 
-    const layouts = glob('**/*.pug', { cwd: resolve(this.context, src, templates, 'layout') });
+    const layouts = glob('**/*.pug', { cwd: resolve(this.context, src, srcLayout) });
 
     layouts.forEach((layout) => {
-      const absPath = resolve(this.context, src, templates, 'layout', layout);
+      const absPath = resolve(this.context, src, srcLayout, layout);
       let html = readFileSync(absPath, {
         encoding: 'utf-8'
       });
@@ -350,12 +357,7 @@ export default class PackingTemplatePlugin {
             const file = resolve(this.context, value);
             if (existsSync(file) && statSync(file).isFile()) {
               const content = readFileSync(file);
-              const {
-                name,
-                ext,
-                dir // ,
-                // base
-              } = parse(value);
+              const { name, ext, dir } = parse(value);
               const hash = this.getHashDigest(content);
               const pattern = '[path][name]_[hash:8].[ext]';
               const newValue = pattern
@@ -387,7 +389,7 @@ export default class PackingTemplatePlugin {
         html.splice(link.start, link.length, url);
       });
 
-      const filename = resolve(this.context, distRoot, templatesDist, 'layout', layout);
+      const filename = resolve(this.context, distRoot, distLayout, layout);
       mkdirp.sync(dirname(filename));
       writeFileSync(filename, html.join(''));
     });

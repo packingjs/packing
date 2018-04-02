@@ -8,8 +8,8 @@ import path from 'path';
 import { isString, isArray, isObject, isFunction } from 'util';
 import webpack from 'webpack';
 import OpenBrowserPlugin from 'open-browser-webpack-plugin';
-import pRequire from '../util/require';
-import { getContext } from '../util';
+import '../bootstrap';
+import { pRequire, getContext } from '..';
 
 const {
   assetExtensions,

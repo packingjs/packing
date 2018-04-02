@@ -3,7 +3,7 @@ import rimraf from 'rimraf';
 import { exec, getTestCaseName } from '../../util';
 
 describe(getTestCaseName(), async () => {
-  const cssFile = `${__dirname}/prd/assets/css/entry.css`;
+  const cssFile = `${__dirname}/prd/css/entry.css`;
   before(async () => {
     const cmd = 'node_modules/.bin/babel-node src/bin/packing.js build';
     if (process.env.DEBUG) {

@@ -11,8 +11,9 @@ export default (packing) => {
 
   p.path.tmpDll = '../dll/.tmp/dll';
   p.path.src.templates = '.';
-  p.path.src.templatesPages = '.';
-  p.path.dist.templatesPages = 'templates';
+  p.path.dist.templates = 'templates';
+  p.templateEngine = 'html';
+  p.templateExtension = '.html';
 
   p.commonChunks = {
     vendor: ['./v']

@@ -3,8 +3,8 @@ import request from 'supertest';
 import webpack from 'webpack';
 import Express from 'express';
 import webpackDevMiddleware from 'webpack-dev-middleware';
-import '../../../src/util/babel-register';
-import pRequire from '../../../src/util/require';
+import '../../../src';
+import { pRequire } from '../../../src';
 import { getTestCaseName } from '../../util';
 
 describe(getTestCaseName(), async () => {

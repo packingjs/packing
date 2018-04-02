@@ -11,9 +11,8 @@ import pug from 'pug';
 import Express from 'express';
 import urlrewrite from 'packing-urlrewrite';
 import { getPath, getContext as getGlobals } from 'packing-template-util';
-import '../util/babel-register';
-import pRequire from '../util/require';
-import { getContext } from '../util';
+import '../bootstrap';
+import { pRequire, getContext } from '..';
 
 const context = getContext();
 const appConfig = pRequire('config/packing', {});

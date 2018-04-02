@@ -3,10 +3,8 @@ import request from 'supertest';
 import webpack from 'webpack';
 import Express from 'express';
 import webpackDevMiddleware from 'webpack-dev-middleware';
-import { middleware } from '../../../src';
-import '../../../src/util/babel-register';
-import pRequire from '../../../src/util/require';
-import { getContext } from '../../../src/util';
+import '../../../src';
+import { getContext, pRequire, middleware } from '../../../src';
 
 describe('serve', async () => {
   let app;

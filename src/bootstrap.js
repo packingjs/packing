@@ -8,4 +8,4 @@ require('babel-register')({
   ]
 });
 
-require('./dotenv');
+require('./lib/dotenv');

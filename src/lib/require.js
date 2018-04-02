@@ -5,7 +5,7 @@ import { resolve, extname, join } from 'path';
 import { existsSync } from 'fs';
 import { isFunction } from 'util';
 import importFresh from 'import-fresh';
-import { getContext } from '.';
+import { getContext } from '..';
 
 export default (file, program, appConfig) => {
   const context = getContext();

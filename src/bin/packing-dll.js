@@ -5,9 +5,8 @@ import { resolve } from 'path';
 import program from 'commander';
 import webpack from 'webpack';
 import mkdirp from 'mkdirp';
-import '../util/babel-register';
-import pRequire from '../util/require';
-import { md5, getContext } from '../util';
+import '../bootstrap';
+import { pRequire, md5, getContext } from '..';
 import packingPackage from '../../package.json';
 
 program

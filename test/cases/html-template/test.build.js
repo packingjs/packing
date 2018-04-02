@@ -11,7 +11,7 @@ describe(`build:(${process.env.NODE_ENV})`, async () => {
   before(async () => {
     publicPath = process.env.NODE_ENV === 'local' ?
       '/' :
-      '//q.qunarzz.com/__xxxx__/prd/assets/';
+      '//q.qunarzz.com/__xxxx__/prd/';
 
     rimraf.sync(`${__dirname}/prd`);
     const cmd = 'node_modules/.bin/babel-node src/bin/packing.js build';

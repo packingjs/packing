@@ -1,6 +1,6 @@
 import { existsSync } from 'fs';
 // import rimraf from 'rimraf';
-import pRequire from '../../../src/util/require';
+import { pRequire } from '../../../src';
 import { execWebpack, getTestCaseName } from '../../util';
 
 describe(getTestCaseName(), async () => {

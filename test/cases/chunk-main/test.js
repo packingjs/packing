@@ -21,7 +21,7 @@ describe(getTestCaseName(), async () => {
   });
 
   it('应该输出main_\\w{8}.js', async () => {
-    const files = glob('main_*.js', { cwd: `${__dirname}/prd/assets/js` });
+    const files = glob('main_*.js', { cwd: `${__dirname}/prd/js` });
 
     // 测试 entries 配置
     files.should.with.lengthOf(1);

@@ -7,8 +7,6 @@ export default (packing) => {
     'c/d': './c/d.js'
   };
   p.path.src.root = '.';
-  // p.path.src.templates = 'templates';
-  // p.path.src.templatesPages = 'templates/pages';
   p.path.tmpDll = '../dll/.tmp/dll';
 
   p.commonChunks = {
@@ -16,9 +14,6 @@ export default (packing) => {
   };
 
   p.longTermCaching = false;
-
-  p.templateEngine = 'pug';
-  p.templateExtension = '.pug';
 
   p.rewriteRules = {
     '^/test$': '/a'

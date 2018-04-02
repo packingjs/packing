@@ -11,7 +11,7 @@ describe(`${getTestCaseName()}(${process.env.NODE_ENV})`, async () => {
   before(async () => {
     publicPath = process.env.NODE_ENV === 'local' ?
       '/' :
-      '//q.qunarzz.com/__xxxx__/prd/assets/';
+      '//q.qunarzz.com/__xxxx__/prd/';
     const cmd = 'node_modules/.bin/babel-node src/bin/packing.js build';
     if (process.env.DEBUG) {
       const stdout = await exec(cmd);

@@ -1,15 +1,16 @@
+import { resolve } from 'path';
 import request from 'supertest';
 import webpack from 'webpack';
 import Express from 'express';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import urlrewrite from 'packing-urlrewrite';
-import { middleware } from 'packing-template';
-import '../../../src/util/babel-register';
-import pRequire from '../../../src/util/require';
+import '../../../src';
+import { pRequire, middleware, getContext } from '../../../src';
 
 describe('serve', async () => {
   let app;
   before(() => {
+    const context = getContext();
     const appConfig = pRequire('config/packing');
     const webpackConfig = pRequire('config/webpack.serve.babel', {}, appConfig);
     const mwOptions = process.env.DEBUG ? {
@@ -24,6 +25,7 @@ describe('serve', async () => {
     };
 
     app = new Express();
+    app.use(Express.static(resolve(context, appConfig.path.tmpDll)));
     const compiler = webpack(webpackConfig);
     const webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, mwOptions);
     webpackDevMiddlewareInstance.waitUntilValid(async () => {

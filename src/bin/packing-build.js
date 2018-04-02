@@ -2,8 +2,8 @@
 
 import { red, yellow } from 'chalk';
 import webpack from 'webpack';
-import '../util/babel-register';
-import pRequire from '../util/require';
+import '../bootstrap';
+import { pRequire } from '..';
 
 const appConfig = pRequire('config/packing');
 const webpackConfig = pRequire('config/webpack.build.babel', {}, appConfig);

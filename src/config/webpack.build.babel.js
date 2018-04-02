@@ -10,9 +10,8 @@ import { yellow } from 'chalk';
 import CleanPlugin from 'clean-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { plugin as PackingTemplatePlugin } from '..';
-import '../util/babel-register';
-import pRequire from '../util/require';
-import { getContext } from '../util';
+import '../bootstrap';
+import { pRequire, getContext } from '..';
 
 // js输出文件保持目录名称
 const JS_DIRECTORY_NAME = 'js';

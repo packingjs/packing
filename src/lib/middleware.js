@@ -117,7 +117,7 @@ export default (app, appConfig, options) => {
       entries,
       src: {
         root: src,
-        templatesPages
+        templates
       },
       mockPages
     },
@@ -128,11 +128,11 @@ export default (app, appConfig, options) => {
     rewriteRules
   } = appConfig;
 
-  const basedir = appConfig.path.templates;
+  const basedir = templates.pages || templates;
 
   options = {
     ...{
-      template: resolve(context, src, `${templatesPages}/default${templateExtension}`),
+      template: resolve(context, src, `${basedir}/default${templateExtension}`),
       inject: templateInjectPosition,
       charset: 'UTF-8',
       title: '',
@@ -181,7 +181,7 @@ export default (app, appConfig, options) => {
       const { assetsByChunkName } = res.locals.webpackStats.toJson();
 
       let html = '';
-      const chunkNameMapTemplate = resolve(context, `${templatesPages}/${chunkName}/${templateExtension}`);
+      const chunkNameMapTemplate = resolve(context, src, `${basedir}/${chunkName}/${templateExtension}`);
       if (existsSync(template)) {
         const templateString = readFileSync(template, {
           encoding: 'utf-8'
@@ -221,7 +221,7 @@ export default (app, appConfig, options) => {
       const parser = require(`packing-template-${templateEngine}`);
       app.get(`/${chunkName}`, parser({
         mockData: mockPages,
-        templates: templatesPages,
+        templates: basedir,
         rewriteRules
       }));
     }
