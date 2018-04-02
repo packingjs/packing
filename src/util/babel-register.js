@@ -8,6 +8,4 @@ require('babel-register')({
   ]
 });
 
-if (!{}.hasOwnProperty.call(process.env, 'NODE_ENV')) {
-  process.env.NODE_ENV = 'local';
-}
+require('./dotenv');
