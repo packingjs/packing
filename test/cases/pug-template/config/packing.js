@@ -6,9 +6,10 @@ export default (packing) => {
     b: './b.js',
     'c/d': './c/d.js'
   };
-  p.path.templates = 'templates';
-  p.path.templatesPages = 'templates/pages';
-  p.path.dll = '../dll/.tmp/dll';
+  p.path.src.root = '.';
+  // p.path.src.templates = 'templates';
+  // p.path.src.templatesPages = 'templates/pages';
+  p.path.tmpDll = '../dll/.tmp/dll';
 
   p.commonChunks = {
     vendor: ['./v']

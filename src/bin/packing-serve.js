@@ -9,31 +9,30 @@ import urlrewrite from 'packing-urlrewrite';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import { Spinner } from 'cli-spinner';
-import { middleware as packingTemplate } from 'packing-template';
+import { middleware as packingTemplate } from '..';
 import '../util/babel-register';
 import pRequire from '../util/require';
+import { getContext } from '../util';
 
 program
   .option('-c, --clean_cache', 'clean dll cache')
   .option('-o, --open_browser', 'open browser')
   .parse(process.argv);
 
-const { env: { CONTEXT } } = process;
-const context = CONTEXT ? resolve(CONTEXT) : process.cwd();
+const context = getContext();
 
 const parser = __dirname.indexOf('/dist/') === 0 ?
   'node' :
   'node_modules/.bin/babel-node';
 
-let cmd = `${parser} ${__dirname}/packing-dll.js`;
-if (CONTEXT) {
-  cmd = `CONTEXT=${CONTEXT} ${cmd}`;
-}
+let cmd = `CONTEXT=${context} ${parser} ${__dirname}/packing-dll.js`;
+
+// 带上命令参数
 if (program.clean_cache) {
   cmd = `${cmd} -c`;
 }
 try {
-  const stdout = execSync(cmd, { encoding: 'utf-8' });
+  execSync(cmd, { encoding: 'utf-8' });
   // console.log(stdout);
 } catch (e) {
   console.log(e.stdout);
@@ -46,13 +45,12 @@ const {
   graphqlMockServer,
   graphqlEndpoint,
   graphiqlEndpoint,
-  path: { dll, src },
-  port: { dev }
+  path: { tmpDll, src: { root: src } },
+  port: { dev: port }
 } = appConfig;
 
 const webpackConfig = pRequire('config/webpack.serve.babel', program, appConfig);
 const compiler = webpack(webpackConfig);
-const port = dev;
 const mwOptions = {
   contentBase: src,
   quiet: false,
@@ -65,13 +63,14 @@ const mwOptions = {
   stats: { colors: true },
   serverSideRender: true
 };
-const dllPath = join(context, dll);
+const dllPath = join(context, tmpDll);
+
+const webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, mwOptions);
 
 const spinner = new Spinner('webpack: Compiling.. %s');
 spinner.setSpinnerString('|/-\\');
 spinner.start();
 
-const webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, mwOptions);
 webpackDevMiddlewareInstance.waitUntilValid(() => {
   spinner.stop();
 

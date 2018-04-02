@@ -1,12 +1,13 @@
 export default (packing) => {
   const p = packing;
 
+  p.path.src.root = '.';
   p.path.entries = {
     a: './a.js',
     b: './b.js'
   };
 
-  p.path.dll = '../dll/.tmp/dll';
+  p.path.tmpDll = '../dll/.tmp/dll';
 
   p.commonChunks = {
     vendor: [

@@ -7,37 +7,18 @@ import webpack from 'webpack';
 import mkdirp from 'mkdirp';
 import '../util/babel-register';
 import pRequire from '../util/require';
-import md5 from '../util/md5';
+import { md5, getContext } from '../util';
 import packingPackage from '../../package.json';
 
 program
   .option('-c, --clean_cache', 'clean dll cache')
   .parse(process.argv);
 
-const { CONTEXT } = process.env;
-const context = CONTEXT ? resolve(CONTEXT) : process.cwd();
-
+const context = getContext();
 const projectPackage = require(resolve(context, 'package.json'));
 const webpackConfigDll = pRequire('config/webpack.dll.babel', program);
 const appConfig = pRequire('config/packing');
-const { commonChunks, path: { dll } } = appConfig;
-
-function execDll(destDir, hashFile, newHash) {
-  // 写入newHash
-  webpack(webpackConfigDll, (err) => {
-    if (err) {
-      console.log(err);
-    } else {
-      if (!existsSync(destDir)) {
-        mkdirp.sync(destDir);
-      }
-      writeFileSync(hashFile, JSON.stringify({
-        hash: newHash
-      }));
-      console.log('💚  DllPlugin executed!');
-    }
-  });
-}
+const { commonChunks, path: { tmpDll } } = appConfig;
 
 if (Object.keys(commonChunks).length !== 0) {
   const allDependencies = Object.assign(
@@ -47,7 +28,7 @@ if (Object.keys(commonChunks).length !== 0) {
     projectPackage.devDependencies
   );
   const dllDeps = {};
-  const destDir = resolve(context, dll);
+  const destDir = resolve(context, tmpDll);
   const hashFile = `${destDir}/hash.json`;
 
   if (program.clean_cache) {
@@ -81,6 +62,19 @@ if (Object.keys(commonChunks).length !== 0) {
   if (skip) {
     console.log('💛  DllPlugin skipped!');
   } else {
-    execDll(destDir, hashFile, newHash);
+    // 写入newHash
+    webpack(webpackConfigDll, (err) => {
+      if (err) {
+        console.log(err);
+      } else {
+        if (!existsSync(destDir)) {
+          mkdirp.sync(destDir);
+        }
+        writeFileSync(hashFile, JSON.stringify({
+          hash: newHash
+        }));
+        console.log('💚  DllPlugin executed!');
+      }
+    });
   }
 }

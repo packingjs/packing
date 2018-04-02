@@ -77,6 +77,6 @@ describe(`${getTestCaseName()}(${process.env.NODE_ENV})`, async () => {
   });
 
   it('应该得到和 webpack\'s require 处理一致的 hash', async () => {
-    glob('prd/assets/1_*.jpg', { cwd: __dirname }).should.have.length(1);
+    glob('prd/1_*.jpg', { cwd: __dirname }).should.have.length(1);
   });
 });

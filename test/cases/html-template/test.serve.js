@@ -1,14 +1,17 @@
+import { resolve } from 'path';
 import request from 'supertest';
 import webpack from 'webpack';
 import Express from 'express';
 import webpackDevMiddleware from 'webpack-dev-middleware';
-import { middleware } from 'packing-template';
+import { middleware } from '../../../src';
 import '../../../src/util/babel-register';
 import pRequire from '../../../src/util/require';
+import { getContext } from '../../../src/util';
 
 describe('serve', async () => {
   let app;
   before(() => {
+    const context = getContext();
     const appConfig = pRequire('config/packing');
     const webpackConfig = pRequire('config/webpack.serve.babel', {}, appConfig);
     const mwOptions = process.env.DEBUG ? {
@@ -23,6 +26,7 @@ describe('serve', async () => {
     };
 
     app = new Express();
+    app.use(Express.static(resolve(context, appConfig.path.tmpDll)));
     const compiler = webpack(webpackConfig);
     const webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, mwOptions);
     webpackDevMiddlewareInstance.waitUntilValid(async () => {
@@ -53,8 +57,8 @@ describe('serve', async () => {
       res.text.should.match(/<meta name="description" content="A simple text">/);
     });
 
-    it('应该不引用 __.js', async () => {
-      res.text.should.not.match(/<script src="\/__\.js"><\/script>/);
+    it('应该不引用 e.js', async () => {
+      res.text.should.not.match(/<script src="\/e\.js"><\/script>/);
     });
 
     it('应该引用了 vendor.js', async () => {
@@ -69,6 +73,16 @@ describe('serve', async () => {
       const vendorMatches = res.text.match('<script src="/vendor.js"></script>');
       const aMatches = res.text.match('<script src="/a.js"></script>');
       (vendorMatches.index < aMatches.index).should.be.true();
+    });
+
+    it('应该访问到 /a.js', async () => {
+      const { status } = await request(app.listen()).get('/a.js');
+      status.should.eql(200);
+    });
+
+    it('应该访问到 /vendor.js', async () => {
+      const { status } = await request(app.listen()).get('/vendor.js');
+      status.should.eql(200);
     });
   });
 

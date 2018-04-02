@@ -9,37 +9,43 @@ import packingGlob from 'packing-glob';
 export default {
   // 文件路径，所有目录都使用相对于项目根目录的相对目录格式
   path: {
-    // 源文件目录
-    src: 'src',
+    // 源文件相关路径
+    src: {
+      // 源文件根目录
+      root: 'src',
 
-    // 页面初始化mock数据文件存放目录
-    mockPageInit: 'mock/pages',
+      // 静态文件目录
+      assets: 'assets',
 
-    // dll输出目录
-    dll: '.tmp/dll',
+      // 模版目录，如果模版支持继承或layout的话
+      // 模板一般会再区分布局文件(layout)和网页文件(pages)
+      templates: 'templates',
 
-    // 静态文件目录，可以设置在src里，也可以设置在src外
-    assets: 'assets',
+      // 模版网页文件，如果没有使用layout的话，保持这个地址和`templates`一致
+      templatesPages: 'templates/pages'
+    },
 
-    // 编译后的静态文件目录
-    // 该目录需要添加到项目根目录下的.gitignore中
-    assetsDist: 'prd/assets',
+    // 编译输出文件相关路径
+    dist: {
+      // webpack 编译产物输出目录，即 `webpack.config.output.path` 参数
+      root: 'prd',
 
-    // 模版目录，如果模版支持继承或layout的话
-    // 模板一般会再区分布局文件(layout)和网页文件(pages)
-    templates: 'src/templates',
+      // 静态文件目录
+      assets: 'assets',
 
-    // 编译后的模版目录，如果模版支持继承或layout的话
-    // 模板一般会再区分布局文件(layout)和网页文件(pages)
-    // 该变量修改时，需要同步修改pom.xml文件`project.properties.qzz_files`节点值
-    // 该目录需要添加到项目根目录下的.gitignore中
-    templatesDist: 'prd/templates',
+      // 模版目录，如果模版支持继承或layout的话
+      // 模板一般会再区分布局文件(layout)和网页文件(pages)
+      templates: 'templates',
 
-    // 模版网页文件，如果没有使用layout的话，保持这个地址和`templates`一致
-    templatesPages: 'src/templates/pages',
+      // 模版网页文件，如果没有使用layout的话，保持这个地址和`templates`一致
+      templatesPages: 'templates/pages'
+    },
 
-    // 编译后的模版网页文件，如果没有使用layout的话，保持这个地址和`templatesDist`一致
-    templatesPagesDist: 'prd/templates/pages',
+    // 页面初始化 mock 数据文件存放目录
+    mockPages: 'mock/pages',
+
+    // dllPlugin 编译输出物临时存放目录
+    tmpDll: '.tmp/dll',
 
     // webpack打包入口JS文件目录
     // As value an object, a function is accepted.

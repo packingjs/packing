@@ -9,6 +9,7 @@ module.exports = {
     complexity: 0,
     "global-require": 0,
     "no-unused-vars": ["error", { "varsIgnorePattern": "should" }],
-    "import/no-dynamic-require": 0
+    "import/no-dynamic-require": 0,
+    "import/prefer-default-export": 0
   }
 };

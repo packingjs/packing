@@ -8,7 +8,7 @@ console.log(` user-agent: ${process.env.npm_config_user_agent}`);
 console.log(` packing: ${pkg.version}`);
 
 program
-  .command('serve', 'start dev web server', { isDefault: true })
+  .command('serve', 'start dev web server')
   .command('serve-dist', 'review build output')
   .alias('serve:dist')
   .command('build', 'build project')

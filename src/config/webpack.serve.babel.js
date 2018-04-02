@@ -9,6 +9,7 @@ import { isString, isArray, isObject, isFunction } from 'util';
 import webpack from 'webpack';
 import OpenBrowserPlugin from 'open-browser-webpack-plugin';
 import pRequire from '../util/require';
+import { getContext } from '../util';
 
 const {
   assetExtensions,
@@ -19,10 +20,10 @@ const {
   cssModulesIdentName,
   commonChunks,
   path: {
-    src,
-    assets,
-    assetsDist,
-    dll,
+    src: {
+      root: src
+    },
+    tmpDll,
     entries
   }
 } = pRequire('config/packing');
@@ -54,18 +55,18 @@ const pushClientJS = (entry) => {
  * @return {object}
  */
 const webpackConfig = (program) => {
-  const { CONTEXT } = process.env;
-  const context = CONTEXT ? path.resolve(CONTEXT) : process.cwd();
-  const assetsPath = path.resolve(context, assetsDist);
-  const dllPath = path.resolve(context, dll);
+  const context = getContext();
+  const dllPath = path.resolve(context, tmpDll);
 
   let entry = isFunction(entries) ? entries() : entries;
+
+  const mode = 'development';
 
   const output = {
     chunkFilename: '[name].js',
     filename: '[name].js',
     // prd环境静态文件输出地址
-    path: assetsPath,
+    path: context,
     // dev环境下数据流访问地址
     publicPath: '/'
   };
@@ -126,7 +127,7 @@ const webpackConfig = (program) => {
   };
 
   const resolve = {
-    modules: [src, assets, 'node_modules']
+    modules: [src, 'node_modules']
   };
 
   const plugins = [];
@@ -146,7 +147,7 @@ const webpackConfig = (program) => {
       plugins.push(new webpack.DllReferencePlugin({
         context,
         // eslint-disable-next-line
-        manifest: require(path.join(dllPath, `${key}-manifest.json`))
+        manifest: require(path.resolve(dllPath, `${key}-manifest.json`))
       }));
     });
   }
@@ -154,7 +155,7 @@ const webpackConfig = (program) => {
   const performance = { hints: false };
 
   return {
-    mode: 'development',
+    mode,
     context,
     entry,
     output,

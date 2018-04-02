@@ -4,10 +4,11 @@
  * @module config/webpack.dll.babel
  */
 
-import path from 'path';
+import { resolve } from 'path';
 import webpack from 'webpack';
 import CleanPlugin from 'clean-webpack-plugin';
 import pRequire from '../util/require';
+import { getContext } from '../util';
 
 /**
  * 生成webpack配置文件
@@ -16,20 +17,18 @@ import pRequire from '../util/require';
  */
 
 export default () => {
-  const { CONTEXT } = process.env;
-  const context = CONTEXT || process.cwd();
-
+  const context = getContext();
   const {
     assetExtensions,
     commonChunks,
     path: {
-      dll
+      tmpDll
     }
   } = pRequire('config/packing');
 
   const output = {
     filename: '[name].js',
-    path: path.resolve(context, dll),
+    path: resolve(context, tmpDll),
     library: '[name]_[hash]'
   };
 
@@ -85,13 +84,13 @@ export default () => {
   };
 
   const plugins = [
-    new CleanPlugin(dll, {
+    new CleanPlugin(tmpDll, {
       root: context,
       verbose: false
     }),
     new webpack.DllPlugin({
       name: '[name]_[hash]',
-      path: path.resolve(context, `${dll}/[name]-manifest.json`)
+      path: resolve(context, `${tmpDll}/[name]-manifest.json`)
     })
   ];
 

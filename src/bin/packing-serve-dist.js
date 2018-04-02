@@ -5,46 +5,46 @@
  * @author Joe Zhong <zhong.zhi@163.com>
  * @module tools/serve
  */
-import { resolve } from 'path';
+import { resolve, join } from 'path';
 import { existsSync, readFileSync } from 'fs';
 import pug from 'pug';
 import Express from 'express';
 import urlrewrite from 'packing-urlrewrite';
-import { getPath, getContext } from 'packing-template-util';
+import { getPath, getContext as getGlobals } from 'packing-template-util';
 import '../util/babel-register';
 import pRequire from '../util/require';
+import { getContext } from '../util';
 
-const { CONTEXT } = process.env;
-const context = CONTEXT ? resolve(CONTEXT) : process.cwd();
+const context = getContext();
 const appConfig = pRequire('config/packing', {});
 const {
   templateEngine,
   templateExtension,
   rewriteRules,
   path: {
-    assetsDist,
-    templatesDist,
-    templatesPagesDist,
-    mockPageInit
+    dist: {
+      root: distRoot,
+      templates,
+      templatesPages
+    },
+    mockPages
   },
   port: {
-    dist
+    dist: port
   }
 } = appConfig;
-// const template = require(`packing-template-${templateEngine}`);
-const port = dist;
 
 const template = () => async (req, res, next) => {
   const { templatePath, pageDataPath, globalDataPath } = getPath(req, {
-    templates: templatesPagesDist,
-    mockData: mockPageInit,
-    extension: templateExtension,
+    templates: join(distRoot, templatesPages),
+    mockData: mockPages,
+    extension: join(distRoot, templateExtension),
     globalData: '__global.js',
     rewriteRules
   });
   let globals = {};
   try {
-    globals = await getContext(req, res, pageDataPath, globalDataPath);
+    globals = await getGlobals(req, res, pageDataPath, globalDataPath);
   } catch (e) {
     console.log(e);
   }
@@ -56,7 +56,7 @@ const template = () => async (req, res, next) => {
       } else {
         res.end(pug.renderFile(templatePath, {
           ...globals,
-          ...{ basedir: templatesDist }
+          ...{ basedir: templates }
         }));
       }
     } catch (e) {
@@ -69,7 +69,7 @@ const template = () => async (req, res, next) => {
 };
 
 const app = new Express();
-app.use(Express.static(resolve(context, assetsDist)));
+app.use(Express.static(resolve(context, distRoot)));
 app.use(urlrewrite(rewriteRules));
 app.use(template());
 

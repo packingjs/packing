@@ -5,9 +5,10 @@ import { resolve, extname, join } from 'path';
 import { existsSync } from 'fs';
 import { isFunction } from 'util';
 import importFresh from 'import-fresh';
+import { getContext } from '.';
 
 export default (file, program, appConfig) => {
-  const context = process.env.CONTEXT || process.cwd();
+  const context = getContext();
 
   let configFile = file;
   if (['.js', '.json'].indexOf(extname(file)) < 0) {
