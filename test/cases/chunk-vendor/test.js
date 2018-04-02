@@ -21,7 +21,7 @@ describe(getTestCaseName(), async () => {
   });
 
   it('应该能正常打出vendor包', async () => {
-    const files = glob('vendor_*.js', { cwd: `${__dirname}/prd/assets/js` });
+    const files = glob('vendor_*.js', { cwd: `${__dirname}/prd/js` });
 
     // 测试 entries 配置
     files.should.have.length(1);

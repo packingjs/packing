@@ -9,23 +9,22 @@ import { isFunction, isObject } from 'util';
 import { yellow } from 'chalk';
 import CleanPlugin from 'clean-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import { plugin as PackingTemplatePlugin } from 'packing-template';
+import { plugin as PackingTemplatePlugin } from '..';
+import '../util/babel-register';
 import pRequire from '../util/require';
+import { getContext } from '../util';
 
 // js输出文件保持目录名称
 const JS_DIRECTORY_NAME = 'js';
 // js输出文件保持目录名称
 const CSS_DIRECTORY_NAME = 'css';
 
-const { NODE_ENV, CONTEXT } = process.env;
-const context = CONTEXT || process.cwd();
-
-const { cdnRoot } = pRequire(`src/profiles/${NODE_ENV}`);
+const { NODE_ENV, CDN_ROOT } = process.env;
+const context = getContext();
 const appConfig = pRequire('config/packing');
 const {
   assetExtensions,
   commonChunks,
-  // templateExtension,
   longTermCaching,
   longTermCachingSymbol,
   fileHashLength,
@@ -33,11 +32,13 @@ const {
   cssModules,
   cssModulesIdentName,
   path: {
-    src,
-    entries,
-    assets,
-    assetsDist,
-    templatesDist
+    src: {
+      root: srcRoot
+    },
+    dist: {
+      root: distRoot
+    },
+    entries
   }
 } = appConfig;
 
@@ -57,7 +58,7 @@ const getHashPattern = (type) => {
  * @return {object}
  */
 const webpackConfig = () => {
-  const assetsPath = path.resolve(context, assetsDist);
+  const outputPath = path.resolve(context, distRoot);
   const chunkhash = getHashPattern('chunkhash');
   const contenthash = getHashPattern('contenthash');
   let entry = isFunction(entries) ? entries() : entries;
@@ -66,9 +67,9 @@ const webpackConfig = () => {
     chunkFilename: `${JS_DIRECTORY_NAME}/[name]${chunkhash}.js`,
     filename: `${JS_DIRECTORY_NAME}/[name]${chunkhash}.js`,
     // prd环境静态文件输出地址
-    path: assetsPath,
+    path: outputPath,
     // dev环境下数据流访问地址
-    publicPath: cdnRoot
+    publicPath: CDN_ROOT
   };
 
   // 开启css-modules时的配置
@@ -117,24 +118,21 @@ const webpackConfig = () => {
       },
       {
         test: new RegExp(`.(${assetExtensions.join('|')})$`, 'i'),
-        loader: 'url-loader',
+        loader: 'file-loader',
         options: {
           // context 参数会影响静态文件打包输出的路径
-          name: `[path][name]${getHashPattern('hash')}.[ext]`,
-          limit: 100
+          name: `[path][name]${getHashPattern('hash')}.[ext]`
         }
       }
     ]
   };
 
   const resolve = {
-    modules: [src, assets, 'node_modules']
+    modules: [srcRoot, 'node_modules']
   };
 
   const plugins = [
-    new CleanPlugin([assetsDist, templatesDist], {
-      root: context
-    }),
+    new CleanPlugin([distRoot]),
 
     new PackingTemplatePlugin(appConfig),
 
