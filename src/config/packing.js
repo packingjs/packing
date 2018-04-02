@@ -73,10 +73,10 @@ export default {
   },
 
   // 模版引擎类型，目前支持的类型有[html,pug,ejs,handlebars,smarty,velocity,artTemplate]
-  templateEngine: 'html',
+  templateEngine: 'pug',
 
   // 模版文件扩展名
-  templateExtension: '.html',
+  templateExtension: '.pug',
 
   // 是否往模版中注入 assets [bool|string]
   // false: 不注入
