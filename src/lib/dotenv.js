@@ -1,7 +1,7 @@
 import { existsSync } from 'fs';
 import { resolve } from 'path';
 import dotenv from 'dotenv';
-import { getContext } from '.';
+import { getContext } from '..';
 
 const context = getContext();
 
