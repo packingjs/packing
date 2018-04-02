@@ -5,8 +5,9 @@
  * @author Joe Zhong <zhong.zhi@163.com>
  * @module tools/serve
  */
-import { resolve, join } from 'path';
+import { resolve, join, dirname } from 'path';
 import { existsSync, readFileSync } from 'fs';
+import { isString } from 'util';
 import pug from 'pug';
 import Express from 'express';
 import urlrewrite from 'packing-urlrewrite';
@@ -23,8 +24,7 @@ const {
   path: {
     dist: {
       root: distRoot,
-      templates,
-      templatesPages
+      templates
     },
     mockPages
   },
@@ -33,11 +33,14 @@ const {
   }
 } = appConfig;
 
+const templatePages = isString(templates) ? templates : templates.pages;
+const basedir = isString(templates) ? templates : dirname(templates.pages);
+
 const template = () => async (req, res, next) => {
   const { templatePath, pageDataPath, globalDataPath } = getPath(req, {
-    templates: join(distRoot, templatesPages),
+    templates: join(distRoot, templatePages),
     mockData: mockPages,
-    extension: join(distRoot, templateExtension),
+    extension: templateExtension,
     globalData: '__global.js',
     rewriteRules
   });
@@ -55,7 +58,7 @@ const template = () => async (req, res, next) => {
       } else {
         res.end(pug.renderFile(templatePath, {
           ...globals,
-          ...{ basedir: templates }
+          ...{ basedir: resolve(context, distRoot, basedir) }
         }));
       }
     } catch (e) {

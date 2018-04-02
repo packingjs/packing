@@ -1,5 +1,5 @@
 import { existsSync, readFileSync } from 'fs';
-import { resolve } from 'path';
+import { resolve, dirname } from 'path';
 import { isObject, isFunction } from 'util';
 
 function injectTitle(html, templateEngine, title) {
@@ -128,11 +128,11 @@ export default (app, appConfig, options) => {
     rewriteRules
   } = appConfig;
 
-  const basedir = templates.pages || templates;
+  const templatePages = templates.pages || templates;
 
   options = {
     ...{
-      template: resolve(context, src, `${basedir}/default${templateExtension}`),
+      template: resolve(context, src, `${templatePages}/default${templateExtension}`),
       inject: templateInjectPosition,
       charset: 'UTF-8',
       title: '',
@@ -181,7 +181,7 @@ export default (app, appConfig, options) => {
       const { assetsByChunkName } = res.locals.webpackStats.toJson();
 
       let html = '';
-      const chunkNameMapTemplate = resolve(context, src, `${basedir}/${chunkName}/${templateExtension}`);
+      const chunkNameMapTemplate = resolve(context, src, `${templatePages}/${chunkName}/${templateExtension}`);
       if (existsSync(template)) {
         const templateString = readFileSync(template, {
           encoding: 'utf-8'
@@ -211,7 +211,7 @@ export default (app, appConfig, options) => {
       } else {
         // 将模版内容传递到下一个中间件处理
         res.filename = template;
-        res.basedir = basedir;
+        res.basedir = dirname(resolve(context, src, templatePages));
         res.template = html;
         next();
       }
@@ -221,7 +221,7 @@ export default (app, appConfig, options) => {
       const parser = require(`packing-template-${templateEngine}`);
       app.get(`/${chunkName}`, parser({
         mockData: mockPages,
-        templates: basedir,
+        // templates: dirname(templatePages),
         rewriteRules
       }));
     }
