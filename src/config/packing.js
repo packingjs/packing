@@ -11,34 +11,39 @@ export default {
   path: {
     // 源文件相关路径
     src: {
-      // 源文件根目录
+      /**
+       * 源文件根目录 {string}
+       */
       root: 'src',
 
-      // 静态文件目录
-      assets: 'assets',
-
-      // 模版目录，如果模版支持继承或layout的话
-      // 模板一般会再区分布局文件(layout)和网页文件(pages)
-      templates: 'templates',
-
-      // 模版网页文件，如果没有使用layout的话，保持这个地址和`templates`一致
-      templatesPages: 'templates/pages'
+      /**
+       * 模版文件路径 {string|object}
+       * 相对于 `src.root` 的相对地址
+       * 若不区分布局文件和网页文件，请直接传入字符串
+       */
+      templates: {
+        layout: 'templates/layout',
+        pages: 'templates/pages'
+      }
     },
 
     // 编译输出文件相关路径
     dist: {
-      // webpack 编译产物输出目录，即 `webpack.config.output.path` 参数
+      /**
+       * webpack 编译产物输出目录 {string}
+       * 即 `webpack.config.output.path` 参数
+       */
       root: 'prd',
 
-      // 静态文件目录
-      assets: 'assets',
-
-      // 模版目录，如果模版支持继承或layout的话
-      // 模板一般会再区分布局文件(layout)和网页文件(pages)
-      templates: 'templates',
-
-      // 模版网页文件，如果没有使用layout的话，保持这个地址和`templates`一致
-      templatesPages: 'templates/pages'
+      /**
+       * 模版文件路径 {string|object}
+       * 相对于 `dist.root` 的相对地址
+       * 若不区分布局文件和网页文件，请直接传入字符串
+       */
+      templates: {
+        layout: 'templates/layout',
+        pages: 'templates/pages'
+      }
     },
 
     // 页面初始化 mock 数据文件存放目录
