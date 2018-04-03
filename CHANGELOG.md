@@ -5,6 +5,40 @@ All notable changes to this project will be documented in this file. See [standa
 <a name="3.0.0-beta.3"></a>
 # [3.0.0-beta.3](https://github.com/packingjs/packing/compare/v3.0.0-beta.2...v3.0.0-beta.3) (2018-04-02)
 
+### Features
+* 用 `file-loader` 代替 `url-loader` 加载静态文件
+* 使用 `dotenv` 加载 `process.env` 环境变量
+* 将 `packing-template` 合并到 `packing` 工程，方便开发调试
+* 调整 `packing.path` 结构
+    - `path.dll` 更名为 `path.tmpDll`
+    - 删除 `assetsDist` `templatesDist` `templatesPagesDist`
+    - 删除 `packing.path.assets` 配置，如果希望直接 `import` `path.assets` 下的文件请使用 `webpack.resolve.alias` 设置
+      ```js
+      webpackConfig.resolve.alias = {
+        assets: 'assets'
+      };
+      ```
+    - 分为 `src` `dist` 两类，每种目录均使用 `root` 的相对目录
+    - 简化 `templates` 目录设置
+      - {string}:
+      - {object}
+        - layout:
+        - pages:
+    - `mockPageInit` 更名为 `mockPages`
+
+* `path.templates` 结构调整
+    - 兼容字符串类型参数
+    - 允许传入包含 `layout` `pages` 的对象参数
+
+* 默认模版类型改为 `pug`
+    - `templateEngine` 默认值由 `html` 改为 `pug`
+    - `templateExtension` 默认值由 `.html` 改为 `.pug`
+
+* `src/profiles` --> `profiles`
+    - 位置变化：该目录无需编译，移动到 `src` 目录外
+    - 格式变化：使用 `key=value` 的方式描述，每行一个配置
+
+* 编译输出目录由 `prd/assets/` 变更为 `prd/`
 
 
 <a name="3.0.0-beta.2"></a>
