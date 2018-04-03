@@ -2,7 +2,7 @@
 /docs/**
 /mock/**
 /examples/**
-/prd/**
-/generator-packing
+prd/
 /node_modules/**
 /dist
+/test/src

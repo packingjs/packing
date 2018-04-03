@@ -9,37 +9,48 @@ import packingGlob from 'packing-glob';
 export default {
   // 文件路径，所有目录都使用相对于项目根目录的相对目录格式
   path: {
-    // 源文件目录
-    src: 'src',
+    // 源文件相关路径
+    src: {
+      /**
+       * 源文件根目录 {string}
+       */
+      root: 'src',
 
-    // 页面初始化mock数据文件存放目录
-    mockPageInit: 'mock/pages',
+      /**
+       * 模版文件路径 {string|object}
+       * 相对于 `src.root` 的相对地址
+       * 若不区分布局文件和网页文件，请直接传入字符串
+       */
+      templates: {
+        layout: 'templates/layout',
+        pages: 'templates/pages'
+      }
+    },
 
-    // dll输出目录
-    dll: '.tmp/dll',
+    // 编译输出文件相关路径
+    dist: {
+      /**
+       * webpack 编译产物输出目录 {string}
+       * 即 `webpack.config.output.path` 参数
+       */
+      root: 'prd',
 
-    // 静态文件目录，可以设置在src里，也可以设置在src外
-    assets: 'assets',
+      /**
+       * 模版文件路径 {string|object}
+       * 相对于 `dist.root` 的相对地址
+       * 若不区分布局文件和网页文件，请直接传入字符串
+       */
+      templates: {
+        layout: 'templates/layout',
+        pages: 'templates/pages'
+      }
+    },
 
-    // 编译后的静态文件目录
-    // 该目录需要添加到项目根目录下的.gitignore中
-    assetsDist: 'prd/assets',
+    // 页面初始化 mock 数据文件存放目录
+    mockPages: 'mock/pages',
 
-    // 模版目录，如果模版支持继承或layout的话
-    // 模板一般会再区分布局文件(layout)和网页文件(pages)
-    templates: 'src/templates',
-
-    // 编译后的模版目录，如果模版支持继承或layout的话
-    // 模板一般会再区分布局文件(layout)和网页文件(pages)
-    // 该变量修改时，需要同步修改pom.xml文件`project.properties.qzz_files`节点值
-    // 该目录需要添加到项目根目录下的.gitignore中
-    templatesDist: 'prd/templates',
-
-    // 模版网页文件，如果没有使用layout的话，保持这个地址和`templates`一致
-    templatesPages: 'src/templates/pages',
-
-    // 编译后的模版网页文件，如果没有使用layout的话，保持这个地址和`templatesDist`一致
-    templatesPagesDist: 'prd/templates/pages',
+    // dllPlugin 编译输出物临时存放目录
+    tmpDll: '.tmp/dll',
 
     // webpack打包入口JS文件目录
     // As value an object, a function is accepted.
@@ -62,9 +73,16 @@ export default {
   },
 
   // 模版引擎类型，目前支持的类型有[html,pug,ejs,handlebars,smarty,velocity,artTemplate]
-  templateEngine: 'html',
+  templateEngine: 'pug',
+
   // 模版文件扩展名
-  templateExtension: '.html',
+  templateExtension: '.pug',
+
+  // 是否往模版中注入 assets [bool|string]
+  // false: 不注入
+  // 'head': 在</head>前注入
+  // 'body': 在</body>前注入
+  templateInjectPosition: 'body',
 
   // 本地访问的域名，为了调试方便，可能改成my.qunar.com
   localhost: 'localhost',
@@ -107,11 +125,11 @@ export default {
   // 否则会报错
   // <script src="/vendor.js"></script>
   commonChunks: {
-    vendor: [
+    // vendor: [
     //   'react',
     //   'react-dom'
-      'packing-ajax'
-    ]
+    //   'packing-ajax'
+    // ]
   },
 
   // 静态资源类型
@@ -140,14 +158,6 @@ export default {
     // '^/api/(.*)': 'http://touch.qunar.com/api/hotel/findhotelcity?cityName=%E5%8C%97%E4%BA%AC',
     // '^/hello': 'http://localhost:3001/123/4.html',
   },
-
-  // 用于在build中打开模板注释的配置
-  // 可选值
-  // String: 'html', 'js', 'css'；预置对3种代码处理。
-  // RegExp: 使用正则来替换注释代码。
-  // Function: 接受一个字符串参数，该参数为文件内容，返回处理后的字符串。
-  // 参考：https://github.com/LHoin/webpack-uncomment-block
-  uncommentPattern: 'html',
 
   // 是否使用GraphQL-mock-server
   graphqlMockServer: false,

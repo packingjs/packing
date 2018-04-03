@@ -1,7 +1,7 @@
 {
   "name": "packing",
   "description": "Webpack based web front-end development environment",
-  "version": "2.6.6",
+  "version": "3.0.0-beta.3",
   "repository": "packingjs/packing",
   "files": [
     "dist"
@@ -12,72 +12,92 @@
   ],
   "bin": {
     "packing": "dist/bin/packing.js",
-    "packing-lint": "dist/bin/packing-lint.js",
     "packing-build": "dist/bin/packing-build.js",
+    "packing-dll": "dist/bin/packing-dll.js",
     "packing-serve-dist": "dist/bin/packing-serve-dist.js",
     "packing-serve": "dist/bin/packing-serve.js"
   },
   "author": "zhongzhi <zhong.zhi@163.com>",
   "license": "MIT",
   "scripts": {
-    "build": "babel src -d dist",
-    "lint": "eslint --quiet \"src/**/*.js\"",
+    "build": "rimraf dist && babel src -d dist",
+    "lint": "eslint --fix --quiet \"src/**/*.js\" \"test/**/*.js\"",
     "postrelease": "git push && git push origin --tags",
     "prepare": "npm run build",
-    "release": "standard-version && npm publish"
+    "release": "standard-version && npm publish",
+    "test": "node test/index.js",
+    "test:debug": "DEBUG=1 node test/index.js",
+    "update": "sh ./scripts/npm-update.sh"
   },
   "dependencies": {
+    "autoprefixer": "^8.1.0",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.25.0",
-    "babel-loader": "^7.1.3",
+    "babel-loader": "^7.1.4",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-plugin-transform-react-display-name": "^6.25.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
-    "chalk": "^2.3.1",
-    "clean-webpack-plugin": "^0.1.18",
-    "cli-spinner": "^0.2.8",
-    "commander": "^2.12.2",
-    "copy-webpack-plugin": "^4.4.2",
-    "css-loader": "^0.28.10",
+    "babel-preset-stage-0": "^6.24.1",
+    "chalk": "^2.3.2",
+    "clean-webpack-plugin": "^0.1.19",
+    "cli-spinner": "^0.2.6",
+    "commander": "^2.15.1",
+    "css-loader": "^0.28.11",
+    "dotenv": "^5.0.1",
     "eslint-config-qunar": "^2.0.0",
     "eslint-loader": "^2.0.0",
-    "extract-text-webpack-plugin": "^3.0.0",
-    "file-loader": "^1.1.10",
+    "file-loader": "^1.1.11",
+    "generator-packing": "^2.9.14",
+    "import-fresh": "^2.0.0",
     "loader-utils": "^1.1.0",
+    "mini-css-extract-plugin": "^0.3.0",
     "mkdirp": "^0.5.1",
-    "move-webpack-plugin": "0.0.1",
-    "packing-ajax": "^0.0.1",
     "packing-glob": "^1.0.1",
-    "packing-profile-webpack-plugin": "^2.0.1",
-    "packing-rev-webpack-plugin": "^1.0.7",
-    "postcss-loader": "^2.1.1",
-    "replace-hash-webpack-plugin": "^2.4.2",
-    "style-loader": "^0.20.2",
-    "url-loader": "^0.6.2",
-    "webpack": "^3.10.0",
-    "webpack-uncomment-block": "^0.0.4"
+    "packing-template-util": "^1.1.1",
+    "postcss-loader": "^2.1.3",
+    "rimraf": "^2.6.2",
+    "style-loader": "^0.20.3",
+    "toposort": "^1.0.6",
+    "url-loader": "^1.0.1",
+    "webpack": "^4.3.0"
   },
   "devDependencies": {
     "apollo-server-express": "^1.3.2",
     "body-parser": "^1.18.2",
     "casual": "^1.5.19",
-    "express": "^4.14.1",
-    "graphql": "^0.13.1",
-    "graphql-tools": "^2.21.0",
-    "merge-graphql-schemas": "^1.5.0",
+    "express": "^4.16.3",
+    "graphql": "^0.13.2",
+    "graphql-tools": "^2.23.1",
+    "merge-graphql-schemas": "^1.5.1",
+    "mocha": "^5.0.4",
     "open-browser-webpack-plugin": "^0.0.5",
     "packing-template-html": "^1.1.2",
-    "packing-urlrewrite": "^0.1.7",
+    "packing-template-pug": "^2.0.4",
+    "packing-urlrewrite": "^0.1.8",
     "redux-devtools": "^3.3.2",
     "redux-devtools-dock-monitor": "^1.1.3",
     "redux-devtools-log-monitor": "^1.2.0",
-    "webpack-dev-middleware": "^1.10.0",
-    "webpack-hot-middleware": "^2.17.0"
+    "should": "^13.2.1",
+    "supertest": "^3.0.0",
+    "webpack-dev-middleware": "^3.1.0",
+    "webpack-hot-middleware": "^2.21.2"
   },
   "engines": {
-    "node": ">=5.10",
+    "node": ">=6.11.5",
     "npm": ">=3.0"
+  },
+  "nyc": {
+    "include": [
+      "src"
+    ],
+    "reporter": [
+      "lcov",
+      "html",
+      "text"
+    ],
+    "report-dir": "./.tmp/coverage",
+    "temp-directory": "./.tmp/.nyc_output"
   }
 }

@@ -1,41 +1,38 @@
 /**
  * webpack开发环境配置文件
  * @author Joe Zhong <zhong.zhi@163.com>
- * @module config/webpack.serve.babel
+ * @module config/webpack.dll.babel
  */
 
-import path from 'path';
+import { resolve } from 'path';
 import webpack from 'webpack';
 import CleanPlugin from 'clean-webpack-plugin';
-import pRequire from '../util/require';
-
-const {
-  assetExtensions,
-  commonChunks,
-  path: {
-    src,
-    assets,
-    dll
-  }
-} = pRequire('config/packing');
-const cwd = process.cwd();
+import '../bootstrap';
+import { pRequire, getContext } from '..';
 
 /**
  * 生成webpack配置文件
  * @param {object} program 程序进程，可以获取启动参数
  * @return {object}
  */
-const webpackConfig = () => {
-  const context = cwd;
-  const devtool = 'eval';
-  const entry = commonChunks;
+
+export default () => {
+  const context = getContext();
+  const {
+    assetExtensions,
+    commonChunks,
+    path: {
+      tmpDll
+    }
+  } = pRequire('config/packing');
+
   const output = {
-    path: path.join(cwd, dll),
     filename: '[name].js',
+    path: resolve(context, tmpDll),
     library: '[name]_[hash]'
   };
 
-  const moduleConfig = {
+  const module = {
     rules: [
       {
         test: /\.js$/i,
@@ -86,37 +83,23 @@ const webpackConfig = () => {
     ]
   };
 
-  const resolve = {
-    modules: [src, assets, 'node_modules']
-  };
-
   const plugins = [
-    new CleanPlugin([dll], {
-      root: cwd
+    new CleanPlugin(tmpDll, {
+      root: context,
+      verbose: false
     }),
-
     new webpack.DllPlugin({
-      path: path.join(output.path, '[name]-manifest.json'),
-      name: '[name]_[hash]'
-    }),
-
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV)
-      }
+      name: '[name]_[hash]',
+      path: resolve(context, `${tmpDll}/[name]-manifest.json`)
     })
-
   ];
 
   return {
+    mode: 'development',
     context,
-    entry,
+    entry: commonChunks,
     output,
-    module: moduleConfig,
-    resolve,
-    plugins,
-    devtool
+    module,
+    plugins
   };
 };
-
-export default program => webpackConfig(program);

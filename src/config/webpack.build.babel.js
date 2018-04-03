@@ -5,45 +5,41 @@
  */
 
 import path from 'path';
-import { isFunction } from 'util';
+import { isFunction, isObject } from 'util';
 import { yellow } from 'chalk';
-import webpack from 'webpack';
 import CleanPlugin from 'clean-webpack-plugin';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import UncommentBlock from 'webpack-uncomment-block';
-import ReplaceHashWebpackPlugin from 'replace-hash-webpack-plugin';
-import ProfilesPlugin from 'packing-profile-webpack-plugin';
-import pRequire from '../util/require';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import { plugin as PackingTemplatePlugin } from '..';
+import '../bootstrap';
+import { pRequire, getContext } from '..';
 
 // js输出文件保持目录名称
 const JS_DIRECTORY_NAME = 'js';
 // js输出文件保持目录名称
 const CSS_DIRECTORY_NAME = 'css';
 
-const { NODE_ENV } = process.env;
-
-const { cdnRoot } = pRequire(`src/profiles/${NODE_ENV}`);
+const { NODE_ENV, CDN_ROOT } = process.env;
+const context = getContext();
+const appConfig = pRequire('config/packing');
 const {
   assetExtensions,
   commonChunks,
-  templateExtension,
   longTermCaching,
   longTermCachingSymbol,
   fileHashLength,
   minimize,
-  sourceMap,
   cssModules,
-  cssModulesIdentName = '[path][name]__[local]--[hash:base64:5]',
-  uncommentPattern,
+  cssModulesIdentName,
   path: {
-    src,
-    templates,
-    entries,
-    assets,
-    assetsDist,
-    templatesDist
+    src: {
+      root: srcRoot
+    },
+    dist: {
+      root: distRoot
+    },
+    entries
   }
-} = pRequire('config/packing');
+} = appConfig;
 
 const getHashPattern = (type) => {
   let hashPattern = '';
@@ -61,20 +57,18 @@ const getHashPattern = (type) => {
  * @return {object}
  */
 const webpackConfig = () => {
-  const projectRootPath = process.cwd();
-  const assetsPath = path.resolve(projectRootPath, assetsDist);
+  const outputPath = path.resolve(context, distRoot);
   const chunkhash = getHashPattern('chunkhash');
   const contenthash = getHashPattern('contenthash');
-  const context = projectRootPath;
-  const entry = isFunction(entries) ? entries() : entries;
+  let entry = isFunction(entries) ? entries() : entries;
 
   const output = {
     chunkFilename: `${JS_DIRECTORY_NAME}/[name]${chunkhash}.js`,
     filename: `${JS_DIRECTORY_NAME}/[name]${chunkhash}.js`,
     // prd环境静态文件输出地址
-    path: assetsPath,
+    path: outputPath,
     // dev环境下数据流访问地址
-    publicPath: cdnRoot
+    publicPath: CDN_ROOT
   };
 
   // 开启css-modules时的配置
@@ -84,7 +78,7 @@ const webpackConfig = () => {
     minimize: { minifyFontValues: false }
   }, cssModulesOptions);
 
-  const moduleConfig = {
+  const module = {
     rules: [
       {
         test: /\.js$/i,
@@ -97,87 +91,57 @@ const webpackConfig = () => {
       },
       {
         test: /\.css$/i,
-        loader: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            { loader: 'css-loader', options: cssLoaderOptions },
-            { loader: 'postcss-loader' }
-          ]
-        })
+        use: [
+          { loader: MiniCssExtractPlugin.loader },
+          { loader: 'css-loader', options: cssLoaderOptions },
+          { loader: 'postcss-loader' }
+        ]
       },
       {
         test: /\.(scss|sass)$/i,
-        loader: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            { loader: 'css-loader', options: cssLoaderOptions },
-            { loader: 'postcss-loader' },
-            { loader: 'sass-loader' }
-          ]
-        })
+        use: [
+          { loader: MiniCssExtractPlugin.loader },
+          { loader: 'css-loader', options: cssLoaderOptions },
+          { loader: 'postcss-loader' },
+          { loader: 'sass-loader' }
+        ]
       },
       {
         test: /\.less$/i,
-        loader: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            { loader: 'css-loader', options: cssLoaderOptions },
-            { loader: 'postcss-loader' },
-            { loader: 'less-loader' }
-          ]
-        })
+        use: [
+          { loader: MiniCssExtractPlugin.loader },
+          { loader: 'css-loader', options: cssLoaderOptions },
+          { loader: 'postcss-loader' },
+          { loader: 'less-loader' }
+        ]
       },
       {
         test: new RegExp(`.(${assetExtensions.join('|')})$`, 'i'),
-        loader: 'url-loader',
+        loader: 'file-loader',
         options: {
-          name: `[path][name]${getHashPattern('hash')}.[ext]`,
-          context: assets,
-          limit: 100
+          // context 参数会影响静态文件打包输出的路径
+          name: `[path][name]${getHashPattern('hash')}.[ext]`
         }
       }
     ]
   };
 
   const resolve = {
-    modules: [src, assets, 'node_modules']
+    modules: [srcRoot, 'node_modules']
   };
 
   const plugins = [
-    new CleanPlugin([assetsDist, templatesDist], {
-      root: projectRootPath
-    }),
+    new CleanPlugin(distRoot, { root: context }),
 
-    // css files from the extract-text-plugin loader
-    new ExtractTextPlugin({
+    new PackingTemplatePlugin(appConfig),
+
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
       filename: `${CSS_DIRECTORY_NAME}/[name]${contenthash}.css`,
-      allChunks: true
-    }),
-
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify(NODE_ENV),
-        CDN_ROOT: JSON.stringify(cdnRoot)
-      }
-    }),
-
-    new UncommentBlock({
-      cwd: templates,
-      src: `**/*${templateExtension}`,
-      dest: templatesDist,
-      pattern: uncommentPattern
-    }),
-
-    new ReplaceHashWebpackPlugin({
-      cwd: templatesDist,
-      src: `**/*${templateExtension}`,
-      dest: templatesDist
-    }),
-
-    new ProfilesPlugin({
-      failOnMissing: true
+      // filename: '[name].css',
+      chunkFilename: '[id].css'
     })
-
   ];
 
   // 从配置文件中获取并生成webpack打包配置
@@ -199,33 +163,45 @@ const webpackConfig = () => {
       console.log(yellow('⚠️  There is a problem with the manifest package configuration. Packing has automatically repaired the error configuration'));
     }
     chunkNames.filter(name => name !== manifestChunkName).forEach((key) => {
-      entry[key] = commonChunks[key];
+      if (isObject(entry)) {
+        entry[key] = commonChunks[key];
+      } else {
+        entry = {
+          main: entry,
+          [key]: commonChunks[key]
+        };
+      }
     });
   }
-  // 扩展阅读 http://webpack.github.io/docs/list-of-plugins.html#commonschunkplugin
-  plugins.push(new webpack.optimize.CommonsChunkPlugin({ names: chunkNames }));
 
-  if (minimize) {
-    plugins.push(
-      // optimizations
-      new webpack.optimize.OccurrenceOrderPlugin(),
-      new webpack.optimize.UglifyJsPlugin({
-        compress: {
-          warnings: false,
-          drop_debugger: true,
-          drop_console: true
-        },
-        comments: /^!/,
-        sourceMap
-      }),
-    );
-  }
+  const optimization = {
+    // splitChunks: {
+    //   cacheGroups: {
+    //     vendor: {
+    //       chunks: 'initial',
+    //       test: 'vendor1',
+    //       name: 'vendor1',
+    //       enforce: true
+    //     }
+    //   }
+    // },
+    // minimizer: [
+    //   new UglifyJsPlugin({
+    //     cache: true,
+    //     parallel: true,
+    //     sourceMap: true // set to true if you want JS source maps
+    //   })
+    // ],
+    minimize
+  };
 
   return {
+    mode: NODE_ENV !== 'production' ? 'development' : 'production',
     context,
     entry,
     output,
-    module: moduleConfig,
+    optimization,
+    module,
     resolve,
     plugins
   };

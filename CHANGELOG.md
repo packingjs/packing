@@ -2,6 +2,142 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.0.0-beta.3"></a>
+# [3.0.0-beta.3](https://github.com/packingjs/packing/compare/v3.0.0-beta.2...v3.0.0-beta.3) (2018-04-02)
+
+### Features
+* 用 `file-loader` 代替 `url-loader` 加载静态文件
+* 使用 `dotenv` 加载 `process.env` 环境变量
+* 将 `packing-template` 合并到 `packing` 工程，方便开发调试
+* 调整 `packing.path` 结构
+    - `path.dll` 更名为 `path.tmpDll`
+    - 删除 `assetsDist` `templatesDist` `templatesPagesDist`
+    - 删除 `packing.path.assets` 配置，如果希望直接 `import` `path.assets` 下的文件请使用 `webpack.resolve.alias` 设置
+      ```js
+      webpackConfig.resolve.alias = {
+        assets: 'assets'
+      };
+      ```
+    - 分为 `src` `dist` 两类，每种目录均使用 `root` 的相对目录
+    - 简化 `templates` 目录设置
+      - {string}:
+      - {object}
+        - layout:
+        - pages:
+    - `mockPageInit` 更名为 `mockPages`
+
+* `path.templates` 结构调整
+    - 兼容字符串类型参数
+    - 允许传入包含 `layout` `pages` 的对象参数
+
+* 默认模版类型改为 `pug`
+    - `templateEngine` 默认值由 `html` 改为 `pug`
+    - `templateExtension` 默认值由 `.html` 改为 `.pug`
+
+* `src/profiles` --> `profiles`
+    - 位置变化：该目录无需编译，移动到 `src` 目录外
+    - 格式变化：使用 `key=value` 的方式描述，每行一个配置
+
+* 编译输出目录由 `prd/assets/` 变更为 `prd/`
+
+
+<a name="3.0.0-beta.2"></a>
+# [3.0.0-beta.2](https://github.com/packingjs/packing/compare/v3.0.0-beta.1...v3.0.0-beta.2) (2018-03-29)
+
+
+### Features
+
+* **packing dll:**  增加 `packing dll` 命令 ([e78a7c3](https://github.com/packingjs/packing/commit/e78a7c3))
+
+
+
+<a name="3.0.0-beta.1"></a>
+# [3.0.0-beta.1](https://github.com/packingjs/packing/compare/v3.0.0-beta.0...v3.0.0-beta.1) (2018-03-27)
+
+### Bug Fixes
+- 修复 `packing@<=2.6.6` `packing-urlrewrite` 兼容问题
+
+<a name="3.0.0-beta.0"></a>
+# [3.0.0-beta.0](https://github.com/packingjs/packing/compare/v2.6.6...v3.0.0-beta.0) (2018-03-26)
+
+### 重大改变
+- 能根据 `entry points` 自动生成网页文件
+- node@>=6.11.5
+- 使用 webpack v4
+- 升级到最新的依赖包
+
+### 新功能
+- 能根据 `entry points` 自动生成网页文件
+- 增加 `process.env.CONTEXT`，可以在运行时指定工程位置
+- 将开发环境下的工程根目录设置为虚拟目录，取消assets虚拟目录
+- 支持 https 请求转发 ([fca12f2](https://github.com/packingjs/packing/commit/fca12f2))
+- **config:** 增加 `templateInjectPosition` 参数，用来控制生成网页时是否往html中注入 assets ([03b4b16](https://github.com/packingjs/packing/commit/03b4b16))
+
+### 优化
+- 在 webpack-dev-middleware 编译后再启动 express 服务
+- 补充了重要功能的测试用例
+- 使用了多进程运行测试用例，确保各用例之间的环境变量不再相互干扰
+- 使用 `travis-ci` 做为集成工具
+
+# Bugfixes
+- 当 `.tmp/vendor` 目录不存在时执行 `packing serve -c` 不再报错 ([464c613](https://github.com/packingjs/packing/commit/464c613))
+- 修复 `packing-urlrewrite` 不能转发 `https://` 请求的问题
+- 修复了默认 `profiles` 中 `cdnRoot` 路径错误
+-
+
+### 内部改变
+- `util/babel-register.js` 使用的配置项写死在代码中，不再依赖工程根目录的 `.babelrc`，
+- 删除了默认配置中 `webpack.DefinePlugin` 插件，使用 `mode` 参数代替
+- 删除了默认配置中的 `webpack-uncomment-block` `replace-hash-webpack-plugin`，使用 `packing-template` 代替
+-
+
+### 删除的功能
+- 删除 `packing lint`，请使用 `eslint` 代替
+- 删除代码覆盖率统计的依赖包
+- 删除了 `packing-profile-webpack-plugin`，使用场景太少
+- 删除了 `assets` 虚拟目录，请看 `兼容性 -> 静态文件引用` 部分
+
+### 兼容性
+- 在模版中引用静态文件时，文件路径需要使用相对于工程根目录的相对路径。比如工程目录结构如下图所示，在 `default.png` 中引用 `1.png`的正确写法为：
+  - v3 以前的写法是 `img(src="1.png")`，可以忽略 `assets` 这一级目录
+  - v3+ 需要把路径写完整， `img(src="assets/1.png")`
+  ```
+  .
+  ├── /assets/
+  │   └── /1.png
+  └── /templates/
+      ├── /layout/
+      └── /pages/
+          └── /default.pug
+
+  ```
+- `webpack.optimize.UglifyJsPlugin` 配置方式发生了变化，需要在下面的位置修改配置：
+  ```js
+  {
+    optimization: {
+      UglifyJs: {
+        compress: {
+          warnings: false,
+          drop_debugger: true,
+          drop_console: true
+        },
+        comments: /^!/,
+        sourceMap
+      }
+    }
+  }
+  ```
+
+- 设置 `packing/config/packing.js` 中的 `templateInjectPosition: false` 来关闭生成网页文件时自动注入 assets 的功能
+
+- 如果使用 `packing` 自动生成的模版，需要修改 node 工程的 pug 代码，需要增加 `basedir` 参数，值为模版的目录
+```js
+new Pug({
+    viewPath: 'templates',
+    basedir: 'templates'
+})
+```
+
 <a name="2.6.6"></a>
 ## [2.6.6](https://github.com/packingjs/packing/compare/v2.6.5...v2.6.6) (2018-02-28)
 
