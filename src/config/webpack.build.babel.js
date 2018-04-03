@@ -131,7 +131,7 @@ const webpackConfig = () => {
   };
 
   const plugins = [
-    new CleanPlugin([distRoot]),
+    new CleanPlugin(distRoot, { root: context }),
 
     new PackingTemplatePlugin(appConfig),
 
