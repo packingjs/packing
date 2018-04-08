@@ -15,6 +15,7 @@ import { pRequire, getContext } from '..';
 
 program
   .option('-c, --clean_cache', 'clean dll cache')
+  .option('-s, --skip_dll', 'skip dll build')
   .option('-o, --open_browser', 'open browser')
   .parse(process.argv);
 
@@ -26,16 +27,18 @@ const parser = __dirname.indexOf('/dist/') === 0 ?
 
 let cmd = `CONTEXT=${context} ${parser} ${__dirname}/packing-dll.js`;
 
-// 带上命令参数
-if (program.clean_cache) {
-  cmd = `${cmd} -c`;
-}
-try {
-  execSync(cmd, { encoding: 'utf-8' });
-  // console.log(stdout);
-} catch (e) {
-  console.log(e.stdout);
-  process.exit(1);
+if (!program.skip_dll) {
+  // 带上命令参数
+  if (program.clean_cache) {
+    cmd = `${cmd} -c`;
+  }
+  try {
+    execSync(cmd, { encoding: 'utf-8' });
+    // console.log(stdout);
+  } catch (e) {
+    console.log(e.stdout);
+    process.exit(1);
+  }
 }
 
 const appConfig = pRequire('config/packing');
