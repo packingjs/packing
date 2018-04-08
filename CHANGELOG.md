@@ -2,6 +2,40 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.0.0-beta.4"></a>
+# [3.0.0-beta.4](https://github.com/packingjs/packing/compare/v3.0.0-beta.3...v3.0.0-beta.4) (2018-04-08)
+
+
+### Bug Fixes
+
+* 修复 build 时删除 prd 目录不成功的问题 ([61a2cbb](https://github.com/packingjs/packing/commit/61a2cbb))
+
+
+### Features
+
+* 可以用 `packing.config.templateInjectManifest` 向网页中插入 pwa manifest.json ([c38ad91](https://github.com/packingjs/packing/commit/c38ad91))
+* **cli:** 增加 `-s, --skip_dll` 参数用来跳过 packing serve 时 dll 编译 ([c6c173b](https://github.com/packingjs/packing/commit/c6c173b))
+* **stylelint:** 增加 stylelint 功能，校验 css 语法 ([35cd0fe](https://github.com/packingjs/packing/commit/35cd0fe))
+
+
+
+<a name="3.0.0"></a>
+# [3.0.0](https://github.com/packingjs/packing/compare/v3.0.0-beta.3...v3.0.0) (2018-04-08)
+
+
+### Bug Fixes
+
+* 修复 build 时删除 prd 目录不成功的问题 ([61a2cbb](https://github.com/packingjs/packing/commit/61a2cbb))
+
+
+### Features
+
+* 可以用 `packing.config.templateInjectManifest` 向网页中插入 pwa manifest.json ([c38ad91](https://github.com/packingjs/packing/commit/c38ad91))
+* **cli:** 增加 `-s, --skip_dll` 参数用来跳过 packing serve 时 dll 编译 ([c6c173b](https://github.com/packingjs/packing/commit/c6c173b))
+* **stylelint:** 增加 stylelint 功能，校验 css 语法 ([35cd0fe](https://github.com/packingjs/packing/commit/35cd0fe))
+
+
+
 <a name="3.0.0-beta.3"></a>
 # [3.0.0-beta.3](https://github.com/packingjs/packing/compare/v3.0.0-beta.2...v3.0.0-beta.3) (2018-04-02)
 
