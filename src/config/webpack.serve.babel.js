@@ -8,8 +8,9 @@ import path from 'path';
 import { isString, isArray, isObject, isFunction } from 'util';
 import webpack from 'webpack';
 import OpenBrowserPlugin from 'open-browser-webpack-plugin';
+import WebpackPwaManifest from 'webpack-pwa-manifest';
 import '../bootstrap';
-import { pRequire, getContext } from '..';
+import { pRequire, getContext, requireDefault } from '..';
 
 const {
   assetExtensions,
@@ -19,6 +20,7 @@ const {
   cssModules,
   cssModulesIdentName,
   commonChunks,
+  templateInjectManifest,
   path: {
     src: {
       root: src
@@ -131,6 +133,13 @@ const webpackConfig = (program) => {
   };
 
   const plugins = [];
+
+  if (templateInjectManifest) {
+    plugins.push(new WebpackPwaManifest({
+      ...requireDefault(path.resolve(context, 'config/webpack.manifest')),
+      ...{ filename: '[name][ext]' }
+    }));
+  }
 
   if (hot) {
     entry = pushClientJS(entry);

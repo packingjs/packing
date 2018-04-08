@@ -30,12 +30,7 @@ describe('serve', async () => {
     const webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, mwOptions);
     webpackDevMiddlewareInstance.waitUntilValid(async () => {
       app.use(urlrewrite(appConfig.rewriteRules));
-      middleware(app, appConfig, {
-        // template: path.resolve(__dirname, 'template.html') // ,
-        // inject: 'head',
-        // favicon: 'xxx.png'
-        // charset: 'gb2312'
-      });
+      middleware(app, appConfig);
     });
     app.use(webpackDevMiddlewareInstance);
   });

@@ -13,8 +13,6 @@ export default (packing) => {
     vendor: ['./v']
   };
 
-  p.longTermCaching = false;
-
   p.rewriteRules = {
     '^/test$': '/a'
   };

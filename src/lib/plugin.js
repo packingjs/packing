@@ -38,16 +38,21 @@ import mkdirp from 'mkdirp';
 import loaderUtils from 'loader-utils';
 import glob from 'packing-glob';
 import chunkSorter from './chunksorter';
+import { requireDefault } from '..';
 
 export default class PackingTemplatePlugin {
   constructor(appConfig, options = {}) {
     const { CONTEXT } = process.env;
     const {
       path: { src: { root: src, templates } },
+      longTermCaching,
+      longTermCachingSymbol,
+      fileHashLength,
       templateExtension,
       templateInjectPosition
     } = appConfig;
     const templatePages = isString(templates) ? templates : templates.pages;
+    const hash = this.getHashPattern(longTermCaching, longTermCachingSymbol, fileHashLength);
     this.context = CONTEXT ? resolve(CONTEXT) : process.cwd();
     this.appConfig = appConfig;
     this.options = {
@@ -62,7 +67,8 @@ export default class PackingTemplatePlugin {
         chunks: null,
         excludeChunks: null,
         chunksSortMode: 'commonChunksFirst',
-        attrs: ['img:src', 'link:href']
+        attrs: ['img:src', 'link:href'],
+        filename: `[path][name]${hash}.[ext]`
       },
       ...options
     };
@@ -80,6 +86,15 @@ export default class PackingTemplatePlugin {
         this.done(compiler, stats);
       });
     }
+  }
+
+  getHashPattern(longTermCaching, longTermCachingSymbol, fileHashLength) {
+    let hashPattern = '';
+
+    if (longTermCaching) {
+      hashPattern = `${longTermCachingSymbol}[hash:${fileHashLength}]`;
+    }
+    return hashPattern;
   }
 
   filterChunks(chunks) {
@@ -151,33 +166,17 @@ export default class PackingTemplatePlugin {
         if (isString(entryPoints[chunkName])) {
           const settingsFile = resolve(this.context, entryPoints[chunkName].replace('.js', '.settings.js'));
           if (existsSync(settingsFile)) {
-            settings = require(settingsFile);
-            if (settings.default) {
-              settings = settings.default;
-            }
+            settings = requireDefault(settingsFile);
           }
         }
 
-        // 配置优先级：
-        // 1. entry.settings.js（单个页面有效）
-        // 2. 注册路由时传递的选项参数（所有页面有效）
-        // 3. 默认参数
-        const args = {
-          ...this.options,
-          ...settings
-        };
-
+        const args = { ...this.options, ...settings };
         const {
           title,
           template,
-          // inject,
           favicon,
           keywords,
           description,
-          // chunks,
-          // excludeChunks,
-          // chunksSortMode,
-          // attrs,
           ...templateData
         } = args;
 
@@ -201,7 +200,7 @@ export default class PackingTemplatePlugin {
   }
 
   getAssetsMap(compiler) {
-    const { fileHashLength, templateEngine } = this.appConfig;
+    const { templateEngine } = this.appConfig;
 
     Object.keys(this.pages).forEach((chunkName) => {
       const matches = [];
@@ -220,19 +219,22 @@ export default class PackingTemplatePlugin {
             const file = resolve(this.context, value);
             if (existsSync(file) && statSync(file).isFile()) {
               const content = readFileSync(file);
-              const {
-                name,
-                ext,
-                dir // ,
-                // base
-              } = parse(value);
+              const { name, ext, dir } = parse(value);
               const hash = this.getHashDigest(content);
-              const pattern = '[path][name]_[hash:8].[ext]';
-              const newValue = pattern
+              const newValue = this.options.filename
                 .replace('[path]', dir ? `${dir}/` : '')
                 .replace('[name]', name)
                 .replace('[ext]', ext.replace('.', ''))
-                .replace('[hash:8]', hash.substr(0, fileHashLength));
+                .replace(/\[hash(:{0,1}\d{0,2})\]/, (pattern) => {
+                  let hashLength = 32;
+                  if (pattern) {
+                    const hashLengthMatches = pattern.match(/\[hash:(\d{1,2})\]/);
+                    if (hashLengthMatches && hashLengthMatches[1]) {
+                      [, hashLength] = hashLengthMatches; // eslint disable line
+                    }
+                  }
+                  return hash.substr(0, hashLength);
+                });
               const dist = resolve(compiler.options.output.path, newValue);
               mkdirp.sync(dirname(dist));
               if (!existsSync(dist)) {
@@ -258,7 +260,8 @@ export default class PackingTemplatePlugin {
       path: { dist: { root: dist, templates } },
       commonChunks,
       templateExtension,
-      templateInjectPosition
+      templateInjectPosition,
+      templateInjectManifest
     } = this.appConfig;
 
     const templatePages = isString(templates) ? templates : templates.pages;
@@ -306,6 +309,10 @@ export default class PackingTemplatePlugin {
         html = this.injectScripts(html, chunkName, allChunks, commonChunks, publicPath, inject);
       }
 
+      if (templateInjectManifest) {
+        html = this.injectManifest(html, this.getManifestFileName(compiler));
+      }
+
       const filename = resolve(this.context, dist, templatePages, `${chunkName + templateExtension}`);
       mkdirp.sync(dirname(filename));
       writeFileSync(filename, html);
@@ -327,8 +334,7 @@ export default class PackingTemplatePlugin {
             layout: distLayout
           }
         }
-      },
-      fileHashLength
+      }
     } = this.appConfig;
     const { attrs } = this.options;
 
@@ -359,12 +365,20 @@ export default class PackingTemplatePlugin {
               const content = readFileSync(file);
               const { name, ext, dir } = parse(value);
               const hash = this.getHashDigest(content);
-              const pattern = '[path][name]_[hash:8].[ext]';
-              const newValue = pattern
+              const newValue = this.options.filename
                 .replace('[path]', dir ? `${dir}/` : '')
                 .replace('[name]', name)
                 .replace('[ext]', ext.replace('.', ''))
-                .replace('[hash:8]', hash.substr(0, fileHashLength));
+                .replace(/\[hash(:{0,1}\d{0,2})\]/, (pattern) => {
+                  let hashLength = 32;
+                  if (pattern) {
+                    const hashLengthMatches = pattern.match(/\[hash:(\d{1,2})\]/);
+                    if (hashLengthMatches && hashLengthMatches[1]) {
+                      [, hashLength] = hashLengthMatches;
+                    }
+                  }
+                  return hash.substr(0, hashLength);
+                });
               const dist = resolve(compiler.options.output.path, newValue);
               mkdirp.sync(dirname(dist));
               if (!existsSync(dist)) {
@@ -408,6 +422,21 @@ export default class PackingTemplatePlugin {
       tag: arr[0] === '*' ? '' : arr[0],
       attribute: arr[1].replace('-', '\\-')
     };
+  }
+
+  getManifestFileName(compiler) {
+    let pwaAssets;
+
+    compiler.options.plugins
+      .filter(p => p.constructor.name === 'WebpackPwaManifest')
+      .forEach((p) => {
+        pwaAssets = p.assets;
+      });
+
+    if (pwaAssets) {
+      return pwaAssets.filter(asset => /manifest\w*.json/.test(asset.output))[0].output;
+    }
+    return '';
   }
 
   injectTitle(html, title) {
@@ -459,6 +488,15 @@ export default class PackingTemplatePlugin {
     }
 
     return html;
+  }
+
+  injectManifest(html, filename) {
+    const { templateEngine } = this.appConfig;
+    // 为 SEO 准备的页面 meta 信息
+    if (templateEngine === 'pug') {
+      return `${html}\nblock append meta\n  link(rel="manifest" href="${filename}")\n`;
+    }
+    return html.replace('</head>', `  <link rel="manifest" href="${filename}">\n  </head>`);
   }
 
   injectStyles(html, chunkName, allChunks, commonChunks, publicPath) {

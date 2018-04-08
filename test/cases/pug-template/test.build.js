@@ -1,8 +1,8 @@
 import { readFileSync, existsSync } from 'fs';
 import rimraf from 'rimraf';
-import { exec, getTestCaseName, random } from '../../util';
+import { exec, getTestCaseName /* , random */ } from '../../util';
 
-process.env.NODE_ENV = random() ? 'local' : 'production';
+// process.env.NODE_ENV = random() ? 'local' : 'production';
 
 describe(`${getTestCaseName()}(${process.env.NODE_ENV})`, async () => {
   let html;

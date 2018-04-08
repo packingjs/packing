@@ -84,6 +84,9 @@ export default {
   // 'body': 在</body>前注入
   templateInjectPosition: 'body',
 
+  // 是否往模版中注入 PWA manifest.json [bool|string]
+  templateInjectManifest: false,
+
   // 本地访问的域名，为了调试方便，可能改成my.qunar.com
   localhost: 'localhost',
 

@@ -1,6 +1,7 @@
 import { existsSync, readFileSync } from 'fs';
 import { resolve, dirname } from 'path';
 import { isObject, isFunction } from 'util';
+import { requireDefault } from '..';
 
 function injectTitle(html, templateEngine, title) {
   if (title) {
@@ -48,6 +49,13 @@ function injectMeta(html, templateEngine, favicon, keywords, description) {
   }
 
   return html;
+}
+
+function injectManifest(html, templateEngine, manifest) {
+  if (templateEngine === 'pug') {
+    return `${html}\nblock append meta\n  link(rel="manifest" href="${manifest}")\n`;
+  }
+  return html.replace('</head>', `  <link rel="manifest" href="${manifest}">\n  </head>`);
 }
 
 function injectStyles(html, templateEngine, chunkName, allChunks, commonChunks) {
@@ -125,6 +133,7 @@ export default (app, appConfig, options) => {
     templateEngine,
     templateExtension,
     templateInjectPosition,
+    templateInjectManifest,
     rewriteRules
   } = appConfig;
 
@@ -153,16 +162,9 @@ export default (app, appConfig, options) => {
       const settingsFile = resolve(context, entryPoints[chunkName].replace('.js', '.settings.js'));
       let settings = {};
       if (existsSync(settingsFile)) {
-        settings = require(settingsFile);
-        if (settings.default) {
-          settings = settings.default;
-        }
+        settings = requireDefault(settingsFile);
       }
 
-      // 配置优先级：
-      // 1. entry.settings.js（单个页面有效）
-      // 2. 注册路由时传递的选项参数（所有页面有效）
-      // 3. 默认参数
       const {
         title,
         template,
@@ -170,8 +172,6 @@ export default (app, appConfig, options) => {
         favicon,
         keywords,
         description,
-        // chunks,
-        // excludeChunks,
         ...templateData
       } = {
         ...options,
@@ -198,6 +198,9 @@ export default (app, appConfig, options) => {
 
       html = injectTitle(html, templateEngine, title);
       html = injectMeta(html, templateEngine, favicon, keywords, description);
+      if (templateInjectManifest) {
+        html = injectManifest(html, templateEngine, templateInjectManifest);
+      }
       if (templateInjectPosition) {
         html = injectStyles(html, templateEngine, chunkName, assetsByChunkName, commonChunks);
         html = injectScripts(html, templateEngine, chunkName, assetsByChunkName, commonChunks, inject); // eslint-disable-line

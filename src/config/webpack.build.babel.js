@@ -9,9 +9,10 @@ import { isFunction, isObject } from 'util';
 import { yellow } from 'chalk';
 import CleanPlugin from 'clean-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import WebpackPwaManifest from 'webpack-pwa-manifest';
 import { plugin as PackingTemplatePlugin } from '..';
 import '../bootstrap';
-import { pRequire, getContext } from '..';
+import { pRequire, getContext, requireDefault } from '..';
 
 // js输出文件保持目录名称
 const JS_DIRECTORY_NAME = 'js';
@@ -30,6 +31,7 @@ const {
   minimize,
   cssModules,
   cssModulesIdentName,
+  templateInjectManifest,
   path: {
     src: {
       root: srcRoot
@@ -60,6 +62,7 @@ const webpackConfig = () => {
   const outputPath = path.resolve(context, distRoot);
   const chunkhash = getHashPattern('chunkhash');
   const contenthash = getHashPattern('contenthash');
+  const hash = getHashPattern('hash');
   let entry = isFunction(entries) ? entries() : entries;
 
   const output = {
@@ -120,7 +123,7 @@ const webpackConfig = () => {
         loader: 'file-loader',
         options: {
           // context 参数会影响静态文件打包输出的路径
-          name: `[path][name]${getHashPattern('hash')}.[ext]`
+          name: `[path][name]${hash}.[ext]`
         }
       }
     ]
@@ -143,6 +146,13 @@ const webpackConfig = () => {
       chunkFilename: '[id].css'
     })
   ];
+
+  if (templateInjectManifest) {
+    plugins.push(new WebpackPwaManifest({
+      ...requireDefault(path.resolve(context, 'config/webpack.manifest')),
+      ...{ filename: `[name]${hash}[ext]` }
+    }));
+  }
 
   // 从配置文件中获取并生成webpack打包配置
   // fix: #14

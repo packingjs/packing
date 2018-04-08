@@ -1,5 +1,4 @@
 process.env.CONTEXT = __dirname;
-process.env.NODE_ENV = 'local';
 
 const { getTestCaseName } = require('../../util');
 
