@@ -14,8 +14,10 @@ All notable changes to this project will be documented in this file. See [standa
 ### Features
 
 * 可以用 `packing.config.templateInjectManifest` 向网页中插入 pwa manifest.json ([c38ad91](https://github.com/packingjs/packing/commit/c38ad91))
-* **cli:** 增加 `-s, --skip_dll` 参数用来跳过 packing serve 时 dll 编译 ([c6c173b](https://github.com/packingjs/packing/commit/c6c173b))
-* **stylelint:** 增加 stylelint 功能，校验 css 语法 ([35cd0fe](https://github.com/packingjs/packing/commit/35cd0fe))
+* **cli:** 增加 `-s, --skip_dll` 参数用来跳过 `packing serve` 时 dll 编译 ([c6c173b](https://github.com/packingjs/packing/commit/c6c173b))
+* **stylelint:** 增加 `stylelint` 功能，校验 `css` 语法 ([35cd0fe](https://github.com/packingjs/packing/commit/35cd0fe))。在 `packing.js` 中增加了两个控制参数：
+    - `stylelint`: 是否启用 `Stylelint`
+    - `stylelintOptions`: stylelint参数，请参考 [Stylelint官方文档](https://stylelint.io/user-guide/node-api/#options)
 
 
 <a name="3.0.0-beta.3"></a>
