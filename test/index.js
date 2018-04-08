@@ -5,7 +5,7 @@ const path = require('path');
 
 process.env.NODE_ENV = 'local';
 
-const files = glob.sync('cases/**/index.js', { cwd: __dirname });
+const files = glob.sync('cases/stylelint/index.js', { cwd: __dirname });
 files.sort((a, b) => path.dirname(a) > path.dirname(b));
 
 const errors = [];

@@ -1,0 +1,8 @@
+.c {
+  color: #f00;
+  content: '===c class===';
+  display: flex;
+}
+::placeholder {
+  color: gray;
+}

@@ -10,6 +10,7 @@ import { yellow } from 'chalk';
 import CleanPlugin from 'clean-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import WebpackPwaManifest from 'webpack-pwa-manifest';
+import StylelintWebpackPlugin from 'stylelint-webpack-plugin';
 import { plugin as PackingTemplatePlugin } from '..';
 import '../bootstrap';
 import { pRequire, getContext, requireDefault } from '..';
@@ -32,6 +33,8 @@ const {
   cssModules,
   cssModulesIdentName,
   templateInjectManifest,
+  stylelint,
+  stylelintOptions,
   path: {
     src: {
       root: srcRoot
@@ -130,7 +133,7 @@ const webpackConfig = () => {
   };
 
   const resolve = {
-    modules: [srcRoot, 'node_modules']
+    modules: [path.resolve(context, srcRoot), 'node_modules']
   };
 
   const plugins = [
@@ -146,6 +149,13 @@ const webpackConfig = () => {
       chunkFilename: '[id].css'
     })
   ];
+
+  if (stylelint) {
+    plugins.push(new StylelintWebpackPlugin({
+      ...{ context: path.resolve(context, srcRoot) },
+      ...stylelintOptions
+    }));
+  }
 
   if (templateInjectManifest) {
     plugins.push(new WebpackPwaManifest({

@@ -114,6 +114,13 @@ export default {
   // 自定义css-modules类标识命名规则
   cssModulesIdentName: '[path][name]__[local]--[hash:base64:5]',
 
+  // 是否启用 Stylelint
+  stylelint: false,
+
+  stylelintOptions: {
+    files: ['**/*.css', '**/*.less', '**/*.s?(a|c)ss']
+  },
+
   // webserver端口
   port: {
     // 开发环境端口号

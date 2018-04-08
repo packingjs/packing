@@ -9,6 +9,7 @@ import { isString, isArray, isObject, isFunction } from 'util';
 import webpack from 'webpack';
 import OpenBrowserPlugin from 'open-browser-webpack-plugin';
 import WebpackPwaManifest from 'webpack-pwa-manifest';
+import StylelintWebpackPlugin from 'stylelint-webpack-plugin';
 import '../bootstrap';
 import { pRequire, getContext, requireDefault } from '..';
 
@@ -21,6 +22,8 @@ const {
   cssModulesIdentName,
   commonChunks,
   templateInjectManifest,
+  stylelint,
+  stylelintOptions,
   path: {
     src: {
       root: src
@@ -129,10 +132,17 @@ const webpackConfig = (program) => {
   };
 
   const resolve = {
-    modules: [src, 'node_modules']
+    modules: [path.resolve(context, src), 'node_modules']
   };
 
   const plugins = [];
+
+  if (stylelint) {
+    plugins.push(new StylelintWebpackPlugin({
+      ...{ context: path.resolve(context, src) },
+      ...stylelintOptions
+    }));
+  }
 
   if (templateInjectManifest) {
     plugins.push(new WebpackPwaManifest({
