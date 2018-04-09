@@ -1,9 +1,9 @@
 import rimraf from 'rimraf';
 import { exec, getTestCaseName } from '../../util';
 
-describe(getTestCaseName(), async () => {
+describe.skip(getTestCaseName(), async () => {
   it('packing serve 应该报错', async () => {
-    const cmd = 'node_modules/.bin/babel-node src/bin/packing.js serve --skip_dll';
+    const cmd = 'node_modules/.bin/babel-node src/bin/packing.js serve --skip-dll --no-listen';
     try {
       await exec(cmd);
       should.fail(); // eslint-disable-line

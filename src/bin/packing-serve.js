@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { execSync } from 'child_process';
-import { resolve, join } from 'path';
+import { join } from 'path';
 import program from 'commander';
 import webpack from 'webpack';
 import Express from 'express';
@@ -12,14 +12,32 @@ import { Spinner } from 'cli-spinner';
 import { middleware as packingTemplate } from '..';
 import '../bootstrap';
 import { pRequire, getContext } from '..';
+import graphqlMockServer from '../lib/graphql-mock-server';
 
 program
-  .option('-c, --clean_cache', 'clean dll cache')
-  .option('-s, --skip_dll', 'skip dll build')
-  .option('-o, --open_browser', 'open browser')
+  .option('-c, --clean-cache', 'clean dll cache')
+  .option('-s, --skip-dll', 'skip dll build')
+  .option('-o, --open-browser', 'open browser')
+  .option('--no-listen', 'no listen app instance')
   .parse(process.argv);
 
 const context = getContext();
+
+const appConfig = pRequire('config/packing');
+const {
+  rewriteRules,
+  graphql: {
+    enable: graphqlEnable,
+    graphqlEndpoint,
+    graphiqlEndpoint
+  },
+  hot,
+  commonChunks,
+  path: { tmpDll },
+  port: { dev: port }
+} = appConfig;
+
+const hasCommonChunks = commonChunks && Object.keys(commonChunks).length > 0;
 
 const parser = __dirname.indexOf('/dist/') === 0 ?
   'node' :
@@ -27,7 +45,7 @@ const parser = __dirname.indexOf('/dist/') === 0 ?
 
 let cmd = `CONTEXT=${context} ${parser} ${__dirname}/packing-dll.js`;
 
-if (!program.skip_dll) {
+if (!program.skip_dll && hasCommonChunks) {
   // 带上命令参数
   if (program.clean_cache) {
     cmd = `${cmd} -c`;
@@ -41,25 +59,15 @@ if (!program.skip_dll) {
   }
 }
 
-const appConfig = pRequire('config/packing');
-const {
-  rewriteRules,
-  graphqlMockServer,
-  graphqlEndpoint,
-  graphiqlEndpoint,
-  path: { tmpDll, src: { root: src } },
-  port: { dev: port }
-} = appConfig;
-
 const webpackConfig = pRequire('config/webpack.serve.babel', program, appConfig);
 const compiler = webpack(webpackConfig);
 const mwOptions = {
-  contentBase: src,
-  quiet: false,
-  noInfo: false,
-  hot: true,
-  inline: true,
-  lazy: false,
+  // contentBase: src,
+  // quiet: false,
+  // noInfo: false,
+  // hot: true,
+  // inline: true,
+  // lazy: false,
   publicPath: webpackConfig.output.publicPath,
   headers: { 'Access-Control-Allow-Origin': '*' },
   stats: { colors: true },
@@ -81,47 +89,28 @@ webpackDevMiddlewareInstance.waitUntilValid(() => {
   app.use(Express.static(dllPath));
   app.use(urlrewrite(rewriteRules));
   app.use(webpackDevMiddlewareInstance);
-  app.use(webpackHotMiddleware(compiler));
+  if (hot) {
+    app.use(webpackHotMiddleware(compiler));
+  }
   packingTemplate(app, appConfig);
 
-  if (graphqlMockServer) {
-    try {
-      const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
-      const { addMockFunctionsToSchema, makeExecutableSchema } = require('graphql-tools');
-      const { mergeTypes, mergeResolvers, fileLoader } = require('merge-graphql-schemas');
-      const bodyParser = require('body-parser');
-
-      let typesArray = '';
-      let mocks = {};
-      try {
-        typesArray = fileLoader(resolve('mock/**/schema.js'));
-        mocks = mergeResolvers(fileLoader(resolve('mock/**/resolver.js')));
-      } catch (e) {
-        console.log(e);
-      }
-
-      try {
-        const schema = makeExecutableSchema({ typeDefs: mergeTypes(typesArray) });
-        addMockFunctionsToSchema({ schema, mocks });
-        app.use(graphqlEndpoint, bodyParser.json(), graphqlExpress(() => ({ schema })));
-        app.use(graphiqlEndpoint, graphiqlExpress({
-          endpointURL: graphqlEndpoint,
-          query: ''
-        }));
-      } catch (e) {
-        console.log(e);
-      }
-    } catch (e) {
-      console.log('\n缺少依赖包，请先安装 npm i --dev apollo-server-express graphql-tools merge-graphql-schemas body-parser \n');
-      process.exit(1);
-    }
+  if (graphqlEnable) {
+    graphqlMockServer(app, {
+      graphqlEndpoint,
+      graphiqlEndpoint
+    });
   }
 
-  app.listen(port, (err) => {
-    if (err) {
-      console.error(err);
-    } else {
-      console.info('==> 🚧  Listening on port %s\n', port);
-    }
-  });
+  console.log('--!program.no_listen:', !program.no_listen);
+  if (!program.no_listen) {
+    // app.listen(port, (err) => {
+    //   if (err) {
+    //     console.error(err);
+    //   } else {
+    //     console.info('==> 🚧  Listening on port %s\n', port);
+    //   }
+    // });
+  } else {
+    process.exit(0);
+  }
 });

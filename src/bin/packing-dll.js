@@ -5,12 +5,13 @@ import { resolve } from 'path';
 import program from 'commander';
 import webpack from 'webpack';
 import mkdirp from 'mkdirp';
+import loaderUtils from 'loader-utils';
 import '../bootstrap';
-import { pRequire, md5, getContext } from '..';
+import { pRequire, getContext } from '..';
 import packingPackage from '../../package.json';
 
 program
-  .option('-c, --clean_cache', 'clean dll cache')
+  .option('-c, --clean-cache', 'clean dll cache')
   .parse(process.argv);
 
 const context = getContext();
@@ -43,8 +44,7 @@ if (Object.keys(commonChunks).length !== 0) {
       }
     });
   });
-
-  const newHash = md5(JSON.stringify(dllDeps));
+  const newHash = loaderUtils.getHashDigest(JSON.stringify(dllDeps));
 
   let skip = true;
   if (existsSync(hashFile)) {
