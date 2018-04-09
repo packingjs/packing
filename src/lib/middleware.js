@@ -130,10 +130,15 @@ export default (app, appConfig, options) => {
       mockPages
     },
     commonChunks,
-    templateEngine,
-    templateExtension,
-    templateInjectPosition,
-    templateInjectManifest,
+    template: {
+      engine,
+      extension
+    },
+    template: {
+      scriptInjectPosition,
+      injectManifestEnable,
+      manifest
+    },
     rewriteRules
   } = appConfig;
 
@@ -141,8 +146,8 @@ export default (app, appConfig, options) => {
 
   options = {
     ...{
-      template: resolve(context, src, `${templatePages}/default${templateExtension}`),
-      inject: templateInjectPosition,
+      template: resolve(context, src, `${templatePages}/default${extension}`),
+      inject: scriptInjectPosition,
       charset: 'UTF-8',
       title: '',
       favicon: false,
@@ -181,7 +186,7 @@ export default (app, appConfig, options) => {
       const { assetsByChunkName } = res.locals.webpackStats.toJson();
 
       let html = '';
-      const chunkNameMapTemplate = resolve(context, src, `${templatePages}/${chunkName}/${templateExtension}`);
+      const chunkNameMapTemplate = resolve(context, src, `${templatePages}/${chunkName}/${extension}`);
       if (existsSync(template)) {
         const templateString = readFileSync(template, {
           encoding: 'utf-8'
@@ -196,20 +201,20 @@ export default (app, appConfig, options) => {
         throw new Error(`Not found template at ${template}`);
       }
 
-      html = injectTitle(html, templateEngine, title);
-      html = injectMeta(html, templateEngine, favicon, keywords, description);
-      if (templateInjectManifest) {
-        html = injectManifest(html, templateEngine, templateInjectManifest);
+      html = injectTitle(html, engine, title);
+      html = injectMeta(html, engine, favicon, keywords, description);
+      if (injectManifestEnable) {
+        html = injectManifest(html, engine, manifest);
       }
-      if (templateInjectPosition) {
-        html = injectStyles(html, templateEngine, chunkName, assetsByChunkName, commonChunks);
-        html = injectScripts(html, templateEngine, chunkName, assetsByChunkName, commonChunks, inject); // eslint-disable-line
+      if (scriptInjectPosition) {
+        html = injectStyles(html, engine, chunkName, assetsByChunkName, commonChunks);
+        html = injectScripts(html, engine, chunkName, assetsByChunkName, commonChunks, inject); // eslint-disable-line
       }
       html = html
         // 替换格式为 __var__ 用户自定义变量
         .replace(/__(\w+)__/gm, (re, $1) => templateData[$1] || '');
 
-      if (templateEngine === 'html') {
+      if (engine === 'html') {
         res.send(html);
       } else {
         // 将模版内容传递到下一个中间件处理
@@ -220,8 +225,8 @@ export default (app, appConfig, options) => {
       }
     });
 
-    if (templateEngine !== 'html') {
-      const parser = require(`packing-template-${templateEngine}`);
+    if (engine !== 'html') {
+      const parser = require(`packing-template-${engine}`);
       app.get(`/${chunkName}`, parser({
         mockData: mockPages,
         // templates: dirname(templatePages),

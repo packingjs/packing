@@ -45,20 +45,24 @@ export default class PackingTemplatePlugin {
     const { CONTEXT } = process.env;
     const {
       path: { src: { root: src, templates } },
-      longTermCaching,
-      longTermCachingSymbol,
-      fileHashLength,
-      templateExtension,
-      templateInjectPosition
+      longTermCaching: {
+        enable: longTermCachingEnable,
+        joinSymbol,
+        fileHashLength
+      },
+      template: {
+        extension,
+        scriptInjectPosition
+      }
     } = appConfig;
     const templatePages = isString(templates) ? templates : templates.pages;
-    const hash = this.getHashPattern(longTermCaching, longTermCachingSymbol, fileHashLength);
+    const hash = this.getHashPattern(longTermCachingEnable, joinSymbol, fileHashLength);
     this.context = CONTEXT ? resolve(CONTEXT) : process.cwd();
     this.appConfig = appConfig;
     this.options = {
       ...{
-        template: resolve(this.context, src, `${templatePages}/default${templateExtension}`),
-        inject: templateInjectPosition,
+        template: resolve(this.context, src, `${templatePages}/default${extension}`),
+        inject: scriptInjectPosition,
         charset: 'UTF-8',
         title: '',
         favicon: false,
@@ -143,12 +147,12 @@ export default class PackingTemplatePlugin {
   }
 
   done(compiler, stats) {
-    const { templateEngine } = this.appConfig;
+    const { template: { engine } } = this.appConfig;
     this.generatePages();
     this.getAssetsMap(compiler);
     this.output(compiler, stats);
 
-    if (templateEngine === 'pug') {
+    if (engine === 'pug') {
       this.copyAndReplaceLayout(compiler);
     }
   }
@@ -200,14 +204,14 @@ export default class PackingTemplatePlugin {
   }
 
   getAssetsMap(compiler) {
-    const { templateEngine } = this.appConfig;
+    const { template: { engine } } = this.appConfig;
 
     Object.keys(this.pages).forEach((chunkName) => {
       const matches = [];
       const { args, html } = this.pages[chunkName];
       args.attrs.forEach((a) => {
         const { tag, attribute } = this.parseAttribute(a);
-        const reg = templateEngine === 'pug' ?
+        const reg = engine === 'pug' ?
           new RegExp(`${tag}(?:\\(.*\\s+|\\()(?:${attribute})\\s*=\\s*["']([^"']+)`, 'g') :
           new RegExp(`${tag}.*\\s+(?:${attribute})\\s*=\\s*["']([^"']+)`, 'g');
         let result;
@@ -259,9 +263,12 @@ export default class PackingTemplatePlugin {
     const {
       path: { dist: { root: dist, templates } },
       commonChunks,
-      templateExtension,
-      templateInjectPosition,
-      templateInjectManifest
+      template: {
+        extension,
+        scriptInjectPosition,
+        injectManifest // ,
+        // manifest
+      }
     } = this.appConfig;
 
     const templatePages = isString(templates) ? templates : templates.pages;
@@ -304,16 +311,16 @@ export default class PackingTemplatePlugin {
       });
       html = html.join('');
 
-      if (templateInjectPosition) {
+      if (scriptInjectPosition) {
         html = this.injectStyles(html, chunkName, allChunks, commonChunks, publicPath);
         html = this.injectScripts(html, chunkName, allChunks, commonChunks, publicPath, inject);
       }
 
-      if (templateInjectManifest) {
+      if (injectManifest) {
         html = this.injectManifest(html, this.getManifestFileName(compiler));
       }
 
-      const filename = resolve(this.context, dist, templatePages, `${chunkName + templateExtension}`);
+      const filename = resolve(this.context, dist, templatePages, `${chunkName + extension}`);
       mkdirp.sync(dirname(filename));
       writeFileSync(filename, html);
     });
@@ -440,10 +447,10 @@ export default class PackingTemplatePlugin {
   }
 
   injectTitle(html, title) {
-    const { templateEngine } = this.appConfig;
+    const { template: { engine } } = this.appConfig;
     if (title) {
       // 为 SEO 准备的页面 meta 信息
-      if (templateEngine === 'pug') {
+      if (engine === 'pug') {
         html = `${html}\nblock title\n  title ${title}\n`;
       } else {
         html = html.replace(/__title__/g, title);
@@ -453,9 +460,9 @@ export default class PackingTemplatePlugin {
   }
 
   injectMeta(html, favicon, keywords, description) {
-    const { templateEngine } = this.appConfig;
+    const { template: { engine } } = this.appConfig;
     // 为 SEO 准备的页面 meta 信息
-    if (templateEngine === 'pug') {
+    if (engine === 'pug') {
       const metaTags = [];
       if (keywords) {
         metaTags.push(`  meta(name="keywords" content="${keywords}")`);
@@ -491,16 +498,16 @@ export default class PackingTemplatePlugin {
   }
 
   injectManifest(html, filename) {
-    const { templateEngine } = this.appConfig;
+    const { template: { engine } } = this.appConfig;
     // 为 SEO 准备的页面 meta 信息
-    if (templateEngine === 'pug') {
+    if (engine === 'pug') {
       return `${html}\nblock append meta\n  link(rel="manifest" href="${filename}")\n`;
     }
     return html.replace('</head>', `  <link rel="manifest" href="${filename}">\n  </head>`);
   }
 
   injectStyles(html, chunkName, allChunks, commonChunks, publicPath) {
-    const { templateEngine } = this.appConfig;
+    const { template: { engine } } = this.appConfig;
     const styles = [];
     allChunks
       .filter((chunk) => {
@@ -517,7 +524,7 @@ export default class PackingTemplatePlugin {
 
     if (styles.length > 0) {
       let styleHtml;
-      if (templateEngine === 'pug') {
+      if (engine === 'pug') {
         styleHtml = `block append style\n${
           styles
             .map(file => `  link(href="${publicPath + file}" rel="stylesheet")`)
@@ -536,7 +543,7 @@ export default class PackingTemplatePlugin {
   }
 
   injectScripts(html, chunkName, allChunks, commonChunks, publicPath, inject) {
-    const { templateEngine } = this.appConfig;
+    const { template: { engine } } = this.appConfig;
 
     // common chunks 和 page chunk 脚本引用代码
     allChunks = allChunks
@@ -549,7 +556,7 @@ export default class PackingTemplatePlugin {
     if (allChunks.length > 0) {
       const scriptHtml = allChunks
         .map((chunk) => {
-          if (templateEngine === 'pug') {
+          if (engine === 'pug') {
             return chunk.files
               .filter(file => file.endsWith('.js'))
               .map(file => `  script(src="${publicPath + file}")`)
@@ -562,7 +569,7 @@ export default class PackingTemplatePlugin {
         })
         .join('\n');
 
-      if (templateEngine === 'pug') {
+      if (engine === 'pug') {
         html = `${html}\nblock append script\n${scriptHtml}\n`;
       } else {
         html = html.replace(`</${inject}>`, `${scriptHtml}\n  </${inject}>`);

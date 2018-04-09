@@ -18,8 +18,10 @@ import { pRequire, getContext } from '..';
 const context = getContext();
 const appConfig = pRequire('config/packing', {});
 const {
-  templateEngine,
-  templateExtension,
+  template: {
+    engine,
+    extension
+  },
   rewriteRules,
   path: {
     dist: {
@@ -40,7 +42,7 @@ const template = () => async (req, res, next) => {
   const { templatePath, pageDataPath, globalDataPath } = getPath(req, {
     templates: join(distRoot, templatePages),
     mockData: mockPages,
-    extension: templateExtension,
+    extension,
     globalData: '__global.js',
     rewriteRules
   });
@@ -52,7 +54,7 @@ const template = () => async (req, res, next) => {
   }
   if (existsSync(templatePath)) {
     try {
-      if (templateEngine === 'html') {
+      if (engine === 'html') {
         const output = readFileSync(templatePath, { encoding: 'utf-8' });
         res.end(output);
       } else {

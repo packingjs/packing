@@ -12,14 +12,14 @@ export default (packing) => {
   p.path.tmpDll = '../dll/.tmp/dll';
   p.path.src.templates = '.';
   p.path.dist.templates = 'templates';
-  p.templateEngine = 'html';
-  p.templateExtension = '.html';
+  p.template.engine = 'html';
+  p.template.extension = '.html';
 
   p.commonChunks = {
     vendor: ['./v']
   };
 
-  p.longTermCaching = false;
+  p.longTermCaching.enable = false;
 
   p.rewriteRules = {
     '^/zhong$': '/a'

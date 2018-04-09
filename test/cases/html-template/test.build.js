@@ -3,8 +3,6 @@ import glob from 'packing-glob';
 import rimraf from 'rimraf';
 import { exec } from '../../util';
 
-// process.env.NODE_ENV = random() ? 'local' : 'production';
-
 describe(`build:(${process.env.NODE_ENV})`, async () => {
   let publicPath;
 

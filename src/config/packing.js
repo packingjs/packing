@@ -1,25 +1,53 @@
 /**
- * 和构建工具相关的配置信息
- * @author Joe Zhong <zhong.zhi@163.com>
+ * `packing` 配置模块
  * @module config/packing
  */
 import path from 'path';
 import packingGlob from 'packing-glob';
 
 export default {
-  // 文件路径，所有目录都使用相对于项目根目录的相对目录格式
+  /**
+   * 本地访问的域名
+   * 如果需要使用 `qunar.com` 的 cookie，需要改成类似 `my.qunar.com` 这种
+   * @type {string}
+   */
+  localhost: 'localhost',
+
+  /**
+   * webserver 端口
+   */
+  port: {
+    /**
+     * 开发环境 webserver 端口
+     * @type {number}
+     */
+    dev: 8081,
+
+    /**
+     * 预览编译结果时 webserver 端口
+     * @type {number}
+     */
+    dist: 8080
+  },
+
+  /**
+   * 文件路径配置
+   * 所有目录都使用相对于项目根目录的相对目录格式
+   */
   path: {
-    // 源文件相关路径
+    /** 源文件相关路径 */
     src: {
       /**
-       * 源文件根目录 {string}
+       * 源文件根目录
+       * @type {string}
        */
       root: 'src',
 
       /**
-       * 模版文件路径 {string|object}
+       * 模版文件路径
        * 相对于 `src.root` 的相对地址
        * 若不区分布局文件和网页文件，请直接传入字符串
+       * @type {(string|object)}
        */
       templates: {
         layout: 'templates/layout',
@@ -27,37 +55,67 @@ export default {
       }
     },
 
-    // 编译输出文件相关路径
+    /** 编译输出文件相关路径 */
     dist: {
       /**
-       * webpack 编译产物输出目录 {string}
+       * webpack 编译产物输出目录
        * 即 `webpack.config.output.path` 参数
+       * @type {string}
        */
       root: 'prd',
 
       /**
-       * 模版文件路径 {string|object}
+       * 模版文件路径
        * 相对于 `dist.root` 的相对地址
        * 若不区分布局文件和网页文件，请直接传入字符串
+       * @type {(string|object)}
        */
       templates: {
         layout: 'templates/layout',
         pages: 'templates/pages'
-      }
+      },
+
+      /**
+       * JavaScript 输出目录
+       * @type {string}
+       */
+      js: 'js',
+
+      /**
+       * CSS 输出目录
+       * @type {string}
+       */
+      css: 'css'
     },
 
-    // 页面初始化 mock 数据文件存放目录
+    /**
+     * 页面初始化 mock 数据文件存放目录
+     * @type {string}
+     */
     mockPages: 'mock/pages',
 
-    // dllPlugin 编译输出物临时存放目录
+    /**
+     * dllPlugin 编译输出物临时存放目录
+     * @type {string}
+     */
     tmpDll: '.tmp/dll',
 
-    // webpack打包入口JS文件目录
-    // As value an object, a function is accepted.
-    // entries: {
-    //   index: './src/entries/index.js',
-    //   abc: './src/entries/abc.less'
-    // }
+    /**
+     * 打包入口文件
+     * @type {(string|object|function)}
+     * @example
+     * // string
+     * entries: './src/entries/index.js'
+     * @example
+     * // object
+     * entries: {
+     *   index: './src/entries/index.js',
+     *   abc: './src/entries/abc.less'
+     * }
+     * @example
+     * // function
+     * entries: () => {}
+     */
     entries: () => {
       const entryPath = 'src/entries';
       const entryPattern = '**/*.js';
@@ -72,68 +130,153 @@ export default {
     }
   },
 
-  // 模版引擎类型，目前支持的类型有[html,pug,ejs,handlebars,smarty,velocity,artTemplate]
-  templateEngine: 'pug',
+  /** 模版配置 */
+  template: {
+    /**
+     * 模版引擎类型
+     * 目前支持
+     * - html
+     * - pug
+     * - ejs
+     * - handlebars
+     * - smarty
+     * - velocity
+     * - artTemplate
+     * @type {string}
+     */
+    engine: 'pug',
 
-  // 模版文件扩展名
-  templateExtension: '.pug',
+    /**
+     * 模版文件扩展名
+     * @type {string}
+     */
+    extension: '.pug',
 
-  // 是否往模版中注入 assets [bool|string]
-  // false: 不注入
-  // 'head': 在</head>前注入
-  // 'body': 在</body>前注入
-  templateInjectPosition: 'body',
+    /**
+     * 是否根据 `entry pointer` 自动生成网页文件
+     * @type {bool}
+     */
+    autoGeneration: true,
 
-  // 是否往模版中注入 PWA manifest.json [bool|string]
-  templateInjectManifest: false,
+    /**
+     * 是否往模版中注入 assets
+     * @type {bool}
+     */
+    inject: true,
 
-  // 本地访问的域名，为了调试方便，可能改成my.qunar.com
-  localhost: 'localhost',
+    /**
+     * JavaScript Chunk 注入的位置
+     * - 'head': 在</head>前注入
+     * - 'body': 在</body>前注入
+     * @type {'head'|'body'}
+     */
+    scriptInjectPosition: 'body',
 
-  // dev环境启用 hmr
+    /**
+     * 是否往模版中注入 PWA manifest.json
+     * @type {bool}
+     */
+    injectManifest: false,
+
+    /**
+     * `manifest.json` 文件位置
+     * @type {string}
+     */
+    manifest: 'manifest.json'
+  },
+
+  /**
+   * 是否启用热模块替换
+   * @type {bool}
+   */
   hot: false,
 
-  // 编译时做文件 md5
-  longTermCaching: true,
+  /** 长效缓存配置 */
+  longTermCaching: {
+    /**
+     * 是否启用编译时文件 hash 重命名
+     * @type {bool}
+     */
+    enable: true,
 
-  // 文件名与 md5 连接使用的字符串
-  longTermCachingSymbol: '_',
+    /**
+     * 文件名与 hash 连接使用的字符串
+     * @type {string}
+     */
+    joinSymbol: '_',
 
-  // 静态文件md5保留长度
-  fileHashLength: 8,
-
-  // 编译时做代码压缩
-  minimize: true,
-
-  // 编译时启用source map
-  sourceMap: false,
-
-  // 启用css-loader的css-modules功能
-  cssModules: false,
-
-  // 自定义css-modules类标识命名规则
-  cssModulesIdentName: '[path][name]__[local]--[hash:base64:5]',
-
-  // 是否启用 Stylelint
-  stylelint: false,
-
-  stylelintOptions: {
-    files: ['**/*.css', '**/*.less', '**/*.s?(a|c)ss']
+    /**
+     * hash 长度
+     * @type {number}
+     */
+    fileHashLength: 8
   },
 
-  // webserver端口
-  port: {
-    // 开发环境端口号
-    dev: 8081,
-    // 预览编译后结果的端口号
-    dist: 8080
+  /** uglifyJS 配置 */
+  uglify: {
+    /**
+     * 是否启用 uglifyJS 压缩代码
+     * @type {bool}
+     */
+    enable: true,
+
+    options: {
+      /**
+       * 是否输出 `source map` 文件
+       * @type {bool}
+       */
+      sourceMap: false
+    }
   },
 
-  // commonChunks配置，在serve任务中被DllPlugin调用，在build任务中被CommonsChunkPlugin调用
-  // CommonsChunkPlugin会将最后一个当作Entry chunk
-  // 注意，如果配置了commonChunks，所有网页模版需要引用公共包文件
-  // 否则会报错
-  // <script src="/vendor.js"></script>
+  /**
+   * `css-loader` 配置项
+   * @type {object}
+   * @see {@link https://github.com/webpack-contrib/css-loader|css-loader}
+   */
+  cssLoader: {
+    /**
+     * 是否启用 `CSS Modules`
+     * @type {bool}
+     */
+    modules: false,
+
+    /**
+     * 自定义css-modules类标识命名规则
+     * @type {string}
+     */
+    localIdentName: '[path][name]__[local]--[hash:base64:5]'
+  },
+
+  /** stylelint 配置 */
+  stylelint: {
+    /**
+     * 是否启用 `stylelint`
+     * @type {bool}
+     */
+    enable: false,
+
+    /**
+     * `stylelint` 配置项
+     * @type {object}
+     * @see {@link https://stylelint.io/user-guide/node-api/#options|stylelint options}
+     */
+    options: {
+      files: ['**/*.css', '**/*.less', '**/*.s?(a|c)ss']
+    }
+  },
+
+  /**
+   * commonChunks 配置
+   * `CommonsChunkPlugin` 会将最后一个当作 `Entry chunk`
+   * 该配置分别在以下过程中被调用：
+   * - 在 `packing serve` 任务中被 `DllPlugin` 调用
+   * - 在 `packing build` 任务中被 `CommonsChunkPlugin` 调用
+   * 注意，如果配置了commonChunks，所有网页模版需要引用公共包文件
+   * 否则会报错
+   * <script src="/vendor.js"></script>
+   * @type {string}
+   */
   commonChunks: {
     // vendor: [
     //   'react',
@@ -142,7 +285,31 @@ export default {
     // ]
   },
 
-  // 静态资源类型
+  /** graphql 配置 */
+  graphql: {
+    /**
+     * 是否使用 `GraphQL-mock-server`
+     * @type {bool}
+     */
+    enable: false,
+
+    /**
+     * GraphQL 地址
+     * @type {string}
+     */
+    graphqlEndpoint: '/graphql',
+
+    /**
+     * GraphiQL 地址
+     * @type {string}
+     */
+    graphiqlEndpoint: '/graphiql'
+  },
+
+  /**
+   * 静态资源类型
+   * @type {array}
+   */
   assetExtensions: [
     'jpg',
     'jpeg',
@@ -156,26 +323,20 @@ export default {
     'svg'
   ],
 
-  // URL转发路由规则配置
-  // require! 表示使用本地mock文件
+  /**
+   * URL转发路由规则配置
+   * `require!` 表示使用本地 mock 文件
+   * @type {object}
+   */
   rewriteRules: {
-    // 网站URL与模版的对应路由关系
+    /** 网站URL与模版的对应路由关系 */
     '^/$': '/index.html',
 
-    // API转发
+    /** API转发 */
     '^/api/(.*)': 'require!/mock/api/$1.js'
     // '^/api/(.*)': '/index.jade.html',
     // '^/api/(.*)': 'http://touch.qunar.com/api/hotel/findhotelcity?cityName=%E5%8C%97%E4%BA%AC',
     // '^/hello': 'http://localhost:3001/123/4.html',
-  },
-
-  // 是否使用GraphQL-mock-server
-  graphqlMockServer: false,
-
-  // GraphQL 地址
-  graphqlEndpoint: '/graphql',
-
-  // GraphiQL 地址
-  graphiqlEndpoint: '/graphiql'
+  }
 
 };

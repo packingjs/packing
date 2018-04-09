@@ -7,8 +7,8 @@ export default (packing) => {
   };
   p.path.src.templates = '.';
   p.path.dist.templates = 'templates';
-  p.templateEngine = 'html';
-  p.templateExtension = '.html';
+  p.template.engine = 'html';
+  p.template.extension = '.html';
 
   return p;
 };

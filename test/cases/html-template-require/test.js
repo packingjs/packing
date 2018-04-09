@@ -1,9 +1,7 @@
 import { readFileSync, existsSync } from 'fs';
 import rimraf from 'rimraf';
 import glob from 'packing-glob';
-import { exec, getTestCaseName, random } from '../../util';
-
-process.env.NODE_ENV = random() ? 'local' : 'production';
+import { exec, getTestCaseName } from '../../util';
 
 describe(`${getTestCaseName()}(${process.env.NODE_ENV})`, async () => {
   let html;

@@ -1,13 +1,20 @@
 import { existsSync } from 'fs';
 // import rimraf from 'rimraf';
-import { pRequire } from '../../../src';
-import { execWebpack, getTestCaseName } from '../../util';
+// import { pRequire } from '../../../src';
+import { exec, getTestCaseName } from '../../util';
 
 describe(getTestCaseName(), async () => {
   before(async () => {
-    const stdout = await execWebpack(pRequire('config/webpack.dll.babel'));
+    // const stdout = await execWebpack(pRequire('config/webpack.dll.babel'));
+    // if (process.env.DEBUG) {
+    //   console.log(stdout);
+    // }
+    const cmd = 'node_modules/.bin/babel-node src/bin/packing.js dll';
     if (process.env.DEBUG) {
+      const stdout = await exec(cmd);
       console.log(stdout);
+    } else {
+      await exec(cmd);
     }
   });
 

@@ -15,32 +15,34 @@ import { plugin as PackingTemplatePlugin } from '..';
 import '../bootstrap';
 import { pRequire, getContext, requireDefault } from '..';
 
-// js输出文件保持目录名称
-const JS_DIRECTORY_NAME = 'js';
-// js输出文件保持目录名称
-const CSS_DIRECTORY_NAME = 'css';
-
 const { NODE_ENV, CDN_ROOT } = process.env;
 const context = getContext();
 const appConfig = pRequire('config/packing');
 const {
   assetExtensions,
   commonChunks,
-  longTermCaching,
-  longTermCachingSymbol,
-  fileHashLength,
-  minimize,
-  cssModules,
-  cssModulesIdentName,
-  templateInjectManifest,
-  stylelint,
-  stylelintOptions,
+  longTermCaching: {
+    enable: longTermCachingEnable,
+    joinSymbol,
+    fileHashLength
+  },
+  // minimize,
+  cssLoader,
+  template: {
+    injectManifest
+  },
+  stylelint: {
+    enable: stylelintEnable,
+    options: stylelintOptions
+  },
   path: {
     src: {
       root: srcRoot
     },
     dist: {
-      root: distRoot
+      root: distRoot,
+      js,
+      css
     },
     entries
   }
@@ -49,8 +51,8 @@ const {
 const getHashPattern = (type) => {
   let hashPattern = '';
 
-  if (longTermCaching) {
-    hashPattern = `${longTermCachingSymbol}[${type}:${fileHashLength}]`;
+  if (longTermCachingEnable) {
+    hashPattern = `${joinSymbol}[${type}:${fileHashLength}]`;
   }
   return hashPattern;
 };
@@ -69,20 +71,20 @@ const webpackConfig = () => {
   let entry = isFunction(entries) ? entries() : entries;
 
   const output = {
-    chunkFilename: `${JS_DIRECTORY_NAME}/[name]${chunkhash}.js`,
-    filename: `${JS_DIRECTORY_NAME}/[name]${chunkhash}.js`,
+    chunkFilename: `${js}/[name]${chunkhash}.js`,
+    filename: `${js}/[name]${chunkhash}.js`,
     // prd环境静态文件输出地址
     path: outputPath,
     // dev环境下数据流访问地址
     publicPath: CDN_ROOT
   };
 
-  // 开启css-modules时的配置
-  const cssModulesOptions = cssModules ? { module: true, localIdentName: cssModulesIdentName } : {};
-  const cssLoaderOptions = Object.assign({
-    importLoaders: 2,
-    minimize: { minifyFontValues: false }
-  }, cssModulesOptions);
+  const cssLoaderOptions = {
+    ...cssLoader,
+    ...{
+      minimize: { minifyFontValues: false }
+    }
+  };
 
   const module = {
     rules: [
@@ -144,20 +146,20 @@ const webpackConfig = () => {
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
-      filename: `${CSS_DIRECTORY_NAME}/[name]${contenthash}.css`,
+      filename: `${css}/[name]${contenthash}.css`,
       // filename: '[name].css',
       chunkFilename: '[id].css'
     })
   ];
 
-  if (stylelint) {
+  if (stylelintEnable) {
     plugins.push(new StylelintWebpackPlugin({
       ...{ context: path.resolve(context, srcRoot) },
       ...stylelintOptions
     }));
   }
 
-  if (templateInjectManifest) {
+  if (injectManifest) {
     plugins.push(new WebpackPwaManifest({
       ...requireDefault(path.resolve(context, 'config/webpack.manifest')),
       ...{ filename: `[name]${hash}[ext]` }
@@ -212,7 +214,7 @@ const webpackConfig = () => {
     //     sourceMap: true // set to true if you want JS source maps
     //   })
     // ],
-    minimize
+    // minimize
   };
 
   return {
