@@ -12,18 +12,20 @@ import WebpackPwaManifest from 'webpack-pwa-manifest';
 import StylelintWebpackPlugin from 'stylelint-webpack-plugin';
 import '../bootstrap';
 import { pRequire, getContext, requireDefault } from '..';
+import loader from './webpack.serve.loader';
 
 const {
-  assetExtensions,
   localhost,
   port,
   hot,
-  cssModules,
-  cssModulesIdentName,
+  template: {
+    injectManifest
+  },
+  stylelint: {
+    enable: stylelintEnable,
+    options: stylelintOptions
+  },
   commonChunks,
-  templateInjectManifest,
-  stylelint,
-  stylelintOptions,
   path: {
     src: {
       root: src
@@ -76,75 +78,20 @@ const webpackConfig = (program) => {
     publicPath: '/'
   };
 
-  // 开启css-modules时的配置
-  const cssModulesOptions = cssModules ? { module: true, localIdentName: cssModulesIdentName } : {};
-  const cssLoaderOptions = Object.assign({ importLoaders: 2 }, cssModulesOptions);
-
-  const module = {
-    rules: [
-      {
-        test: /\.js$/i,
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: 'babel-loader'
-          },
-          {
-            loader: 'eslint-loader'
-          }
-        ]
-      },
-      {
-        test: /\.css$/i,
-        use: [
-          { loader: 'style-loader' },
-          { loader: 'css-loader', options: cssLoaderOptions },
-          { loader: 'postcss-loader' }
-        ]
-      },
-      {
-        test: /\.(scss|sass)$/i,
-        use: [
-          { loader: 'style-loader' },
-          { loader: 'css-loader', options: cssLoaderOptions },
-          { loader: 'postcss-loader' },
-          { loader: 'sass-loader' }
-        ]
-      },
-      {
-        test: /\.less$/i,
-        use: [
-          { loader: 'style-loader' },
-          { loader: 'css-loader', options: cssLoaderOptions },
-          { loader: 'postcss-loader' },
-          { loader: 'less-loader' }
-        ]
-      },
-      {
-        test: new RegExp(`.(${assetExtensions.join('|')})$`, 'i'),
-        loader: 'file-loader',
-        options: {
-          name: '[path][name].[ext]',
-          publicPath: '/'
-        }
-      }
-    ]
-  };
-
   const resolve = {
     modules: [path.resolve(context, src), 'node_modules']
   };
 
   const plugins = [];
 
-  if (stylelint) {
+  if (stylelintEnable) {
     plugins.push(new StylelintWebpackPlugin({
       ...{ context: path.resolve(context, src) },
       ...stylelintOptions
     }));
   }
 
-  if (templateInjectManifest) {
+  if (injectManifest) {
     plugins.push(new WebpackPwaManifest({
       ...requireDefault(path.resolve(context, 'config/webpack.manifest')),
       ...{ filename: '[name][ext]' }
@@ -157,7 +104,9 @@ const webpackConfig = (program) => {
   }
 
   if (program.open_browser) {
-    plugins.push(new OpenBrowserPlugin({ url: `http://${localhost}:${port.dev}` }));
+    plugins.push(new OpenBrowserPlugin({
+      url: `http://${localhost}:${port.dev}`
+    }));
   }
 
   // 从配置文件中获取dll
@@ -178,7 +127,7 @@ const webpackConfig = (program) => {
     context,
     entry,
     output,
-    module,
+    module: loader,
     resolve,
     plugins,
     performance

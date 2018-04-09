@@ -9,6 +9,7 @@ import webpack from 'webpack';
 import CleanPlugin from 'clean-webpack-plugin';
 import '../bootstrap';
 import { pRequire, getContext } from '..';
+import loader from './webpack.serve.loader';
 
 /**
  * 生成webpack配置文件
@@ -19,7 +20,6 @@ import { pRequire, getContext } from '..';
 export default () => {
   const context = getContext();
   const {
-    assetExtensions,
     commonChunks,
     path: {
       tmpDll
@@ -30,57 +30,6 @@ export default () => {
     filename: '[name].js',
     path: resolve(context, tmpDll),
     library: '[name]_[hash]'
-  };
-
-  const module = {
-    rules: [
-      {
-        test: /\.js$/i,
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: 'babel-loader'
-          },
-          {
-            loader: 'eslint-loader'
-          }
-        ]
-      },
-      {
-        test: /\.css$/i,
-        use: [
-          { loader: 'style-loader' },
-          { loader: 'css-loader', options: { importLoaders: 2 } },
-          { loader: 'postcss-loader' }
-        ]
-      },
-      {
-        test: /\.(scss|sass)$/i,
-        use: [
-          { loader: 'style-loader' },
-          { loader: 'css-loader', options: { importLoaders: 2 } },
-          { loader: 'postcss-loader' },
-          { loader: 'sass-loader' }
-        ]
-      },
-      {
-        test: /\.less$/i,
-        use: [
-          { loader: 'style-loader' },
-          { loader: 'css-loader', options: { importLoaders: 2 } },
-          { loader: 'postcss-loader' },
-          { loader: 'less-loader' }
-        ]
-      },
-      {
-        test: new RegExp(`.(${assetExtensions.join('|')})$`, 'i'),
-        loader: 'file-loader',
-        options: {
-          name: '[path][name].[ext]',
-          publicPath: '/'
-        }
-      }
-    ]
   };
 
   const plugins = [
@@ -99,7 +48,7 @@ export default () => {
     context,
     entry: commonChunks,
     output,
-    module,
+    module: loader,
     plugins
   };
 };
