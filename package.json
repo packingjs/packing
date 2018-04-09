@@ -64,7 +64,7 @@
     "stylelint-webpack-plugin": "^0.10.4",
     "toposort": "^1.0.6",
     "url-loader": "^1.0.1",
-    "webpack": "^4.3.0",
+    "webpack": "^4.5.0",
     "webpack-pwa-manifest": "^3.6.2"
   },
   "devDependencies": {
