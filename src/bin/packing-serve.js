@@ -77,12 +77,14 @@ const dllPath = join(context, tmpDll);
 
 const webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, mwOptions);
 
-const spinner = new Spinner('webpack: Compiling.. %s');
-spinner.setSpinnerString('|/-\\');
-spinner.start();
+const spinner = new Spinner('webpack: bundling.. %s');
+spinner.setSpinnerDelay(100);
+setTimeout(() => {
+  spinner.start();
+}, 0);
 
 webpackDevMiddlewareInstance.waitUntilValid(() => {
-  spinner.stop();
+  spinner.stop(true);
 
   const app = new Express();
   app.use(Express.static(context));
