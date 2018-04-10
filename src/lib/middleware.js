@@ -1,7 +1,8 @@
 import { existsSync, readFileSync } from 'fs';
-import { resolve, dirname } from 'path';
-import { isObject, isFunction } from 'util';
-import { requireDefault } from '..';
+import { resolve, dirname, isAbsolute } from 'path';
+import { isObject } from 'util';
+import { requireDefault, getContext } from '..';
+import getEntries from '../lib/getEntries';
 
 function injectTitle(html, templateEngine, title) {
   if (title) {
@@ -84,7 +85,9 @@ function injectStyles(html, templateEngine, chunkName, allChunks, commonChunks) 
 
   return html;
 }
-function injectScripts(html, templateEngine, chunkName, allChunks, commonChunks, inject) {
+
+// eslint-disable-next-line
+function injectScripts(html, templateEngine, chunkName, allChunks, commonChunks, scriptInjectPosition) {
   const publicPath = '/';
   const scripts = Object.keys(allChunks)
     .filter(key => allChunks[key].endsWith('.js'))
@@ -110,16 +113,15 @@ function injectScripts(html, templateEngine, chunkName, allChunks, commonChunks,
       scriptHtml = scripts
         .map(file => `  <script src="${publicPath + file}"></script>`)
         .join('\n');
-      html = html.replace(`</${inject}>`, `${scriptHtml}\n  </head>`);
+      html = html.replace(`</${scriptInjectPosition}>`, `${scriptHtml}\n  </scriptInjectPosition>`);
     }
   }
 
   return html;
 }
 
-export default (app, appConfig, options) => {
-  const { CONTEXT } = process.env;
-  const context = CONTEXT ? resolve(CONTEXT) : process.cwd();
+export default (app, appConfig) => {
+  const context = getContext();
   const {
     path: {
       entries,
@@ -132,36 +134,19 @@ export default (app, appConfig, options) => {
     commonChunks,
     template: {
       engine,
-      extension
-    },
-    template: {
+      extension,
       scriptInjectPosition,
       injectManifestEnable,
-      manifest
+      manifest,
+      autoGeneration
     },
     rewriteRules
   } = appConfig;
 
   const templatePages = templates.pages || templates;
 
-  options = {
-    ...{
-      template: resolve(context, src, `${templatePages}/default${extension}`),
-      inject: scriptInjectPosition,
-      charset: 'UTF-8',
-      title: '',
-      favicon: false,
-      keywords: false,
-      description: false,
-      chunks: null,
-      excludeChunks: null,
-      chunksSortMode: null
-    },
-    ...options
-  };
-
   // 根据 entry 信息在 express 中添加路由
-  const entryPoints = isFunction(entries) ? entries() : entries;
+  const entryPoints = getEntries(entries);
   Object.keys(entryPoints).forEach((chunkName) => {
     app.get(`/${chunkName}`, (req, res, next) => {
       const settingsFile = resolve(context, entryPoints[chunkName].replace('.js', '.settings.js'));
@@ -172,23 +157,24 @@ export default (app, appConfig, options) => {
 
       const {
         title,
-        template,
+        source,
         inject,
         favicon,
         keywords,
         description,
         ...templateData
       } = {
-        ...options,
+        ...appConfig.template,
         ...settings
       };
 
       const { assetsByChunkName } = res.locals.webpackStats.toJson();
 
       let html = '';
-      const chunkNameMapTemplate = resolve(context, src, `${templatePages}/${chunkName}/${extension}`);
-      if (existsSync(template)) {
-        const templateString = readFileSync(template, {
+      const chunkNameMapTemplate = resolve(context, src, `${templatePages}/${chunkName}${extension}`);
+      const parent = isAbsolute(source) ? source : resolve(context, source);
+      if (autoGeneration && existsSync(parent)) {
+        const templateString = readFileSync(parent, {
           encoding: 'utf-8'
         });
         html = templateString;
@@ -198,7 +184,7 @@ export default (app, appConfig, options) => {
         });
         html = templateString;
       } else {
-        throw new Error(`Not found template at ${template}`);
+        throw new Error(`Not found template at ${parent}`);
       }
 
       html = injectTitle(html, engine, title);
@@ -206,9 +192,9 @@ export default (app, appConfig, options) => {
       if (injectManifestEnable) {
         html = injectManifest(html, engine, manifest);
       }
-      if (scriptInjectPosition) {
+      if (inject) {
         html = injectStyles(html, engine, chunkName, assetsByChunkName, commonChunks);
-        html = injectScripts(html, engine, chunkName, assetsByChunkName, commonChunks, inject); // eslint-disable-line
+        html = injectScripts(html, engine, chunkName, assetsByChunkName, commonChunks, scriptInjectPosition); // eslint-disable-line
       }
       html = html
         // 替换格式为 __var__ 用户自定义变量
@@ -218,7 +204,7 @@ export default (app, appConfig, options) => {
         res.send(html);
       } else {
         // 将模版内容传递到下一个中间件处理
-        res.filename = template;
+        res.filename = parent;
         res.basedir = dirname(resolve(context, src, templatePages));
         res.template = html;
         next();

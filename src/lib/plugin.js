@@ -1,6 +1,7 @@
 /**
  * 思路：
- *   1. 在 done 时根据 entries 信息生成网页并存储到内存 pages 中
+ *   1. 在 done 时根据 entries 信息生成网页并存储到 this.pages
+ *      如果 autoGeneration=false 就读取存在的模版文件并存储到 this.pages
  *   2. 匹配出所有静态资源，生成 matches
  *   3. 根据 matches 信息拷贝文件并使用 hash 重命名文件名
  *   4. 把 pages 中的文件替换为新的文件路径
@@ -32,50 +33,19 @@ webpack plugin hooks 执行顺序：
  */
 
 import { existsSync, readFileSync, writeFileSync, statSync } from 'fs';
-import { resolve, dirname, parse } from 'path';
-import { isString, isFunction } from 'util';
+import { resolve, join, dirname, parse, isAbsolute } from 'path';
+import { isString } from 'util';
 import mkdirp from 'mkdirp';
 import loaderUtils from 'loader-utils';
 import glob from 'packing-glob';
 import chunkSorter from './chunksorter';
-import { requireDefault } from '..';
+import { requireDefault, getContext } from '..';
+import getEntries from '../lib/getEntries';
 
 export default class PackingTemplatePlugin {
-  constructor(appConfig, options = {}) {
-    const { CONTEXT } = process.env;
-    const {
-      path: { src: { root: src, templates } },
-      longTermCaching: {
-        enable: longTermCachingEnable,
-        joinSymbol,
-        fileHashLength
-      },
-      template: {
-        extension,
-        scriptInjectPosition
-      }
-    } = appConfig;
-    const templatePages = isString(templates) ? templates : templates.pages;
-    const hash = this.getHashPattern(longTermCachingEnable, joinSymbol, fileHashLength);
-    this.context = CONTEXT ? resolve(CONTEXT) : process.cwd();
+  constructor(appConfig) {
+    this.context = getContext();
     this.appConfig = appConfig;
-    this.options = {
-      ...{
-        template: resolve(this.context, src, `${templatePages}/default${extension}`),
-        inject: scriptInjectPosition,
-        charset: 'UTF-8',
-        title: '',
-        favicon: false,
-        keywords: false,
-        description: false,
-        chunks: null,
-        excludeChunks: null,
-        chunksSortMode: 'commonChunksFirst',
-        attrs: ['img:src', 'link:href'],
-        filename: `[path][name]${hash}.[ext]`
-      },
-      ...options
-    };
     this.pages = {};
   }
 
@@ -137,7 +107,7 @@ export default class PackingTemplatePlugin {
       return chunkSorter.none(chunks);
     }
     if (sortMode === 'manual') {
-      return chunkSorter.manual(chunks, this.options.chunks);
+      return chunkSorter.manual(chunks, this.appConfig.template.chunks);
     }
     // Check if the given sort mode is a valid chunkSorter sort mode
     if (typeof chunkSorter[sortMode] !== 'undefined') {
@@ -147,8 +117,12 @@ export default class PackingTemplatePlugin {
   }
 
   done(compiler, stats) {
-    const { template: { engine } } = this.appConfig;
-    this.generatePages();
+    const { template: { engine, autoGeneration } } = this.appConfig;
+    if (autoGeneration) {
+      this.generatePages();
+    } else {
+      this.readPages();
+    }
     this.getAssetsMap(compiler);
     this.output(compiler, stats);
 
@@ -158,10 +132,14 @@ export default class PackingTemplatePlugin {
   }
 
   generatePages() {
-    const { path: { entries }, commonChunks } = this.appConfig;
+    const {
+      path: { entries },
+      commonChunks,
+      template: templateOptions
+    } = this.appConfig;
 
     // 该 entries 信息包含 commonChunks 配置
-    const entryPoints = isFunction(entries) ? entries() : entries;
+    const entryPoints = getEntries(entries);
     Object.keys(entryPoints)
       // 排除 commonChunks 入口
       .filter(entry => Object.keys(commonChunks).indexOf(entry) < 0)
@@ -174,10 +152,10 @@ export default class PackingTemplatePlugin {
           }
         }
 
-        const args = { ...this.options, ...settings };
+        const args = { ...templateOptions, ...settings };
         const {
           title,
-          template,
+          source,
           favicon,
           keywords,
           description,
@@ -185,13 +163,14 @@ export default class PackingTemplatePlugin {
         } = args;
 
         let html = '';
-        if (existsSync(template)) {
-          const templateString = readFileSync(template, {
+        const parent = isAbsolute(source) ? source : resolve(this.context, source);
+        if (existsSync(parent)) {
+          const templateString = readFileSync(parent, {
             encoding: 'utf-8'
           });
           html = templateString;
         } else {
-          throw new Error(`\nNot found template at ${template}\n`);
+          throw new Error(`\nNot found template at ${parent}\n`);
         }
 
         html = this.injectTitle(html, title);
@@ -203,8 +182,35 @@ export default class PackingTemplatePlugin {
       });
   }
 
+  /**
+   * 读取已有的模版文件
+   */
+  readPages() {
+    const {
+      path: {
+        src: {
+          root: src,
+          templates
+        }
+      },
+      template: {
+        extension
+      }
+    } = this.appConfig;
+
+    const tempagePages = templates.pages || templates;
+    const templateRoot = resolve(getContext(), src, tempagePages);
+    glob(`**/*${extension}`, { cwd: templateRoot }).forEach((file) => {
+      const html = readFileSync(resolve(templateRoot, file), {
+        encoding: 'utf-8'
+      });
+      const args = this.appConfig.template;
+      this.pages[file.replace(extension, '')] = { args, html };
+    });
+  }
+
   getAssetsMap(compiler) {
-    const { template: { engine } } = this.appConfig;
+    const { template: { engine, path: outputPath } } = this.appConfig;
 
     Object.keys(this.pages).forEach((chunkName) => {
       const matches = [];
@@ -214,18 +220,18 @@ export default class PackingTemplatePlugin {
         const reg = engine === 'pug' ?
           new RegExp(`${tag}(?:\\(.*\\s+|\\()(?:${attribute})\\s*=\\s*["']([^"']+)`, 'g') :
           new RegExp(`${tag}.*\\s+(?:${attribute})\\s*=\\s*["']([^"']+)`, 'g');
-        let result;
 
+        let result;
         while(result = reg.exec(html)) { // eslint-disable-line
           const value = result[1];
           if (!/^(https{0,1}:){0,1}\/\//.test(value)) {
             const head = result[0].replace(value, ''); // => src="
-            const file = resolve(this.context, value);
+            const file = join(this.context, value);
             if (existsSync(file) && statSync(file).isFile()) {
               const content = readFileSync(file);
               const { name, ext, dir } = parse(value);
               const hash = this.getHashDigest(content);
-              const newValue = this.options.filename
+              const newValue = outputPath
                 .replace('[path]', dir ? `${dir}/` : '')
                 .replace('[name]', name)
                 .replace('[ext]', ext.replace('.', ''))
@@ -239,7 +245,8 @@ export default class PackingTemplatePlugin {
                   }
                   return hash.substr(0, hashLength);
                 });
-              const dist = resolve(compiler.options.output.path, newValue);
+
+              const dist = join(compiler.options.output.path, newValue);
               mkdirp.sync(dirname(dist));
               if (!existsSync(dist)) {
                 writeFileSync(dist, content);
@@ -265,13 +272,13 @@ export default class PackingTemplatePlugin {
       commonChunks,
       template: {
         extension,
-        scriptInjectPosition,
+        chunksSortMode,
         injectManifest // ,
         // manifest
       }
     } = this.appConfig;
 
-    const templatePages = isString(templates) ? templates : templates.pages;
+    const templatePages = templates.pages || templates;
     let { publicPath } = compiler.options.output;
     if (!publicPath.endsWith('/')) {
       publicPath = `${publicPath}/`;
@@ -296,7 +303,7 @@ export default class PackingTemplatePlugin {
     let allChunks = statsJson.chunks;
     allChunks = this.sortChunks(
       allChunks,
-      this.options.chunksSortMode,
+      chunksSortMode,
       stats.compilation.chunkGroups
     );
 
@@ -306,14 +313,14 @@ export default class PackingTemplatePlugin {
 
       html = html.split('');
       matches.reverse().forEach((link) => {
-        const url = publicPath + link.newValue;
+        const url = publicPath + (link.newValue.startsWith('/') ? link.newValue.substring(1, link.newValue.length) : link.newValue);
         html.splice(link.start, link.length, url);
       });
       html = html.join('');
 
-      if (scriptInjectPosition) {
+      if (inject) {
         html = this.injectStyles(html, chunkName, allChunks, commonChunks, publicPath);
-        html = this.injectScripts(html, chunkName, allChunks, commonChunks, publicPath, inject);
+        html = this.injectScripts(html, chunkName, allChunks, commonChunks, publicPath);
       }
 
       if (injectManifest) {
@@ -341,9 +348,10 @@ export default class PackingTemplatePlugin {
             layout: distLayout
           }
         }
-      }
+      },
+      template: templateOptions
     } = this.appConfig;
-    const { attrs } = this.options;
+    const { attrs } = templateOptions;
 
     let { publicPath } = compiler.options.output;
     if (!publicPath.endsWith('/')) {
@@ -372,7 +380,7 @@ export default class PackingTemplatePlugin {
               const content = readFileSync(file);
               const { name, ext, dir } = parse(value);
               const hash = this.getHashDigest(content);
-              const newValue = this.options.filename
+              const newValue = templateOptions.path
                 .replace('[path]', dir ? `${dir}/` : '')
                 .replace('[name]', name)
                 .replace('[ext]', ext.replace('.', ''))
@@ -542,8 +550,8 @@ export default class PackingTemplatePlugin {
     return html;
   }
 
-  injectScripts(html, chunkName, allChunks, commonChunks, publicPath, inject) {
-    const { template: { engine } } = this.appConfig;
+  injectScripts(html, chunkName, allChunks, commonChunks, publicPath) {
+    const { template: { engine, scriptInjectPosition } } = this.appConfig;
 
     // common chunks 和 page chunk 脚本引用代码
     allChunks = allChunks
@@ -572,7 +580,7 @@ export default class PackingTemplatePlugin {
       if (engine === 'pug') {
         html = `${html}\nblock append script\n${scriptHtml}\n`;
       } else {
-        html = html.replace(`</${inject}>`, `${scriptHtml}\n  </${inject}>`);
+        html = html.replace(`</${scriptInjectPosition}>`, `${scriptHtml}\n  </${scriptInjectPosition}>`);
       }
     }
 

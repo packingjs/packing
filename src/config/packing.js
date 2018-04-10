@@ -5,6 +5,8 @@
 import path from 'path';
 import packingGlob from 'packing-glob';
 
+const context = process.env.CONTEXT || process.cwd();
+
 export default {
   /**
    * 本地访问的域名
@@ -119,7 +121,7 @@ export default {
     entries: () => {
       const entryPath = 'src/entries';
       const entryPattern = '**/*.js';
-      const cwd = path.resolve(entryPath);
+      const cwd = path.resolve(context, entryPath);
       const config = {};
       packingGlob(entryPattern, { cwd }).forEach((page) => {
         const ext = path.extname(page).toLowerCase();
@@ -182,7 +184,85 @@ export default {
      * `manifest.json` 文件位置
      * @type {string}
      */
-    manifest: 'manifest.json'
+    manifest: 'manifest.json',
+
+    /**
+     * 生成网页用的源文件位置
+     * @type {string}
+     */
+    source: 'src/templates/pages/default.pug',
+
+    /**
+     * 生成网页使用的字符编码
+     * @type {string}
+     */
+    charset: 'UTF-8',
+
+    /**
+     * 生成网页使用的网页标题
+     * @type {string}
+     */
+    title: '',
+
+    /**
+     * 生成网页使用的 favicon 图标
+     * - false: 不使用 favicon 图标
+     * - 非空字符串: favicon 图标的位置
+     * @type {(bool|string)}
+     */
+    favicon: false,
+
+    /**
+     * 生成网页使用的关键字
+     * @type {(bool|string)}
+     */
+    keywords: false,
+
+    /**
+     * 生成网页使用的网页标题
+     * @type {(bool|string)}
+     */
+    description: false,
+
+    /**
+     * 生成网页中必须包含的 chunks 列表
+     * @type {null|array}
+     */
+    chunks: null,
+
+    /**
+     * 生成网页中不包含的 chunks 列表
+     * @type {null|array}
+     */
+    excludeChunks: null,
+
+    /**
+     * 生成网页中 chunks 排序方式
+     * - 'none': 按 webpack 生成顺序插入
+     * - 'id': 按 chunks id 正向排序
+     * - 'manual': 手动排序（暂不可用）
+     * - 'commonChunksFirst': 按 common chunks 优先方式排序
+     * - 'reverse': 按当前排序反向排序
+     * @type {string}
+     */
+    chunksSortMode: 'commonChunksFirst',
+
+    /**
+     * 网页文件中需要在编译时替换为 _hash 的标签属性列表
+     * 格式为 tag:attribute
+     * 如果想对所有标签的某个属性替换，请使用 * 代替 tag
+     * 如所有标签的 src 属性都需要替换，则使用 *:src
+     * @example ['*:src', 'link:href']
+     * @type {array}
+     */
+    attrs: ['img:src', 'link:href'],
+
+    /**
+     * 模版中命中的静态文件编译输出的文件名
+     * @type {string}
+     */
+    path: '[path][name]_[hash:8].[ext]'
+
   },
 
   /** HRM 配置 */
@@ -222,22 +302,11 @@ export default {
     fileHashLength: 8
   },
 
-  /** uglifyJS 配置 */
-  uglify: {
-    /**
-     * 是否启用 uglifyJS 压缩代码
-     * @type {bool}
-     */
-    enable: true,
-
-    options: {
-      /**
-       * 是否输出 `source map` 文件
-       * @type {bool}
-       */
-      sourceMap: false
-    }
-  },
+  /**
+   * 是否压缩代码
+   * @type {bool}
+   */
+  minimize: true,
 
   /**
    * `css-loader` 配置项
