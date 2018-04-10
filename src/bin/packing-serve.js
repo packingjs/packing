@@ -16,9 +16,9 @@ import graphqlMockServer from '../lib/graphql-mock-server';
 
 program
   .option('-c, --clean-cache', 'clean dll cache')
-  .option('-s, --skip-dll', 'skip dll build')
+  .option('-d, --no-dll', 'skip dll build')
+  .option('-l, --no-listen', 'skip listen app')
   .option('-o, --open-browser', 'open browser')
-  .option('--no-listen', 'no listen app instance')
   .parse(process.argv);
 
 const context = getContext();
@@ -33,7 +33,7 @@ const {
   },
   hot,
   commonChunks,
-  path: { tmpDll },
+  path: { src: { root: src }, tmpDll },
   port: { dev: port }
 } = appConfig;
 
@@ -45,9 +45,9 @@ const parser = __dirname.indexOf('/dist/') === 0 ?
 
 let cmd = `CONTEXT=${context} ${parser} ${__dirname}/packing-dll.js`;
 
-if (!program.skip_dll && hasCommonChunks) {
+if (program.dll && hasCommonChunks) {
   // 带上命令参数
-  if (program.clean_cache) {
+  if (program['clean-cache']) {
     cmd = `${cmd} -c`;
   }
   try {
@@ -62,12 +62,12 @@ if (!program.skip_dll && hasCommonChunks) {
 const webpackConfig = pRequire('config/webpack.serve.babel', program, appConfig);
 const compiler = webpack(webpackConfig);
 const mwOptions = {
-  // contentBase: src,
-  // quiet: false,
-  // noInfo: false,
-  // hot: true,
-  // inline: true,
-  // lazy: false,
+  contentBase: src,
+  quiet: false,
+  noInfo: false,
+  hot: true,
+  inline: true,
+  lazy: false,
   publicPath: webpackConfig.output.publicPath,
   headers: { 'Access-Control-Allow-Origin': '*' },
   stats: { colors: true },
@@ -101,15 +101,14 @@ webpackDevMiddlewareInstance.waitUntilValid(() => {
     });
   }
 
-  console.log('--!program.no_listen:', !program.no_listen);
-  if (!program.no_listen) {
-    // app.listen(port, (err) => {
-    //   if (err) {
-    //     console.error(err);
-    //   } else {
-    //     console.info('==> 🚧  Listening on port %s\n', port);
-    //   }
-    // });
+  if (program.listen) {
+    app.listen(port, (err) => {
+      if (err) {
+        console.error(err);
+      } else {
+        console.info('==> 🚧  Listening on port %s\n', port);
+      }
+    });
   } else {
     process.exit(0);
   }

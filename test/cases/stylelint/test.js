@@ -1,18 +1,14 @@
 import rimraf from 'rimraf';
 import { exec, getTestCaseName } from '../../util';
 
-describe.skip(getTestCaseName(), async () => {
-  it('packing serve 应该报错', async () => {
-    const cmd = 'node_modules/.bin/babel-node src/bin/packing.js serve --skip-dll --no-listen';
-    try {
-      await exec(cmd);
-      should.fail(); // eslint-disable-line
-    } catch (error) {
-      if (process.env.DEBUG) {
-        console.log(error.message);
-      }
-      error.message.should.match(/Expected empty line before rule/);
-    }
+describe(getTestCaseName(), async () => {
+  it.skip('packing serve 应该报错', async () => {
+    const cmd = 'node_modules/.bin/babel-node src/bin/packing.js serve --no-dll --no-listen';
+    const stdout = await exec(cmd);
+    // if (process.env.DEBUG) {
+    //   console.log(stdout);
+    // }
+    stdout.should.match(/Expected empty line before rule/);
   });
 
   it('packing build 应该报错', async () => {

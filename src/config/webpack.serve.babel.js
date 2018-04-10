@@ -5,6 +5,7 @@
  */
 
 import path from 'path';
+import { stringify } from 'querystring';
 import { isString, isArray, isObject, isFunction } from 'util';
 import webpack from 'webpack';
 import OpenBrowserPlugin from 'open-browser-webpack-plugin';
@@ -17,7 +18,10 @@ import loader from './webpack.serve.loader';
 const {
   localhost,
   port,
-  hot,
+  hot: {
+    enable: hotEnable,
+    options: hotOptions
+  },
   template: {
     injectManifest
   },
@@ -41,7 +45,10 @@ const {
  * @return {array}
  */
 const pushClientJS = (entry) => {
-  const clientJS = 'webpack-hot-middleware/client';
+  let clientJS = 'webpack-hot-middleware/client';
+  if (hotOptions && Object.keys(hotOptions).length > 0) {
+    clientJS = `${clientJS}?${stringify(hotOptions)}`;
+  }
   let newEntry = entry;
   if (isString(newEntry)) {
     newEntry = [clientJS, newEntry];
@@ -98,7 +105,7 @@ const webpackConfig = (program) => {
     }));
   }
 
-  if (hot) {
+  if (hotEnable) {
     entry = pushClientJS(entry);
     plugins.push(new webpack.HotModuleReplacementPlugin());
   }

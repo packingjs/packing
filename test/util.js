@@ -7,11 +7,11 @@ import fs from 'fs';
 import mkdirp from 'mkdirp';
 
 export const exec = command => new Promise((resolve, reject) => {
-  execute(command, (err, stdout) => {
+  execute(command, (err, stdout, stderr) => {
     if (err) {
       return reject(err);
     }
-    return resolve(stdout);
+    return resolve(stdout + stderr);
   });
 });
 

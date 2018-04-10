@@ -31,7 +31,7 @@ if (Object.keys(commonChunks).length !== 0) {
   const destDir = resolve(context, tmpDll);
   const hashFile = `${destDir}/hash.json`;
 
-  if (program.clean_cache) {
+  if (program['clean-cache']) {
     if (existsSync(hashFile)) {
       unlinkSync(hashFile);
     }

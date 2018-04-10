@@ -185,11 +185,21 @@ export default {
     manifest: 'manifest.json'
   },
 
-  /**
-   * 是否启用热模块替换
-   * @type {bool}
-   */
-  hot: false,
+  /** HRM 配置 */
+  hot: {
+    /**
+     * 是否启用热模块替换
+     * @type {bool}
+     */
+    enable: true,
+
+    /**
+     * HRM 选项
+     * @type {object}
+     * @see {@link https://github.com/webpack-contrib/webpack-hot-middleware|webpack-hot-middleware}
+     */
+    options: {}
+  },
 
   /** 长效缓存配置 */
   longTermCaching: {
