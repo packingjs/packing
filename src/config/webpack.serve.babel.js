@@ -6,7 +6,7 @@
 
 import path from 'path';
 import { stringify } from 'querystring';
-import { isString, isArray, isObject, isFunction } from 'util';
+import { isString, isArray, isObject } from 'util';
 import webpack from 'webpack';
 import OpenBrowserPlugin from 'open-browser-webpack-plugin';
 import WebpackPwaManifest from 'webpack-pwa-manifest';
@@ -14,6 +14,7 @@ import StylelintWebpackPlugin from 'stylelint-webpack-plugin';
 import '../bootstrap';
 import { pRequire, getContext, requireDefault } from '..';
 import loader from './webpack.serve.loader';
+import getEntries from '../lib/getEntries';
 
 const {
   localhost,
@@ -72,7 +73,7 @@ const webpackConfig = (program) => {
   const context = getContext();
   const dllPath = path.resolve(context, tmpDll);
 
-  let entry = isFunction(entries) ? entries() : entries;
+  let entry = getEntries(entries);
 
   const mode = 'development';
 
@@ -86,7 +87,7 @@ const webpackConfig = (program) => {
   };
 
   const resolve = {
-    modules: [path.resolve(context, src), 'node_modules']
+    modules: [src, 'node_modules']
   };
 
   const plugins = [];
@@ -110,7 +111,7 @@ const webpackConfig = (program) => {
     plugins.push(new webpack.HotModuleReplacementPlugin());
   }
 
-  if (program.open_browser) {
+  if (program.open) {
     plugins.push(new OpenBrowserPlugin({
       url: `http://${localhost}:${port.dev}`
     }));

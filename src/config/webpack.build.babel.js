@@ -5,7 +5,7 @@
  */
 
 import path from 'path';
-import { isFunction, isObject } from 'util';
+import { isObject } from 'util';
 import { yellow } from 'chalk';
 import CleanPlugin from 'clean-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
@@ -14,6 +14,7 @@ import StylelintWebpackPlugin from 'stylelint-webpack-plugin';
 import { plugin as PackingTemplatePlugin } from '..';
 import '../bootstrap';
 import { pRequire, getContext, requireDefault } from '..';
+import getEntries from '../lib/getEntries';
 
 const { NODE_ENV, CDN_ROOT } = process.env;
 const context = getContext();
@@ -35,6 +36,7 @@ const {
     enable: stylelintEnable,
     options: stylelintOptions
   },
+  minimize,
   path: {
     src: {
       root: srcRoot
@@ -68,7 +70,7 @@ const webpackConfig = () => {
   const chunkhash = getHashPattern('chunkhash');
   const contenthash = getHashPattern('contenthash');
   const hash = getHashPattern('hash');
-  let entry = isFunction(entries) ? entries() : entries;
+  let entry = getEntries(entries);
 
   const output = {
     chunkFilename: `${js}/[name]${chunkhash}.js`,
@@ -135,7 +137,7 @@ const webpackConfig = () => {
   };
 
   const resolve = {
-    modules: [path.resolve(context, srcRoot), 'node_modules']
+    modules: [srcRoot, 'node_modules']
   };
 
   const plugins = [
@@ -214,7 +216,7 @@ const webpackConfig = () => {
     //     sourceMap: true // set to true if you want JS source maps
     //   })
     // ],
-    // minimize
+    minimize
   };
 
   return {
