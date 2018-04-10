@@ -52,7 +52,7 @@
     "generator-packing": "^2.9.14",
     "import-fresh": "^2.0.0",
     "loader-utils": "^1.1.0",
-    "mini-css-extract-plugin": "^0.3.0",
+    "mini-css-extract-plugin": "^0.4.0",
     "mkdirp": "^0.5.1",
     "packing-glob": "^1.0.1",
     "packing-template-util": "^1.1.1",
@@ -85,8 +85,8 @@
     "redux-devtools-log-monitor": "^1.2.0",
     "should": "^13.2.1",
     "supertest": "^3.0.0",
-    "webpack-dev-middleware": "^3.1.0",
-    "webpack-hot-middleware": "^2.21.2"
+    "webpack-dev-middleware": "^3.1.2",
+    "webpack-hot-middleware": "^2.22.0"
   },
   "engines": {
     "node": ">=6.11.5",
