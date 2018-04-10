@@ -43,10 +43,6 @@ describe(`${getTestCaseName()}(${process.env.NODE_ENV})`, async () => {
     html = readFileSync(htmlFile, 'utf8');
   });
 
-  it.skip('应该在入口网页中插入网页标题', async () => {
-    html.should.match(/block title\s+title Page A/);
-  });
-
   it('应该替换入口网页中的一级目录图片地址', async () => {
     html.should.match(new RegExp(`src="${publicPath}assets/1_\\w{8}.jpg"`));
   });
@@ -69,7 +65,7 @@ describe(`${getTestCaseName()}(${process.env.NODE_ENV})`, async () => {
   });
 
   it('应该不替换 img 标签中的 alt 属性', async () => {
-    html.should.match(/alt="assets\/images\/1.jpg"/);
+    html.should.match(/alt="\/assets\/images\/1.jpg"/);
   });
 
   it('应该替换所有标签中的 test 属性', async () => {

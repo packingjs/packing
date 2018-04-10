@@ -8,6 +8,7 @@ export default (packing) => {
   };
   p.path.src.root = '.';
   p.path.tmpDll = '../dll/.tmp/dll';
+  p.template.source = 'templates/pages/default.pug';
 
   p.commonChunks = {
     vendor: ['./v']

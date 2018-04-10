@@ -15,10 +15,10 @@ import { pRequire, getContext } from '..';
 import graphqlMockServer from '../lib/graphql-mock-server';
 
 program
-  .option('-c, --clean-cache', 'clean dll cache')
+  .option('-c, --clean', 'clean dll cache')
   .option('-d, --no-dll', 'skip dll build')
   .option('-l, --no-listen', 'skip listen app')
-  .option('-o, --open-browser', 'open browser')
+  .option('-o, --open', 'open browser')
   .parse(process.argv);
 
 const context = getContext();
@@ -47,7 +47,7 @@ let cmd = `CONTEXT=${context} ${parser} ${__dirname}/packing-dll.js`;
 
 if (program.dll && hasCommonChunks) {
   // 带上命令参数
-  if (program['clean-cache']) {
+  if (program.clean) {
     cmd = `${cmd} -c`;
   }
   try {

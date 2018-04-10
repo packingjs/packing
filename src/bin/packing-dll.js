@@ -11,7 +11,7 @@ import { pRequire, getContext } from '..';
 import packingPackage from '../../package.json';
 
 program
-  .option('-c, --clean-cache', 'clean dll cache')
+  .option('-c, --clean', 'clean dll cache')
   .parse(process.argv);
 
 const context = getContext();
@@ -31,7 +31,9 @@ if (Object.keys(commonChunks).length !== 0) {
   const destDir = resolve(context, tmpDll);
   const hashFile = `${destDir}/hash.json`;
 
-  if (program['clean-cache']) {
+  console.log('--program:', program);
+
+  if (program.clean) {
     if (existsSync(hashFile)) {
       unlinkSync(hashFile);
     }

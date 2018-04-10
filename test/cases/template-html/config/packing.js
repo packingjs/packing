@@ -14,6 +14,7 @@ export default (packing) => {
   p.path.dist.templates = 'templates';
   p.template.engine = 'html';
   p.template.extension = '.html';
+  p.template.source = 'default.html';
 
   p.commonChunks = {
     vendor: ['./v']

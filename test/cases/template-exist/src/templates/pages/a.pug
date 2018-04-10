@@ -1,14 +1,11 @@
-extends ../layout/default.pug
+extends /layout/default.pug
 
 block content
   div#root
-  ul
-    li #{global}
-    li #{page}
-  img(src="assets/1.jpg" data-src="assets/images/2.jpg")
-  img(src="assets/images/1.jpg" alt="assets/images/1.jpg")
-  img(alt="abc" src="assets/images/2.jpg")
+  img(src="/assets/1.jpg" data-src="/assets/images/2.jpg")
+  img(src="/assets/images/1.jpg" alt="/assets/images/1.jpg")
+  img(alt="abc" src="/assets/images/2.jpg")
   img(src="//qzz.com/assets/images/2.jpg")
-  img(src="assets/1.jpg")
-  h1(test="assets/images/2.jpg")
-  h2(test="assets/images/2.jpg")
+  img(src="/assets/1.jpg")
+  h1(test="/assets/images/2.jpg")
+  h2(test="/assets/images/2.jpg")
