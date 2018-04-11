@@ -24,7 +24,7 @@ const {
   commonChunks,
   longTermCaching: {
     enable: longTermCachingEnable,
-    joinSymbol,
+    delimiter,
     fileHashLength
   },
   // minimize,
@@ -54,7 +54,7 @@ const getHashPattern = (type) => {
   let hashPattern = '';
 
   if (longTermCachingEnable) {
-    hashPattern = `${joinSymbol}[${type}:${fileHashLength}]`;
+    hashPattern = `${delimiter}[${type}:${fileHashLength}]`;
   }
   return hashPattern;
 };

@@ -293,7 +293,7 @@ export default {
      * 文件名与 hash 连接使用的字符串
      * @type {string}
      */
-    joinSymbol: '_',
+    delimiter: '_',
 
     /**
      * hash 长度
