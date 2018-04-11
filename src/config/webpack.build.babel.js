@@ -27,7 +27,6 @@ const {
     delimiter,
     fileHashLength
   },
-  // minimize,
   cssLoader,
   template: {
     injectManifest
@@ -70,7 +69,7 @@ const webpackConfig = () => {
   const chunkhash = getHashPattern('chunkhash');
   const contenthash = getHashPattern('contenthash');
   const hash = getHashPattern('hash');
-  let entry = getEntries(entries);
+  const entry = getEntries(entries);
 
   const output = {
     chunkFilename: `${js}/[name]${chunkhash}.js`,
@@ -150,7 +149,7 @@ const webpackConfig = () => {
       // both options are optional
       filename: `${css}/[name]${contenthash}.css`,
       // filename: '[name].css',
-      chunkFilename: '[id].css'
+      chunkFilename: `${css}/[id]${contenthash}.css`
     })
   ];
 
@@ -170,54 +169,52 @@ const webpackConfig = () => {
 
   // 从配置文件中获取并生成webpack打包配置
   // fix: #14
-  let chunkNames = [];
-  if (commonChunks && Object.keys(commonChunks).length > 0) {
-    const manifestChunkName = 'manifest';
-    chunkNames = Object.keys(commonChunks);
-    const lastChunkName = chunkNames[chunkNames.length - 1];
-    // 确保manifest放在最后
-    if (lastChunkName !== manifestChunkName) {
-      chunkNames.push(manifestChunkName);
-    }
-    // 检测chunk配置的有效性
-    const index = chunkNames.indexOf(manifestChunkName);
-    if (index !== chunkNames.length - 1) {
-      // manifest位置不对时，校正配置并给出提示
-      chunkNames.splice(index, 1);
-      console.log(yellow('⚠️  There is a problem with the manifest package configuration. Packing has automatically repaired the error configuration'));
-    }
-    chunkNames.filter(name => name !== manifestChunkName).forEach((key) => {
-      if (isObject(entry)) {
-        entry[key] = commonChunks[key];
-      } else {
-        entry = {
-          main: entry,
-          [key]: commonChunks[key]
-        };
-      }
-    });
-  }
+  // let chunkNames = [];
+  // if (commonChunks && Object.keys(commonChunks).length > 0) {
+  //   const manifestChunkName = 'manifest';
+  //   chunkNames = Object.keys(commonChunks);
+  //   const lastChunkName = chunkNames[chunkNames.length - 1];
+  //   // 确保manifest放在最后
+  //   if (lastChunkName !== manifestChunkName) {
+  //     chunkNames.push(manifestChunkName);
+  //   }
+  //   // 检测chunk配置的有效性
+  //   const index = chunkNames.indexOf(manifestChunkName);
+  //   if (index !== chunkNames.length - 1) {
+  //     // manifest位置不对时，校正配置并给出提示
+  //     chunkNames.splice(index, 1);
+  //     console.log(yellow('⚠️  There is a problem with the manifest package configuration. Packing has automatically repaired the error configuration'));
+  //   }
+  //   chunkNames.filter(name => name !== manifestChunkName).forEach((key) => {
+  //     if (isObject(entry)) {
+  //       entry[key] = commonChunks[key];
+  //     } else {
+  //       entry = {
+  //         main: entry,
+  //         [key]: commonChunks[key]
+  //       };
+  //     }
+  //   });
+  // }
 
-  const optimization = {
-    // splitChunks: {
-    //   cacheGroups: {
-    //     vendor: {
-    //       chunks: 'initial',
-    //       test: 'vendor1',
-    //       name: 'vendor1',
-    //       enforce: true
-    //     }
-    //   }
-    // },
-    // minimizer: [
-    //   new UglifyJsPlugin({
-    //     cache: true,
-    //     parallel: true,
-    //     sourceMap: true // set to true if you want JS source maps
-    //   })
-    // ],
-    minimize
-  };
+  const optimization = { minimize };
+
+  if (commonChunks && Object.keys(commonChunks).length > 0) {
+    const cacheGroups = {};
+    Object.keys(commonChunks).forEach((chunkName) => {
+      const pattern = commonChunks[chunkName].join('|');
+      cacheGroups[chunkName] = {
+        test: new RegExp(`(${pattern})`), // /(ccc|sub\/bbb|\.\/d)/,
+        chunks: 'initial',
+        name: chunkName,
+        // 优先级
+        priority: 10,
+        // 忽略命中次数，只要命中且使用过一次就打入 vendor
+        enforce: true
+      };
+    });
+    optimization.splitChunks = { cacheGroups };
+  }
 
   return {
     mode: NODE_ENV !== 'production' ? 'development' : 'production',
