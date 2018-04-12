@@ -50,11 +50,11 @@
   npm run serve:normal
 
   # 启动时自动打开浏览器功能
-  npm run serve -- --open_browser
+  npm run serve -- --open
   npm run serve -- -o
 
   # 启动时强制清除DLL缓存功能
-  npm run serve -- --clean_cache
+  npm run serve -- --clean
   npm run serve -- -c
   ```
 

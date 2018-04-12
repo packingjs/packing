@@ -10,11 +10,9 @@ describe(getTestCaseName(), async () => {
     //   console.log(stdout);
     // }
     const cmd = 'node_modules/.bin/babel-node src/bin/packing.js dll';
+    const stdout = await exec(cmd);
     if (process.env.DEBUG) {
-      const stdout = await exec(cmd);
       console.log(stdout);
-    } else {
-      await exec(cmd);
     }
   });
 

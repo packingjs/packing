@@ -6,11 +6,9 @@ describe(getTestCaseName(), async () => {
   const cssFile = `${__dirname}/prd/css/entry.css`;
   before(async () => {
     const cmd = 'node_modules/.bin/babel-node src/bin/packing.js build';
+    const stdout = await exec(cmd);
     if (process.env.DEBUG) {
-      const stdout = await exec(cmd);
       console.log(stdout);
-    } else {
-      await exec(cmd);
     }
   });
 

@@ -6,7 +6,7 @@ export default (packing) => {
   };
   p.commonChunks = {
     vendor: [
-      'ccc', 'sub/bbb', './d'
+      'ccc', 'sub/bbb', 'sub2/', './d', './useless'
     ]
   };
   p.template.autoGeneration = false;

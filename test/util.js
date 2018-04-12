@@ -29,6 +29,16 @@ export const createFile = (file, content) => {
   fs.writeFileSync(fullname, content);
 };
 
+export const append = (file, text, position = 'end') => {
+  const parentId = module.parent.id;
+  const fullname = path.resolve(path.dirname(parentId), file);
+  const origin = fs.readFileSync(fullname);
+  const content = position === 'end' ? origin + text : text + origin;
+  createFile(file, content);
+};
+
+export const preappend = (file, text) => append(file, text, 'begin');
+
 export const execWebpack = config => new Promise((resolve, reject) => {
   webpack(config, (err, stats) => {
     if (err) {

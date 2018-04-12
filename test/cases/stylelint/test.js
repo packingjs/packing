@@ -5,9 +5,6 @@ describe(getTestCaseName(), async () => {
   it.skip('packing serve 应该报错', async () => {
     const cmd = 'node_modules/.bin/babel-node src/bin/packing.js serve --no-dll --no-listen';
     const stdout = await exec(cmd);
-    // if (process.env.DEBUG) {
-    //   console.log(stdout);
-    // }
     stdout.should.match(/Expected empty line before rule/);
   });
 
