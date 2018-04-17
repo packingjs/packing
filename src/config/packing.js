@@ -346,15 +346,34 @@ export default {
   },
 
   /**
+   * runtimeChunk 配置
+   * @see https://webpack.js.org/plugins/split-chunks-plugin/
+   */
+  runtimeChunk: {
+    /**
+     * 是否启用 runtimeChunk
+     * @type {bool}
+     */
+    enable: false,
+
+    /**
+     * runtimeChunk 输出的文件名
+     * @type {string}
+     */
+    name: 'runtime'
+  },
+
+  /**
    * commonChunks 配置
-   * `CommonsChunkPlugin` 会将最后一个当作 `Entry chunk`
+   * 可以配置多个 common 包
    * 该配置分别在以下过程中被调用：
    * - 在 `packing serve` 任务中被 `DllPlugin` 调用
-   * - 在 `packing build` 任务中被 `CommonsChunkPlugin` 调用
+   * - 在 `packing build` 任务中被 `SplitChunkPlugin` 调用
    * 注意，如果配置了commonChunks，所有网页模版需要引用公共包文件
    * 否则会报错
    * <script src="/vendor.js"></script>
-   * @type {string}
+   * @type {object}
+   * @see https://webpack.js.org/plugins/split-chunks-plugin/
    */
   commonChunks: {
     // vendor: [

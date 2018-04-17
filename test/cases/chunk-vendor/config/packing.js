@@ -4,6 +4,7 @@ export default (packing) => {
   p.path.entries = {
     a: './a.js'
   };
+  p.runtimeChunk.enable = true;
   p.commonChunks = {
     vendor: [
       'ccc', 'sub/bbb', 'sub2/', './d', './useless'

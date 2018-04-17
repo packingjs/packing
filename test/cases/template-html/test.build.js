@@ -109,9 +109,9 @@ describe(`build:(${process.env.NODE_ENV})`, async () => {
       html.should.not.match(/<meta name="description"/);
     });
 
-    it('应该引用了 vendor.css', async () => {
+    it('应该不引用 vendor.css', async () => {
       const regexp = new RegExp(`<link href="${publicPath}css/vendor.css" rel="stylesheet">`);
-      html.should.match(regexp);
+      html.should.not.match(regexp);
     });
 
     it('应该不引用 a.css', async () => {
@@ -119,18 +119,12 @@ describe(`build:(${process.env.NODE_ENV})`, async () => {
       html.should.not.match(regexp);
     });
 
-    it('应该引用了 vendor.js', async () => {
-      html.should.match(new RegExp(`<script src="${publicPath}js/vendor.js"></script>`));
+    it('应该不引用 vendor.js', async () => {
+      html.should.not.match(new RegExp(`<script src="${publicPath}js/vendor.js"></script>`));
     });
 
     it('应该引用了 c/d.js', async () => {
       html.should.match(new RegExp(`<script src="${publicPath}js/c/d.js"></script>`));
-    });
-
-    it('应该按 vendor.js -> c/d.js 的顺序引用', async () => {
-      const vendorMatches = html.match(new RegExp(`<script src="${publicPath}js/vendor.js"></script>`));
-      const aMatches = html.match(new RegExp(`<script src="${publicPath}js/c/d.js"></script>`));
-      (vendorMatches.index < aMatches.index).should.be.true();
     });
   });
 });

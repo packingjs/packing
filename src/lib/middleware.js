@@ -59,12 +59,9 @@ function injectManifest(html, templateEngine, manifest) {
   return html.replace('</head>', `  <link rel="manifest" href="${manifest}">\n  </head>`);
 }
 
-function injectStyles(html, templateEngine, chunkName, allChunks, commonChunks) {
+function injectStyles(html, templateEngine, chunkName, assets) {
   const publicPath = '/';
-  const styles = Object.keys(allChunks)
-    .filter(key => allChunks[key].endsWith('.css'))
-    .filter(key => key === chunkName || Object.keys(commonChunks).indexOf(key) > -1)
-    .map(key => allChunks[key]);
+  const styles = assets.filter(asset => asset.endsWith('.css'));
 
   if (styles.length > 0) {
     let styleHtml;
@@ -87,12 +84,9 @@ function injectStyles(html, templateEngine, chunkName, allChunks, commonChunks) 
 }
 
 // eslint-disable-next-line
-function injectScripts(html, templateEngine, chunkName, allChunks, commonChunks, scriptInjectPosition) {
+function injectScripts(html, templateEngine, chunkName, assets, commonChunks, scriptInjectPosition) {
   const publicPath = '/';
-  const scripts = Object.keys(allChunks)
-    .filter(key => allChunks[key].endsWith('.js'))
-    .filter(key => key === chunkName || Object.keys(commonChunks).indexOf(key) > -1)
-    .map(key => allChunks[key]);
+  const scripts = assets.filter(asset => asset.endsWith('.js'));
 
   if (isObject(commonChunks)) {
     Object.keys(commonChunks).forEach((name) => {
@@ -168,7 +162,13 @@ export default (app, appConfig) => {
         ...settings
       };
 
-      const { assetsByChunkName } = res.locals.webpackStats.toJson();
+      // const { assetsByChunkName } = res.locals.webpackStats.toJson();
+      const statsJson = res.locals.webpackStats.compilation.getStats().toJson({
+        all: false,
+        entrypoints: true
+      });
+      // console.log('--statsJson:', statsJson.entrypoints);
+      const { entrypoints } = statsJson;
 
       let html = '';
       const chunkNameMapTemplate = resolve(context, src, `${templatePages}/${chunkName}${extension}`);
@@ -187,14 +187,16 @@ export default (app, appConfig) => {
         throw new Error(`Not found template at ${parent}`);
       }
 
+      const { assets } = entrypoints[chunkName];
+
       html = injectTitle(html, engine, title);
       html = injectMeta(html, engine, favicon, keywords, description);
       if (injectManifestEnable) {
         html = injectManifest(html, engine, manifest);
       }
-      if (inject) {
-        html = injectStyles(html, engine, chunkName, assetsByChunkName, commonChunks);
-        html = injectScripts(html, engine, chunkName, assetsByChunkName, commonChunks, scriptInjectPosition); // eslint-disable-line
+      if (inject && assets.length > 0) {
+        html = injectStyles(html, engine, chunkName, assets);
+        html = injectScripts(html, engine, chunkName, assets, commonChunks, scriptInjectPosition); // eslint-disable-line
       }
       html = html
         // 替换格式为 __var__ 用户自定义变量

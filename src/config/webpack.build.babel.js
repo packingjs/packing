@@ -5,12 +5,11 @@
  */
 
 import path from 'path';
-import { isObject } from 'util';
-import { yellow } from 'chalk';
 import CleanPlugin from 'clean-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import WebpackPwaManifest from 'webpack-pwa-manifest';
 import StylelintWebpackPlugin from 'stylelint-webpack-plugin';
+// import WebpackManifestPlugin from 'webpack-manifest-plugin';
 import { plugin as PackingTemplatePlugin } from '..';
 import '../bootstrap';
 import { pRequire, getContext, requireDefault } from '..';
@@ -22,6 +21,10 @@ const appConfig = pRequire('config/packing');
 const {
   assetExtensions,
   commonChunks,
+  runtimeChunk: {
+    enable: runtimeChunkEnable,
+    name: runtimeChunkName
+  },
   longTermCaching: {
     enable: longTermCachingEnable,
     delimiter,
@@ -150,7 +153,9 @@ const webpackConfig = () => {
       filename: `${css}/[name]${contenthash}.css`,
       // filename: '[name].css',
       chunkFilename: `${css}/[id]${contenthash}.css`
-    })
+    }) // ,
+
+    // new WebpackManifestPlugin()
   ];
 
   if (stylelintEnable) {
@@ -167,37 +172,13 @@ const webpackConfig = () => {
     }));
   }
 
-  // 从配置文件中获取并生成webpack打包配置
-  // fix: #14
-  // let chunkNames = [];
-  // if (commonChunks && Object.keys(commonChunks).length > 0) {
-  //   const manifestChunkName = 'manifest';
-  //   chunkNames = Object.keys(commonChunks);
-  //   const lastChunkName = chunkNames[chunkNames.length - 1];
-  //   // 确保manifest放在最后
-  //   if (lastChunkName !== manifestChunkName) {
-  //     chunkNames.push(manifestChunkName);
-  //   }
-  //   // 检测chunk配置的有效性
-  //   const index = chunkNames.indexOf(manifestChunkName);
-  //   if (index !== chunkNames.length - 1) {
-  //     // manifest位置不对时，校正配置并给出提示
-  //     chunkNames.splice(index, 1);
-  //     console.log(yellow('⚠️  There is a problem with the manifest package configuration. Packing has automatically repaired the error configuration'));
-  //   }
-  //   chunkNames.filter(name => name !== manifestChunkName).forEach((key) => {
-  //     if (isObject(entry)) {
-  //       entry[key] = commonChunks[key];
-  //     } else {
-  //       entry = {
-  //         main: entry,
-  //         [key]: commonChunks[key]
-  //       };
-  //     }
-  //   });
-  // }
-
   const optimization = { minimize };
+
+  if (runtimeChunkEnable) {
+    optimization.runtimeChunk = {
+      name: runtimeChunkName
+    };
+  }
 
   if (commonChunks && Object.keys(commonChunks).length > 0) {
     const cacheGroups = {};

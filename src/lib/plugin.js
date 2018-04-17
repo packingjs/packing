@@ -38,7 +38,6 @@ import { isString } from 'util';
 import mkdirp from 'mkdirp';
 import loaderUtils from 'loader-utils';
 import glob from 'packing-glob';
-import chunkSorter from './chunksorter';
 import { requireDefault, getContext } from '..';
 import getEntries from '../lib/getEntries';
 
@@ -71,60 +70,22 @@ export default class PackingTemplatePlugin {
     return hashPattern;
   }
 
-  filterChunks(chunks) {
-    chunks.filter((chunk) => {
-      const chunkName = chunk.names[0];
-      // This chunk doesn't have a name. This script can't handled it.
-      if (chunkName === undefined) {
-        return false;
-      }
-      // Skip if the chunk should be lazy loaded
-      if (typeof chunk.isInitial === 'function') {
-        if (!chunk.isInitial()) {
-          return false;
-        }
-      } else if (!chunk.initial) {
-        return false;
-      }
-      return true;
-    });
-  }
-
-  sortChunks(chunks, sortMode, chunkGroups) {
-    // Sort mode auto by default:
-    if (typeof sortMode === 'undefined') {
-      sortMode = 'commonChunksFirst';
-    }
-    if (sortMode === 'commonChunksFirst') {
-      return chunkSorter.commonChunksFirst(chunks, Object.keys(this.appConfig.commonChunks));
-    }
-    // Custom function
-    if (typeof sortMode === 'function') {
-      return chunks.sort(sortMode);
-    }
-    // Disabled sorting:
-    if (sortMode === 'none') {
-      return chunkSorter.none(chunks);
-    }
-    if (sortMode === 'manual') {
-      return chunkSorter.manual(chunks, this.appConfig.template.chunks);
-    }
-    // Check if the given sort mode is a valid chunkSorter sort mode
-    if (typeof chunkSorter[sortMode] !== 'undefined') {
-      return chunkSorter[sortMode](chunks, chunkGroups);
-    }
-    throw new Error(`"${sortMode}" is not a valid chunk sort mode`);
-  }
-
   done(compiler, stats) {
     const { template: { engine, autoGeneration } } = this.appConfig;
+    const statsJson = stats.compilation.getStats().toJson({
+      all: false,
+      entrypoints: true
+    });
+    // 记录所有页面入口和入口对应的 assets
+    this.entrypoints = statsJson.entrypoints;
+
     if (autoGeneration) {
       this.generatePages();
     } else {
       this.readPages();
     }
     this.getAssetsMap(compiler);
-    this.output(compiler, stats);
+    this.output(compiler);
 
     if (engine === 'pug') {
       this.copyAndReplaceLayout(compiler);
@@ -266,15 +227,12 @@ export default class PackingTemplatePlugin {
     });
   }
 
-  output(compiler, stats) {
+  output(compiler) {
     const {
       path: { dist: { root: dist, templates } },
-      commonChunks,
       template: {
         extension,
-        chunksSortMode,
-        injectManifest // ,
-        // manifest
+        injectManifest
       }
     } = this.appConfig;
 
@@ -283,44 +241,23 @@ export default class PackingTemplatePlugin {
     if (!publicPath.endsWith('/')) {
       publicPath = `${publicPath}/`;
     }
-
-    const chunkOnlyConfig = {
-      assets: true,
-      cached: false,
-      children: false,
-      chunks: true,
-      chunkModules: false,
-      chunkOrigins: false,
-      errorDetails: false,
-      hash: false,
-      modules: false,
-      reasons: false,
-      source: false,
-      timings: false,
-      version: false
-    };
-    const statsJson = stats.compilation.getStats().toJson(chunkOnlyConfig);
-    let allChunks = statsJson.chunks;
-    allChunks = this.sortChunks(
-      allChunks,
-      chunksSortMode,
-      stats.compilation.chunkGroups
-    );
-
     Object.keys(this.pages).forEach((chunkName) => {
       const { matches, args: { inject } } = this.pages[chunkName];
       let { html } = this.pages[chunkName];
 
       html = html.split('');
+      // 替换模版中的 src="x.png" -> src="x_xxxxxxxx.png"
       matches.reverse().forEach((link) => {
         const url = publicPath + (link.newValue.startsWith('/') ? link.newValue.substring(1, link.newValue.length) : link.newValue);
         html.splice(link.start, link.length, url);
       });
       html = html.join('');
 
-      if (inject) {
-        html = this.injectStyles(html, chunkName, allChunks, commonChunks, publicPath);
-        html = this.injectScripts(html, chunkName, allChunks, commonChunks, publicPath);
+      // 当前页面使用到的所有 asets
+      const { assets } = this.entrypoints[chunkName];
+      if (inject && assets) {
+        html = this.injectStyles(html, chunkName, assets, publicPath);
+        html = this.injectScripts(html, chunkName, assets, publicPath);
       }
 
       if (injectManifest) {
@@ -514,21 +451,9 @@ export default class PackingTemplatePlugin {
     return html.replace('</head>', `  <link rel="manifest" href="${filename}">\n  </head>`);
   }
 
-  injectStyles(html, chunkName, allChunks, commonChunks, publicPath) {
+  injectStyles(html, chunkName, assets, publicPath) {
     const { template: { engine } } = this.appConfig;
-    const styles = [];
-    allChunks
-      .filter((chunk) => {
-        const name = chunk.names[0];
-        return name === chunkName || Object.keys(commonChunks).indexOf(name) > -1;
-      })
-      .forEach((chunk) => {
-        chunk.files
-          .filter(file => file.endsWith('.css'))
-          .forEach((file) => {
-            styles.push(file);
-          });
-      });
+    const styles = assets.filter(asset => asset.endsWith('.css'));
 
     if (styles.length > 0) {
       let styleHtml;
@@ -550,38 +475,20 @@ export default class PackingTemplatePlugin {
     return html;
   }
 
-  injectScripts(html, chunkName, allChunks, commonChunks, publicPath) {
+  injectScripts(html, chunkName, assets, publicPath) {
     const { template: { engine, scriptInjectPosition } } = this.appConfig;
 
-    // common chunks 和 page chunk 脚本引用代码
-    allChunks = allChunks
-      // .filter(chunk => chunk.files[0].endsWith('.js'))
-      .filter((chunk) => {
-        const name = chunk.names[0];
-        return name === chunkName || Object.keys(commonChunks).indexOf(name) > -1;
-      });
-
-    if (allChunks.length > 0) {
-      const scriptHtml = allChunks
-        .map((chunk) => {
-          if (engine === 'pug') {
-            return chunk.files
-              .filter(file => file.endsWith('.js'))
-              .map(file => `  script(src="${publicPath + file}")`)
-              .join('\n');
-          }
-          return chunk.files
-            .filter(file => file.endsWith('.js'))
-            .map(file => `  <script src="${publicPath + file}"></script>`)
-            .join('\n');
-        })
+    const scripts = assets.filter(asset => asset.endsWith('.js'));
+    if (engine === 'pug') {
+      const scriptPug = scripts
+        .map(asset => `  script(src="${publicPath + asset}")`)
         .join('\n');
-
-      if (engine === 'pug') {
-        html = `${html}\nblock append script\n${scriptHtml}\n`;
-      } else {
-        html = html.replace(`</${scriptInjectPosition}>`, `${scriptHtml}\n  </${scriptInjectPosition}>`);
-      }
+      html = `${html}\nblock append script\n${scriptPug}\n`;
+    } else {
+      const scriptHtml = scripts
+        .map(asset => `  <script src="${publicPath + asset}"></script>`)
+        .join('\n');
+      html = html.replace(`</${scriptInjectPosition}>`, `${scriptHtml}\n  </${scriptInjectPosition}>`);
     }
 
     return html;
