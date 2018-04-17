@@ -3,7 +3,7 @@ const chalk = require('chalk');
 const glob = require('glob');
 const path = require('path');
 
-process.env.NODE_ENV = 'local';
+process.env.NODE_ENV = process.env.NODE_ENV || 'local';
 
 const files = glob.sync('cases/**/index.js', { cwd: __dirname });
 files.sort((a, b) => path.dirname(a) > path.dirname(b));
