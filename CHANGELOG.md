@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.0.0-beta.5"></a>
+# [3.0.0-beta.5](https://github.com/packingjs/packing/compare/v3.0.0-beta.4...v3.0.0-beta.5) (2018-04-17)
+
+
+
 <a name="3.0.0-beta.4"></a>
 # [3.0.0-beta.4](https://github.com/packingjs/packing/compare/v3.0.0-beta.3...v3.0.0-beta.4) (2018-04-08)
 
