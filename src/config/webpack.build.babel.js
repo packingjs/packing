@@ -9,11 +9,11 @@ import CleanPlugin from 'clean-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import WebpackPwaManifest from 'webpack-pwa-manifest';
 import StylelintWebpackPlugin from 'stylelint-webpack-plugin';
-// import WebpackManifestPlugin from 'webpack-manifest-plugin';
 import { plugin as PackingTemplatePlugin } from '..';
 import '../bootstrap';
 import { pRequire, getContext, requireDefault } from '..';
 import getEntries from '../lib/getEntries';
+import getExistsFilePath from '../lib/getExistsFilePath';
 
 const { NODE_ENV, CDN_ROOT } = process.env;
 const context = getContext();
@@ -90,6 +90,15 @@ const webpackConfig = () => {
     }
   };
 
+  const postcssConfigFileName = 'postcss.config.js';
+  const postcssConfigFileInProject = path.resolve(context, postcssConfigFileName);
+  const postcssConfigFileInLib = path.resolve(__dirname, postcssConfigFileName);
+  const postcssLoaderOptions = {
+    config: {
+      path: getExistsFilePath(postcssConfigFileInProject, postcssConfigFileInLib)
+    }
+  };
+
   const module = {
     rules: [
       {
@@ -106,7 +115,7 @@ const webpackConfig = () => {
         use: [
           { loader: MiniCssExtractPlugin.loader },
           { loader: 'css-loader', options: cssLoaderOptions },
-          { loader: 'postcss-loader' }
+          { loader: 'postcss-loader', options: postcssLoaderOptions }
         ]
       },
       {
@@ -114,7 +123,7 @@ const webpackConfig = () => {
         use: [
           { loader: MiniCssExtractPlugin.loader },
           { loader: 'css-loader', options: cssLoaderOptions },
-          { loader: 'postcss-loader' },
+          { loader: 'postcss-loader', options: postcssLoaderOptions },
           { loader: 'sass-loader' }
         ]
       },
@@ -123,7 +132,7 @@ const webpackConfig = () => {
         use: [
           { loader: MiniCssExtractPlugin.loader },
           { loader: 'css-loader', options: cssLoaderOptions },
-          { loader: 'postcss-loader' },
+          { loader: 'postcss-loader', options: postcssLoaderOptions },
           { loader: 'less-loader' }
         ]
       },
@@ -153,9 +162,7 @@ const webpackConfig = () => {
       filename: `${css}/[name]${contenthash}.css`,
       // filename: '[name].css',
       chunkFilename: `${css}/[id]${contenthash}.css`
-    }) // ,
-
-    // new WebpackManifestPlugin()
+    })
   ];
 
   if (stylelintEnable) {

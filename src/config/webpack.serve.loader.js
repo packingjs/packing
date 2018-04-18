@@ -4,12 +4,23 @@
  * @module config/webpack.serve.loader
  */
 
+import path from 'path';
 import { pRequire } from '..';
+import getExistsFilePath from '../lib/getExistsFilePath';
 
 const {
   assetExtensions,
   cssLoader: cssLoaderOptions
 } = pRequire('config/packing');
+
+const postcssConfigFileName = 'postcss.config.js';
+const postcssConfigFileInProject = path.resolve(context, postcssConfigFileName);
+const postcssConfigFileInLib = path.resolve(__dirname, postcssConfigFileName);
+const postcssLoaderOptions = {
+  config: {
+    path: getExistsFilePath(postcssConfigFileInProject, postcssConfigFileInLib)
+  }
+};
 
 export default {
   rules: [
@@ -30,7 +41,7 @@ export default {
       use: [
         { loader: 'style-loader' },
         { loader: 'css-loader', options: cssLoaderOptions },
-        { loader: 'postcss-loader' }
+        { loader: 'postcss-loader', options: postcssLoaderOptions }
       ]
     },
     {
@@ -38,7 +49,7 @@ export default {
       use: [
         { loader: 'style-loader' },
         { loader: 'css-loader', options: cssLoaderOptions },
-        { loader: 'postcss-loader' },
+        { loader: 'postcss-loader', options: postcssLoaderOptions },
         { loader: 'sass-loader' }
       ]
     },
@@ -47,7 +58,7 @@ export default {
       use: [
         { loader: 'style-loader' },
         { loader: 'css-loader', options: cssLoaderOptions },
-        { loader: 'postcss-loader' },
+        { loader: 'postcss-loader', options: postcssLoaderOptions },
         { loader: 'less-loader' }
       ]
     },

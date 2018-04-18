@@ -315,6 +315,11 @@ export default {
    */
   cssLoader: {
     /**
+     * 在 css loader 之前应用的 loader 数量
+     * @type {number}
+     */
+    importLoaders: 2,
+    /**
      * 是否启用 `CSS Modules`
      * @type {bool}
      */
