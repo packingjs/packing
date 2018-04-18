@@ -9,6 +9,7 @@ import CleanPlugin from 'clean-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import WebpackPwaManifest from 'webpack-pwa-manifest';
 import StylelintWebpackPlugin from 'stylelint-webpack-plugin';
+import WebpackVisualizerPlugin from 'webpack-visualizer-plugin';
 import { plugin as PackingTemplatePlugin } from '..';
 import '../bootstrap';
 import { pRequire, getContext, requireDefault } from '..';
@@ -37,6 +38,9 @@ const {
   stylelint: {
     enable: stylelintEnable,
     options: stylelintOptions
+  },
+  visualizer: {
+    enable: visualizerEnable
   },
   minimize,
   path: {
@@ -165,6 +169,7 @@ const webpackConfig = () => {
     })
   ];
 
+  // 该插件用的还是旧插件机制
   if (stylelintEnable) {
     plugins.push(new StylelintWebpackPlugin({
       ...{ context: path.resolve(context, srcRoot) },
@@ -177,6 +182,11 @@ const webpackConfig = () => {
       ...requireDefault(path.resolve(context, 'config/webpack.manifest')),
       ...{ filename: `[name]${hash}[ext]` }
     }));
+  }
+
+  // 该插件用的还是旧插件机制
+  if (visualizerEnable) {
+    plugins.push(new WebpackVisualizerPlugin());
   }
 
   const optimization = { minimize };

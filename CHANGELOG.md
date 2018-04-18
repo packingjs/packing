@@ -12,16 +12,6 @@ All notable changes to this project will be documented in this file. See [standa
 
 
 
-<a name="3.0.0"></a>
-# [3.0.0](https://github.com/packingjs/packing/compare/v3.0.0-beta.5...v3.0.0) (2018-04-18)
-
-
-### Features
-
-* 内置 `postcss.config.js` 配置文件 ([c5450be](https://github.com/packingjs/packing/commit/c5450be))
-
-
-
 <a name="3.0.0-beta.5"></a>
 # [3.0.0-beta.5](https://github.com/packingjs/packing/compare/v3.0.0-beta.4...v3.0.0-beta.5) (2018-04-17)
 

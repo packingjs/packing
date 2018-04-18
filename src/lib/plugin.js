@@ -71,7 +71,12 @@ export default class PackingTemplatePlugin {
   }
 
   done(compiler, stats) {
-    const { template: { engine, autoGeneration } } = this.appConfig;
+    const {
+      template: {
+        engine,
+        autoGeneration
+      }
+    } = this.appConfig;
     const statsJson = stats.compilation.getStats().toJson({
       all: false,
       entrypoints: true

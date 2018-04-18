@@ -388,6 +388,30 @@ export default {
     // ]
   },
 
+  /**
+   * webpack-visualizer-plugin 配置
+   * @see https://github.com/chrisbateman/webpack-visualizer
+   */
+  visualizer: {
+    /**
+     * 是否启用 webpack-visualizer-plugin
+     * @type {bool}
+     */
+    enable: true,
+
+    /**
+     * `visualizer` 配置项
+     * @type {object}
+     */
+    options: {
+      /**
+       * 编译成功是否在浏览器中打开报表网页
+       * @type {object}
+       */
+      open: true
+    }
+  },
+
   /** graphql 配置 */
   graphql: {
     /**

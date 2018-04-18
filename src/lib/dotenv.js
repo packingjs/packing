@@ -15,7 +15,7 @@ dotenv.config({
 const { NODE_ENV } = process.env;
 if (!NODE_ENV) {
   const message = `
-[错误]: 未能在工程根目录下找到 \`.env\` 文件。
+[dotenv]: 未能在工程根目录下找到 \`.env\` 文件。
 解决方法：
 方法1：运行 echo NODE_ENV=local > .env 创建文件。
 方法2：启动时传递环境变量 NODE_ENV=<local|beta|production>
@@ -29,8 +29,8 @@ const envInLib = resolve(__dirname, `../../profiles/${NODE_ENV}.env`);
 const dotenvConfig = getExistsFilePath(envInProject, envInLib);
 try {
   dotenv.config({ path: dotenvConfig });
-  console.log(`[成功]: 配置文件加载成功，文件位置：${dotenvConfig}`);
+  console.log(`[dotenv]: 配置文件加载成功，文件位置：${dotenvConfig}`);
 } catch (e) {
-  const message = `[错误]: 配置文件加载失败，文件位置：${dotenvConfig}`;
+  const message = `[dotenv]: 配置文件加载失败，文件位置：${dotenvConfig}`;
   console.log(chalk.red(message));
 }
