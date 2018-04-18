@@ -5,8 +5,10 @@
  */
 
 import path from 'path';
-import { pRequire } from '..';
+import { pRequire, getContext } from '..';
 import getExistsFilePath from '../lib/getExistsFilePath';
+
+const context = getContext();
 
 const {
   assetExtensions,
