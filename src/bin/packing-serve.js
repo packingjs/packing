@@ -12,7 +12,7 @@ import { Spinner } from 'cli-spinner';
 import { middleware as packingTemplate } from '..';
 import '../bootstrap';
 import { pRequire, getContext } from '..';
-import graphqlMockServer from '../lib/graphql-mock-server';
+// import graphqlMockServer from '../lib/graphql-mock-server';
 
 program
   .option('-c, --clean', 'clean dll cache')
@@ -97,6 +97,7 @@ webpackDevMiddlewareInstance.waitUntilValid(() => {
   packingTemplate(app, appConfig);
 
   if (graphqlEnable) {
+    const graphqlMockServer = require('../lib/graphql-mock-server');
     graphqlMockServer(app, {
       graphqlEndpoint,
       graphiqlEndpoint
