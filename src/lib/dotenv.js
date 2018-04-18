@@ -1,7 +1,8 @@
-import { existsSync } from 'fs';
 import { resolve } from 'path';
 import dotenv from 'dotenv';
+import chalk from 'chalk';
 import { getContext } from '..';
+import getExistsFilePath from './getExistsFilePath';
 
 const context = getContext();
 
@@ -13,16 +14,23 @@ dotenv.config({
 // 当加载 .env 失败时，终止程序
 const { NODE_ENV } = process.env;
 if (!NODE_ENV) {
-  console.log([
-    '[error]: The .env file is not found. ',
-    'Please run the following command to create the file in the root of the project:',
-    'echo NODE_ENV=local > .env'
-  ].join('\n'));
+  const message = `
+[错误]: 未能在工程根目录下找到 \`.env\` 文件。
+解决方法：
+方法1：运行 echo NODE_ENV=local > .env 创建文件。
+方法2：启动时传递环境变量 NODE_ENV=<local|beta|production>
+`;
+  console.log(chalk.red(message));
   process.exit(1);
 }
 
 const envInProject = resolve(getContext(), `profiles/${NODE_ENV}.env`);
 const envInLib = resolve(__dirname, `../../profiles/${NODE_ENV}.env`);
-const dotenvConfig = existsSync(envInProject) ? envInProject : envInLib;
-dotenv.config({ path: dotenvConfig });
-console.log(`[dotenv]\`${dotenvConfig}\` loaded.`);
+const dotenvConfig = getExistsFilePath(envInProject, envInLib);
+try {
+  dotenv.config({ path: dotenvConfig });
+  console.log(`[成功]: 配置文件加载成功，文件位置：${dotenvConfig}`);
+} catch (e) {
+  const message = `[错误]: 配置文件加载失败，文件位置：${dotenvConfig}`;
+  console.log(chalk.red(message));
+}
