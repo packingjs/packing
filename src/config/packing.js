@@ -405,11 +405,11 @@ export default {
      */
     options: {
       /**
-       * 编译成功是否在浏览器中打开报表网页
+       * 是否在浏览器中打开 visualizer 报表网页
        * 和 `packing build -o` 效果一样
        * @type {object}
        */
-      open: true
+      open: false
     }
   },
 
