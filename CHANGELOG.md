@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.0.0-beta.7"></a>
+# [3.0.0-beta.7](https://github.com/packingjs/packing/compare/v3.0.0-beta.6...v3.0.0-beta.7) (2018-04-19)
+
+
+### Features
+
+* 增加输出文件分析报表功能，借助报表能优化打包结果 ([fa5d49e](https://github.com/packingjs/packing/commit/fa5d49e))
+
+
+
 <a name="3.0.0-beta.6"></a>
 # [3.0.0-beta.6](https://github.com/packingjs/packing/compare/v3.0.0-beta.5...v3.0.0-beta.6) (2018-04-18)
 
