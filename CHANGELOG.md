@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.0.0-beta.8"></a>
+# [3.0.0-beta.8](https://github.com/packingjs/packing/compare/v3.0.0-beta.7...v3.0.0-beta.8) (2018-04-19)
+
+
+### Bug Fixes
+
+* 修复当build结果存在 warning 就不自动弹出包体积分析报告网页 ([cdb478c](https://github.com/packingjs/packing/commit/cdb478c))
+
+
+
 <a name="3.0.0-beta.7"></a>
 # [3.0.0-beta.7](https://github.com/packingjs/packing/compare/v3.0.0-beta.6...v3.0.0-beta.7) (2018-04-19)
 
