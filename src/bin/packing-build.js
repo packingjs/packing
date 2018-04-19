@@ -42,14 +42,14 @@ webpack(webpackConfig, (err, stats) => {
   } else {
     console.log(stats.toString(stats));
     console.log('[build]:💚 Webpack 打包成功。');
+  }
 
-    if (visualizerEnable) {
-      const file = resolve(context, distRoot, 'stats.html');
-      const message = `[webpack-visualizer-plugin]: 模块报表已经生成，该报表可以指导优化输出文件体积\n请运行 open file://${file} 查看报表`;
-      console.log(message);
-      if (program.open || visualizerOptions.open) {
-        open(`file://${file}`);
-      }
+  if (visualizerEnable) {
+    const file = resolve(context, distRoot, 'stats.html');
+    const message = `[webpack-visualizer-plugin]: 模块报表已经生成，该报表可以指导优化输出文件体积\n请运行 open file://${file} 查看报表`;
+    console.log(message);
+    if (program.open || visualizerOptions.open) {
+      open(`file://${file}`);
     }
   }
 });
