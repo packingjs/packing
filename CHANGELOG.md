@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.0.0-beta.11"></a>
+# [3.0.0-beta.11](https://github.com/packingjs/packing/compare/v3.0.0-beta.10...v3.0.0-beta.11) (2018-04-19)
+
+
+### Bug Fixes
+
+* 修复开发环境下 script 闭合标签错误的问题 ([f887d61](https://github.com/packingjs/packing/commit/f887d61))
+
+
+
 <a name="3.0.0-beta.10"></a>
 # [3.0.0-beta.10](https://github.com/packingjs/packing/compare/v3.0.0-beta.9...v3.0.0-beta.10) (2018-04-19)
 
