@@ -107,7 +107,7 @@ function injectScripts(html, templateEngine, chunkName, assets, commonChunks, sc
       scriptHtml = scripts
         .map(file => `  <script src="${publicPath + file}"></script>`)
         .join('\n');
-      html = html.replace(`</${scriptInjectPosition}>`, `${scriptHtml}\n  </scriptInjectPosition>`);
+      html = html.replace(`</${scriptInjectPosition}>`, `${scriptHtml}\n  </${scriptInjectPosition}>`);
     }
   }
 
