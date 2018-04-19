@@ -119,13 +119,13 @@ export default {
      * entries: () => {}
      */
     entries: () => {
-      const entryPath = 'src/entries';
-      const entryPattern = '**/*.js';
+      const entryFileName = 'entry.js';
+      const entryPath = 'src/pages';
+      const entryPattern = `**/${entryFileName}`;
       const cwd = path.resolve(context, entryPath);
       const config = {};
       packingGlob(entryPattern, { cwd }).forEach((page) => {
-        const ext = path.extname(page).toLowerCase();
-        const key = page.replace(ext, '');
+        const key = page.replace(`/${entryFileName}`, '');
         config[key] = path.join(cwd, page);
       });
       return config;
