@@ -1,7 +1,7 @@
 {
   "name": "packing",
   "description": "Webpack based web front-end development environment",
-  "version": "3.0.0-beta.9",
+  "version": "3.0.0-beta.10",
   "repository": "packingjs/packing",
   "files": [
     "dist"
