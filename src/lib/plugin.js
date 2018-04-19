@@ -39,7 +39,7 @@ import mkdirp from 'mkdirp';
 import loaderUtils from 'loader-utils';
 import glob from 'packing-glob';
 import { requireDefault, getContext } from '..';
-import getEntries from '../lib/getEntries';
+import getEntries from '../lib/get-entries';
 
 export default class PackingTemplatePlugin {
   constructor(appConfig) {

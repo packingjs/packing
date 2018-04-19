@@ -2,7 +2,7 @@ import { existsSync, readFileSync } from 'fs';
 import { resolve, dirname, isAbsolute } from 'path';
 import { isObject } from 'util';
 import { requireDefault, getContext } from '..';
-import getEntries from '../lib/getEntries';
+import getEntries from '../lib/get-entries';
 
 function injectTitle(html, templateEngine, title) {
   if (title) {

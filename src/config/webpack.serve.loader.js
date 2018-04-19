@@ -6,7 +6,7 @@
 
 import path from 'path';
 import { pRequire, getContext } from '..';
-import getExistsFilePath from '../lib/getExistsFilePath';
+import getExistsFilePath from '../lib/get-exists-file-path';
 
 const context = getContext();
 

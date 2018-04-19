@@ -14,7 +14,7 @@ import StylelintWebpackPlugin from 'stylelint-webpack-plugin';
 import '../bootstrap';
 import { pRequire, getContext, requireDefault } from '..';
 import loader from './webpack.serve.loader';
-import getEntries from '../lib/getEntries';
+import getEntries from '../lib/get-entries';
 
 const {
   localhost,

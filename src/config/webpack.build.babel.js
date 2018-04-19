@@ -13,8 +13,8 @@ import WebpackVisualizerPlugin from 'webpack-visualizer-plugin';
 import { plugin as PackingTemplatePlugin } from '..';
 import '../bootstrap';
 import { pRequire, getContext, requireDefault } from '..';
-import getEntries from '../lib/getEntries';
-import getExistsFilePath from '../lib/getExistsFilePath';
+import getEntries from '../lib/get-entries';
+import getExistsFilePath from '../lib/get-exists-file-path';
 
 const { NODE_ENV, CDN_ROOT } = process.env;
 const context = getContext();
