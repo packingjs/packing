@@ -2,7 +2,6 @@ import { resolve } from 'path';
 import dotenv from 'dotenv';
 import chalk from 'chalk';
 import { getContext } from '..';
-import getExistsFilePath from './getExistsFilePath';
 
 const context = getContext();
 
@@ -24,9 +23,7 @@ if (!NODE_ENV) {
   process.exit(1);
 }
 
-const envInProject = resolve(getContext(), `profiles/${NODE_ENV}.env`);
-const envInLib = resolve(__dirname, `../../profiles/${NODE_ENV}.env`);
-const dotenvConfig = getExistsFilePath(envInProject, envInLib);
+const dotenvConfig = resolve(getContext(), `profiles/${NODE_ENV}.env`);
 try {
   dotenv.config({ path: dotenvConfig });
   console.log(`[dotenv]: 配置文件加载成功，文件位置：${dotenvConfig}`);
