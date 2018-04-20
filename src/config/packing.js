@@ -397,7 +397,7 @@ export default {
      * 是否启用 webpack-visualizer-plugin
      * @type {bool}
      */
-    enable: true,
+    enable: false,
 
     /**
      * `visualizer` 配置项

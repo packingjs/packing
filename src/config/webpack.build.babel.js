@@ -16,7 +16,7 @@ import { pRequire, getContext, requireDefault } from '..';
 import getEntries from '../lib/get-entries';
 import getExistsFilePath from '../lib/get-exists-file-path';
 
-const { NODE_ENV, CDN_ROOT } = process.env;
+const { NODE_ENV, CDN_ROOT = '/' } = process.env;
 const context = getContext();
 const appConfig = pRequire('config/packing');
 const {
