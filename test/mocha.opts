@@ -1,5 +1,5 @@
 --require should
 --require babel-core/register
 --recursive
---timeout 30000
+--timeout 10000
 --exit

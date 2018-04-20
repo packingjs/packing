@@ -338,7 +338,7 @@ export default {
      * 是否启用 `stylelint`
      * @type {bool}
      */
-    enable: false,
+    enable: true,
 
     /**
      * `stylelint` 配置项
@@ -458,7 +458,7 @@ export default {
    */
   rewriteRules: {
     /** 网站URL与模版的对应路由关系 */
-    '^/$': '/index.html',
+    // '^/$': '/index',
 
     /** API转发 */
     '^/api/(.*)': 'require!/mock/api/$1.js'

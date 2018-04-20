@@ -171,8 +171,15 @@ const webpackConfig = () => {
 
   // 该插件用的还是旧插件机制
   if (stylelintEnable) {
+    const stylelintConfigFileName = 'stylelint.config.js';
+    const stylelintConfigFileInProject = path.resolve(context, stylelintConfigFileName);
+    const stylelintConfigFileInLib = path.resolve(__dirname, stylelintConfigFileName);
+
     plugins.push(new StylelintWebpackPlugin({
-      ...{ context: path.resolve(context, srcRoot) },
+      ...{
+        context: path.resolve(context, srcRoot),
+        configFile: getExistsFilePath(stylelintConfigFileInProject, stylelintConfigFileInLib)
+      },
       ...stylelintOptions
     }));
   }

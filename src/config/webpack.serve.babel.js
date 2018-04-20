@@ -10,7 +10,6 @@ import { isString, isArray, isObject } from 'util';
 import webpack from 'webpack';
 import OpenBrowserPlugin from 'open-browser-webpack-plugin';
 import WebpackPwaManifest from 'webpack-pwa-manifest';
-import StylelintWebpackPlugin from 'stylelint-webpack-plugin';
 import '../bootstrap';
 import { pRequire, getContext, requireDefault } from '..';
 import loader from './webpack.serve.loader';
@@ -25,10 +24,6 @@ const {
   },
   template: {
     injectManifest
-  },
-  stylelint: {
-    enable: stylelintEnable,
-    options: stylelintOptions
   },
   commonChunks,
   path: {
@@ -91,13 +86,6 @@ const webpackConfig = (program) => {
   };
 
   const plugins = [];
-
-  if (stylelintEnable) {
-    plugins.push(new StylelintWebpackPlugin({
-      ...{ context: path.resolve(context, src) },
-      ...stylelintOptions
-    }));
-  }
 
   if (injectManifest) {
     plugins.push(new WebpackPwaManifest({

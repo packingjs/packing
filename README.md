@@ -7,12 +7,10 @@
 [![Dependency Status](https://david-dm.org/packingjs/packing.svg)](https://david-dm.org/packingjs/packing)
 [![devDependency Status](https://david-dm.org/packingjs/packing/dev-status.svg)](https://david-dm.org/packingjs/packing#info=devDependencies)
 
-## Introduction
-* 由于react的流行，公司越来越多的项目都希望使用react来构建，但目前公司的前端工具FEKit不能很好的支持react开发和编译
-* 有些部门已经使用了react，但在实施过程中或多或少的遇到了一些问题，这些问题具有一些共性，其实可以使用统一的方案来解决
-* 无线touch团队在过往的工作中在前端工程化和react方面积累了不少经验，愿意进行技术分享和全公司内推广
-* 只关心通用的集成开发环境和编译过程，不关心网站的架构和目录结构
-* 部分灵感来源于grunt和Yeoman
+## 特点
+* 不依赖 host 文件，根据环境自动切换资源路径
+* 节约开发服务器，多分支开发部署到同一台服务器不会相互覆盖
+* 提供资源包体积分析报告
 
 ## Install
 
@@ -57,53 +55,6 @@
   npm run serve -- --clean
   npm run serve -- -c
   ```
-
-## Features
-- [x]react支持
-- [x]HMR
-- [x]动态加载
-- [x]支持自定义打包规则和指定common.js
-- [x]yo-generator
-- [x]urlrewrite/自定义路由规则
-- [x]支持SPA／多入口网站／React Native
-- [x]支持多种资源的引入，如images、fonts、json
-- [x]大size图片在css中引用hash自动更新
-- [x]使用babel，支持ES6/7
-- [x]统一的eslint语法检查
-- [x]less、sass支持
-- [x]使用postcss预编译
-- [x]支持source map
-- [x]支持资源hash rename
-- [x]预览编译后的内容
-- [x]不同环境使用profiles文件
-- [x]redux-devtools
-- [x]性能：不常修改的common包支持编译结果缓存
-- [x]支持多种模版
-  - html
-  - [pug](https://pugjs.org)
-  - [ejs](https://github.com/tj/ejs)
-  - [handlebars](http://handlebarsjs.com/)
-  - [smarty](http://www.smarty.net/)
-  - [velocity](http://velocity.apache.org/)
-  - [artTemplate](https://github.com/aui/artTemplate)
-
-## Todo
-- [ ]文档
-- [x]页面初始化数据支持代理服务器功能
-- [x]example
-  - [x]base
-  - [x]custom template
-  - [x]react + redus
-  - [x]common chunks
-  - [x]url rules
-  - [x]data mock
-  - [x]profiles
-- [ ]unit test
-- [x]es6 decorator
-- [ ]动态require，更新reduce
-- [x]packing-profile-webpack-plugin支持webpack2
-- [ ]升级eslint-plugin-jsx-a11y@^3.0.2(eslint-config-airbnb@13.0.0配置有误，暂不升级)
-- [ ]Replace NPM with yarn(Nested bin bug https://github.com/yarnpkg/yarn/pull/1210)
 
 ## Directory
 
