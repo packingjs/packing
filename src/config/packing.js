@@ -370,7 +370,7 @@ export default {
 
   /**
    * commonChunks 配置
-   * 可以配置多个 common 包
+   * 可以配置多个 common 包，配置的包名称会转换为正则表达式
    * 该配置分别在以下过程中被调用：
    * - 在 `packing serve` 任务中被 `DllPlugin` 调用
    * - 在 `packing build` 任务中被 `SplitChunkPlugin` 调用
