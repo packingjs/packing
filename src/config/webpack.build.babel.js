@@ -28,8 +28,10 @@ const {
   },
   longTermCaching: {
     enable: longTermCachingEnable,
-    delimiter,
-    fileHashLength
+    options: {
+      delimiter,
+      fileHashLength
+    }
   },
   cssLoader,
   template: {

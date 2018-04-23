@@ -61,14 +61,14 @@ export default class PackingTemplatePlugin {
     }
   }
 
-  getHashPattern(longTermCaching, longTermCachingSymbol, fileHashLength) {
-    let hashPattern = '';
-
-    if (longTermCaching) {
-      hashPattern = `${longTermCachingSymbol}[hash:${fileHashLength}]`;
-    }
-    return hashPattern;
-  }
+  // getHashPattern(longTermCaching, longTermCachingSymbol, fileHashLength) {
+  //   let hashPattern = '';
+  //
+  //   if (longTermCaching) {
+  //     hashPattern = `${longTermCachingSymbol}[hash:${fileHashLength}]`;
+  //   }
+  //   return hashPattern;
+  // }
 
   done(compiler, stats) {
     const {

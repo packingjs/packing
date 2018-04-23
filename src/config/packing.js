@@ -290,16 +290,22 @@ export default {
     enable: true,
 
     /**
-     * 文件名与 hash 连接使用的字符串
-     * @type {string}
+     * 缓存选项
+     * @type {object}
      */
-    delimiter: '_',
+    options: {
+      /**
+       * 文件名与 hash 连接使用的字符串
+       * @type {string}
+       */
+      delimiter: '_',
 
-    /**
-     * hash 长度
-     * @type {number}
-     */
-    fileHashLength: 8
+      /**
+       * hash 长度
+       * @type {number}
+       */
+      fileHashLength: 8
+    }
   },
 
   /**
@@ -438,17 +444,19 @@ export default {
      */
     enable: false,
 
-    /**
-     * GraphQL 地址
-     * @type {string}
-     */
-    graphqlEndpoint: '/graphql',
+    options: {
+      /**
+       * GraphQL 地址
+       * @type {string}
+       */
+      graphqlEndpoint: '/graphql',
 
-    /**
-     * GraphiQL 地址
-     * @type {string}
-     */
-    graphiqlEndpoint: '/graphiql'
+      /**
+       * GraphiQL 地址
+       * @type {string}
+       */
+      graphiqlEndpoint: '/graphiql'
+    }
   },
 
   /**
