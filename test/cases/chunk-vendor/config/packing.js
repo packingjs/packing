@@ -4,6 +4,8 @@ export default (packing) => {
   p.path.entries = {
     a: './a.js'
   };
+  p.eslint.enable = false;
+  p.stylelint.enable = false;
   p.runtimeChunk.enable = true;
   p.commonChunks = {
     vendor: [

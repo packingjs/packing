@@ -10,10 +10,12 @@ import { isString, isArray, isObject } from 'util';
 import webpack from 'webpack';
 import OpenBrowserPlugin from 'open-browser-webpack-plugin';
 import WebpackPwaManifest from 'webpack-pwa-manifest';
+import StylelintWebpackPlugin from 'stylelint-webpack-plugin';
 import '../bootstrap';
 import { pRequire, getContext, requireDefault } from '..';
 import loader from './webpack.serve.loader';
 import getEntries from '../lib/get-entries';
+import getExistsFilePath from '../lib/get-exists-file-path';
 
 const {
   localhost,
@@ -21,6 +23,10 @@ const {
   hot: {
     enable: hotEnable,
     options: hotOptions
+  },
+  stylelint: {
+    enable: stylelintEnable,
+    options: stylelintOptions
   },
   template: {
     injectManifest
@@ -114,6 +120,21 @@ const webpackConfig = (program) => {
         manifest: require(path.resolve(dllPath, `${key}-manifest.json`))
       }));
     });
+  }
+
+  // 该插件用的还是旧插件机制
+  if (stylelintEnable) {
+    const stylelintConfigFileName = 'stylelint.config.js';
+    const stylelintConfigFileInProject = path.resolve(context, stylelintConfigFileName);
+    const stylelintConfigFileInLib = path.resolve(__dirname, stylelintConfigFileName);
+
+    plugins.push(new StylelintWebpackPlugin({
+      ...{
+        context: path.resolve(context, src),
+        configFile: getExistsFilePath(stylelintConfigFileInProject, stylelintConfigFileInLib)
+      },
+      ...stylelintOptions
+    }));
   }
 
   const performance = { hints: false };

@@ -1,0 +1,8 @@
+/.tmp/**
+/docs/**
+/mock/**
+/examples/**
+prd/
+/node_modules/**
+/dist
+/test/src

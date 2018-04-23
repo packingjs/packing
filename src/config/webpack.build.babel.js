@@ -39,6 +39,10 @@ const {
     enable: stylelintEnable,
     options: stylelintOptions
   },
+  eslint: {
+    enable: eslintEnable,
+    options: eslintOptions
+  },
   visualizer: {
     enable: visualizerEnable
   },
@@ -103,16 +107,25 @@ const webpackConfig = () => {
     }
   };
 
+  const jsLoaders = [
+    {
+      loader: 'babel-loader'
+    }
+  ];
+
+  if (eslintEnable) {
+    jsLoaders.push({
+      loader: 'eslint-loader',
+      options: eslintOptions
+    });
+  }
+
   const module = {
     rules: [
       {
         test: /\.js$/i,
         exclude: /node_modules/,
-        use: [
-          {
-            loader: 'babel-loader'
-          }
-        ]
+        use: jsLoaders
       },
       {
         test: /\.css$/i,

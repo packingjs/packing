@@ -12,7 +12,11 @@ const context = getContext();
 
 const {
   assetExtensions,
-  cssLoader: cssLoaderOptions
+  cssLoader: cssLoaderOptions,
+  eslint: {
+    enable: eslintEnable,
+    options: eslintOptions
+  }
 } = pRequire('config/packing');
 
 const postcssConfigFileName = 'postcss.config.js';
@@ -24,19 +28,25 @@ const postcssLoaderOptions = {
   }
 };
 
+const jsLoaders = [
+  {
+    loader: 'babel-loader'
+  }
+];
+
+if (eslintEnable) {
+  jsLoaders.push({
+    loader: 'eslint-loader',
+    options: eslintOptions
+  });
+}
+
 export default {
   rules: [
     {
       test: /\.js$/i,
       exclude: /node_modules/,
-      use: [
-        {
-          loader: 'babel-loader'
-        },
-        {
-          loader: 'eslint-loader'
-        }
-      ]
+      use: jsLoaders
     },
     {
       test: /\.css$/i,

@@ -350,6 +350,23 @@ export default {
     }
   },
 
+  /** eslint 配置 */
+  eslint: {
+    /**
+     * 是否启用 `eslint`
+     * @type {bool}
+     */
+    enable: true,
+
+    /**
+     * `eslint` 配置项
+     * @type {object}
+     * @see {@link https://github.com/webpack-contrib/eslint-loader|eslint options}
+     */
+    options: {
+    }
+  },
+
   /**
    * runtimeChunk 配置
    * @see https://webpack.js.org/plugins/split-chunks-plugin/
