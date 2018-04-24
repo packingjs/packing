@@ -124,7 +124,7 @@ const webpackConfig = (program) => {
 
   // 该插件用的还是旧插件机制
   if (stylelintEnable) {
-    const stylelintConfigFileName = 'stylelint.config.js';
+    const stylelintConfigFileName = '.stylelintrc.js';
     const stylelintConfigFileInProject = path.resolve(context, stylelintConfigFileName);
     const stylelintConfigFileInLib = path.resolve(__dirname, stylelintConfigFileName);
 

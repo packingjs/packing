@@ -19,7 +19,7 @@ const {
   }
 } = pRequire('config/packing');
 
-const postcssConfigFileName = 'postcss.config.js';
+const postcssConfigFileName = '.postcssrc.js';
 const postcssConfigFileInProject = path.resolve(context, postcssConfigFileName);
 const postcssConfigFileInLib = path.resolve(__dirname, postcssConfigFileName);
 const postcssLoaderOptions = {
