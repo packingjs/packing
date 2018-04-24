@@ -1,12 +1,12 @@
-import { isFunction, isString } from 'util';
+import { isFunction, isObject } from 'util';
 
 export default (entries) => {
   if (isFunction(entries)) {
     return entries();
-  } else if (isString(entries)) {
-    return {
-      main: entries
-    };
+  } else if (isObject(entries)) {
+    return entries;
   }
-  return entries;
+  return {
+    main: entries
+  };
 };
