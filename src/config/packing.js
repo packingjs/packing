@@ -449,7 +449,7 @@ export default {
      * 是否启用 webpack-visualizer-plugin
      * @type {bool}
      */
-    enable: false,
+    enable: true,
 
     /**
      * `visualizer` 配置项
@@ -461,7 +461,7 @@ export default {
        * 和 `packing build -o` 效果一样
        * @type {object}
        */
-      open: false
+      open: process.env.npm_lifecycle_event === 'build'
     }
   },
 
