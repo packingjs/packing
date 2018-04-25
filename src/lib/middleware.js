@@ -164,12 +164,10 @@ export default (app, appConfig) => {
         ...settings
       };
 
-      // const { assetsByChunkName } = res.locals.webpackStats.toJson();
       const statsJson = res.locals.webpackStats.compilation.getStats().toJson({
         all: false,
         entrypoints: true
       });
-      // console.log('--statsJson:', statsJson.entrypoints);
       const { entrypoints } = statsJson;
 
       let html = '';

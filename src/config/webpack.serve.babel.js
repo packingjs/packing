@@ -15,7 +15,7 @@ import '../bootstrap';
 import { pRequire, getContext, requireDefault } from '..';
 import loader from './webpack.serve.loader';
 import getEntries from '../lib/get-entries';
-import getExistsFilePath from '../lib/get-exists-file-path';
+import getExistConfigPath from '../lib/get-exist-config-path';
 
 const {
   localhost,
@@ -126,14 +126,10 @@ const webpackConfig = (program) => {
 
   // 该插件用的还是旧插件机制
   if (stylelintEnable) {
-    const stylelintConfigFileName = '.stylelintrc.js';
-    const stylelintConfigFileInProject = path.resolve(context, stylelintConfigFileName);
-    const stylelintConfigFileInLib = path.resolve(__dirname, stylelintConfigFileName);
-
     plugins.push(new StylelintWebpackPlugin({
       ...{
         context: path.resolve(context, src),
-        configFile: getExistsFilePath(stylelintConfigFileInProject, stylelintConfigFileInLib)
+        configFile: getExistConfigPath('stylelint', context, __dirname)
       },
       ...stylelintOptions
     }));

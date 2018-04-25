@@ -15,7 +15,7 @@ import { plugin as PackingTemplatePlugin } from '..';
 import '../bootstrap';
 import { pRequire, getContext, requireDefault } from '..';
 import getEntries from '../lib/get-entries';
-import getExistsFilePath from '../lib/get-exists-file-path';
+import getExistConfigPath from '../lib/get-exist-config-path';
 
 const { NODE_ENV, CDN_ROOT = '/' } = process.env;
 const context = getContext();
@@ -107,14 +107,12 @@ const webpackConfig = () => {
     }
   };
 
-  const postcssConfigFileName = '.postcssrc.js';
-  const postcssConfigFileInProject = path.resolve(context, postcssConfigFileName);
-  const postcssConfigFileInLib = path.resolve(__dirname, postcssConfigFileName);
   const postcssLoaderOptions = {
     config: {
-      path: getExistsFilePath(postcssConfigFileInProject, postcssConfigFileInLib)
+      path: getExistConfigPath('postcss', context, __dirname)
     }
   };
+  console.log('--aaa:', getExistConfigPath('postcss', context, __dirname));
 
   const jsLoaders = [
     {
@@ -195,14 +193,10 @@ const webpackConfig = () => {
 
   // 该插件用的还是旧插件机制
   if (stylelintEnable) {
-    const stylelintConfigFileName = '.stylelintrc.js';
-    const stylelintConfigFileInProject = path.resolve(context, stylelintConfigFileName);
-    const stylelintConfigFileInLib = path.resolve(__dirname, stylelintConfigFileName);
-
     plugins.push(new StylelintWebpackPlugin({
       ...{
         context: path.resolve(context, srcRoot),
-        configFile: getExistsFilePath(stylelintConfigFileInProject, stylelintConfigFileInLib)
+        configFile: getExistConfigPath('stylelint', context, __dirname)
       },
       ...stylelintOptions
     }));

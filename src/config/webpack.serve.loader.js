@@ -4,9 +4,8 @@
  * @module config/webpack.serve.loader
  */
 
-import path from 'path';
 import { pRequire, getContext } from '..';
-import getExistsFilePath from '../lib/get-exists-file-path';
+import getExistConfigPath from '../lib/get-exist-config-path';
 
 const context = getContext();
 
@@ -19,12 +18,9 @@ const {
   }
 } = pRequire('config/packing');
 
-const postcssConfigFileName = '.postcssrc.js';
-const postcssConfigFileInProject = path.resolve(context, postcssConfigFileName);
-const postcssConfigFileInLib = path.resolve(__dirname, postcssConfigFileName);
 const postcssLoaderOptions = {
   config: {
-    path: getExistsFilePath(postcssConfigFileInProject, postcssConfigFileInLib)
+    path: getExistConfigPath('postcss', context, __dirname)
   }
 };
 
