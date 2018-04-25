@@ -29,7 +29,9 @@ const {
     options: stylelintOptions
   },
   template: {
-    injectManifest
+    options: {
+      injectManifest
+    }
   },
   commonChunks,
   path: {

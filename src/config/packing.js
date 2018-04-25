@@ -135,133 +135,145 @@ export default {
   /** 模版配置 */
   template: {
     /**
-     * 模版引擎类型
-     * 目前支持
-     * - html
-     * - pug
-     * - ejs
-     * - handlebars
-     * - smarty
-     * - velocity
-     * - artTemplate
-     * @type {string}
-     */
-    engine: 'pug',
-
-    /**
-     * 模版文件扩展名
-     * @type {string}
-     */
-    extension: '.pug',
-
-    /**
-     * 是否根据 `entry pointer` 自动生成网页文件
+     * 是否启用 packing template
      * @type {bool}
      */
-    autoGeneration: true,
+    enable: true,
 
     /**
-     * 是否往模版中注入 assets
-     * @type {bool}
+     * packing template 选项
+     * @type {object}
      */
-    inject: true,
+    options: {
+      /**
+       * 模版引擎类型
+       * 目前支持
+       * - html
+       * - pug
+       * - ejs
+       * - handlebars
+       * - smarty
+       * - velocity
+       * - artTemplate
+       * @type {string}
+       */
+      engine: 'pug',
 
-    /**
-     * JavaScript Chunk 注入的位置
-     * - 'head': 在</head>前注入
-     * - 'body': 在</body>前注入
-     * @type {'head'|'body'}
-     */
-    scriptInjectPosition: 'body',
+      /**
+       * 模版文件扩展名
+       * @type {string}
+       */
+      extension: '.pug',
 
-    /**
-     * 是否往模版中注入 PWA manifest.json
-     * @type {bool}
-     */
-    injectManifest: false,
+      /**
+       * 是否根据 `entry pointer` 自动生成网页文件
+       * @type {bool}
+       */
+      autoGeneration: true,
 
-    /**
-     * `manifest.json` 文件位置
-     * @type {string}
-     */
-    manifest: 'manifest.json',
+      /**
+       * 是否往模版中注入 assets
+       * @type {bool}
+       */
+      inject: true,
 
-    /**
-     * 生成网页用的源文件位置
-     * @type {string}
-     */
-    source: 'src/templates/pages/default.pug',
+      /**
+       * JavaScript Chunk 注入的位置
+       * - 'head': 在</head>前注入
+       * - 'body': 在</body>前注入
+       * @type {'head'|'body'}
+       */
+      scriptInjectPosition: 'body',
 
-    /**
-     * 生成网页使用的字符编码
-     * @type {string}
-     */
-    charset: 'UTF-8',
+      /**
+       * 是否往模版中注入 PWA manifest.json
+       * @type {bool}
+       */
+      injectManifest: false,
 
-    /**
-     * 生成网页使用的网页标题
-     * @type {string}
-     */
-    title: '',
+      /**
+       * `manifest.json` 文件位置
+       * @type {string}
+       */
+      manifest: 'manifest.json',
 
-    /**
-     * 生成网页使用的 favicon 图标
-     * - false: 不使用 favicon 图标
-     * - 非空字符串: favicon 图标的位置
-     * @type {(bool|string)}
-     */
-    favicon: false,
+      /**
+       * 生成网页用的源文件位置
+       * @type {string}
+       */
+      source: 'src/templates/pages/default.pug',
 
-    /**
-     * 生成网页使用的关键字
-     * @type {(bool|string)}
-     */
-    keywords: false,
+      /**
+       * 生成网页使用的字符编码
+       * @type {string}
+       */
+      charset: 'UTF-8',
 
-    /**
-     * 生成网页使用的网页标题
-     * @type {(bool|string)}
-     */
-    description: false,
+      /**
+       * 生成网页使用的网页标题
+       * @type {string}
+       */
+      title: '',
 
-    /**
-     * 生成网页中必须包含的 chunks 列表
-     * @type {null|array}
-     */
-    chunks: null,
+      /**
+       * 生成网页使用的 favicon 图标
+       * - false: 不使用 favicon 图标
+       * - 非空字符串: favicon 图标的位置
+       * @type {(bool|string)}
+       */
+      favicon: false,
 
-    /**
-     * 生成网页中不包含的 chunks 列表
-     * @type {null|array}
-     */
-    excludeChunks: null,
+      /**
+       * 生成网页使用的关键字
+       * @type {(bool|string)}
+       */
+      keywords: false,
 
-    /**
-     * 生成网页中 chunks 排序方式
-     * - 'none': 按 webpack 生成顺序插入
-     * - 'id': 按 chunks id 正向排序
-     * - 'manual': 手动排序（暂不可用）
-     * - 'commonChunksFirst': 按 common chunks 优先方式排序
-     * - 'reverse': 按当前排序反向排序
-     * @type {string}
-     */
-    chunksSortMode: 'commonChunksFirst',
+      /**
+       * 生成网页使用的网页标题
+       * @type {(bool|string)}
+       */
+      description: false,
 
-    /**
-     * 网页文件中需要在编译时替换为 _hash 的标签属性列表
-     * 格式为 tag:attribute
-     * 如果想对所有标签的某个属性替换，请使用 * 代替 tag
-     * 如所有标签的 src 属性都需要替换，则使用 *:src
-     * @example ['*:src', 'link:href']
-     * @type {array}
-     */
-    attrs: ['img:src', 'link:href'],
+      /**
+       * 生成网页中必须包含的 chunks 列表
+       * @type {null|array}
+       */
+      chunks: null,
 
-    /**
-     * 模版中命中的静态文件编译输出的文件名
-     * @type {string}
-     */
-    path: '[path][name]_[hash:8].[ext]'
+      /**
+       * 生成网页中不包含的 chunks 列表
+       * @type {null|array}
+       */
+      excludeChunks: null,
+
+      /**
+       * 生成网页中 chunks 排序方式
+       * - 'none': 按 webpack 生成顺序插入
+       * - 'id': 按 chunks id 正向排序
+       * - 'manual': 手动排序（暂不可用）
+       * - 'commonChunksFirst': 按 common chunks 优先方式排序
+       * - 'reverse': 按当前排序反向排序
+       * @type {string}
+       */
+      chunksSortMode: 'commonChunksFirst',
+
+      /**
+       * 网页文件中需要在编译时替换为 _hash 的标签属性列表
+       * 格式为 tag:attribute
+       * 如果想对所有标签的某个属性替换，请使用 * 代替 tag
+       * 如所有标签的 src 属性都需要替换，则使用 *:src
+       * @example ['*:src', 'link:href']
+       * @type {array}
+       */
+      attrs: ['img:src', 'link:href'],
+
+      /**
+       * 模版中命中的静态文件编译输出的文件名
+       * @type {string}
+       */
+      path: '[path][name]_[hash:8].[ext]'
+    }
 
   },
 
@@ -308,11 +320,28 @@ export default {
     }
   },
 
-  /**
-   * 是否压缩代码
-   * @type {bool}
-   */
-  minimize: true,
+  /** 压缩代码配置 */
+  minimize: {
+    /**
+     * 是否压缩代码
+     * @type {bool}
+     */
+    enable: true,
+
+    /**
+     * uglifyjs plugin 配置
+     * @type {object}
+     */
+    options: {
+      // sourceMap: true,
+      uglifyOptions: {
+        output: {
+          // beautify: true,
+          comments: false
+        }
+      }
+    }
+  },
 
   /**
    * `css-loader` 配置项

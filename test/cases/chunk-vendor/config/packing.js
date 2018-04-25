@@ -12,7 +12,7 @@ export default (packing) => {
       'ccc', 'sub/bbb', 'sub2/', './d', './useless'
     ]
   };
-  p.template.autoGeneration = false;
+  p.template.options.autoGeneration = false;
   p.minimize = false;
   return p;
 };

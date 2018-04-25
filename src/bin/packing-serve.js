@@ -29,7 +29,12 @@ const {
     enable: graphqlEnable,
     options: graphqlOptions
   },
-  hot,
+  hot: {
+    enable: hotEnable
+  },
+  template: {
+    enable: templateEnable
+  },
   commonChunks,
   path: { src: { root: src }, tmpDll },
   port: { dev: port }
@@ -89,10 +94,12 @@ webpackDevMiddlewareInstance.waitUntilValid(() => {
   app.use(Express.static(dllPath));
   app.use(urlrewrite(rewriteRules));
   app.use(webpackDevMiddlewareInstance);
-  if (hot) {
+  if (hotEnable) {
     app.use(webpackHotMiddleware(compiler));
   }
-  packingTemplate(app, appConfig);
+  if (templateEnable) {
+    packingTemplate(app, appConfig);
+  }
 
   if (graphqlEnable) {
     const graphqlMockServer = require('../lib/graphql-mock-server');

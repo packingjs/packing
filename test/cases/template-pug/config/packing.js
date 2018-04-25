@@ -8,7 +8,7 @@ export default (packing) => {
   };
   p.path.src.root = '.';
   p.path.tmpDll = '../dll/.tmp/dll';
-  p.template.source = 'templates/pages/default.pug';
+  p.template.options.source = 'templates/pages/default.pug';
   p.runtimeChunk.enable = true;
 
   p.commonChunks = {

@@ -127,12 +127,14 @@ export default (app, appConfig) => {
     },
     commonChunks,
     template: {
-      engine,
-      extension,
-      scriptInjectPosition,
-      injectManifestEnable,
-      manifest,
-      autoGeneration
+      options: {
+        engine,
+        extension,
+        scriptInjectPosition,
+        injectManifestEnable,
+        manifest,
+        autoGeneration
+      }
     },
     rewriteRules
   } = appConfig;
@@ -158,7 +160,7 @@ export default (app, appConfig) => {
         description,
         ...templateData
       } = {
-        ...appConfig.template,
+        ...appConfig.template.options,
         ...settings
       };
 

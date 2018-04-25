@@ -1,9 +1,9 @@
 export default (packing) => {
   const p = packing;
 
-  p.template.autoGeneration = false;
-  p.template.inject = false;
-  p.template.attrs = ['img:src', 'link:href', 'img:data-src', '*:test'];
+  p.template.options.autoGeneration = false;
+  p.template.options.inject = false;
+  p.template.options.attrs = ['img:src', 'link:href', 'img:data-src', '*:test'];
 
   return p;
 };

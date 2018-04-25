@@ -64,8 +64,10 @@ export default class PackingTemplatePlugin {
   done(compiler, stats) {
     const {
       template: {
-        engine,
-        autoGeneration
+        options: {
+          engine,
+          autoGeneration
+        }
       }
     } = this.appConfig;
     const statsJson = stats.compilation.getStats().toJson({
@@ -92,7 +94,9 @@ export default class PackingTemplatePlugin {
     const {
       path: { entries },
       commonChunks,
-      template: templateOptions
+      template: {
+        options: templateOptions
+      }
     } = this.appConfig;
 
     // 该 entries 信息包含 commonChunks 配置
@@ -151,7 +155,9 @@ export default class PackingTemplatePlugin {
         }
       },
       template: {
-        extension
+        options: {
+          extension
+        }
       }
     } = this.appConfig;
 
@@ -161,13 +167,13 @@ export default class PackingTemplatePlugin {
       const html = readFileSync(resolve(templateRoot, file), {
         encoding: 'utf-8'
       });
-      const args = this.appConfig.template;
+      const args = this.appConfig.template.options;
       this.pages[file.replace(extension, '')] = { args, html };
     });
   }
 
   getAssetsMap(compiler) {
-    const { template: { engine, path: outputPath } } = this.appConfig;
+    const { engine, path: outputPath } = this.appConfig.template.options;
 
     Object.keys(this.pages).forEach((chunkName) => {
       const matches = [];
@@ -227,8 +233,10 @@ export default class PackingTemplatePlugin {
     const {
       path: { dist: { root: dist, templates } },
       template: {
-        extension,
-        injectManifest
+        options: {
+          extension,
+          injectManifest
+        }
       }
     } = this.appConfig;
 
@@ -282,7 +290,9 @@ export default class PackingTemplatePlugin {
           }
         }
       },
-      template: templateOptions
+      template: {
+        options: templateOptions
+      }
     } = this.appConfig;
     const { attrs } = templateOptions;
 
@@ -388,7 +398,7 @@ export default class PackingTemplatePlugin {
   }
 
   injectTitle(html, title) {
-    const { template: { engine } } = this.appConfig;
+    const { template: { options: { engine } } } = this.appConfig;
     if (title) {
       // 为 SEO 准备的页面 meta 信息
       if (engine === 'pug') {
@@ -401,7 +411,7 @@ export default class PackingTemplatePlugin {
   }
 
   injectMeta(html, favicon, keywords, description) {
-    const { template: { engine } } = this.appConfig;
+    const { template: { options: { engine } } } = this.appConfig;
     // 为 SEO 准备的页面 meta 信息
     if (engine === 'pug') {
       const metaTags = [];
@@ -439,7 +449,7 @@ export default class PackingTemplatePlugin {
   }
 
   injectManifest(html, filename) {
-    const { template: { engine } } = this.appConfig;
+    const { template: { options: { engine } } } = this.appConfig;
     // 为 SEO 准备的页面 meta 信息
     if (engine === 'pug') {
       return `${html}\nblock append meta\n  link(rel="manifest" href="${filename}")\n`;
@@ -448,7 +458,7 @@ export default class PackingTemplatePlugin {
   }
 
   injectStyles(html, chunkName, assets, publicPath) {
-    const { template: { engine } } = this.appConfig;
+    const { template: { options: { engine } } } = this.appConfig;
     const styles = assets.filter(asset => asset.endsWith('.css'));
 
     if (styles.length > 0) {
@@ -472,7 +482,7 @@ export default class PackingTemplatePlugin {
   }
 
   injectScripts(html, chunkName, assets, publicPath) {
-    const { template: { engine, scriptInjectPosition } } = this.appConfig;
+    const { template: { options: { engine, scriptInjectPosition } } } = this.appConfig;
 
     const scripts = assets.filter(asset => asset.endsWith('.js'));
     if (engine === 'pug') {

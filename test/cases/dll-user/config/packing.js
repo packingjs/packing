@@ -7,7 +7,7 @@ export default (packing) => {
     b: './b.js'
   };
 
-  p.template.autoGeneration = false;
+  p.template.options.autoGeneration = false;
 
   p.path.tmpDll = '../dll/.tmp/dll';
 

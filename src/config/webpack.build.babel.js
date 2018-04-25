@@ -10,6 +10,7 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import WebpackPwaManifest from 'webpack-pwa-manifest';
 import StylelintWebpackPlugin from 'stylelint-webpack-plugin';
 import WebpackVisualizerPlugin from 'webpack-visualizer-plugin';
+import UglifyjsWebpackPlugin from 'uglifyjs-webpack-plugin';
 import { plugin as PackingTemplatePlugin } from '..';
 import '../bootstrap';
 import { pRequire, getContext, requireDefault } from '..';
@@ -35,7 +36,10 @@ const {
   },
   cssLoader,
   template: {
-    injectManifest
+    enable: templateEnable,
+    options: {
+      injectManifest
+    }
   },
   stylelint: {
     enable: stylelintEnable,
@@ -48,7 +52,10 @@ const {
   visualizer: {
     enable: visualizerEnable
   },
-  minimize,
+  minimize: {
+    enable: minimizeEnable,
+    options: minimizeOptions
+  },
   path: {
     src: {
       root: srcRoot
@@ -173,8 +180,6 @@ const webpackConfig = () => {
   const plugins = [
     new CleanPlugin(distRoot, { root: context }),
 
-    new PackingTemplatePlugin(appConfig),
-
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
@@ -183,6 +188,10 @@ const webpackConfig = () => {
       chunkFilename: `${css}/[id]${contenthash}.css`
     })
   ];
+
+  if (templateEnable) {
+    plugins.push(new PackingTemplatePlugin(appConfig));
+  }
 
   // 该插件用的还是旧插件机制
   if (stylelintEnable) {
@@ -211,7 +220,14 @@ const webpackConfig = () => {
     plugins.push(new WebpackVisualizerPlugin());
   }
 
-  const optimization = { minimize };
+  const optimization = { minimize: minimizeEnable };
+  // const optimization = {};
+
+  if (minimizeEnable) {
+    optimization.minimizer = [
+      new UglifyjsWebpackPlugin(minimizeOptions)
+    ];
+  }
 
   if (runtimeChunkEnable) {
     optimization.runtimeChunk = {
