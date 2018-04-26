@@ -112,7 +112,6 @@ const webpackConfig = () => {
       path: getExistConfigPath('postcss', context, __dirname)
     }
   };
-  console.log('--aaa:', getExistConfigPath('postcss', context, __dirname));
 
   const jsLoaders = [
     {

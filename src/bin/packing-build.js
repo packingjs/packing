@@ -36,9 +36,6 @@ webpack(webpackConfig, (err, stats) => {
     console.log(message);
     // 让 jenkins 终止编译
     process.exit(1);
-  } else if (stats.hasWarnings()) {
-    const message = yellow(`[build]: ⚠️ Webpack 打包成功，请关注以下信息：\n${stats.compilation.warnings}`);
-    console.log(yellow(message));
   } else {
     console.log(stats.toString(stats));
     console.log('[build]:💚 Webpack 打包成功。');
