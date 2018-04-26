@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.0.0-beta.17"></a>
+# [3.0.0-beta.17](https://github.com/packingjs/packing/compare/v3.0.0-beta.16...v3.0.0-beta.17) (2018-04-26)
+
+
+### Bug Fixes
+
+* babel不编译隐藏文件 ([c6df9e9](https://github.com/packingjs/packing/commit/c6df9e9))
+
+
+### Features
+
+* **eslint:** 检查 import 地址时区分大小写 ([fee351a](https://github.com/packingjs/packing/commit/fee351a))
+
+
+
 <a name="3.0.0"></a>
 # [3.0.0](https://github.com/packingjs/packing/compare/v3.0.0-beta.16...v3.0.0) (2018-04-26)
 
