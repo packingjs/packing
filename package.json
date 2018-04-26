@@ -46,7 +46,7 @@
     "commander": "^2.15.1",
     "css-loader": "^0.28.11",
     "dotenv": "^5.0.1",
-    "eslint-config-qunar": "^2.0.0",
+    "eslint-config-qunar": "^3.0.0",
     "eslint-loader": "^2.0.0",
     "file-loader": "^1.1.11",
     "import-fresh": "^2.0.0",
