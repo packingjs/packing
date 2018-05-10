@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.0.4"></a>
+## [3.0.4](https://github.com/packingjs/packing/compare/v3.0.3...v3.0.4) (2018-05-10)
+
+
+### Bug Fixes
+
+* 修复 manifest.json 地址在编译机上错误的问题 ([5375fbf](https://github.com/packingjs/packing/commit/5375fbf))
+
+
+
 <a name="3.0.3"></a>
 ## [3.0.3](https://github.com/packingjs/packing/compare/v3.0.2...v3.0.3) (2018-05-10)
 
