@@ -265,7 +265,7 @@ export default class PackingTemplatePlugin {
       }
 
       if (injectManifest) {
-        html = this.injectManifest(html, this.getManifestFileName(compiler));
+        html = this.injectManifest(html, this.getManifestFileName(compiler), publicPath);
       }
 
       const filename = resolve(this.context, dist, templatePages, `${chunkName + extension}`);
@@ -448,13 +448,13 @@ export default class PackingTemplatePlugin {
     return html;
   }
 
-  injectManifest(html, filename) {
+  injectManifest(html, filename, publicPath) {
     const { template: { options: { engine } } } = this.appConfig;
     // 为 SEO 准备的页面 meta 信息
     if (engine === 'pug') {
-      return `${html}\nblock append meta\n  link(rel="manifest" href="${filename}")\n`;
+      return `${html}\nblock append meta\n  link(rel="manifest" href="${publicPath}${filename}")\n`;
     }
-    return html.replace('</head>', `  <link rel="manifest" href="${filename}">\n  </head>`);
+    return html.replace('</head>', `  <link rel="manifest" href="${publicPath}${filename}">\n  </head>`);
   }
 
   injectStyles(html, chunkName, assets, publicPath) {

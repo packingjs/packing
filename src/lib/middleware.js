@@ -54,9 +54,9 @@ function injectMeta(html, templateEngine, favicon, keywords, description) {
 
 function injectManifest(html, templateEngine, manifest) {
   if (templateEngine === 'pug') {
-    return `${html}\nblock append meta\n  link(rel="manifest" href="${manifest}")\n`;
+    return `${html}\nblock append meta\n  link(rel="manifest" href="/${manifest}")\n`;
   }
-  return html.replace('</head>', `  <link rel="manifest" href="${manifest}">\n  </head>`);
+  return html.replace('</head>', `  <link rel="manifest" href="/${manifest}">\n  </head>`);
 }
 
 function injectStyles(html, templateEngine, chunkName, assets) {
