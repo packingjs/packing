@@ -4,9 +4,7 @@ export default (packing) => {
   p.path.src.root = '.';
   p.path.entries = './entry.js';
 
-  p.template.enable = false;
-
-  // p.minimize = true;
+  p.template.enabled = false;
 
   return p;
 };

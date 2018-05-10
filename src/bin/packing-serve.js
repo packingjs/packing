@@ -26,14 +26,14 @@ const appConfig = pRequire('config/packing');
 const {
   rewriteRules,
   graphql: {
-    enable: graphqlEnable,
+    enabled: graphqlEnabled,
     options: graphqlOptions
   },
   hot: {
-    enable: hotEnable
+    enabled: hotEnabled
   },
   template: {
-    enable: templateEnable
+    enabled: templateEnabled
   },
   commonChunks,
   path: { src: { root: src }, tmpDll },
@@ -94,14 +94,14 @@ webpackDevMiddlewareInstance.waitUntilValid(() => {
   app.use(Express.static(dllPath));
   app.use(urlrewrite(rewriteRules));
   app.use(webpackDevMiddlewareInstance);
-  if (hotEnable) {
+  if (hotEnabled) {
     app.use(webpackHotMiddleware(compiler));
   }
-  if (templateEnable) {
+  if (templateEnabled) {
     packingTemplate(app, appConfig);
   }
 
-  if (graphqlEnable) {
+  if (graphqlEnabled) {
     const graphqlMockServer = require('../lib/graphql-mock-server');
     graphqlMockServer(app, graphqlOptions);
   }

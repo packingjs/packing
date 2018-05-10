@@ -23,7 +23,7 @@ const {
     }
   },
   visualizer: {
-    enable: visualizerEnable,
+    enabled: visualizerEnabled,
     options: visualizerOptions
   }
 } = appConfig;
@@ -41,7 +41,7 @@ webpack(webpackConfig, (err, stats) => {
     console.log('[build]:💚 Webpack 打包成功。');
   }
 
-  if (visualizerEnable) {
+  if (visualizerEnabled) {
     const file = resolve(context, distRoot, 'stats.html');
     const message = `[webpack-visualizer-plugin]: 模块报表已经生成，该报表可以指导优化输出文件体积\n请运行 open file://${file} 查看报表`;
     console.log(message);

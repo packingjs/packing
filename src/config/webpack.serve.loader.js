@@ -13,7 +13,7 @@ const {
   assetExtensions,
   cssLoader: cssLoaderOptions,
   eslint: {
-    enable: eslintEnable,
+    enabled: eslintEnabled,
     options: eslintOptions
   }
 } = pRequire('config/packing');
@@ -30,7 +30,7 @@ const jsLoaders = [
   }
 ];
 
-if (eslintEnable) {
+if (eslintEnabled) {
   jsLoaders.push({
     loader: 'eslint-loader',
     options: eslintOptions

@@ -21,11 +21,11 @@ const {
   localhost,
   port,
   hot: {
-    enable: hotEnable,
+    enabled: hotEnabled,
     options: hotOptions
   },
   stylelint: {
-    enable: stylelintEnable,
+    enabled: stylelintEnabled,
     options: stylelintOptions
   },
   template: {
@@ -102,7 +102,7 @@ const webpackConfig = (program) => {
     }));
   }
 
-  if (hotEnable) {
+  if (hotEnabled) {
     entry = pushClientJS(entry);
     plugins.push(new webpack.HotModuleReplacementPlugin());
   }
@@ -125,7 +125,7 @@ const webpackConfig = (program) => {
   }
 
   // 该插件用的还是旧插件机制
-  if (stylelintEnable) {
+  if (stylelintEnabled) {
     plugins.push(new StylelintWebpackPlugin({
       ...{
         context: path.resolve(context, src),

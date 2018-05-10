@@ -131,7 +131,7 @@ export default (app, appConfig) => {
         engine,
         extension,
         scriptInjectPosition,
-        injectManifestEnable,
+        injectManifest,
         manifest,
         autoGeneration
       }
@@ -191,7 +191,7 @@ export default (app, appConfig) => {
 
       html = injectTitle(html, engine, title);
       html = injectMeta(html, engine, favicon, keywords, description);
-      if (injectManifestEnable) {
+      if (injectManifest) {
         html = injectManifest(html, engine, manifest);
       }
       if (inject && assets.length > 0) {

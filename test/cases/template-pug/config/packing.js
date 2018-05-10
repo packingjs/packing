@@ -9,7 +9,7 @@ export default (packing) => {
   p.path.src.root = '.';
   p.path.tmpDll = '../dll/.tmp/dll';
   p.template.options.source = 'templates/pages/default.pug';
-  p.runtimeChunk.enable = true;
+  p.runtimeChunk.enabled = true;
 
   p.commonChunks = {
     vendor: ['./v']

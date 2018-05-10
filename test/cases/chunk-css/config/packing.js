@@ -4,6 +4,6 @@ export default (packing) => {
   p.path.entries = {
     entry: './entry.js'
   };
-  p.longTermCaching.enable = false;
+  p.longTermCaching.enabled = false;
   return p;
 };

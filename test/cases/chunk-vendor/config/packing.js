@@ -4,15 +4,15 @@ export default (packing) => {
   p.path.entries = {
     a: './a.js'
   };
-  p.eslint.enable = false;
-  p.stylelint.enable = false;
-  p.runtimeChunk.enable = true;
+  p.eslint.enabled = false;
+  p.stylelint.enabled = false;
+  p.runtimeChunk.enabled = true;
+  p.minimize.enabled = false;
   p.commonChunks = {
     vendor: [
       'ccc', 'sub/bbb', 'sub2/', './d', './useless'
     ]
   };
   p.template.options.autoGeneration = false;
-  p.minimize = false;
   return p;
 };

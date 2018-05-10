@@ -24,11 +24,11 @@ const {
   assetExtensions,
   commonChunks,
   runtimeChunk: {
-    enable: runtimeChunkEnable,
+    enabled: runtimeChunkEnabled,
     name: runtimeChunkName
   },
   longTermCaching: {
-    enable: longTermCachingEnable,
+    enabled: longTermCachingEnabled,
     options: {
       delimiter,
       fileHashLength
@@ -36,24 +36,24 @@ const {
   },
   cssLoader,
   template: {
-    enable: templateEnable,
+    enabled: templateEnabled,
     options: {
       injectManifest
     }
   },
   stylelint: {
-    enable: stylelintEnable,
+    enabled: stylelintEnabled,
     options: stylelintOptions
   },
   eslint: {
-    enable: eslintEnable,
+    enabled: eslintEnabled,
     options: eslintOptions
   },
   visualizer: {
-    enable: visualizerEnable
+    enabled: visualizerEnabled
   },
   minimize: {
-    enable: minimizeEnable,
+    enabled: minimizeEnabled,
     options: minimizeOptions
   },
   path: {
@@ -72,7 +72,7 @@ const {
 const getHashPattern = (type) => {
   let hashPattern = '';
 
-  if (longTermCachingEnable) {
+  if (longTermCachingEnabled) {
     hashPattern = `${delimiter}[${type}:${fileHashLength}]`;
   }
   return hashPattern;
@@ -119,7 +119,7 @@ const webpackConfig = () => {
     }
   ];
 
-  if (eslintEnable) {
+  if (eslintEnabled) {
     jsLoaders.push({
       loader: 'eslint-loader',
       options: eslintOptions
@@ -186,12 +186,12 @@ const webpackConfig = () => {
     })
   ];
 
-  if (templateEnable) {
+  if (templateEnabled) {
     plugins.push(new PackingTemplatePlugin(appConfig));
   }
 
   // 该插件用的还是旧插件机制
-  if (stylelintEnable) {
+  if (stylelintEnabled) {
     plugins.push(new StylelintWebpackPlugin({
       ...{
         context: path.resolve(context, srcRoot),
@@ -209,20 +209,20 @@ const webpackConfig = () => {
   }
 
   // 该插件用的还是旧插件机制
-  if (visualizerEnable) {
+  if (visualizerEnabled) {
     plugins.push(new WebpackVisualizerPlugin());
   }
 
-  const optimization = { minimize: minimizeEnable };
+  const optimization = { minimize: minimizeEnabled };
   // const optimization = {};
 
-  if (minimizeEnable) {
+  if (minimizeEnabled) {
     optimization.minimizer = [
       new UglifyjsWebpackPlugin(minimizeOptions)
     ];
   }
 
-  if (runtimeChunkEnable) {
+  if (runtimeChunkEnabled) {
     optimization.runtimeChunk = {
       name: runtimeChunkName
     };

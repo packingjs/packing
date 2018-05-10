@@ -20,7 +20,7 @@ export default (packing) => {
     vendor: ['./v']
   };
 
-  p.longTermCaching.enable = false;
+  p.longTermCaching.enabled = false;
 
   p.rewriteRules = {
     '^/zhong$': '/a'
