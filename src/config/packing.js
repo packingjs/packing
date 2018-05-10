@@ -154,7 +154,6 @@ export default {
        * - handlebars
        * - smarty
        * - velocity
-       * - artTemplate
        * @type {string}
        */
       engine: 'pug',
