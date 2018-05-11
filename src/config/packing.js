@@ -191,31 +191,31 @@ export default {
       injectManifest: false,
 
       /**
-       * `manifest.json` 文件位置
+       * `manifest.json` 输出位置
        * @type {string}
        */
       manifest: 'manifest.json',
 
       /**
-       * 生成网页用的源文件位置
+       * 母模版位置
        * @type {string}
        */
       source: 'src/templates/pages/default.pug',
 
       /**
-       * 生成网页使用的字符编码
+       * 输出网页使用的字符编码
        * @type {string}
        */
       charset: 'UTF-8',
 
       /**
-       * 生成网页使用的网页标题
+       * 输出网页使用的标题
        * @type {string}
        */
       title: '',
 
       /**
-       * 生成网页使用的 favicon 图标
+       * 输出网页使用的 favicon 图标
        * - false: 不使用 favicon 图标
        * - 非空字符串: favicon 图标的位置
        * @type {(bool|string)}
@@ -223,39 +223,16 @@ export default {
       favicon: false,
 
       /**
-       * 生成网页使用的关键字
+       * 输出网页使用的关键字
        * @type {(bool|string)}
        */
       keywords: false,
 
       /**
-       * 生成网页使用的网页标题
+       * 输出网页使用的描述
        * @type {(bool|string)}
        */
       description: false,
-
-      /**
-       * 生成网页中必须包含的 chunks 列表
-       * @type {null|array}
-       */
-      chunks: null,
-
-      /**
-       * 生成网页中不包含的 chunks 列表
-       * @type {null|array}
-       */
-      excludeChunks: null,
-
-      /**
-       * 生成网页中 chunks 排序方式
-       * - 'none': 按 webpack 生成顺序插入
-       * - 'id': 按 chunks id 正向排序
-       * - 'manual': 手动排序（暂不可用）
-       * - 'commonChunksFirst': 按 common chunks 优先方式排序
-       * - 'reverse': 按当前排序反向排序
-       * @type {string}
-       */
-      chunksSortMode: 'commonChunksFirst',
 
       /**
        * 网页文件中需要在编译时替换为 _hash 的标签属性列表
