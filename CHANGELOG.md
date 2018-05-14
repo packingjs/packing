@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.2.0"></a>
+# [3.2.0](https://github.com/packingjs/packing/compare/v3.1.0...v3.2.0) (2018-05-14)
+
+
+### Features
+
+* 增加配置参数有效性检查 ([c05ee60](https://github.com/packingjs/packing/commit/c05ee60))
+
+
+
 <a name="3.1.0"></a>
 # [3.1.0](https://github.com/packingjs/packing/compare/v3.0.4...v3.1.0) (2018-05-10)
 
