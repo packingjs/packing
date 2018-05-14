@@ -3,6 +3,14 @@ import WebpackOptionsValidationError from 'webpack/lib/WebpackOptionsValidationE
 import packingOptionsSchema from '../schemas/packing-options';
 import { pRequire } from '..';
 
+class PackingOptionsValidationError extends Error {
+  constructor(message) {
+    super();
+    this.name = 'PackingOptionsValidationError';
+    this.message = message;
+  }
+}
+
 /**
  * 校验 `config/packing.js` 参数
  */
@@ -11,6 +19,10 @@ export default () => {
   const packingOptionsValidationErrors = validateSchema(packingOptionsSchema, options);
 
   if (packingOptionsValidationErrors.length) {
-    throw new WebpackOptionsValidationError(packingOptionsValidationErrors);
+    // 重写 error.message
+    // 保证输出消息的可读性
+    const error = new WebpackOptionsValidationError(packingOptionsValidationErrors);
+    const message = error.message.replace(/Webpack/mg, 'Packing');
+    throw new PackingOptionsValidationError(message);
   }
 };
