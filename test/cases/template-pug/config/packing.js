@@ -3,13 +3,14 @@ export default (packing) => {
 
   p.path.entries = {
     a: './a.js',
-    b: './b.js',
     'c/d': './c/d.js'
   };
   p.path.src.root = '.';
+  // p.path.src.templates.layout = 'templates/';
   p.path.tmpDll = '../dll/.tmp/dll';
-  p.template.options.source = 'templates/pages/default.pug';
+  p.template.options.master = 'templates/pages/default.pug';
   p.runtimeChunk.enabled = true;
+  p.visualizer.enabled = false;
 
   p.commonChunks = {
     vendor: ['./v']

@@ -200,7 +200,7 @@ export default {
        * 母模版位置
        * @type {string}
        */
-      source: 'src/templates/pages/default.pug',
+      master: 'src/templates/pages/default.pug',
 
       /**
        * 输出网页使用的字符编码

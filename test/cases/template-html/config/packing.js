@@ -4,9 +4,7 @@ export default (packing) => {
   p.path.src.root = '.';
   p.path.entries = {
     a: './a.js',
-    b: './b.js',
-    'c/d': './c/d.js',
-    e: './e.js'
+    'c/d': './c/d.js'
   };
 
   p.path.tmpDll = '../dll/.tmp/dll';
@@ -14,7 +12,7 @@ export default (packing) => {
   p.path.dist.templates = 'templates';
   p.template.options.engine = 'html';
   p.template.options.extension = '.html';
-  p.template.options.source = 'default.html';
+  p.template.options.master = 'master2.html';
 
   p.commonChunks = {
     vendor: ['./v']

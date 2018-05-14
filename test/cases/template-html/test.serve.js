@@ -44,15 +44,23 @@ describe('serve', async () => {
     });
 
     it('应该包含网页标题', async () => {
-      res.text.should.match(/<title>Page A<\/title>/);
+      res.text.should.match(/<title>Title<\/title>/);
     });
 
     it('应该包含网页关键字', async () => {
-      res.text.should.match(/<meta name="keywords" content="A AA">/);
+      res.text.should.match(/<meta name="keywords" content="Keywords">/);
     });
 
     it('应该包含网页描述', async () => {
-      res.text.should.match(/<meta name="description" content="A simple text">/);
+      res.text.should.match(/<meta name="description" content="Description">/);
+    });
+
+    it('应该将存在的 __var__ 变量替换为实际变量', async () => {
+      res.text.should.match(/<h1>city<\/h1>/);
+    });
+
+    it('应该将不存在的 __var__ 变量替换为空字符串', async () => {
+      res.text.should.match(/<h2><\/h2>/);
     });
 
     it('应该不引用 e.js', async () => {
@@ -92,6 +100,10 @@ describe('serve', async () => {
 
     it('应该正常返回网页', async () => {
       res.status.should.eql(200);
+    });
+
+    it('应该使用 master2.html 母模版', async () => {
+      res.text.should.match(/<h1>master2<\/h1>/);
     });
 
     it('应该包含网页标题', async () => {

@@ -116,7 +116,7 @@ export default class PackingTemplatePlugin {
         const args = { ...templateOptions, ...settings };
         const {
           title,
-          source,
+          master,
           favicon,
           keywords,
           description,
@@ -124,7 +124,7 @@ export default class PackingTemplatePlugin {
         } = args;
 
         let html = '';
-        const parent = isAbsolute(source) ? source : resolve(this.context, source);
+        const parent = isAbsolute(master) ? master : resolve(this.context, master);
         if (existsSync(parent)) {
           const templateString = readFileSync(parent, {
             encoding: 'utf-8'

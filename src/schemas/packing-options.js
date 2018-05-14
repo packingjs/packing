@@ -180,7 +180,7 @@ export default {
               description: 'manifest.json输出位置',
               type: 'string'
             },
-            source: {
+            master: {
               description: '母模版位置',
               type: 'string'
             },

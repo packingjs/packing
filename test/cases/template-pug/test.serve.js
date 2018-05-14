@@ -39,10 +39,19 @@ describe('serve', async () => {
     let res;
     before(async () => {
       res = await request(app.listen()).get('/a');
+      console.log(res.text);
     });
 
     it('应该正常返回网页', async () => {
       res.status.should.eql(200);
+    });
+
+    it('应该使用 master 母模版', async () => {
+      res.text.should.match(/<h1>master<\/h1>/);
+    });
+
+    it('应该包含 favicon', async () => {
+      res.text.should.match(/<link rel="icon" type="image\/png" href="images\/favico\.jpg">/);
     });
 
     it('应该包含网页标题', async () => {
@@ -88,6 +97,10 @@ describe('serve', async () => {
 
     it('应该正常返回网页', async () => {
       res.status.should.eql(200);
+    });
+
+    it('应该使用 default 母模版', async () => {
+      res.text.should.match(/<h1>default<\/h1>/);
     });
 
     it('应该包含网页默认标题', async () => {

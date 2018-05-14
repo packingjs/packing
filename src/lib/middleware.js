@@ -52,7 +52,7 @@ function injectMeta(html, templateEngine, favicon, keywords, description) {
   return html;
 }
 
-function injectManifest(html, templateEngine, manifest) {
+function injectManifestMeta(html, templateEngine, manifest) {
   if (templateEngine === 'pug') {
     return `${html}\nblock append meta\n  link(rel="manifest" href="/${manifest}")\n`;
   }
@@ -153,7 +153,7 @@ export default (app, appConfig) => {
 
       const {
         title,
-        source,
+        master,
         inject,
         favicon,
         keywords,
@@ -172,7 +172,7 @@ export default (app, appConfig) => {
 
       let html = '';
       const chunkNameMapTemplate = resolve(context, src, `${templatePages}/${chunkName}${extension}`);
-      const parent = isAbsolute(source) ? source : resolve(context, source);
+      const parent = isAbsolute(master) ? master : resolve(context, master);
       if (autoGeneration && existsSync(parent)) {
         const templateString = readFileSync(parent, {
           encoding: 'utf-8'
@@ -192,7 +192,7 @@ export default (app, appConfig) => {
       html = injectTitle(html, engine, title);
       html = injectMeta(html, engine, favicon, keywords, description);
       if (injectManifest) {
-        html = injectManifest(html, engine, manifest);
+        html = injectManifestMeta(html, engine, manifest);
       }
       if (inject && assets.length > 0) {
         html = injectStyles(html, engine, chunkName, assets);
