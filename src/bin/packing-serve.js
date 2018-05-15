@@ -10,8 +10,11 @@ import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import { Spinner } from 'cli-spinner';
 import { middleware as packingTemplate } from '..';
+import validateSchema from '../lib/validate-schema';
 import '../bootstrap';
 import { pRequire, getContext } from '..';
+
+validateSchema();
 
 program
   .option('-c, --clean', 'clean dll cache')

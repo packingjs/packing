@@ -1,12 +1,15 @@
 #!/usr/bin/env node
 
 import { resolve } from 'path';
-import { red, yellow } from 'chalk';
+import { red } from 'chalk';
 import open from 'open';
 import webpack from 'webpack';
 import program from 'commander';
+import validateSchema from '../lib/validate-schema';
 import '../bootstrap';
 import { pRequire, getContext } from '..';
+
+validateSchema();
 
 program
   .option('-o, --open', 'open webpack visualizer report')

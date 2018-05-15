@@ -6,9 +6,12 @@ import program from 'commander';
 import webpack from 'webpack';
 import mkdirp from 'mkdirp';
 import loaderUtils from 'loader-utils';
+import validateSchema from '../lib/validate-schema';
 import '../bootstrap';
 import { pRequire, getContext } from '..';
 import packingPackage from '../../package.json';
+
+validateSchema();
 
 program
   .option('-c, --clean', 'clean dll cache')
