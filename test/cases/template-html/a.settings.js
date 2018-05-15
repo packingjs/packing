@@ -1,5 +1,5 @@
 export default {
-  master: 'master1.html',
+  master: 'a.html',
   title: 'Title',
   keywords: 'Keywords',
   description: 'Description',

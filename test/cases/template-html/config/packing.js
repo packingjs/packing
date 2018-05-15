@@ -12,7 +12,7 @@ export default (packing) => {
   p.path.dist.templates = 'templates';
   p.template.options.engine = 'html';
   p.template.options.extension = '.html';
-  p.template.options.master = 'master2.html';
+  p.template.options.master = 'master.html';
 
   p.commonChunks = {
     vendor: ['./v']

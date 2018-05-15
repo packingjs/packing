@@ -173,18 +173,22 @@ export default (app, appConfig) => {
       let html = '';
       const chunkNameMapTemplate = resolve(context, src, `${templatePages}/${chunkName}${extension}`);
       const parent = isAbsolute(master) ? master : resolve(context, master);
-      if (autoGeneration && existsSync(parent)) {
-        const templateString = readFileSync(parent, {
-          encoding: 'utf-8'
-        });
-        html = templateString;
+      if (autoGeneration) {
+        if (existsSync(parent)) {
+          const templateString = readFileSync(parent, {
+            encoding: 'utf-8'
+          });
+          html = templateString;
+        } else {
+          throw new Error(`找不到母模版：${parent}`);
+        }
       } else if (existsSync(chunkNameMapTemplate)) { // 兼容 v3 以下版本
         const templateString = readFileSync(chunkNameMapTemplate, {
           encoding: 'utf-8'
         });
         html = templateString;
       } else {
-        throw new Error(`Not found template at ${parent}`);
+        throw new Error(`找不网页模版：${parent}`);
       }
 
       const { assets } = entrypoints[chunkName];

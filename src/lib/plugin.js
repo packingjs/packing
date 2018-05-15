@@ -131,7 +131,7 @@ export default class PackingTemplatePlugin {
           });
           html = templateString;
         } else {
-          throw new Error(`\nNot found template at ${parent}\n`);
+          throw new Error(`\n找不到母模版：${parent}\n`);
         }
 
         html = this.injectTitle(html, title);

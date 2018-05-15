@@ -166,6 +166,7 @@ export default {
 
       /**
        * 是否根据 `entry pointer` 自动生成网页文件
+       * 如需兼容 packing@<3.0.0 的工程，该值设置为 false
        * @type {bool}
        */
       autoGeneration: true,
