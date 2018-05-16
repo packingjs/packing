@@ -1,6 +1,13 @@
 export default {
   additionalProperties: true,
   properties: {
+    ci: {
+      description: '工程使用的编译平台',
+      enum: [
+        'portal',
+        'qdr'
+      ]
+    },
     localhost: {
       description: '本地开发环境 webserver 使用的域名',
       type: 'string',
