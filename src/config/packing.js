@@ -11,6 +11,7 @@ export default {
   /**
    * 工程使用的编译平台
    * 目前支持
+   * - none
    * - portal
    * - qdr
    * @type {string}

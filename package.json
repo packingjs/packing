@@ -27,6 +27,7 @@
     "release": "standard-version && npm publish",
     "test": "node test/index.js",
     "test:debug": "DEBUG=1 node test/index.js",
+    "examples": "node examples/build-all.js",
     "update": "sh ./scripts/npm-update.sh"
   },
   "dependencies": {
@@ -62,7 +63,7 @@
     "stylelint-webpack-plugin": "^0.10.4",
     "uglifyjs-webpack-plugin": "^1.2.5",
     "url-loader": "^1.0.1",
-    "webpack": "^4.8.1",
+    "webpack": "^4.8.3",
     "webpack-pwa-manifest": "^3.6.2",
     "webpack-visualizer-plugin": "^0.1.11"
   },
@@ -70,6 +71,7 @@
     "apollo-server-express": "^1.3.6",
     "body-parser": "^1.18.2",
     "casual": "^1.5.19",
+    "eslint": "^4.19.1",
     "express": "^4.16.3",
     "graphql": "^0.13.2",
     "graphql-tools": "^2.24.0",
@@ -77,18 +79,15 @@
     "mocha": "^5.1.1",
     "open-browser-webpack-plugin": "^0.0.5",
     "packing-template-ejs": "^2.0.0",
-    "packing-template-handlebars": "^2.0.1",
+    "packing-template-handlebars": "^2.0.2",
     "packing-template-pug": "^2.0.5",
     "packing-template-smarty": "^2.0.1",
     "packing-template-velocity": "^2.0.0",
     "packing-urlrewrite": "^0.1.8",
-    "redux-devtools": "^3.3.2",
-    "redux-devtools-dock-monitor": "^1.1.3",
-    "redux-devtools-log-monitor": "^1.2.0",
     "should": "^13.2.1",
     "supertest": "^3.0.0",
-    "webpack-dev-middleware": "^3.1.2",
-    "webpack-hot-middleware": "^2.22.1"
+    "webpack-dev-middleware": "^3.1.3",
+    "webpack-hot-middleware": "^2.22.2"
   },
   "engines": {
     "node": ">=6.11.5",

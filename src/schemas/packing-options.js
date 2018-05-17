@@ -4,6 +4,7 @@ export default {
     ci: {
       description: '工程使用的编译平台',
       enum: [
+        'none',
         'portal',
         'qdr'
       ]
