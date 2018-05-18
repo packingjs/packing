@@ -63,5 +63,18 @@ module.exports = {
 
 # Info
 ```
-undefined
+Versions:
+ user-agent: npm/6.0.1 node/v8.5.0 darwin x64
+ packing: 3.2.4
+[dotenv]: 配置文件加载成功，文件位置：/Users/zhongzhi/workspace/github/packingjs/packing/examples/build-library/profiles/local.env
+Hash: f506cd746bbebdbfadb2
+Version: webpack 4.8.3
+Time: 373ms
+Built at: 2018-05-18 12:00:20
+ Asset       Size  Chunks             Chunk Names
+abc.js  932 bytes    main  [emitted]  main
+Entrypoint main = abc.js
+[./src/lib.js] 50 bytes {main} [built]
+[build]:💚 Webpack 打包成功。
+
 ```

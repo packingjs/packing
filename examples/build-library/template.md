@@ -27,5 +27,5 @@
 
 # Info
 ```
-{{stdout}}
+{{stdout:build}}
 ```
