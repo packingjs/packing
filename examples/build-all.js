@@ -1,5 +1,6 @@
 const cp = require('child_process');
 const examples = require('./examples');
+// const examples = [`${__dirname}/custom-page-master`];
 
 const cmds = examples.map(function(dirname) {
 	return `CONTEXT=${dirname} node examples/build.js`; // node_modules/.bin/babel-node src/bin/packing.js build`;

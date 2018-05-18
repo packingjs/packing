@@ -1,6 +1,8 @@
-删除 packing 默认配置中的一个插件。
+# remove-default-plugin
 
-# config/webpack.build.babel.js
+删除 packing 默认配置中的一个插件，同理可以增加或者修改默认插件。
+
+## config/webpack.build.babel.js
 ``` javascript
 export default (webpackConfig) => {
   const config = webpackConfig;
