@@ -43,7 +43,6 @@ export default {
 <html>
   <head>
     <meta charset='utf-8'>
-    <title>__title__</title>
   </head>
 
   <body>
@@ -58,7 +57,6 @@ export default {
 <html>
   <head>
     <meta charset='utf-8'>
-    <title>__title__</title>
   </head>
 
   <body>
@@ -73,7 +71,6 @@ export default {
 <html>
   <head>
     <meta charset='utf-8'>
-    <title></title>
   </head>
 
   <body>
@@ -89,7 +86,6 @@ export default {
 <html>
   <head>
     <meta charset='utf-8'>
-    <title></title>
   </head>
 
   <body>

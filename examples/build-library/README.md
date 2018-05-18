@@ -71,8 +71,8 @@ Versions:
 [dotenv]: 配置文件加载成功，文件位置：/Users/zhongzhi/workspace/github/packingjs/packing/examples/build-library/profiles/local.env
 Hash: f506cd746bbebdbfadb2
 Version: webpack 4.8.3
-Time: 381ms
-Built at: 2018-05-18 17:07:02
+Time: 395ms
+Built at: 2018-05-18 17:11:44
  Asset       Size  Chunks             Chunk Names
 abc.js  932 bytes    main  [emitted]  main
 Entrypoint main = abc.js
