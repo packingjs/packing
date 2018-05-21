@@ -80,10 +80,12 @@
 ```
 
 ## 例子
-- [antd](examples/antd)<br/>和antd组件库一起使用
-- [build-library](examples/build-library)<br/>输出一个工具类库
-- [common-chunks](examples/common-chunks)<br/>将共用代码打包成common包
-- [decorator](examples/decorator)<br/>配合装饰器一起编程
-- [mock-ajax](examples/mock-ajax)<br/>模拟异步请求
-- [mock-page-context-global](examples/mock-page-context-global)<br/>模拟共用的模版数据
-- [mock-page-context-promise](examples/mock-page-context-promise)<br/>模拟从其他服务获取模版数据
+- [build-library](examples/build-library)<br/>演示输出一个工具类库
+- [common-chunks](examples/common-chunks)<br/>演示将共用代码打包成common包
+- [custom-page-master](examples/custom-page-master)<br/>演示自定义网页母模版
+- [custom-page-title](examples/custom-page-title)<br/>演示自定义网页标题、关键字、网页描述等信息
+- [mock-ajax](examples/mock-ajax)<br/>演示模拟异步请求
+- [mock-graphql](examples/mock-graphql)<br/>演示模拟GraphQL服务
+- [mock-page-context-global](examples/mock-page-context-global)<br/>演示模拟公用的模版数据
+- [mock-page-context-promise](examples/mock-page-context-promise)<br/>演示模拟从其他服务获取模版数据
+- [remove-default-plugin](examples/remove-default-plugin)<br/>演示删除packing默认配置
