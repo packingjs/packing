@@ -40,6 +40,7 @@ import loaderUtils from 'loader-utils';
 import glob from 'packing-glob';
 import { requireDefault, getContext } from '..';
 import getEntries from '../lib/get-entries';
+import getEntryFromList from '../lib/get-entry-from-list';
 
 export default class PackingTemplatePlugin {
   constructor(appConfig) {
@@ -106,11 +107,10 @@ export default class PackingTemplatePlugin {
       .filter(entry => Object.keys(commonChunks).indexOf(entry) < 0)
       .forEach((chunkName) => {
         let settings = {};
-        if (isString(entryPoints[chunkName])) {
-          const settingsFile = resolve(this.context, entryPoints[chunkName].replace('.js', '.settings.js'));
-          if (existsSync(settingsFile)) {
-            settings = requireDefault(settingsFile);
-          }
+        const entryFile = getEntryFromList(chunkName, entryPoints[chunkName]);
+        const settingsFile = resolve(this.context, entryFile.replace('.js', '.settings.js'));
+        if (existsSync(settingsFile)) {
+          settings = requireDefault(settingsFile);
         }
 
         const args = { ...templateOptions, ...settings };

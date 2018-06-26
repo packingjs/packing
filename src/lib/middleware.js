@@ -3,6 +3,7 @@ import { resolve, dirname, isAbsolute } from 'path';
 import { isObject } from 'util';
 import { requireDefault, getContext } from '..';
 import getEntries from '../lib/get-entries';
+import getEntryFromList from '../lib/get-entry-from-list';
 
 function injectTitle(html, templateEngine, title) {
   if (title) {
@@ -141,11 +142,13 @@ export default (app, appConfig) => {
 
   const templatePages = templates.pages || templates;
 
+
   // 根据 entry 信息在 express 中添加路由
   const entryPoints = getEntries(entries);
   Object.keys(entryPoints).forEach((chunkName) => {
     app.get(`/${chunkName}`, (req, res, next) => {
-      const settingsFile = resolve(context, entryPoints[chunkName].replace('.js', '.settings.js'));
+      const entryFile = getEntryFromList(chunkName, entryPoints[chunkName]);
+      const settingsFile = resolve(context, entryFile.replace('.js', '.settings.js'));
       let settings = {};
       if (existsSync(settingsFile)) {
         settings = requireDefault(settingsFile);
