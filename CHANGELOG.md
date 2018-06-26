@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.2.5"></a>
+## [3.2.5](https://github.com/packingjs/packing/compare/v3.2.4...v3.2.5) (2018-06-26)
+
+
+### Bug Fixes
+
+* [#23](https://github.com/packingjs/packing/issues/23) entrypoint为数组时报错 ([0cbcc37](https://github.com/packingjs/packing/commit/0cbcc37))
+
+
+
 <a name="3.2.4"></a>
 ## [3.2.4](https://github.com/packingjs/packing/compare/v3.2.3...v3.2.4) (2018-05-16)
 
