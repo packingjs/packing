@@ -509,6 +509,17 @@ export default {
     // '^/api/(.*)': '/index.jade.html',
     // '^/api/(.*)': 'http://touch.qunar.com/api/hotel/findhotelcity?cityName=%E5%8C%97%E4%BA%AC',
     // '^/hello': 'http://localhost:3001/123/4.html',
-  }
+  },
 
+  /**
+   * packing-serve使用的webpackDevMiddleware配置项
+   * @type {object}
+   */
+  devMwOptions: {
+    /**
+     * 是否将中间产物写入文件
+     * @type {bool|function}
+     */
+    writeToDisk: false
+  }
 };
