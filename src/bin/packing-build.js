@@ -35,7 +35,7 @@ webpack(webpackConfig, (err, stats) => {
   if (err) {
     console.log(err);
   } else if (stats.hasErrors()) {
-    const message = red(`[build]: 💔 Webpack 打包失败。\n${stats.compilation.errors}`);
+    const message = red(`[build]: 💔 Webpack 打包失败。\n${stats.toJson().errors}`);
     console.log(message);
     // 让 jenkins 终止编译
     process.exit(1);

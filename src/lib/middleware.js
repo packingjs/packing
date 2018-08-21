@@ -167,11 +167,11 @@ export default (app, appConfig) => {
         ...settings
       };
 
-      const statsJson = res.locals.webpackStats.compilation.getStats().toJson({
+      const statsJson = res.locals.webpackStats.toJson({
         all: false,
         entrypoints: true
       });
-      const { entrypoints } = statsJson;
+      const { entrypoints } = statsJson.children ? statsJson.children[0] : statsJson;
 
       let html = '';
       const chunkNameMapTemplate = resolve(context, src, `${templatePages}/${chunkName}${extension}`);
