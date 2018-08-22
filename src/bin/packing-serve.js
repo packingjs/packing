@@ -40,7 +40,10 @@ const {
   },
   commonChunks,
   path: { src: { root: src }, tmpDll },
-  port: { dev: port }
+  port: { dev: port },
+  devMwOptions: {
+    writeToDisk
+  }
 } = appConfig;
 
 const hasCommonChunks = commonChunks && Object.keys(commonChunks).length > 0;
@@ -77,6 +80,7 @@ const mwOptions = {
   publicPath: webpackConfig.output.publicPath,
   headers: { 'Access-Control-Allow-Origin': '*' },
   stats: { colors: true },
+  writeToDisk,
   serverSideRender: true
 };
 const dllPath = join(context, tmpDll);
