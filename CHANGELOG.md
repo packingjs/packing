@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.3.0"></a>
+# [3.3.0](https://github.com/packingjs/packing/compare/v3.2.4...v3.3.0) (2018-08-22)
+
+
+### Bug Fixes
+
+* [#23](https://github.com/packingjs/packing/issues/23) entrypoint为数组时报错 ([0cbcc37](https://github.com/packingjs/packing/commit/0cbcc37))
+
+
+### Features
+
+* [#24](https://github.com/packingjs/packing/issues/24) 支持多个webpack配置 ([9203d78](https://github.com/packingjs/packing/commit/9203d78))
+* [#25](https://github.com/packingjs/packing/issues/25) 暴露webpackDevMiddleware配置项writeToDisk ([ad5b753](https://github.com/packingjs/packing/commit/ad5b753))
+
+
+
 <a name="3.2.5"></a>
 ## [3.2.5](https://github.com/packingjs/packing/compare/v3.2.4...v3.2.5) (2018-06-26)
 
