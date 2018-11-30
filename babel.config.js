@@ -2,6 +2,7 @@ module.exports = {
   presets: [
     '@babel/preset-react',
     ['@babel/preset-env', {
+      useBuiltIns: 'usage',
       targets: {
         node: 'current'
       }
