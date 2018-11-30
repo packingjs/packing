@@ -1,12 +1,4 @@
 require('@babel/register')({
-  presets: [
-    ['@babel/preset-env', {
-      useBuiltIns: 'usage',
-      targets: {
-        node: 'current'
-      }
-    }]
-  ],
   plugins: [
     'add-module-exports',
 
