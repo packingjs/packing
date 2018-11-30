@@ -1,11 +1,2 @@
-require('babel-register')({
-  presets: [
-    'stage-0'
-  ],
-
-  plugins: [
-    'add-module-exports'
-  ]
-});
-
+require('@babel/register')({ plugins: require('../babel.config.js').plugins });
 require('./lib/dotenv');

@@ -1,6 +1,6 @@
 {
   "presets": [
-    ["env", {
+    ["@babel/preset-env", {
       "targets": {
         "browsers": ["> 1%", "Android >= 4.4", "IOS >= 7", "ie >= 9"]
       }
@@ -9,6 +9,6 @@
 
   "plugins": [
     "add-module-exports",
-    "transform-decorators-legacy"
+    ["@babel/plugin-proposal-decorators", { "legacy": true }]
   ]
 }

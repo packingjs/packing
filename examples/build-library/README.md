@@ -60,23 +60,23 @@ module.exports = {
 
 ## prd/abc.js
 ```js
-!function(e,t){"object"==typeof exports&&"object"==typeof module?module.exports=t():"function"==typeof define&&define.amd?define([],t):"object"==typeof exports?exports.ABC=t():e.ABC=t()}(window,function(){return function(e){var t={};function n(o){if(t[o])return t[o].exports;var r=t[o]={i:o,l:!1,exports:{}};return e[o].call(r.exports,r,r.exports,n),r.l=!0,r.exports}return n.m=e,n.c=t,n.d=function(e,t,o){n.o(e,t)||Object.defineProperty(e,t,{configurable:!1,enumerable:!0,get:o})},n.r=function(e){Object.defineProperty(e,"__esModule",{value:!0})},n.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return n.d(t,"a",t),t},n.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},n.p="/",n(n.s="./src/lib.js")}({"./src/lib.js":function(module,exports,__webpack_require__){"use strict";eval("\n\nmodule.exports = {\n  name: 'Joe'\n};\n\n//# sourceURL=webpack://ABC/./src/lib.js?")}})});
+!function(e,t){"object"==typeof exports&&"object"==typeof module?module.exports=t():"function"==typeof define&&define.amd?define([],t):"object"==typeof exports?exports.ABC=t():e.ABC=t()}(window,function(){return function(n){var r={};function o(e){if(r[e])return r[e].exports;var t=r[e]={i:e,l:!1,exports:{}};return n[e].call(t.exports,t,t.exports,o),t.l=!0,t.exports}return o.m=n,o.c=r,o.d=function(e,t,n){o.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:n})},o.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},o.t=function(t,e){if(1&e&&(t=o(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var n=Object.create(null);if(o.r(n),Object.defineProperty(n,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var r in t)o.d(n,r,function(e){return t[e]}.bind(null,r));return n},o.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return o.d(t,"a",t),t},o.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},o.p="/",o(o.s="./src/lib.js")}({"./src/lib.js":function(module,exports){eval("module.exports = {\n  name: 'Joe'\n};\n\n//# sourceURL=webpack://ABC/./src/lib.js?")}})});
 ```
 
 ## Info
 ```
 Versions:
- user-agent: npm/6.0.1 node/v8.5.0 darwin x64
- packing: 3.2.4
-[dotenv]: 配置文件加载成功，文件位置：/Users/zhongzhi/workspace/github/packingjs/packing/examples/build-library/profiles/local.env
-Hash: f506cd746bbebdbfadb2
-Version: webpack 4.8.3
-Time: 395ms
-Built at: 2018-05-18 17:11:44
- Asset       Size  Chunks             Chunk Names
-abc.js  932 bytes    main  [emitted]  main
+ user-agent: npm/6.4.1 node/v8.9.1 darwin x64
+ packing: 3.3.1
+[dotenv]: 配置文件加载成功，文件位置：/Users/zhan.chen/Documents/github/packing/examples/build-library/profiles/local.env
+Hash: 32bda4b575826943d8af
+Version: webpack 4.26.1
+Time: 1098ms
+Built at: 2018-11-30 18:54:06
+ Asset      Size  Chunks             Chunk Names
+abc.js  1.25 KiB    main  [emitted]  main
 Entrypoint main = abc.js
-[./src/lib.js] 50 bytes {main} [built]
+[./src/lib.js] 35 bytes {main} [built]
 [build]:💚 Webpack 打包成功。
 
 ```

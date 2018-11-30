@@ -70,7 +70,7 @@ export default {
   <meta name="description" content="aaa">
   </head>
 
-  <body>  <script src="/js/a_e748a171.js"></script>
+  <body>  <script src="/js/a_46c78f2e.js"></script>
   </body>
 </html>
 ```
@@ -86,7 +86,7 @@ export default {
   <meta name="description" content="bbb">
   </head>
 
-  <body>  <script src="/js/b_a3c117a7.js"></script>
+  <body>  <script src="/js/b_74fc3508.js"></script>
   </body>
 </html>
 ```
