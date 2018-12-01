@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="4.0.1"></a>
+## [4.0.1](https://github.com/packingjs/packing/compare/v4.0.0...v4.0.1) (2018-12-01)
+
+
+### Bug Fixes
+
+* [ESLINT_LEGACY_OBJECT_REST_SPREAD] DeprecationWarning: The 'parserOptions.ecmaFeatures.experimentalObjectRestSpread' option is deprecated. Use 'parserOptions.ecmaVersion' instead. ([d76db01](https://github.com/packingjs/packing/commit/d76db01))
+
+
+
 <a name="4.0.0"></a>
 # [4.0.0](https://github.com/packingjs/packing/compare/v4.0.1...v4.0.0) (2018-12-01)
 
