@@ -5,24 +5,34 @@ All notable changes to this project will be documented in this file. See [standa
 <a name="4.0.2"></a>
 ## [4.0.2](https://github.com/packingjs/packing/compare/v4.0.1...v4.0.2) (2018-12-01)
 
-
-
-<a name="4.0.1"></a>
-## [4.0.1](https://github.com/packingjs/packing/compare/v4.0.0...v4.0.1) (2018-12-01)
-
-
 ### Bug Fixes
 
 * [ESLINT_LEGACY_OBJECT_REST_SPREAD] DeprecationWarning: The 'parserOptions.ecmaFeatures.experimentalObjectRestSpread' option is deprecated. Use 'parserOptions.ecmaVersion' instead. ([d76db01](https://github.com/packingjs/packing/commit/d76db01))
 
+
+<a name="4.0.1"></a>
+## [4.0.1](https://github.com/packingjs/packing/compare/v4.0.0...v4.0.1) (2018-12-01)（deprecate）
 
 
 <a name="4.0.0"></a>
 # [4.0.0](https://github.com/packingjs/packing/compare/v4.0.1...v4.0.0) (2018-12-01)
 
 
-### BREAKING CHANGE: Upgrade to babel 7.
+### BREAKING CHANGE
 
+* Upgrade to babel 7
+
+Upgrade to babel 7 and update outdated packages.
+
+Now you can use ES2018 grammar and experimental features of ECMAScript!
+
+** 升级指南 **
+> 1. 执行 `npm install --save packing@latest` 更新4.0.0以上版本的packing依赖；
+> 2. 执行 `npx babel-upgrade --write --install` 命令，将会自动更新babel相关依赖以及`.babelrc`或`babel.config.js`配置文件；
+> 3. 执行 `npm install --save-dev @babel/register` 安装最新版babel-register；
+> 4. 删除 `.babelrc` 或 `babel.config.js` 配置文件中可能存在的的重复plugin；
+> 5. 若自动更新生成的`.babelrc` 或 `babel.config.js` 配置文件中存在 `@babel/plugin-transform-runtime` 这个plugin，删除这个plugin配置参数中的 `polyfill` 属性。
+> 6. 由于不再支持在runtime插件中配置polyfill，若需要使用polyfill，执行 `@babel/polyfill` 安装babel-polyfill，并在 `.babelrc` 或 `babel.config.js` 配置文件中的presets属性下的 `@babel/preset-env` 配置参数中添加 `useBuiltIns: 'usage' `。若有`core-js`相关错误，尝试安装最新版 `core-js`。 详情[参考官网babel-polyfill](https://babeljs.io/docs/en/babel-polyfill)介绍。
 
 
 <a name="3.3.1"></a>
