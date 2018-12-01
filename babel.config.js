@@ -1,4 +1,12 @@
-require('@babel/register')({
+module.exports = {
+  presets: [
+    '@babel/preset-react',
+    ['@babel/preset-env', {
+      targets: {
+        node: 'current'
+      }
+    }]
+  ],
   plugins: [
     'add-module-exports',
 
@@ -24,5 +32,4 @@ require('@babel/register')({
     ['@babel/plugin-proposal-class-properties', { loose: true }],
     '@babel/plugin-proposal-json-strings'
   ]
-});
-require('./lib/dotenv');
+};
