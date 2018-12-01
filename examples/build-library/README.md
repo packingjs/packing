@@ -71,8 +71,8 @@ Versions:
 [dotenv]: 配置文件加载成功，文件位置：/Users/zhan.chen/Documents/github/packing/examples/build-library/profiles/local.env
 Hash: 32bda4b575826943d8af
 Version: webpack 4.26.1
-Time: 1098ms
-Built at: 2018-11-30 18:54:06
+Time: 503ms
+Built at: 2018-12-01 11:48:55
  Asset      Size  Chunks             Chunk Names
 abc.js  1.25 KiB    main  [emitted]  main
 Entrypoint main = abc.js
