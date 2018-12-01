@@ -25,6 +25,8 @@
     "postrelease": "git push && git push origin --tags",
     "prepare": "npm run build",
     "release": "standard-version && npm publish",
+    "release:minor": "standard-version --release-as minor && npm publish",
+    "release:major": "standard-version --release-as major && npm publish",
     "test": "node test/index.js",
     "test:debug": "DEBUG=1 node test/index.js",
     "examples": "node examples/build-all.js",
