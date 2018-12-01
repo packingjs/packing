@@ -102,6 +102,7 @@
     "packing-template-velocity": "^2.0.0",
     "packing-urlrewrite": "^0.2.0",
     "should": "^13.2.3",
+    "standard-version": "^4.4.0",
     "supertest": "^3.3.0",
     "webpack-dev-middleware": "^3.4.0",
     "webpack-hot-middleware": "^2.24.3"
