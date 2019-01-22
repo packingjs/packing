@@ -323,10 +323,9 @@ export default {
      */
     options: {
       // sourceMap: true,
-      uglifyOptions: {
+      terserOptions: {
         output: {
-          // beautify: true,
-          // 删除注释代码
+          // 删除注释
           comments: false
         }
       }

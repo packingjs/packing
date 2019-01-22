@@ -10,7 +10,7 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import WebpackPwaManifest from 'webpack-pwa-manifest';
 import StylelintWebpackPlugin from 'stylelint-webpack-plugin';
 import WebpackVisualizerPlugin from 'webpack-visualizer-plugin';
-import UglifyjsWebpackPlugin from 'uglifyjs-webpack-plugin';
+import TerserWebpackPlugin from 'terser-webpack-plugin';
 import { plugin as PackingTemplatePlugin } from '..';
 import '../bootstrap';
 import { pRequire, getContext, requireDefault } from '..';
@@ -218,7 +218,7 @@ const webpackConfig = () => {
 
   if (minimizeEnabled) {
     optimization.minimizer = [
-      new UglifyjsWebpackPlugin(minimizeOptions)
+      new TerserWebpackPlugin(minimizeOptions)
     ];
   }
 
