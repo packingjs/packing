@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="4.0.4"></a>
+## [4.0.4](https://github.com/packingjs/packing/compare/v4.0.3...v4.0.4) (2019-01-22)
+
+
+### Bug Fixes
+
+* 使用terser工具代替uglifyjs进行代码压缩 ([9b0fe32](https://github.com/packingjs/packing/commit/9b0fe32))
+
+
+
 <a name="4.0.3"></a>
 ## [4.0.3](https://github.com/packingjs/packing/compare/v4.0.2...v4.0.3) (2018-12-12)
 
