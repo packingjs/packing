@@ -318,7 +318,7 @@ export default {
     enabled: true,
 
     /**
-     * uglifyjs plugin 配置
+     * terser plugin 配置
      * @type {object}
      */
     options: {
