@@ -1,6 +1,20 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+## [5.0.0](https://github.com/packingjs/packing/compare/v4.0.5...v5.0.0) (2019-06-09)
+
+
+### Bug Fixes
+
+* 修复 open 包存在的安全漏洞 ([44026f0](https://github.com/packingjs/packing/commit/44026f0))
+
+
+### Features
+
+* css-loader@^2.1.1 BREAKING CHANGE:  CSS压缩功能失效，需要使用postcss-nano来压缩 ([3f90f18](https://github.com/packingjs/packing/commit/3f90f18))
+
+
 
 <a name="4.0.5"></a>
 ## [4.0.5](https://github.com/packingjs/packing/compare/v4.0.4...v4.0.5) (2019-06-09)
