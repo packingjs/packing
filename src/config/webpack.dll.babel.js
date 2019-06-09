@@ -6,7 +6,7 @@
 
 import { resolve } from 'path';
 import webpack from 'webpack';
-import CleanPlugin from 'clean-webpack-plugin';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import '../bootstrap';
 import { pRequire, getContext } from '..';
 import loader from './webpack.serve.loader';
@@ -33,9 +33,12 @@ export default () => {
   };
 
   const plugins = [
-    new CleanPlugin(tmpDll, {
-      root: context,
-      verbose: false
+    // new CleanWebpackPlugin(tmpDll, {
+    //   root: context,
+    //   verbose: false
+    // }),
+    new CleanWebpackPlugin({
+      cleanOnceBeforeBuildPatterns: [tmpDll]
     }),
     new webpack.DllPlugin({
       name: '[name]_[hash]',

@@ -6,3 +6,5 @@ import d from './d';
 
 const a = b + c + d + sub2a + sub2b;
 console.log(a);
+
+/* new */

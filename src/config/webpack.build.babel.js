@@ -5,7 +5,7 @@
  */
 
 import path from 'path';
-import CleanPlugin from 'clean-webpack-plugin';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import WebpackPwaManifest from 'webpack-pwa-manifest';
 import StylelintWebpackPlugin from 'stylelint-webpack-plugin';
@@ -175,7 +175,7 @@ const webpackConfig = () => {
   };
 
   const plugins = [
-    new CleanPlugin(distRoot, { root: context }),
+    new CleanWebpackPlugin(),
 
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
