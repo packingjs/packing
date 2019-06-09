@@ -97,7 +97,7 @@
     "graphql-tools": "^4.0.3",
     "merge-graphql-schemas": "^1.5.8",
     "mocha": "^6.1.4",
-    "open-browser-webpack-plugin": "^0.0.5",
+    "open-browser-webpack-plugin": "github:rodrigopandini/open-browser-webpack-plugin",
     "packing-template-ejs": "^2.0.0",
     "packing-template-handlebars": "^2.0.2",
     "packing-template-pug": "^2.0.5",
