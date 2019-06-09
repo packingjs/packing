@@ -100,12 +100,7 @@ const webpackConfig = () => {
     publicPath: CDN_ROOT
   };
 
-  const cssLoaderOptions = {
-    ...cssLoader,
-    ...{
-      minimize: { minifyFontValues: false }
-    }
-  };
+  const cssLoaderOptions = cssLoader;
 
   const postcssLoaderOptions = {
     config: {
