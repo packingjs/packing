@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.1.0](https://github.com/packingjs/packing/compare/v5.0.0...v5.1.0) (2019-06-10)
+
+
+### Features
+
+* npm update 更新所有依赖包到最新版本 ([602c4ba](https://github.com/packingjs/packing/commit/602c4ba))
+* 升级 `stylelint@^10.1.0` ([10ed562](https://github.com/packingjs/packing/commit/10ed562))
+
+
+
 ## [5.0.0](https://github.com/packingjs/packing/compare/v4.0.5...v5.0.0) (2019-06-09)
 
 
