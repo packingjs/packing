@@ -7,13 +7,24 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Features
 
-* npm update 更新所有依赖包到最新版本 ([602c4ba](https://github.com/packingjs/packing/commit/602c4ba))
-* 升级 `stylelint@^10.1.0` ([10ed562](https://github.com/packingjs/packing/commit/10ed562))
+* 升级所有依赖包到最新版本 ([602c4ba](https://github.com/packingjs/packing/commit/602c4ba))
+* 增加了 `stylelint` 参数 `allowEmptyInput = true`，避免部分不使用样式文件(css/less/scss)的工程报错。([10ed562](https://github.com/packingjs/packing/commit/10ed562))
 
 
 
 ## [5.0.0](https://github.com/packingjs/packing/compare/v4.0.5...v5.0.0) (2019-06-09)
 
+
+### BREAKING CHANGES
+
+*  `css-loader@>1.0` 内置不支持 css 压缩，需要引入 `postcss-nano` 来做压缩
+  * 删除 `cssLoaderOptions.minimize. minifyFontValues = false `
+  * CSS压缩功能失效，需要使用postcss-nano来压缩 ([3f90f18](https://github.com/packingjs/packing/commit/3f90f18))，在 `config/postcss.config.js` 增加 nano 配置：
+    ```js
+    plugins: {
+      nano: process.env.NODE_ENV === 'local' ? false : {}
+    }
+    ```
 
 ### Bug Fixes
 
@@ -22,14 +33,33 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Features
 
-* css-loader@^2.1.1 BREAKING CHANGE:  CSS压缩功能失效，需要使用postcss-nano来压缩 ([3f90f18](https://github.com/packingjs/packing/commit/3f90f18))
+* css-loader@^2.1.1
 
 
 
 <a name="4.0.5"></a>
 ## [4.0.5](https://github.com/packingjs/packing/compare/v4.0.4...v4.0.5) (2019-06-09)
 
+### BREAK CHANGES:
+* `clean-webpack-plugin` 从 3.0 起使用语法有变化，如果在工程中有修改 `config/webpack.serve.babel.js` 和 `config/webpack.build.babel.js` 请注意语法的变化。
+  ```js
+  // < 3.0
+  import CleanWebpackPlugin from 'clean-webpack-plugin';
 
+  // >= 3.0
+  import { CleanWebpackPlugin } from 'clean-webpack-plugin';
+  ```
+
+### Features
+
+* 升级依赖包
+  * clean-webpack-plugin@^3.0.0
+  * dotenv@^8.0.0
+  * import-fresh@^3.0.0
+  * mini-css-extract-plugin@^0.7.0
+  * open@^6.3.0
+  * url-loader@^2.0.0
+  * webpack-pwa-manifest@^4.0.0
 
 <a name="4.0.4"></a>
 ## [4.0.4](https://github.com/packingjs/packing/compare/v4.0.3...v4.0.4) (2019-01-22)
