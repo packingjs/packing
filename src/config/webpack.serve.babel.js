@@ -129,7 +129,11 @@ const webpackConfig = (program) => {
     plugins.push(new StylelintWebpackPlugin({
       ...{
         context: path.resolve(context, src),
-        configFile: getExistConfigPath('stylelint', context, __dirname)
+        configFile: getExistConfigPath('stylelint', context, __dirname),
+        // 避免 packing.stylelint.options.files 匹配不到文件时报错
+        // stylelint@>=10.0
+        // @see https://github.com/stylelint/stylelint/pull/3965
+        allowEmptyInput: true
       },
       ...stylelintOptions
     }));
