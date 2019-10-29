@@ -4,10 +4,17 @@
  * @module config/webpack.serve.loader
  */
 
+import fs from 'fs';
+import path from 'path';
 import { pRequire, getContext } from '..';
 import getExistConfigPath from '../lib/get-exist-config-path';
 
 const context = getContext();
+
+const babelOptions = {};
+if (context && fs.existsSync(path.resolve(context, 'babel.config.js'))) {
+  babelOptions.cwd = context;
+}
 
 const {
   assetExtensions,
@@ -26,7 +33,8 @@ const postcssLoaderOptions = {
 
 const jsLoaders = [
   {
-    loader: 'babel-loader'
+    loader: 'babel-loader',
+    options: babelOptions
   }
 ];
 

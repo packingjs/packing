@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@babel/preset-typescript": "^7.6.0",
+    "eslint-config-qunar-typescript-base": "1.0.2",
+    "typescript": "^3.6.4"
+  }
+}
