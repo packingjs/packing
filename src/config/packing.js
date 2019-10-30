@@ -347,13 +347,14 @@ export default {
      * 是否启用 `CSS Modules`
      * @type {bool}
      */
-    modules: false,
-
-    /**
-     * 自定义css-modules类标识命名规则
-     * @type {string}
-     */
-    localIdentName: '[path][name]__[local]--[hash:base64:5]'
+    modules: false
+    // modules: {
+    // /**
+    //  * 自定义css-modules类标识命名规则
+    //  * @type {string}
+    //  */
+    //   localIdentName: '[path]__[name]___[local]_[hash:base64:5]'
+    // }
   },
 
   /** stylelint 配置 */
