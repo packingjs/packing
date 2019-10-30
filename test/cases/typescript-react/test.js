@@ -4,8 +4,8 @@ import webpack from 'webpack';
 import Express from 'express';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import urlrewrite from 'packing-urlrewrite';
-import { getTestCaseName } from '../../util';
 import { pRequire, middleware, getContext } from '../../../src';
+import { getTestCaseName } from '../../util';
 
 describe(getTestCaseName(), async () => {
   let app;
@@ -36,15 +36,9 @@ describe(getTestCaseName(), async () => {
     app.use(webpackDevMiddlewareInstance);
   });
 
-  describe('/', async () => {
-    let res;
-    before(async () => {
-      res = await request(app.listen()).get('/index');
-      console.log(res.text);
-    });
-
-    it('应该正常返回网页', async () => {
-      res.status.should.eql(200);
-    });
+  it('应该正常返回网页', async () => {
+    const res = await request(app.listen()).get('/index');
+    console.log(res.text);
+    res.status.should.eql(200);
   });
 });

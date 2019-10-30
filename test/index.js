@@ -11,10 +11,6 @@ files.sort((a, b) => path.dirname(a) > path.dirname(b));
 
 const errors = [];
 files.forEach((file, i) => {
-  const cmd = `node_modules/.bin/mocha test/${file}`;
-  const title = `[${i + 1}/${files.length}] ${cmd}`;
-  console.log(chalk.yellow(title));
-
   // 是否需要安装依赖
   const packagePath = path.resolve(path.dirname(`./test/${file}`), 'package.json');
   if (fs.existsSync(packagePath)) {
@@ -34,6 +30,9 @@ files.forEach((file, i) => {
     }
   }
 
+  const cmd = `node_modules/.bin/mocha test/${file}`;
+  const title = `[${i + 1}/${files.length}] ${cmd}`;
+  console.log(chalk.yellow(title));
   try {
     const stdout = cp.execSync(cmd, { encoding: 'utf-8' });
     console.log(stdout);
