@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.3.0](https://github.com/packingjs/packing/compare/v5.1.0...v5.3.0) (2019-10-30)
+
+
+### Features
+
+* 升级 css-loader@3.2.0 ([d8d8a7d](https://github.com/packingjs/packing/commit/d8d8a7d8ea0ea3f902ecb38d7e23b8ca5c885d18))
+* 升级依赖包 ([629f853](https://github.com/packingjs/packing/commit/629f853de5e8c487efdc5771456eb140742cc880))
+* 增加 typescript 支持 ([266473d](https://github.com/packingjs/packing/commit/266473dbccf6c27567ab0fd1fb4e7cf75bf11600))
+
 ## [5.1.0](https://github.com/packingjs/packing/compare/v5.0.0...v5.1.0) (2019-06-10)
 
 
