@@ -357,24 +357,6 @@ export default {
     // }
   },
 
-  /** stylelint 配置 */
-  stylelint: {
-    /**
-     * 是否启用 `stylelint`
-     * @type {bool}
-     */
-    enabled: true,
-
-    /**
-     * `stylelint` 配置项
-     * @type {object}
-     * @see {@link https://stylelint.io/user-guide/node-api/#options|stylelint options}
-     */
-    options: {
-      files: ['**/*.css', '**/*.less', '**/*.s?(a|c)ss']
-    }
-  },
-
   /** eslint 配置 */
   eslint: {
     /**

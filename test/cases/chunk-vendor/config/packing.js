@@ -5,7 +5,6 @@ export default (packing) => {
     a: './a.js'
   };
   p.eslint.enabled = false;
-  p.stylelint.enabled = false;
   p.runtimeChunk.enabled = true;
   p.minimize.enabled = false;
   p.commonChunks = {

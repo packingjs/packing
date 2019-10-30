@@ -10,12 +10,10 @@ import { isString, isArray, isObject } from 'util';
 import webpack from 'webpack';
 import OpenBrowserPlugin from 'open-browser-webpack-plugin';
 import WebpackPwaManifest from 'webpack-pwa-manifest';
-import StylelintWebpackPlugin from 'stylelint-webpack-plugin';
 import '../bootstrap';
 import { pRequire, getContext, requireDefault } from '..';
 import loader from './webpack.serve.loader';
 import getEntries from '../lib/get-entries';
-import getExistConfigPath from '../lib/get-exist-config-path';
 
 const {
   localhost,
@@ -23,10 +21,6 @@ const {
   hot: {
     enabled: hotEnabled,
     options: hotOptions
-  },
-  stylelint: {
-    enabled: stylelintEnabled,
-    options: stylelintOptions
   },
   template: {
     options: {
@@ -122,21 +116,6 @@ const webpackConfig = (program) => {
         manifest: require(path.resolve(dllPath, `${key}-manifest.json`))
       }));
     });
-  }
-
-  // 该插件用的还是旧插件机制
-  if (stylelintEnabled) {
-    plugins.push(new StylelintWebpackPlugin({
-      ...{
-        context: path.resolve(context, src),
-        configFile: getExistConfigPath('stylelint', context, __dirname),
-        // 避免 packing.stylelint.options.files 匹配不到文件时报错
-        // stylelint@>=10.0
-        // @see https://github.com/stylelint/stylelint/pull/3965
-        allowEmptyInput: true
-      },
-      ...stylelintOptions
-    }));
   }
 
   const performance = { hints: false };

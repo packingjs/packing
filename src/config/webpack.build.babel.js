@@ -8,7 +8,6 @@ import path from 'path';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import WebpackPwaManifest from 'webpack-pwa-manifest';
-import StylelintWebpackPlugin from 'stylelint-webpack-plugin';
 import WebpackVisualizerPlugin from 'webpack-visualizer-plugin';
 import TerserWebpackPlugin from 'terser-webpack-plugin';
 import { plugin as PackingTemplatePlugin } from '..';
@@ -40,10 +39,6 @@ const {
     options: {
       injectManifest
     }
-  },
-  stylelint: {
-    enabled: stylelintEnabled,
-    options: stylelintOptions
   },
   eslint: {
     enabled: eslintEnabled,
@@ -183,21 +178,6 @@ const webpackConfig = () => {
 
   if (templateEnabled) {
     plugins.push(new PackingTemplatePlugin(appConfig));
-  }
-
-  // 该插件用的还是旧插件机制
-  if (stylelintEnabled) {
-    plugins.push(new StylelintWebpackPlugin({
-      ...{
-        context: path.resolve(context, srcRoot),
-        configFile: getExistConfigPath('stylelint', context, __dirname),
-        // 避免 packing.stylelint.options.files 匹配不到文件时报错
-        // stylelint@>=10.0
-        // @see https://github.com/stylelint/stylelint/pull/3965
-        allowEmptyInput: true
-      },
-      ...stylelintOptions
-    }));
   }
 
   if (injectManifest) {
