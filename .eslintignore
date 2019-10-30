@@ -5,4 +5,7 @@
 prd/
 /node_modules/**
 /dist
-/test/src
+/test/cases/**/config/**
+/test/cases/**/babel.config.js
+/test/cases/**/index.js
+/test/cases/**/test.js
