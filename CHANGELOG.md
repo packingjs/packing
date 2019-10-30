@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [6.0.0](https://github.com/packingjs/packing/compare/v5.3.0...v6.0.0) (2019-10-30)
+
+
+### Features
+
+* 用 postcss stylelint 插件方式代替 stylelint-webpack-plugin ([e30d6c5](https://github.com/packingjs/packing/commit/e30d6c5347a27382ca1b3095eb5e84be6113349e))
+
 ## [5.3.0](https://github.com/packingjs/packing/compare/v5.1.0...v5.3.0) (2019-10-30)
 
 
