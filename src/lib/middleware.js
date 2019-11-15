@@ -2,8 +2,8 @@ import { existsSync, readFileSync } from 'fs';
 import { resolve, dirname, isAbsolute } from 'path';
 import { isObject } from 'util';
 import { requireDefault, getContext } from '..';
-import getEntries from '../lib/get-entries';
-import getEntryFromList from '../lib/get-entry-from-list';
+import getEntries from './get-entries';
+import getEntryFromList from './get-entry-from-list';
 
 function injectTitle(html, templateEngine, title) {
   if (title) {

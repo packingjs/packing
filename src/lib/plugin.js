@@ -34,13 +34,12 @@ webpack plugin hooks 执行顺序：
 
 import { existsSync, readFileSync, writeFileSync, statSync } from 'fs';
 import { resolve, join, dirname, parse, isAbsolute } from 'path';
-import { isString } from 'util';
 import mkdirp from 'mkdirp';
 import loaderUtils from 'loader-utils';
 import glob from 'packing-glob';
 import { requireDefault, getContext } from '..';
-import getEntries from '../lib/get-entries';
-import getEntryFromList from '../lib/get-entry-from-list';
+import getEntries from './get-entries';
+import getEntryFromList from './get-entry-from-list';
 
 export default class PackingTemplatePlugin {
   constructor(appConfig) {
