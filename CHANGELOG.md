@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [6.1.0](https://github.com/packingjs/packing/compare/v6.0.0...v6.1.0) (2020-02-08)
+
+
+### Features
+
+* 增加 core-js@3.x ([9387fa0](https://github.com/packingjs/packing/commit/9387fa0245ff2f5e6a72f4ae5228649f5ad86236))
+
 ## [6.0.0](https://github.com/packingjs/packing/compare/v5.3.0...v6.0.0) (2019-10-30)
 
 
