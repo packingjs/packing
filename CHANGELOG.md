@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.1.1](https://github.com/packingjs/packing/compare/v6.1.0...v6.1.1) (2020-02-11)
+
+
+### Bug Fixes
+
+* 修复entry.settings.tsx导致页面出错的问题 ([0b76b6f](https://github.com/packingjs/packing/commit/0b76b6f986ddc32ada62948142a6de52e657e88b))
+
 ## [6.1.0](https://github.com/packingjs/packing/compare/v6.0.0...v6.1.0) (2020-02-08)
 
 
