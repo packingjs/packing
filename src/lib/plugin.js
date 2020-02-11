@@ -107,7 +107,7 @@ export default class PackingTemplatePlugin {
       .forEach((chunkName) => {
         let settings = {};
         const entryFile = getEntryFromList(chunkName, entryPoints[chunkName]);
-        const settingsFile = resolve(this.context, entryFile.replace('.js', '.settings.js'));
+        const settingsFile = resolve(this.context, entryFile.replace(/(\.(t|j)s)/, '.settings$1'));
         if (existsSync(settingsFile)) {
           settings = requireDefault(settingsFile);
         }

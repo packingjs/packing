@@ -148,7 +148,7 @@ export default (app, appConfig) => {
   Object.keys(entryPoints).forEach((chunkName) => {
     app.get(`/${chunkName}`, (req, res, next) => {
       const entryFile = getEntryFromList(chunkName, entryPoints[chunkName]);
-      const settingsFile = resolve(context, entryFile.replace('.js', '.settings.js'));
+      const settingsFile = resolve(context, entryFile.replace(/(\.(t|j)s)/, '.settings$1'));
       let settings = {};
       if (existsSync(settingsFile)) {
         settings = requireDefault(settingsFile);
