@@ -119,7 +119,7 @@ export default {
      * entries: () => {}
      */
     entries: () => {
-      const entryFileName = 'entry.(js|tsx)';
+      const entryFileName = 'entry.+(js|tsx)';
       const entryPath = 'src/pages';
       const entryPattern = `**/${entryFileName}`;
       const cwd = path.resolve(context, entryPath);
