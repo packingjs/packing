@@ -125,7 +125,7 @@ export default {
       const cwd = path.resolve(context, entryPath);
       const config = {};
       packingGlob(entryPattern, { cwd }).forEach((page) => {
-        const key = page.replace(`/${entryFileName}`, '');
+        const key = path.dirname(page);
         config[key] = path.join(cwd, page);
       });
       return config;
