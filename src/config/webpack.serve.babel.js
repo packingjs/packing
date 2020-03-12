@@ -84,7 +84,8 @@ const webpackConfig = (program) => {
   };
 
   const resolve = {
-    modules: [src, 'node_modules']
+    modules: [src, 'node_modules'],
+    extensions: ['.tsx', '.jsx', '.ts', '.js']
   };
 
   const plugins = [];

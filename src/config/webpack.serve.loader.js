@@ -48,7 +48,7 @@ if (eslintEnabled) {
 export default {
   rules: [
     {
-      test: /\.js$/i,
+      test: /\.(t|j)sx?$/i,
       exclude: /node_modules/,
       use: jsLoaders
     },

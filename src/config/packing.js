@@ -9,16 +9,6 @@ const context = process.env.CONTEXT || process.cwd();
 
 export default {
   /**
-   * 工程使用的编译平台
-   * 目前支持
-   * - none
-   * - portal
-   * - qdr
-   * @type {string}
-   */
-  ci: 'portal',
-
-  /**
    * 本地访问的域名
    * 如果需要使用 `qunar.com` 的 cookie，需要改成类似 `my.qunar.com` 这种
    * @type {string}
@@ -72,11 +62,9 @@ export default {
       /**
        * webpack 编译产物输出目录
        * 即 `webpack.config.output.path` 参数
-       * portal dev 发布时要求输出到 `dev` 目录
-       * qdr dev 发布时要求输出到 `prd` 目录
        * @type {string}
        */
-      root: process.env.NODE_ENV === 'development' ? 'dev' : 'prd',
+      root: 'prd',
 
       /**
        * 模版文件路径
@@ -131,7 +119,7 @@ export default {
      * entries: () => {}
      */
     entries: () => {
-      const entryFileName = 'entry.js';
+      const entryFileName = 'entry.(js|tsx)';
       const entryPath = 'src/pages';
       const entryPattern = `**/${entryFileName}`;
       const cwd = path.resolve(context, entryPath);

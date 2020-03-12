@@ -119,7 +119,7 @@ const webpackConfig = () => {
   const module = {
     rules: [
       {
-        test: /\.js$/i,
+        test: /\.(t|j)sx?$/i,
         exclude: /node_modules/,
         use: jsLoaders
       },
@@ -161,7 +161,8 @@ const webpackConfig = () => {
   };
 
   const resolve = {
-    modules: [srcRoot, 'node_modules']
+    modules: [srcRoot, 'node_modules'],
+    extensions: ['.tsx', '.jsx', '.ts', '.js']
   };
 
   const plugins = [
