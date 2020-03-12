@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.1.5](https://github.com/packingjs/packing/compare/v6.1.4...v6.1.5) (2020-03-12)
+
+
+### Bug Fixes
+
+* 修复 entries 错误 ([8696425](https://github.com/packingjs/packing/commit/8696425c0b2e848f7d955338f572eedd39ae7ea4))
+
 ### [6.1.4](https://github.com/packingjs/packing/compare/v6.1.3...v6.1.4) (2020-03-12)
 
 
