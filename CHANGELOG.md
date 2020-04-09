@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [6.2.0](https://github.com/packingjs/packing/compare/v6.1.5...v6.2.0) (2020-04-09)
+
+
+### Features
+
+* 支持只编译部分页面，参数 `partialCompile.enabled` 和 `partialCompile.whitelist` ([f8a9f2b](https://github.com/packingjs/packing/commit/f8a9f2b586f2d87653b0058971cf0e69fe56fdf4))
+
 ### [6.1.5](https://github.com/packingjs/packing/compare/v6.1.4...v6.1.5) (2020-03-12)
 
 
