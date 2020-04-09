@@ -9,6 +9,7 @@ import urlrewrite from 'packing-urlrewrite';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import { Spinner } from 'cli-spinner';
+import inquirer from 'inquirer';
 import { middleware as packingTemplate } from '..';
 import validateSchema from '../lib/validate-schema';
 import '../bootstrap';
@@ -21,6 +22,7 @@ program
   .option('-d, --no-dll', 'skip dll build')
   .option('-l, --no-listen', 'skip listen app')
   .option('-o, --open', 'open browser')
+  .option('-p, --partial', 'partial compile')
   .parse(process.argv);
 
 const context = getContext();
@@ -43,6 +45,10 @@ const {
   port: { dev: port },
   devMwOptions: {
     writeToDisk
+  },
+  partialCompile: {
+    enabled: partialCompileEnabled,
+    whitelist
   }
 } = appConfig;
 
@@ -68,60 +74,89 @@ if (program.dll && hasCommonChunks) {
   }
 }
 
+function pack(webpackConfig) {
+  const compiler = webpack(webpackConfig);
+  const mwOptions = {
+    contentBase: src,
+    quiet: false,
+    noInfo: false,
+    hot: true,
+    inline: true,
+    lazy: false,
+    publicPath: webpackConfig.output.publicPath,
+    headers: { 'Access-Control-Allow-Origin': '*' },
+    stats: { colors: true },
+    writeToDisk,
+    serverSideRender: true
+  };
+  const dllPath = join(context, tmpDll);
+
+  const webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, mwOptions);
+
+  const spinner = new Spinner('webpack: bundling.. %s');
+  spinner.setSpinnerDelay(100);
+  setTimeout(() => {
+    spinner.start();
+  }, 0);
+
+  webpackDevMiddlewareInstance.waitUntilValid(() => {
+    spinner.stop(true);
+
+    const app = new Express();
+    app.use(Express.static(context));
+    app.use(Express.static(dllPath));
+    app.use(urlrewrite(rewriteRules));
+    app.use(webpackDevMiddlewareInstance);
+    if (hotEnabled) {
+      app.use(webpackHotMiddleware(compiler));
+    }
+    if (templateEnabled) {
+      packingTemplate(app, appConfig);
+    }
+
+    if (graphqlEnabled) {
+      const graphqlMockServer = require('../lib/graphql-mock-server');
+      graphqlMockServer(app, graphqlOptions);
+    }
+
+    if (program.listen) {
+      app.listen(port, (err) => {
+        if (err) {
+          console.error(err);
+        } else {
+          console.info('==> 🚧  Listening on port %s\n', port);
+        }
+      });
+    } else {
+      process.exit(0);
+    }
+  });
+}
+
 const webpackConfig = pRequire('config/webpack.serve.babel', program, appConfig);
-const compiler = webpack(webpackConfig);
-const mwOptions = {
-  contentBase: src,
-  quiet: false,
-  noInfo: false,
-  hot: true,
-  inline: true,
-  lazy: false,
-  publicPath: webpackConfig.output.publicPath,
-  headers: { 'Access-Control-Allow-Origin': '*' },
-  stats: { colors: true },
-  writeToDisk,
-  serverSideRender: true
-};
-const dllPath = join(context, tmpDll);
-
-const webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, mwOptions);
-
-const spinner = new Spinner('webpack: bundling.. %s');
-spinner.setSpinnerDelay(100);
-setTimeout(() => {
-  spinner.start();
-}, 0);
-
-webpackDevMiddlewareInstance.waitUntilValid(() => {
-  spinner.stop(true);
-
-  const app = new Express();
-  app.use(Express.static(context));
-  app.use(Express.static(dllPath));
-  app.use(urlrewrite(rewriteRules));
-  app.use(webpackDevMiddlewareInstance);
-  if (hotEnabled) {
-    app.use(webpackHotMiddleware(compiler));
-  }
-  if (templateEnabled) {
-    packingTemplate(app, appConfig);
-  }
-
-  if (graphqlEnabled) {
-    const graphqlMockServer = require('../lib/graphql-mock-server');
-    graphqlMockServer(app, graphqlOptions);
-  }
-
-  if (program.listen) {
-    app.listen(port, (err) => {
-      if (err) {
-        console.error(err);
-      } else {
-        console.info('==> 🚧  Listening on port %s\n', port);
-      }
+if (program.partial || partialCompileEnabled) {
+  const prompts = [
+    {
+      type: 'checkbox',
+      name: 'entries',
+      message: 'Which pages do you want to compile?',
+      choices: Object.keys(webpackConfig.entry).map(key => ({
+        name: key,
+        value: key
+      })),
+      default: whitelist,
+      validate: input => input.length > 0
+    }
+  ];
+  inquirer
+    .prompt(prompts)
+    .then((answers) => {
+      Object.keys(webpackConfig.entry)
+        .filter(key => !answers.entries.includes(key))
+        .forEach(key => delete webpackConfig.entry[key]);
+      pack(webpackConfig);
     });
-  } else {
-    process.exit(0);
-  }
-});
+} else {
+  // 全量编译
+  pack(webpackConfig);
+}

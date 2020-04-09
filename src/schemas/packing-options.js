@@ -379,6 +379,35 @@ export default {
       description: 'URL转发路由规则配置',
       type: 'object',
       additionalProperties: true
+    },
+    devMwOptions: {
+      description: 'packing-serve使用的webpackDevMiddleware配置项',
+      type: 'object',
+      additionalProperties: false,
+      properties: {
+        writeToDisk: {
+          description: '是否将中间产物写入文件',
+          type: 'boolean'
+        }
+      }
+    },
+    partialCompile: {
+      description: 'packing-serve是否支持部分页面编译',
+      type: 'object',
+      additionalProperties: false,
+      properties: {
+        enabled: {
+          description: '是否启用部分页面编译',
+          type: 'boolean'
+        },
+        whitelist: {
+          description: '默认编译的页面',
+          type: 'array',
+          items: {
+            type: 'string'
+          }
+        }
+      }
     }
   }
 };

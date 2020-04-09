@@ -491,5 +491,23 @@ export default {
      * @type {bool|function}
      */
     writeToDisk: false
+  },
+
+  /**
+   * packing-serve是否支持部分页面编译
+   * @type {object}
+   */
+  partialCompile: {
+    /**
+     * 是否启用部分页面编译
+     * @type {bool}
+     */
+    enabled: false,
+
+    /**
+     * 默认编译的页面
+     * @type {array}
+     */
+    whitelist: []
   }
 };
