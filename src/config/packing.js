@@ -401,27 +401,21 @@ export default {
   },
 
   /**
-   * webpack-visualizer-plugin 配置
-   * @see https://github.com/chrisbateman/webpack-visualizer
+   * webpack-bundle-analyzer 配置
+   * @see https://www.npmjs.com/package/webpack-bundle-analyzer
    */
-  visualizer: {
+  bundleAnalyzer: {
     /**
-     * 是否启用 webpack-visualizer-plugin
+     * 是否启用 webpack-bundle-analyzer
      * @type {bool}
      */
     enabled: true,
 
     /**
-     * `visualizer` 配置项
+     * `webpack-bundle-analyzer` 配置项
      * @type {object}
      */
     options: {
-      /**
-       * 是否在浏览器中打开 visualizer 报表网页
-       * 和 `packing build -o` 效果一样
-       * @type {object}
-       */
-      open: process.env.npm_lifecycle_event === 'build'
     }
   },
 

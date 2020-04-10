@@ -8,7 +8,7 @@ import path from 'path';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import WebpackPwaManifest from 'webpack-pwa-manifest';
-import WebpackVisualizerPlugin from 'webpack-visualizer-plugin';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import TerserWebpackPlugin from 'terser-webpack-plugin';
 import { plugin as PackingTemplatePlugin } from '..';
 import '../bootstrap';
@@ -44,8 +44,9 @@ const {
     enabled: eslintEnabled,
     options: eslintOptions
   },
-  visualizer: {
-    enabled: visualizerEnabled
+  bundleAnalyzer: {
+    enabled: bundleAnalyzerEnabled,
+    options: bundleAnalyzerOptions
   },
   minimize: {
     enabled: minimizeEnabled,
@@ -189,8 +190,8 @@ const webpackConfig = () => {
   }
 
   // 该插件用的还是旧插件机制
-  if (visualizerEnabled) {
-    plugins.push(new WebpackVisualizerPlugin());
+  if (bundleAnalyzerEnabled) {
+    plugins.push(new BundleAnalyzerPlugin(bundleAnalyzerOptions));
   }
 
   const optimization = { minimize: minimizeEnabled };

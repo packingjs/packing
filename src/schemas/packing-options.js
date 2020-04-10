@@ -336,17 +336,17 @@ export default {
       type: 'object',
       additionalProperties: true
     },
-    visualizer: {
-      description: 'webpack-visualizer-plugin配置',
+    bundleAnalyzer: {
+      description: 'webpack-bundle-analyzer配置',
       type: 'object',
       additionalProperties: false,
       properties: {
         enabled: {
-          description: 'visualizer开关',
+          description: 'webpack-bundle-analyzer开关',
           type: 'boolean'
         },
         options: {
-          description: 'visualizer选项',
+          description: 'webpack-bundle-analyzer选项',
           type: 'object',
           additionalProperties: true
         }
