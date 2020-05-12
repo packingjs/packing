@@ -24,5 +24,7 @@ webpack(webpackConfig, (err, stats) => {
   } else {
     console.log(stats.toString(stats));
     console.log('[build]:💚 Webpack 打包成功。');
+    // jenkins 编译完不退出，这里临时处理一下，需要定位具体原因
+    process.exit(0);
   }
 });
