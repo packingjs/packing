@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.3.1](https://github.com/packingjs/packing/compare/v6.3.0...v6.3.1) (2020-05-12)
+
+
+### Bug Fixes
+
+* 修复 jenkins 编译完成后不退出的问题 ([ac81d76](https://github.com/packingjs/packing/commit/ac81d76b28c99671f946df63504beec547f0651d))
+
 ## [6.3.0](https://github.com/packingjs/packing/compare/v6.2.0...v6.3.0) (2020-04-10)
 
 
