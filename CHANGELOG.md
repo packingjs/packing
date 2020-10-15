@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [7.0.1-alpha.0](https://github.com/packingjs/packing/compare/v6.3.1...v7.0.1-alpha.0) (2020-10-15)
+
 ### [6.3.1](https://github.com/packingjs/packing/compare/v6.3.0...v6.3.1) (2020-05-12)
 
 
