@@ -13,6 +13,6 @@ export default () => {
     // 改写默认异常信息
     e.headerName = 'Packing';
     e.message = e.message.replace(/Webpack/mg, 'Packing');
-    console.log(e);
+    throw (e);
   }
 };
