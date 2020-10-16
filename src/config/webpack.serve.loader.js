@@ -26,8 +26,9 @@ const {
 } = pRequire('config/packing');
 
 const postcssLoaderOptions = {
-  config: {
-    path: getExistConfigPath('postcss', context, __dirname)
+  // 兼容 eslint-loader@4.x
+  postcssOptions: {
+    config: getExistConfigPath('postcss', context, __dirname)
   }
 };
 
