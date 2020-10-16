@@ -100,7 +100,9 @@ const webpackConfig = () => {
 
   const postcssLoaderOptions = {
     // 兼容 eslint-loader@4.x
-    config: getExistConfigPath('postcss', context, __dirname)
+    postcssOptions: {
+      config: getExistConfigPath('postcss', context, __dirname)
+    }
   };
 
   const jsLoaders = [
@@ -237,4 +239,4 @@ const webpackConfig = () => {
   };
 };
 
-export default program => webpackConfig(program);
+export default (program) => webpackConfig(program);
