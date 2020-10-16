@@ -32,8 +32,12 @@ webpack plugin hooks 执行顺序：
 --done--
  */
 
-import { existsSync, readFileSync, writeFileSync, statSync } from 'fs';
-import { resolve, join, dirname, parse, isAbsolute } from 'path';
+import {
+  existsSync, readFileSync, writeFileSync, statSync
+} from 'fs';
+import {
+  resolve, join, dirname, parse, isAbsolute
+} from 'path';
 import mkdirp from 'mkdirp';
 import loaderUtils from 'loader-utils';
 import glob from 'packing-glob';
@@ -103,7 +107,7 @@ export default class PackingTemplatePlugin {
     const entryPoints = getEntries(entries);
     Object.keys(entryPoints)
       // 排除 commonChunks 入口
-      .filter(entry => Object.keys(commonChunks).indexOf(entry) < 0)
+      .filter((entry) => Object.keys(commonChunks).indexOf(entry) < 0)
       .forEach((chunkName) => {
         let settings = {};
         const entryFile = getEntryFromList(chunkName, entryPoints[chunkName]);
@@ -179,12 +183,13 @@ export default class PackingTemplatePlugin {
       const { args, html } = this.pages[chunkName];
       args.attrs.forEach((a) => {
         const { tag, attribute } = this.parseAttribute(a);
-        const reg = engine === 'pug' ?
-          new RegExp(`${tag}(?:\\(.*\\s+|\\()(?:${attribute})\\s*=\\s*["']([^"']+)`, 'g') :
-          new RegExp(`${tag}.*\\s+(?:${attribute})\\s*=\\s*["']([^"']+)`, 'g');
+        const reg = engine === 'pug'
+          ? new RegExp(`${tag}(?:\\(.*\\s+|\\()(?:${attribute})\\s*=\\s*["']([^"']+)`, 'g')
+          : new RegExp(`${tag}.*\\s+(?:${attribute})\\s*=\\s*["']([^"']+)`, 'g');
 
         let result;
-        while(result = reg.exec(html)) { // eslint-disable-line
+        // eslint-disable-next-line no-cond-assign
+        while (result = reg.exec(html)) {
           const value = result[1];
           if (!/^(https{0,1}:){0,1}\/\//.test(value)) {
             const head = result[0].replace(value, ''); // => src="
@@ -313,7 +318,8 @@ export default class PackingTemplatePlugin {
         const reg = new RegExp(`${tag}(?:\\(.*\\s+|\\()(?:${attribute})\\s*=\\s*["']([^"']+)`, 'g');
         let result;
 
-        while(result = reg.exec(html)) { // eslint-disable-line
+        // eslint-disable-next-line no-cond-assign
+        while (result = reg.exec(html)) {
           const value = result[1];
           if (!/^(https{0,1}:){0,1}\/\//.test(value)) {
             const head = result[0].replace(value, ''); // => src="
@@ -385,13 +391,13 @@ export default class PackingTemplatePlugin {
     let pwaAssets;
 
     compiler.options.plugins
-      .filter(p => p.constructor.name === 'WebpackPwaManifest')
+      .filter((p) => p.constructor.name === 'WebpackPwaManifest')
       .forEach((p) => {
         pwaAssets = p.assets;
       });
 
     if (pwaAssets) {
-      return pwaAssets.filter(asset => /manifest\w*.json/.test(asset.output))[0].output;
+      return pwaAssets.filter((asset) => /manifest\w*.json/.test(asset.output))[0].output;
     }
     return '';
   }
@@ -458,20 +464,20 @@ export default class PackingTemplatePlugin {
 
   injectStyles(html, chunkName, assets, publicPath) {
     const { template: { options: { engine } } } = this.appConfig;
-    const styles = assets.filter(asset => asset.endsWith('.css'));
+    const styles = assets.filter(({ name }) => name.endsWith('.css'));
 
     if (styles.length > 0) {
       let styleHtml;
       if (engine === 'pug') {
         styleHtml = `block append style\n${
           styles
-            .map(file => `  link(href="${publicPath + file}" rel="stylesheet")`)
+            .map(({ name }) => `  link(href="${publicPath + name}" rel="stylesheet")`)
             .join('\n')
         }`;
         html = `${html}\n${styleHtml}\n`;
       } else {
         styleHtml = styles
-          .map(file => `  <link href="${publicPath + file}" rel="stylesheet">`)
+          .map(({ name }) => `  <link href="${publicPath + name}" rel="stylesheet">`)
           .join('\n');
         html = html.replace('</head>', `${styleHtml}\n  </head>`);
       }
@@ -483,15 +489,15 @@ export default class PackingTemplatePlugin {
   injectScripts(html, chunkName, assets, publicPath) {
     const { template: { options: { engine, scriptInjectPosition } } } = this.appConfig;
 
-    const scripts = assets.filter(asset => asset.endsWith('.js'));
+    const scripts = assets.filter(({ name }) => name.endsWith('.js'));
     if (engine === 'pug') {
       const scriptPug = scripts
-        .map(asset => `  script(src="${publicPath + asset}")`)
+        .map(({ name }) => `  script(src="${publicPath + name}")`)
         .join('\n');
       html = `${html}\nblock append script\n${scriptPug}\n`;
     } else {
       const scriptHtml = scripts
-        .map(asset => `  <script src="${publicPath + asset}"></script>`)
+        .map(({ name }) => `  <script src="${publicPath + name}"></script>`)
         .join('\n');
       html = html.replace(`</${scriptInjectPosition}>`, `${scriptHtml}\n  </${scriptInjectPosition}>`);
     }
