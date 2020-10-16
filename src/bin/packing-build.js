@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { red } from 'chalk';
+import { red, yellow } from 'chalk';
 import webpack from 'webpack';
 import program from 'commander';
 import validateSchema from '../lib/validate-schema';
@@ -17,7 +17,14 @@ webpack(webpackConfig, (err, stats) => {
   if (err) {
     console.log(err);
   } else if (stats.hasErrors()) {
-    const message = red(`[build]: 💔 Webpack 打包失败。\n${stats.toJson().errors}`);
+    let plainError = '';
+    stats.toJson().errors.forEach((error) => {
+      Object.keys(error).forEach((key) => {
+        plainError += `\n${yellow(key)}: ${red(error[key])}`;
+      });
+      plainError += '\n';
+    });
+    const message = red('[build]: 💔 Webpack 打包失败。\n') + plainError;
     console.log(message);
     // 让 jenkins 终止编译
     process.exit(1);

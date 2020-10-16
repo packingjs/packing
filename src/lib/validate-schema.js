@@ -1,5 +1,5 @@
 import validateSchema from 'webpack/lib/validateSchema';
-import WebpackOptionsValidationError from 'webpack/lib/WebpackOptionsValidationError';
+// import WebpackOptionsValidationError from 'webpack/lib/WebpackOptionsValidationError';
 import packingOptionsSchema from '../schemas/packing-options';
 import { pRequire } from '..';
 
@@ -21,8 +21,8 @@ export default () => {
   if (packingOptionsValidationErrors.length) {
     // 重写 error.message
     // 保证输出消息的可读性
-    const error = new WebpackOptionsValidationError(packingOptionsValidationErrors);
-    const message = error.message.replace(/Webpack/mg, 'Packing');
+    // const error = new WebpackOptionsValidationError(packingOptionsValidationErrors);
+    // const message = error.message.replace(/Webpack/mg, 'Packing');
     throw new PackingOptionsValidationError(message);
   }
 };
