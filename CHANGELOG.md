@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [7.0.1-alpha.1](https://github.com/packingjs/packing/compare/v7.0.1-alpha.0...v7.0.1-alpha.1) (2020-10-16)
+
+
+### Bug Fixes
+
+* 兼容 eslint-loader@4.x ([72f970b](https://github.com/packingjs/packing/commit/72f970b772fa5277c17e18e04e4819aa26d77913))
+* 格式化输出编译错误 ([9d3c192](https://github.com/packingjs/packing/commit/9d3c192f61d2b20d55bf1876741b886a5ec4276f))
+
 ### [7.0.1-alpha.0](https://github.com/packingjs/packing/compare/v6.3.1...v7.0.1-alpha.0) (2020-10-15)
 
 ### [6.3.1](https://github.com/packingjs/packing/compare/v6.3.0...v6.3.1) (2020-05-12)
