@@ -62,20 +62,20 @@ function injectManifestMeta(html, templateEngine, manifest) {
 
 function injectStyles(html, templateEngine, chunkName, assets) {
   const publicPath = '/';
-  const styles = assets.filter(asset => asset.endsWith('.css'));
+  const styles = assets.filter(({ name }) => name.endsWith('.css'));
 
   if (styles.length > 0) {
     let styleHtml;
     if (templateEngine === 'pug') {
       styleHtml = `block append style\n${
         styles
-          .map(file => `  link(href="${publicPath + file}" rel="stylesheet")`)
+          .map(({ name }) => `  link(href="${publicPath + name}" rel="stylesheet")`)
           .join('\n')
       }`;
       html = `${html}\n${styleHtml}\n`;
     } else {
       styleHtml = styles
-        .map(file => `  <link href="${publicPath + file}" rel="stylesheet">`)
+        .map(({ name }) => `  <link href="${publicPath + name}" rel="stylesheet">`)
         .join('\n');
       html = html.replace('</head>', `${styleHtml}\n  </head>`);
     }
@@ -84,10 +84,10 @@ function injectStyles(html, templateEngine, chunkName, assets) {
   return html;
 }
 
-// eslint-disable-next-line
+// eslint-disable-next-line max-len
 function injectScripts(html, templateEngine, chunkName, assets, commonChunks, scriptInjectPosition) {
   const publicPath = '/';
-  const scripts = assets.filter(asset => asset.endsWith('.js'));
+  const scripts = assets.filter(({ name }) => name.endsWith('.js'));
 
   if (isObject(commonChunks)) {
     Object.keys(commonChunks).forEach((name) => {
@@ -100,13 +100,13 @@ function injectScripts(html, templateEngine, chunkName, assets, commonChunks, sc
     if (templateEngine === 'pug') {
       scriptHtml = `block append script\n${
         scripts
-          .map(file => `  script(src="${publicPath + file}")`)
+          .map(({ name }) => `  script(src="${publicPath + name}")`)
           .join('\n')
       }`;
       html = `${html}\n${scriptHtml}\n`;
     } else {
       scriptHtml = scripts
-        .map(file => `  <script src="${publicPath + file}"></script>`)
+        .map(({ name }) => `  <script src="${publicPath + name}"></script>`)
         .join('\n');
       html = html.replace(`</${scriptInjectPosition}>`, `${scriptHtml}\n  </${scriptInjectPosition}>`);
     }
@@ -141,7 +141,6 @@ export default (app, appConfig) => {
   } = appConfig;
 
   const templatePages = templates.pages || templates;
-
 
   // 根据 entry 信息在 express 中添加路由
   const entryPoints = getEntries(entries);
@@ -203,7 +202,7 @@ export default (app, appConfig) => {
       }
       if (inject && assets.length > 0) {
         html = injectStyles(html, engine, chunkName, assets);
-        html = injectScripts(html, engine, chunkName, assets, commonChunks, scriptInjectPosition); // eslint-disable-line
+        html = injectScripts(html, engine, chunkName, assets, commonChunks, scriptInjectPosition);
       }
       html = html
         // 替换格式为 __var__ 用户自定义变量
