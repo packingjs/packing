@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [7.0.2](https://github.com/packingjs/packing/compare/v7.0.1...v7.0.2) (2020-10-20)
+
+
+### Bug Fixes
+
+* 修复静态资源替换导致的模版文件错乱的问题 ([713b2b6](https://github.com/packingjs/packing/commit/713b2b6e598e14918e8b15a905c84a78ce2aade3))
+
 ### [7.0.1](https://github.com/packingjs/packing/compare/v7.0.1-alpha.4...v7.0.1) (2020-10-16)
 
 ### [7.0.1-alpha.4](https://github.com/packingjs/packing/compare/v7.0.1-alpha.3...v7.0.1-alpha.4) (2020-10-16)
