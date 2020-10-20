@@ -6,7 +6,7 @@ const fs = require('fs');
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'local';
 
-const files = glob.sync('cases/**/index.js', { cwd: __dirname });
+const files = glob.sync('cases/template-exist/index.js', { cwd: __dirname });
 files.sort((a, b) => path.dirname(a) > path.dirname(b));
 
 const errors = [];

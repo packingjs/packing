@@ -3,6 +3,7 @@ import request from 'supertest';
 import webpack from 'webpack';
 import Express from 'express';
 import webpackDevMiddleware from 'webpack-dev-middleware';
+import urlrewrite from 'packing-urlrewrite';
 import '../../../src';
 import { getContext, pRequire, middleware } from '../../../src';
 
@@ -18,6 +19,7 @@ describe('serve', async () => {
       serverSideRender: true,
       // 禁止 webpack-dev-middleware 输出日志
       logger: {
+        warn: () => {},
         info: () => {},
         error: console.log
       }
@@ -28,9 +30,13 @@ describe('serve', async () => {
     const compiler = webpack(webpackConfig);
     const webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, mwOptions);
     webpackDevMiddlewareInstance.waitUntilValid(async () => {
+      app.use(urlrewrite(appConfig.rewriteRules));
       middleware(app, appConfig);
     });
     app.use(webpackDevMiddlewareInstance);
+    // app.listen(8080, () => {
+    //   console.log('...is working.');
+    // });
   });
 
   describe('单层目录', async () => {

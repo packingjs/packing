@@ -4,5 +4,5 @@ const { getTestCaseName } = require('../../util');
 
 describe(getTestCaseName(), async () => {
   require('./test.serve');
-  require('./test.build');
+  // require('./test.build');
 });

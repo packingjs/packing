@@ -1,12 +1,10 @@
-/* eslint-disable import/prefer-default-export */
-
 import { exec as execute } from 'child_process';
 import webpack from 'webpack';
 import path from 'path';
 import fs from 'fs';
 import mkdirp from 'mkdirp';
 
-export const exec = command => new Promise((resolve, reject) => {
+export const exec = (command) => new Promise((resolve, reject) => {
   execute(command, (err, stdout, stderr) => {
     if (err) {
       return reject(err);
@@ -39,7 +37,7 @@ export const append = (file, text, position = 'end') => {
 
 export const preappend = (file, text) => append(file, text, 'begin');
 
-export const execWebpack = config => new Promise((resolve, reject) => {
+export const execWebpack = (config) => new Promise((resolve, reject) => {
   webpack(config, (err, stats) => {
     if (err) {
       reject(err);

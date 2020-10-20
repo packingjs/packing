@@ -1,0 +1,6 @@
+recursive: true
+exit: true
+require: 
+  - '@babel/register'
+  - 'should'
+timeout: 0

@@ -6,7 +6,7 @@ export default (packing) => {
   };
   p.path.src.root = '.';
   p.template.options.master = 'templates/pages/default.pug';
-  p.visualizer.enabled = false;
+  // p.visualizer.enabled = false;
 
   return p;
 };

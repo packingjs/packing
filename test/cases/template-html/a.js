@@ -1,5 +1,5 @@
 import '3.css';
 import './x.css';
-import './v';
+import { v } from './v';
 
-export default 'a';
+export default `a${v}`;

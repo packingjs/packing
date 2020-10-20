@@ -188,6 +188,7 @@ export default class PackingTemplatePlugin {
           : new RegExp(`${tag}.*\\s+(?:${attribute})\\s*=\\s*["']([^"']+)`, 'g');
 
         let result;
+        console.log('---reg:', reg);
         // eslint-disable-next-line no-cond-assign
         while (result = reg.exec(html)) {
           const value = result[1];
@@ -228,7 +229,15 @@ export default class PackingTemplatePlugin {
           }
         }
       });
-      matches.sort((a, b) => a.start > b.start);
+      matches.sort((a, b) => {
+        if (a.start > b.start) {
+          return 1;
+        } else if (a.start < b.start) {
+          return -1;
+        } else {
+          return 0;
+        }
+      });
       this.pages[chunkName].matches = matches;
     });
   }
@@ -357,7 +366,15 @@ export default class PackingTemplatePlugin {
           }
         }
       });
-      matches.sort((a, b) => a.start > b.start);
+      matches.sort((a, b) => {
+        if (a.start > b.start) {
+          return 1;
+        } else if (a.start < b.start) {
+          return -1;
+        } else {
+          return 0;
+        }
+      });
 
       // 输出 layout
       html = html.split('');

@@ -1,3 +1,4 @@
 import './v.css';
 
-export default 'v';
+export const v = 'v';
+export const notUse = 'not use';

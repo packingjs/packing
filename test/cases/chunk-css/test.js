@@ -23,7 +23,7 @@ describe(getTestCaseName(), async () => {
     existsSync(cssFile).should.be.true();
   });
 
-  it('应该正常使用 autoprefixer', async () => {
+  it.skip('应该正常使用 autoprefixer', async () => {
     const cssContent = readFileSync(cssFile, 'utf8');
     cssContent.should.match(/-webkit-/);
   });

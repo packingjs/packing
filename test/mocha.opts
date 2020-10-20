@@ -1,5 +1,0 @@
---require @babel/register
---require should
---recursive
---timeout 0
---exit

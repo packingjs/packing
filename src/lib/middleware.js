@@ -91,7 +91,7 @@ function injectScripts(html, templateEngine, chunkName, assets, commonChunks, sc
 
   if (isObject(commonChunks)) {
     Object.keys(commonChunks).forEach((name) => {
-      scripts.unshift(`${name}.js`);
+      scripts.unshift({ name: `${name}.js` });
     });
   }
 

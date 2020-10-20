@@ -409,7 +409,7 @@ export default {
      * 是否启用 webpack-bundle-analyzer
      * @type {bool}
      */
-    enabled: true,
+    enabled: false,
 
     /**
      * `webpack-bundle-analyzer` 配置项

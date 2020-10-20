@@ -1,9 +1,8 @@
-import { isFunction, isObject } from 'util';
-
 export default (entries) => {
-  if (isFunction(entries)) {
+  if (typeof entries === 'function') {
     return entries();
-  } else if (isObject(entries)) {
+  }
+  if (entries !== null && typeof entries === 'object') {
     return entries;
   }
   return {
